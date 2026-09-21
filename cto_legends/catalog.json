@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "version": "0.1.0",
+  "modules": {
+    "legends-dataforseo-kit": {
+      "version": "0.4.0",
+      "commit": "2b413367eec136e1cbd57d3d8f0dfd7bcdeffe31",
+      "repo": "avalonreset/legends-dataforseo-kit",
+      "sha256": "582c984a6a9f7f10a05481bed6dc58a3f920953aa20b3f1b288a5daadc8eb017",
+      "purpose": "Search and keyword research through DataForSEO.",
+      "keywords": [
+        "seo",
+        "keywords",
+        "keyword",
+        "search",
+        "serp",
+        "dataforseo",
+        "backlinks",
+        "research"
+      ],
+      "dependencies": {},
+      "scope": "Python API and CLI; credentials required only for provider requests."
+    },
+    "legends-geogrid": {
+      "version": "0.3.1",
+      "commit": "df21b309d42bc2c3e1e6729be5ac93d94a48e201",
+      "repo": "avalonreset/legends-geogrid",
+      "sha256": "259ccd4fdd6205e40931366508672a0c05fd4c568799826cd2c66129d4d6e194",
+      "purpose": "Google Maps ranking grids and local visibility research.",
+      "keywords": [
+        "maps",
+        "grid",
+        "grids",
+        "geogrid",
+        "local",
+        "rank",
+        "ranking",
+        "rankings"
+      ],
+      "dependencies": {
+        "legends-dataforseo-kit": "0.4.0"
+      },
+      "scope": "Python scan runner and provider transport. Browser UI and PDF extras require module setup."
+    },
+    "legends-github": {
+      "version": "1.4.0",
+      "commit": "35da7ee17ffb2be3921c1f320209303c19c1c8e4",
+      "repo": "avalonreset/legends-github",
+      "sha256": "ed468945714579a87aa2d2345653402d4ef70d72c1f86a8d884fab45f0e049d8",
+      "purpose": "Audit and improve GitHub repository presentation and releases.",
+      "keywords": [
+        "github",
+        "repository",
+        "repositories",
+        "readme",
+        "release",
+        "packaging"
+      ],
+      "dependencies": {
+        "legends-dataforseo-kit": "0.3.0"
+      },
+      "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup."
+    }
+  }
+}
