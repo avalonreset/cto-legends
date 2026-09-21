@@ -2,10 +2,19 @@
 
 Verified locally on Windows with Python 3.11 on 2026-09-21:
 
-- 26 offline tests passed, including archive traversal/link rejection, checksum
+- 34 offline tests passed, including archive traversal/link rejection, checksum
   failure, no-side-effect previews, lock contention, failed batch activation,
   preserving an active installation after upgrade failure, retaining the prior
   environment, rollback, skill overwrite refusal, and argument boundaries.
+- Expanded catalog: seven public released modules, excluding SEO Dungeon.
+  Versioned release metadata and license files were inspected for all additions.
+- Fresh managed audio installation passed skill validation and offline music
+  planning. No model weights, PyTorch, or paid audio calls were involved.
+- The OBS release tarball matched its pinned hash, unpacked safely, and passed
+  its offline manifest probe under Node. OBS settings were not modified.
+- Native hyperyap and OBS Cursor entries supply pinned docs and release assets
+  with published SHA-256 values. Native installation, microphone operation, and
+  cursor integration were not performed. They are explicitly guided, not managed.
 - Wheel and source distribution built successfully; both passed twine checks.
 - Artifact path/content checks found no private workspace paths, environment
   files, private keys, or matching GitHub token patterns. These checks do not

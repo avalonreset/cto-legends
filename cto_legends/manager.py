@@ -12,13 +12,19 @@ import shutil
 import stat
 import subprocess
 import sys
+import tarfile
 import urllib.request
 import uuid
 import zipfile
 
 ROOT = Path(__file__).resolve().parent
 LIMIT = 100 * 1024 * 1024
-RECIPES = {"legends-dataforseo-kit", "legends-geogrid", "legends-github"}
+REPOSITORIES = {key: "avalonreset/" + key for key in (
+    "legends-dataforseo-kit", "legends-geogrid", "legends-github",
+    "legends-stable-audio-3", "legends-obs-kit", "hyperyap")}
+REPOSITORIES["legends-obs-cursor"] = "cto-legends/legends-obs-cursor"
+RECIPES = set(REPOSITORIES)
+GUIDED_MODULES = {"hyperyap", "legends-obs-cursor"}
 
 
 def catalog():
@@ -28,7 +34,7 @@ def catalog():
             raise ValueError("Unsupported catalog module or revision")
         if not re.fullmatch(r"[0-9a-f]{64}", module["sha256"]):
             raise ValueError("Missing artifact checksum")
-        if module["repo"] != "avalonreset/" + key:
+        if module["repo"] != REPOSITORIES[key]:
             raise ValueError("Unexpected module repository")
     return data
 
@@ -42,7 +48,7 @@ def read_state(home):
         raise ValueError("Unsupported installation state")
     for group in ("active", "previous"):
         for key, relative in data[group].items():
-            if key not in RECIPES:
+            if key not in RECIPES or key in GUIDED_MODULES:
                 raise ValueError("Unknown installed module")
             managed_path(home, relative)
     return data
@@ -81,16 +87,61 @@ def write_state(home, data):
 
 
 def fetch(url):
-    if not url.startswith(("https://codeload.github.com/avalonreset/", "https://api.github.com/repos/avalonreset/")):
+    allowed = tuple(prefix + repo + "/" for repo in REPOSITORIES.values()
+                    for prefix in ("https://codeload.github.com/", "https://api.github.com/repos/"))
+    releases = tuple("https://github.com/" + repo + "/releases/download/" for repo in REPOSITORIES.values())
+    if not url.startswith(allowed + releases):
         raise ValueError("Unexpected download origin")
     request = urllib.request.Request(url, headers={"User-Agent": "cto-legends/0.1.0"})
     with urllib.request.urlopen(request, timeout=90) as response:
-        if not response.url.startswith(("https://codeload.github.com/", "https://api.github.com/")):
+        if not response.url.startswith(("https://codeload.github.com/", "https://api.github.com/", "https://release-assets.githubusercontent.com/")):
             raise ValueError("Unexpected redirect origin")
         raw = response.read(LIMIT + 1)
     if len(raw) > LIMIT:
         raise ValueError("Download exceeds size limit")
     return raw
+
+
+def extract_tgz(raw, destination, expected):
+    """Validate regular tar members, then reuse the ZIP path-safety checks."""
+    import io
+    if hashlib.sha256(raw).hexdigest() != expected:
+        raise ValueError("Archive checksum mismatch; no module code was executed")
+    buffer = io.BytesIO()
+    with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as archive:
+        members = archive.getmembers()
+        if len(members) > 20000 or sum(x.size for x in members) > 400 * 1024 * 1024:
+            raise ValueError("Archive expansion exceeds limit")
+        with zipfile.ZipFile(buffer, "w") as converted:
+            for member in members:
+                if not member.isfile() and not member.isdir():
+                    raise ValueError("Archive links and special files are not supported")
+                if '\\' in member.name or '\x00' in member.name:
+                    raise ValueError("Unsafe original archive path")
+                if member.isfile():
+                    converted.writestr(member.name, archive.extractfile(member).read())
+    zipped = buffer.getvalue()
+    extract(zipped, destination, hashlib.sha256(zipped).hexdigest())
+
+
+def node_binary():
+    binary = shutil.which("node")
+    if not binary:
+        raise ValueError("legends-obs-kit requires Node.js 22 or newer; install Node then retry")
+    version = subprocess.run([binary, "--version"], capture_output=True, text=True, check=True, timeout=10).stdout.strip()
+    if not re.fullmatch(r"v\d+\.\d+\.\d+", version) or int(version[1:].split('.')[0]) < 22:
+        raise ValueError("legends-obs-kit requires Node.js 22 or newer")
+    return binary
+
+
+def guide(key):
+    module = catalog()["modules"][key]
+    return {"id": key, "version": module["version"], "mode": "guided" if key in GUIDED_MODULES else "managed",
+            "platforms": module.get("platforms", ["windows", "linux", "macos"]),
+            "scope": module["scope"], "license": module.get("license", "MIT"),
+            "instructions": f"https://github.com/{module['repo']}/blob/{module['commit']}/README.md",
+            "release": f"https://github.com/{module['repo']}/releases/tag/v{module['version']}",
+            "assets": module.get("assets", []), "next": module.get("next", "Preview installation with cto-legends install " + key)}
 
 
 def extract(raw, destination, expected):
@@ -151,25 +202,40 @@ def probe(key, release):
             raise ValueError("GeoGrid transport acceptance tests are missing")
         run([python, "-m", "unittest", "discover", "-s", str(source / "tests"), "-p", "*transport*"], release)
         run([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert m.version('legends-dataforseo-kit') == '0.4.0'"], release)
-    else:
+    elif key == "legends-github":
         run([python, source / "legends_github.py", "capabilities"], release)
         run([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert m.version('legends-dataforseo-kit') == '0.3.0'"], release)
+    elif key == "legends-stable-audio-3":
+        run([python, "-m", "legends_sa3", "skill", "validate"], release)
+        run([python, "-m", "legends_sa3", "plan", "--hours", "1", "--vram-gb", "16"], release)
+    elif key == "legends-obs-kit":
+        run([node_binary(), source / "dist" / "index.js", "manifest"], release)
+    else:
+        raise ValueError("No managed probe for this module")
 
 
 def prepare(key, module, home):
+    if key in GUIDED_MODULES:
+        raise ValueError("This module uses guided native setup")
+    if key == "legends-obs-kit":
+        node_binary()
     relative = "releases/" + key + "/" + module["version"] + "-" + uuid.uuid4().hex[:12]
     release = managed_path(home, relative)
     release.mkdir(parents=True)
     source = release / "source"
     source.mkdir()
-    raw = fetch(f"https://codeload.github.com/{module['repo']}/zip/{module['commit']}")
-    extract(raw, source, module["sha256"])
-    run([sys.executable, "-m", "venv", release / "env"], release)
-    python = python_at(release)
-    if key == "legends-dataforseo-kit":
-        run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
+    if key == "legends-obs-kit":
+        raw = fetch(module["artifact_url"])
+        extract_tgz(raw, source, module["sha256"])
     else:
-        run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-dataforseo.txt"], release)
+        raw = fetch(f"https://codeload.github.com/{module['repo']}/zip/{module['commit']}")
+        extract(raw, source, module["sha256"])
+        run([sys.executable, "-m", "venv", release / "env"], release)
+        python = python_at(release)
+        if key in {"legends-dataforseo-kit", "legends-stable-audio-3"}:
+            run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
+        else:
+            run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-dataforseo.txt"], release)
     probe(key, release)
     (release / "receipt.json").write_text(json.dumps(module, indent=2), encoding="utf-8")
     return relative
@@ -183,6 +249,9 @@ def plan(home, keys):
         if key not in modules:
             raise ValueError(f"Unknown module: {key}")
         module = modules[key]
+        if key in GUIDED_MODULES:
+            result.append({"id": key, "action": "guided-setup", **guide(key)})
+            continue
         current = state["active"].get(key)
         same = False
         if current:
@@ -208,7 +277,8 @@ def install(home, keys):
                 state["previous"][key] = state["active"][key]
             state["active"][key] = relative
         write_state(home, state)
-    return {"changes": changes, "active": state["active"]}
+    return {"changes": changes, "active": state["active"],
+            "guided_setup": [guide(item["id"]) for item in changes if item["action"] == "guided-setup"]}
 
 
 def rollback(home, key):
@@ -229,7 +299,9 @@ def status(home):
         release = managed_path(home, relative)
         receipt = json.loads((release / "receipt.json").read_text(encoding="utf-8"))
         result[key] = {"version": receipt["version"], "commit": receipt["commit"],
-                       "python": str(python_at(release)), "source": str(release / "source"),
+                       "python": str(python_at(release)) if key != "legends-obs-kit" else None,
+                       "runtime": "node >=22" if key == "legends-obs-kit" else "isolated Python",
+                       "source": str(release / "source"),
                        "guide": str(release / "source" / "AGENTS.md"), "scope": receipt["scope"]}
     return result
 

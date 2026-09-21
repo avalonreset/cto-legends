@@ -56,14 +56,26 @@ depends on your agent's configuration. No plugin host is required.
 | [legends-geogrid](https://github.com/avalonreset/legends-geogrid) 0.3.1 | Google Maps rank grids and local visibility | Python scan runner + DataForSEO Kit 0.4.0 |
 | [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) 0.4.0 | Search, keywords, API documentation, queued research | Python library + CLI |
 | [legends-github](https://github.com/avalonreset/legends-github) 1.4.0 | Repository audits, README, metadata, release preparation | Headless workflows + declared research transport 0.3.0 |
+| [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.4.1 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
+| [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) 0.4.0 | OBS recording, scenes, settings, verification | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
+| [hyperyap](https://github.com/avalonreset/hyperyap) 1.0.11 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
+| [legends-obs-cursor](https://github.com/cto-legends/legends-obs-cursor) 0.1.0 | Animated OBS cursor overlays and click effects | Guided Windows OBS filter setup |
+
+Five modules have managed CLI installations. The two native modules use
+`cto-legends guide <module>`: pinned setup instructions, release downloads,
+platform information, and published asset checksums. `install` for those modules
+returns that handoff, including with `--apply`; it does not run an app installer,
+modify OBS scenes, or claim that a native application is installed. Their native
+updates remain guided and are not part of managed `update` or `rollback`.
 
 GeoGrid's browser UI and PDF renderer need additional dependencies. Legends
 GitHub may need `gh` authentication for remote work. Follow each module's README;
 the manager's doctor verifies its managed Python capabilities, not every optional
 feature or provider credential.
 
-Each module gets a separate Python environment, so their dependency versions
-can differ safely. Installing GeoGrid supplies its provider dependency automatically;
+Python modules get separate environments, so their dependency versions
+can differ safely. OBS Kit uses a verified prebuilt Node package and your Node
+runtime. Installing GeoGrid supplies its provider dependency automatically;
 you only need a standalone kit installation for direct kit use.
 
 ## Use an installed module
@@ -72,13 +84,24 @@ you only need a standalone kit installation for direct kit use.
 cto-legends run legends-geogrid -- --help
 cto-legends run legends-dataforseo-kit -- routes
 cto-legends run legends-github -- capabilities
+cto-legends install legends-stable-audio-3 --apply
+cto-legends run legends-stable-audio-3 -- plan --hours 1 --vram-gb 16
+cto-legends install legends-obs-kit --apply
+cto-legends run legends-obs-kit -- manifest
+cto-legends guide hyperyap
+cto-legends guide legends-obs-cursor
 cto-legends status
 ```
 
-`status` returns the exact Python, source, and agent-guide paths. Advanced module
+`status` returns the runtime, source, and agent-guide paths (Python is null for
+the Node module). Advanced module
 tools can use that interpreter directly. Execution keeps your current working
 directory so your outputs belong to your project. Store reports outside the
 managed source directories.
+
+Audio installation does not download model weights or PyTorch, accept model
+licenses, or spend hosted credits. OBS installation does not connect to OBS or
+change settings; follow its first-run guide before live operation.
 
 Credentials stay in your environment. Research tools retain their own explicit
 execution and spending controls. Installation neither collects credentials nor
@@ -98,7 +121,8 @@ To obtain a newer set, upgrade the manager from its [latest release](https://git
 then run `update --apply`. Your agent can handle those steps when you ask it to
 update cto-legends. A new upstream tag is not automatically a tested combination.
 
-Source archives are pinned to commits and SHA-256 checksums. New environments
+Source archives and the prebuilt OBS package are pinned to versions and SHA-256
+checksums, with their source commits recorded. New managed installations
 must pass their checks before the active set changes. Failed setups leave the
 previous active set intact. Previous environments are retained:
 
@@ -133,6 +157,8 @@ python -m twine check dist/*
 See [architecture](docs/ARCHITECTURE.md), [contributing](CONTRIBUTING.md), and
 [security](SECURITY.md). Python dependencies installed by individual modules may
 come from PyPI and are not all reproducibly locked by this manager. Module
-licenses remain in their source archives. The manager is [MIT licensed](LICENSE).
+licenses remain in their packages. The manager is [MIT licensed](LICENSE).
+Audio uses Apache-2.0; hyperyap uses AGPL-3.0; OBS Cursor uses GPL-2.0-or-later.
+They remain separate projects and keep their own licensing and model terms.
 
 [cto-legends.com](https://cto-legends.com)

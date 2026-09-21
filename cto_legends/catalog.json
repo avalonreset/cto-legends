@@ -60,6 +60,138 @@
         "legends-dataforseo-kit": "0.3.0"
       },
       "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup."
+    },
+    "legends-stable-audio-3": {
+      "version": "0.4.1",
+      "repo": "avalonreset/legends-stable-audio-3",
+      "commit": "d32b9dc9cb98d5480e93b378d39e55bfe06eafdf",
+      "purpose": "Create instrumental music, sound effects, and continuous mixes.",
+      "keywords": [
+        "music",
+        "audio",
+        "sound",
+        "instrumental",
+        "mix",
+        "mixes",
+        "stable",
+        "sfx"
+      ],
+      "license": "Apache-2.0",
+      "scope": "Managed planning CLI and agent skill. GPU runtime, model access, weights, and hosted credentials are separate setup.",
+      "dependencies": {},
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "sha256": "75b052002c23e6a52fc48c4c19eaa93c4a10331b5f29e4994497d290ada49970"
+    },
+    "legends-obs-kit": {
+      "version": "0.4.0",
+      "repo": "avalonreset/legends-obs-kit",
+      "commit": "81eaa20822686a74e19ab039972039e4f2516d59",
+      "purpose": "Inspect, configure, and verify OBS Studio recording workflows.",
+      "keywords": [
+        "obs",
+        "recording",
+        "record",
+        "streaming",
+        "scenes",
+        "encoder"
+      ],
+      "license": "MIT",
+      "scope": "Managed prebuilt Node CLI; Node 22+ required. Live OBS operation targets Windows and needs local OBS WebSocket setup.",
+      "dependencies": {},
+      "platforms": [
+        "windows"
+      ],
+      "sha256": "5f3036aaabc90a4fbc557370cda12dcd6386bba01e977a3cf93e48c82a88697d",
+      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.4.0/avalonreset-legends-obs-kit-0.4.0.tgz"
+    },
+    "hyperyap": {
+      "version": "1.0.11",
+      "repo": "avalonreset/hyperyap",
+      "commit": "681b06be5613bdb6048ea43056eb0014bc5d82d1",
+      "purpose": "Local voice typing, dictation, and app-focused paste.",
+      "keywords": [
+        "voice",
+        "dictation",
+        "transcription",
+        "speech",
+        "typing",
+        "hyperyap"
+      ],
+      "license": "AGPL-3.0",
+      "scope": "Guided native desktop installation. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
+      "dependencies": {},
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "sha256": "d16c0ae4cd2a053d1fe9d51ba9cf93574326ec324746c28ba259d91d483e9596",
+      "assets": [
+        {
+          "name": "hyperyap_1.0.11_x64-setup.exe",
+          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/hyperyap_1.0.11_x64-setup.exe",
+          "size": 130267421,
+          "sha256": "d16c0ae4cd2a053d1fe9d51ba9cf93574326ec324746c28ba259d91d483e9596"
+        },
+        {
+          "name": "HyperYap_aarch64_darwin.dmg",
+          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/HyperYap_aarch64_darwin.dmg",
+          "size": 19348538,
+          "sha256": "b4dbace270f51033014486b183225a6e7730f135cfe42012cb0d1e1ffb271f96"
+        },
+        {
+          "name": "HyperYap_amd64.AppImage",
+          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/HyperYap_amd64.AppImage",
+          "size": 555448824,
+          "sha256": "0a7dea0aa54b7c644efa9622c19a8005885b7ee7771ce8ff1e19ffd534dbbb72"
+        },
+        {
+          "name": "HyperYap_amd64.deb",
+          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/HyperYap_amd64.deb",
+          "size": 21594132,
+          "sha256": "5828a6097fe57148fcde29733ff88f308de62a1cad217699a98b0ad4ff5b9cf6"
+        },
+        {
+          "name": "HyperYap_x86_64_darwin.dmg",
+          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/HyperYap_x86_64_darwin.dmg",
+          "size": 20875417,
+          "sha256": "bc28315185db73580783a0c762b49ab7a59f3b4dad067b611dbe5013eadbd12c"
+        }
+      ],
+      "next": "Choose the installer for the user platform, verify its SHA-256, and follow the pinned README. Model downloads and native permissions need user setup."
+    },
+    "legends-obs-cursor": {
+      "version": "0.1.0",
+      "repo": "cto-legends/legends-obs-cursor",
+      "commit": "f12f120b4b351ca8c7cd19f01e74dd61412ca7ce",
+      "purpose": "Animated cursor overlay and click effects for OBS.",
+      "keywords": [
+        "cursor",
+        "pointer",
+        "overlay",
+        "click",
+        "halo"
+      ],
+      "license": "GPL-2.0-or-later",
+      "scope": "Guided Windows OBS filter setup. Back up scenes and close OBS before the module installer; the manager does not modify OBS or track this native installation.",
+      "dependencies": {},
+      "platforms": [
+        "windows"
+      ],
+      "sha256": "4244b4dcf201ad22bc810f40b058d561f2f6a5942f52a3c51c741e9f4611c4ce",
+      "assets": [
+        {
+          "name": "legends-obs-cursor-v0.1.0.zip",
+          "url": "https://github.com/cto-legends/legends-obs-cursor/releases/download/v0.1.0/legends-obs-cursor-v0.1.0.zip",
+          "size": 16300169,
+          "sha256": "4244b4dcf201ad22bc810f40b058d561f2f6a5942f52a3c51c741e9f4611c4ce"
+        }
+      ],
+      "next": "Download and verify the ZIP, extract it, read the pinned README, and use the module installer after closing OBS and reviewing its scene changes."
     }
   }
 }

@@ -13,8 +13,8 @@ not remote shell strings. GitHub release discovery is read-only.
 1. Acquire an exclusive per-home operation lock.
 2. Resolve requested modules against the bundled catalog.
 3. Download and verify each source archive, rejecting unsafe members.
-4. Create a fresh version directory and Python environment at its final path.
-5. Install the module or its declared provider requirements.
+4. Create a fresh version directory and, for Python modules, an environment at its final path.
+5. Install the Python module/requirements or unpack the prebuilt OBS Node package.
 6. Run offline module checks and write a receipt.
 7. Atomically replace state.json only when the whole batch succeeds.
 
@@ -37,9 +37,17 @@ home, run doctor and CLI smoke checks, and test dependency versions. Publish a
 new manager release only after platform CI succeeds.
 
 Do not add a private module, placeholder, or merely available repository to the
-installable catalog. This first set intentionally covers the three independently
-released research and repository tools. Other public Legends projects can be
-added after their install contracts receive the same verification.
+catalog. The current set contains seven independently released projects: five
+managed CLIs and two native setup guides. Native entries supply pinned release
+assets and checksums but are never recorded as managed installed environments.
+Other public projects need the same review before admission. The intentionally
+excluded SEO Dungeon project is not routable or installable through this catalog.
+
+OBS uses its released npm tarball, verified before regular-file-only extraction.
+No TypeScript compiler or package manager is needed. Python modules retain their
+own environments; audio installs its base dependency set without GPU extras.
+Doctor runs offline CLI probes, not OBS control, microphones, or GPU generation.
+`guide` works offline and exposes upstream setup details without executing them.
 
 ## Trust and boundaries
 

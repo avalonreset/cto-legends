@@ -15,14 +15,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - run: python -m unittest discover -s tests -v
       - run: python -m pip install build twine
       - run: python -m build
       - run: python -m twine check dist/*
       - run: python -m pip install .
       - run: cto-legends route "Google Maps ranking grids"
-      - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo-kit legends-geogrid legends-github --apply
+      - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo-kit legends-geogrid legends-github legends-stable-audio-3 legends-obs-kit --apply
       - run: cto-legends --home "${{ runner.temp }}/legends" doctor
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-geogrid -- --help
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-dataforseo-kit -- routes
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-github -- capabilities
+      - run: cto-legends --home "${{ runner.temp }}/legends" run legends-stable-audio-3 -- plan --hours 1 --vram-gb 16
+      - run: cto-legends --home "${{ runner.temp }}/legends" run legends-obs-kit -- manifest
+      - run: cto-legends guide hyperyap
+      - run: cto-legends guide legends-obs-cursor

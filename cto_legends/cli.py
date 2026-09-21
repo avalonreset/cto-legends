@@ -45,6 +45,8 @@ def parser():
     sub.add_parser("check-updates", help="Compare public release tags without installing them")
     r = sub.add_parser("route", help="Find modules for a goal, offline")
     r.add_argument("goal")
+    r = sub.add_parser("guide", help="Show pinned setup instructions, platform requirements, and release downloads")
+    r.add_argument("module", choices=sorted(m.RECIPES))
     for name in ("install", "update"):
         s = sub.add_parser(name, help="Preview changes; add --apply to install")
         s.add_argument("modules", nargs="+" if name == "install" else "*")
@@ -68,6 +70,8 @@ def execute(args):
         return m.catalog()
     if cmd == "route":
         return route(args.goal)
+    if cmd == "guide":
+        return m.guide(args.module)
     if cmd == "status":
         return m.status(home)
     if cmd == "check-updates":
@@ -89,17 +93,22 @@ def execute(args):
             checks[key] = "passed"
         return {"ok": True, "version": __version__, "modules": checks,
                 "optional_tools": {x: bool(shutil.which(x)) for x in ("node", "pnpm", "gh")},
-                "note": "Checks managed Python capabilities only. Browser UI, PDFs, credentials and paid calls are separate module setup."}
+                "note": "Checks managed CLI capabilities only. Native apps, OBS connection, GPU/models, browser UI, PDFs, credentials and paid calls require module setup."}
     if cmd == "run":
+        if args.module in m.GUIDED_MODULES:
+            raise ValueError("Native application setup is guided; use cto-legends guide " + args.module)
         state = m.read_state(home)
         if args.module not in state["active"]:
             raise ValueError("Module is not installed; preview its installation first")
         release = m.managed_path(home, state["active"][args.module])
         entries = {"legends-dataforseo-kit": ["-m", "legends_dataforseo"],
                    "legends-geogrid": [str(release / "source" / "tools" / "bulk_geogrid_runner.py")],
-                   "legends-github": [str(release / "source" / "legends_github.py")]}
+                   "legends-github": [str(release / "source" / "legends_github.py")],
+                   "legends-stable-audio-3": ["-m", "legends_sa3"],
+                   "legends-obs-kit": [str(release / "source" / "dist" / "index.js")]}
         remaining = args.args[1:] if args.args[:1] == ["--"] else args.args
-        result = subprocess.run([str(m.python_at(release)), *entries[args.module], *remaining])
+        binary = m.node_binary() if args.module == "legends-obs-kit" else str(m.python_at(release))
+        result = subprocess.run([binary, *entries[args.module], *remaining])
         return result.returncode
     raise ValueError("Unknown command")
 

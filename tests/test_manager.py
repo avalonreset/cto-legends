@@ -3,6 +3,7 @@ import io
 import json
 from pathlib import Path
 import stat
+import tarfile
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -31,6 +32,76 @@ class ManagerTests(unittest.TestCase):
 
     def test_catalog_pins_all_public_modules(self):
         self.assertEqual(set(m.catalog()["modules"]), m.RECIPES)
+
+    def test_excluded_module_is_not_discoverable_or_installable(self):
+        self.assertNotIn("legends-seo-dungeon", m.catalog()["modules"])
+        with self.assertRaises(ValueError):
+            m.plan(self.home, ["legends-seo-dungeon"])
+
+    def test_new_module_routes(self):
+        for goal, expected in (("voice dictation", "hyperyap"), ("cursor overlay", "legends-obs-cursor"),
+                               ("music audio", "legends-stable-audio-3"), ("OBS recording", "legends-obs-kit")):
+            self.assertEqual(route(goal)["matches"][0]["id"], expected)
+
+    def test_guided_install_does_not_download_or_activate_native_apps(self):
+        with patch.object(m, "prepare", side_effect=AssertionError("must not prepare")), patch.object(m, "fetch", side_effect=AssertionError("network")):
+            result = m.install(self.home, ["hyperyap", "legends-obs-cursor"])
+        self.assertEqual(result["active"], {})
+        self.assertEqual(len(result["guided_setup"]), 2)
+        self.assertTrue(all(x["action"] == "guided-setup" for x in result["changes"]))
+
+    def test_guided_assets_and_licenses(self):
+        for key in m.GUIDED_MODULES:
+            data = m.guide(key)
+            self.assertEqual(data["mode"], "guided")
+            self.assertTrue(data["assets"])
+            self.assertIn(m.catalog()["modules"][key]["commit"], data["instructions"])
+            self.assertNotEqual(data["license"], "MIT")
+            for asset in data["assets"]:
+                self.assertEqual(len(asset["sha256"]), 64)
+
+    def test_node_missing_and_old_are_rejected(self):
+        with patch.object(m.shutil, "which", return_value=None):
+            with self.assertRaises(ValueError):
+                m.node_binary()
+        with patch.object(m.shutil, "which", return_value="node"), patch.object(m.subprocess, "run") as run:
+            run.return_value.stdout = "v20.19.0"
+            with self.assertRaises(ValueError):
+                m.node_binary()
+            run.return_value.stdout = "v22.20.0"
+            self.assertEqual(m.node_binary(), "node")
+
+    def test_guided_run_explains_setup(self):
+        args = parser().parse_args(["--home", str(self.home), "run", "hyperyap"])
+        with self.assertRaisesRegex(ValueError, "guided"):
+            execute(args)
+
+    def test_tgz_extract_and_unsafe_entries(self):
+        for name, kind in (("package/file.txt", tarfile.REGTYPE), ("package/../escape", tarfile.REGTYPE),
+                           ("package/link", tarfile.SYMTYPE), ("package/a\\b", tarfile.REGTYPE)):
+            stream = io.BytesIO()
+            with tarfile.open(fileobj=stream, mode="w:gz") as tar:
+                entry = tarfile.TarInfo(name)
+                entry.type = kind
+                entry.size = 2 if kind == tarfile.REGTYPE else 0
+                tar.addfile(entry, io.BytesIO(b"ok") if entry.size else None)
+            raw = stream.getvalue()
+            sha = hashlib.sha256(raw).hexdigest()
+            target = self.home / str(len(list(self.home.iterdir())))
+            if name == "package/file.txt":
+                m.extract_tgz(raw, target, sha)
+                self.assertEqual((target / "file.txt").read_text(), "ok")
+                with self.assertRaisesRegex(ValueError, "checksum"):
+                    m.extract_tgz(raw, target, '0' * 64)
+            else:
+                with self.assertRaises(ValueError):
+                    m.extract_tgz(raw, target, sha)
+
+    def test_node_status_has_no_fictional_python(self):
+        key = "legends-obs-kit"
+        relative = self.prepare_fake(key, m.catalog()["modules"][key], self.home)
+        m.write_state(self.home, {"schema": 1, "active": {key: relative}, "previous": {}})
+        self.assertIsNone(m.status(self.home)[key]["python"])
 
     def test_route_maps(self):
         self.assertEqual(route("Google Maps ranking grids")["matches"][0]["id"], "legends-geogrid")
