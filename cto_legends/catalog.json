@@ -23,9 +23,9 @@
     },
     "legends-geogrid": {
       "version": "0.4.0",
-      "commit": "e8ca69bef5b54a6841fe748509895b67841daa46",
+      "commit": "35048a60c320b4bae3f5e77fd4f7509632511070",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "11440db9186b0fc3f753721bb056a7933c2d88c0adf205709cef84c804a37dd0",
+      "sha256": "aff01a3fa8a87a74feb89f3945246a0d325a0d2682629465cd5a602ceb82979f",
       "purpose": "Google Maps ranking grids and local visibility research.",
       "keywords": [
         "maps",
@@ -195,9 +195,9 @@
     },
     "legends-obsidian": {
       "version": "2.3.0",
-      "commit": "1938bc8e87641a5b62e6ce68ae1e2f4145ce3200",
+      "commit": "722ad1498d54f21aeaba9975d1830d952082718b",
       "repo": "avalonreset/legends-obsidian",
-      "sha256": "b2750697e783fe597b1bf116274b029b737f3f0628190fd5cab7d0305ba0b8a4",
+      "sha256": "74922fe0c1c1b302576b333d116d53fe3ffbb0ebde92f270946c18f6e856fe71",
       "purpose": "Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions.",
       "keywords": [
         "obsidian",

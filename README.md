@@ -10,6 +10,10 @@ Tell your agent what you want to do. `cto-legends` helps it find the right modul
 install a verified version, and maintain the components you actually use.
 Each module remains its own open-source project.
 
+The central recipe targets **Grok, Codex, Gemini, Claude, Cursor, and MetaMuse**.
+Use the documented host registration or explicitly load the portable skill.
+Host discovery and operational verification are tracked separately.
+
 ## Start here
 
 Python 3.10 or newer is required. No Git, provider account, background service,

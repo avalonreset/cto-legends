@@ -86,3 +86,7 @@ can: retain each module's preview, execute and spending gates. Credentials stay
 in user-provided environment variables. Never print or persist secret values.
 Do not subscribe to an MCP server just to discover these modules. No background
 service is required. Route matching is a hint, not an authoritative judgment.
+
+## Writing style
+
+Use plain punctuation. Do not use em dashes in generated copy, documentation, or release titles.

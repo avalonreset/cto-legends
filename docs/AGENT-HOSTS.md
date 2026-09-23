@@ -16,7 +16,7 @@ application, reload it, and verify a fresh invocation before claiming support.
 | Claude | `~/.claude/skills` |
 | Cursor | `~/.cursor/skills` |
 | Grok | `~/.grok/skills` |
-| Meta Muse | `~/.agents/skills` |
+| MetaMuse | `~/.agents/skills` (explicit generic registration, not verified native discovery) |
 
 All presets use identical portable instructions. The manager tests registration,
 conflict handling and preservation of edited skills. These tests do not prove
@@ -40,3 +40,5 @@ silently route commands to another machine or copy credentials there.
 
 Updates refresh only unedited registrations owned by this installer. Existing
 user-written skills, vaults, module outputs and global host settings are preserved.
+
+The bundled Obsidian module also documents its own adapters for Claude, Codex, Gemini, Cursor and Grok, and manual loading for MetaMuse. Its native Windows wrapper shows instructions without modifying host installations; use the central registration above or the module instructions for the chosen host.
