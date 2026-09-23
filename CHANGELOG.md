@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 - 2026-09-23
+
+- Pin Legends GitHub 1.5.0 and its DataForSEO Kit 0.4.0 dependency.
+- Clarify agent skills positioning using live search research.
+- Add the standard Legends banner and installation explainer.
+- Restrict Python package discovery so artwork cannot break builds.
+
+
 ## 0.2.0
 
 - Added the verified public legends-obsidian v2.3.0 module, offline install probes, and explicit Python/Windows requirements.

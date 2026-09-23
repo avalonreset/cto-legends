@@ -47,17 +47,20 @@
       "commit": "f5e08704961e125fe11d31c0ed1b8da83b2c2252",
       "repo": "avalonreset/legends-github",
       "sha256": "8fca9bde634eef577ec4797ee9b8f2e90322c61db86ed4f72d2e3547c03611b5",
-      "purpose": "Audit and improve GitHub repository presentation and releases.",
+      "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
         "repository",
         "repositories",
         "readme",
         "release",
-        "packaging"
+        "packaging",
+        "seo",
+        "optimization",
+        "keywords"
       ],
       "dependencies": {
-        "legends-dataforseo-kit": "0.3.0"
+        "legends-dataforseo-kit": "0.4.0"
       },
       "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup."
     },
