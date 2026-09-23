@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import sys
 from . import __version__, manager as m
+from . import agents
 
 
 def route(goal):
@@ -42,6 +43,7 @@ def parser():
     sub.add_parser("catalog", help="List the bundled, verified module set")
     sub.add_parser("status", help="Show managed paths and installed versions")
     sub.add_parser("doctor", help="Check installed environments without provider API calls")
+    sub.add_parser("report-readiness", help="Check installed GeoGrid reports, map browser and transport without paid calls")
     sub.add_parser("check-updates", help="Compare public release tags without installing them")
     r = sub.add_parser("route", help="Find modules for a goal, offline")
     r.add_argument("goal")
@@ -57,6 +59,14 @@ def parser():
     r = sub.add_parser("install-skill", help="Register the router in an explicit agent skill directory")
     r.add_argument("--directory", type=Path, required=True)
     r.add_argument("--apply", action="store_true")
+    r = sub.add_parser("agent-setup", help="Preview or register the central skill for an agent host")
+    r.add_argument("host", choices=sorted(agents.ROOTS))
+    r.add_argument("--directory", type=Path)
+    r.add_argument("--apply", action="store_true")
+    r = sub.add_parser("register-guide", help="Register existing local Markdown instructions; does not install or execute")
+    r.add_argument("name")
+    r.add_argument("path", type=Path)
+    r.add_argument("--apply", action="store_true")
     r = sub.add_parser("run", help="Run an installed module; following arguments go directly to it")
     r.add_argument("module", choices=sorted(m.RECIPES))
     r.add_argument("args", nargs=argparse.REMAINDER)
@@ -68,12 +78,33 @@ def execute(args):
     cmd = args.command
     if cmd == "catalog":
         return m.catalog()
+    if cmd == "agent-setup":
+        return agents.configure(args.host, home, directory=args.directory, apply=args.apply)
+    if cmd == "register-guide":
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", args.name):
+            raise ValueError("Use a lowercase dash-separated guide name")
+        path = args.path.expanduser().resolve()
+        if not path.is_file() or path.suffix.lower() != ".md":
+            raise ValueError("Guide must be an existing Markdown file")
+        result = {"name": args.name, "path": str(path), "readiness": "unverified", "source": "user-selected-local-guide"}
+        if args.apply:
+            with m.lock(home):
+                file = home / "local-guides.json"
+                guides = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
+                if args.name in guides and guides[args.name] != result:
+                    raise ValueError("Existing guide differs; preserved")
+                guides[args.name] = result
+                file.write_text(json.dumps(guides, indent=2), encoding="utf-8")
+        return {"preview": not args.apply, "guide": result}
     if cmd == "route":
         return route(args.goal)
     if cmd == "guide":
         return m.guide(args.module)
     if cmd == "status":
-        return m.status(home)
+        result = m.status(home)
+        file = home / "local-guides.json"
+        result["local_guides"] = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
+        return result
     if cmd == "check-updates":
         return m.updates()
     if cmd in ("install", "update"):
@@ -94,6 +125,14 @@ def execute(args):
         return {"ok": True, "version": __version__, "modules": checks,
                 "optional_tools": {x: bool(shutil.which(x)) for x in ("node", "pnpm", "gh")},
                 "note": "Checks managed CLI capabilities only. Native apps, OBS connection, GPU/models, browser UI, PDFs, credentials and paid calls require module setup."}
+    if cmd == "report-readiness":
+        state = m.read_state(home)
+        if "legends-geogrid" not in state["active"]:
+            raise ValueError("Install legends-geogrid first")
+        release = m.managed_path(home, state["active"]["legends-geogrid"])
+        return subprocess.run([str(m.python_at(release)),
+            str(release / "source" / "tools" / "geogrid_doctor.py"),
+            "--reports", "--basemaps", "--dataforseo"]).returncode
     if cmd == "run":
         if args.module in m.GUIDED_MODULES:
             raise ValueError("Native application setup is guided; use cto-legends guide " + args.module)
@@ -101,8 +140,9 @@ def execute(args):
         if args.module not in state["active"]:
             raise ValueError("Module is not installed; preview its installation first")
         release = m.managed_path(home, state["active"][args.module])
-        entries = {"legends-dataforseo-kit": ["-m", "legends_dataforseo"],
-                   "legends-geogrid": [str(release / "source" / "tools" / "bulk_geogrid_runner.py")],
+        entries = {"legends-obsidian": [str(release / "source" / "scripts" / "claude-obsidian.py")],
+                   "legends-dataforseo-kit": ["-m", "legends_dataforseo"],
+                   "legends-geogrid": [str(release / "source" / "tools" / "study.py")],
                    "legends-github": [str(release / "source" / "legends_github.py")],
                    "legends-stable-audio-3": ["-m", "legends_sa3"],
                    "legends-obs-kit": [str(release / "source" / "dist" / "index.js")]}

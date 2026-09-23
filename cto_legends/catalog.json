@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.4.0",
@@ -22,10 +22,10 @@
       "scope": "Python API and CLI; credentials required only for provider requests."
     },
     "legends-geogrid": {
-      "version": "0.3.1",
-      "commit": "df21b309d42bc2c3e1e6729be5ac93d94a48e201",
+      "version": "0.4.0",
+      "commit": "e8ca69bef5b54a6841fe748509895b67841daa46",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "259ccd4fdd6205e40931366508672a0c05fd4c568799826cd2c66129d4d6e194",
+      "sha256": "11440db9186b0fc3f753721bb056a7933c2d88c0adf205709cef84c804a37dd0",
       "purpose": "Google Maps ranking grids and local visibility research.",
       "keywords": [
         "maps",
@@ -40,7 +40,7 @@
       "dependencies": {
         "legends-dataforseo-kit": "0.4.0"
       },
-      "scope": "Python scan runner and provider transport. Browser UI and PDF extras require module setup."
+      "scope": "Research-first studies, reports and enhancement. Report libraries included; browser binaries and provider credentials require readiness checks."
     },
     "legends-github": {
       "version": "1.4.0",
@@ -192,6 +192,24 @@
         }
       ],
       "next": "Download and verify the ZIP, extract it, read the pinned README, and use the module installer after closing OBS and reviewing its scene changes."
+    },
+    "legends-obsidian": {
+      "version": "2.3.0",
+      "commit": "1938bc8e87641a5b62e6ce68ae1e2f4145ce3200",
+      "repo": "avalonreset/legends-obsidian",
+      "sha256": "b2750697e783fe597b1bf116274b029b737f3f0628190fd5cab7d0305ba0b8a4",
+      "purpose": "Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions.",
+      "keywords": [
+        "obsidian",
+        "vault",
+        "memory",
+        "knowledge",
+        "notes",
+        "evidence",
+        "wiki"
+      ],
+      "dependencies": {},
+      "scope": "Python 3.11+ standard-library core. Windows supports read-only inspection and previews; canonical vault writes require POSIX/WSL. Obsidian Desktop is optional."
     }
   }
 }

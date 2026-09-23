@@ -53,7 +53,7 @@ depends on your agent's configuration. No plugin host is required.
 
 | Module | Use it for | Managed setup |
 |---|---|---|
-| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) 0.3.1 | Google Maps rank grids and local visibility | Python scan runner + DataForSEO Kit 0.4.0 |
+| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) 0.4.0 | Google Maps rank grids and local visibility | Research workflow + report libraries + DataForSEO Kit 0.4.0 |
 | [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) 0.4.0 | Search, keywords, API documentation, queued research | Python library + CLI |
 | [legends-github](https://github.com/avalonreset/legends-github) 1.4.0 | Repository audits, README, metadata, release preparation | Headless workflows + declared research transport 0.3.0 |
 | [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.4.1 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
@@ -68,7 +68,7 @@ returns that handoff, including with `--apply`; it does not run an app installer
 modify OBS scenes, or claim that a native application is installed. Their native
 updates remain guided and are not part of managed `update` or `rollback`.
 
-GeoGrid's browser UI and PDF renderer need additional dependencies. Legends
+GeoGrid report libraries are installed; browser binaries and Linux system libraries need module setup. Legends
 GitHub may need `gh` authentication for remote work. Follow each module's README;
 the manager's doctor verifies its managed Python capabilities, not every optional
 feature or provider credential.
@@ -162,3 +162,35 @@ Audio uses Apache-2.0; hyperyap uses AGPL-3.0; OBS Cursor uses GPL-2.0-or-later.
 They remain separate projects and keep their own licensing and model terms.
 
 [cto-legends.com](https://cto-legends.com)
+
+## Central agent discovery (0.2.0 candidate)
+
+One shared skill supports Codex, Gemini, Claude, Cursor, Grok and Muse adapters.
+Preview `cto-legends agent-setup gemini`; add `--apply` to register it. Repeat
+for the hosts you use. `--directory PATH` selects a different skill root.
+Existing unmanaged or edited instructions are preserved. Reload the host after
+registration; actual discovery must be confirmed in that host, not inferred
+from a file being written. No live parity across all six hosts is claimed.
+
+Only this central skill needs registration. It reads the chosen module's
+instructions on demand. Host tool permissions and operating-system dependency
+support still apply. Gemini on a remote execution host needs installation there.
+
+For an existing local product not in the public catalog:
+`cto-legends register-guide legends-obsidian /path/to/skills/legends-obsidian/SKILL.md --apply`.
+This registers a guide only: no installation, update, execution or readiness
+claim. Such guides appear in `status`, stay private, and remain user-managed.
+
+The 0.2.0 candidate is installed from source or a locally built wheel. The
+0.1.0 public wheel above does not contain these new commands.
+
+See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
+
+## Research memory
+
+`cto-legends install legends-obsidian --apply` installs the verified v2.3.0
+public source in an isolated Python environment. Run
+`cto-legends run legends-obsidian -- contracts --check-only` to verify its
+portable contracts, then read the router path returned by `status`.
+Python 3.11+ is required. Vault writes use POSIX/WSL; native Windows supports
+inspection and previews. Installing the module never creates or changes a vault.

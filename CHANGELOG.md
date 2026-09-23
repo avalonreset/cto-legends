@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (unreleased)
+
+- Added the verified public legends-obsidian v2.3.0 module, offline install probes, and explicit Python/Windows requirements.
+- Six explicit central-skill adapters with protected refresh and truthful discovery status.
+- Local guide registration for independent existing products.
+- GeoGrid 0.4.0 immutable pin, report dependencies, and study entrypoint.
+- No new provider calls or global agent configuration rewrites.
+
 ## 0.1.0
 
 - Goal-based discovery for seven released Legends modules.
@@ -9,3 +17,4 @@
 - Retained versions, rollback, status, and offline environment checks.
 - Explicit agent skill registration with no overwrite.
 - Informational upstream release checks and a versioned compatibility catalog.
+

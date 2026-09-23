@@ -1,6 +1,6 @@
 ---
 name: cto-legends
-description: Discover and set up released Legends modules for rank grids, search research, GitHub improvements, audio generation, OBS recording, cursor overlays, and voice typing. Use for cto-legends, ecosystem updates, or matching these goals to installable tools.
+description: Discover and set up released Legends modules for rank grids, search research, GitHub improvements, audio generation, OBS recording, cursor overlays, and voice typing, and source-cited Obsidian vault memory. Use for cto-legends, ecosystem updates, or matching these goals to installable tools.
 ---
 
 # cto-legends
@@ -10,10 +10,29 @@ capabilities. Use `cto-legends status` to find installed paths and interpreters.
 Only the public modules in the catalog are supported. Do not infer access to
 other Legends projects or private infrastructure.
 
+`status` may also list explicitly registered `local_guides`. These are existing
+user-selected Markdown instructions, not catalog installs or proof of readiness.
+Read a matching guide when the user requests that capability; follow its own
+prerequisites. Never execute a guide path as a command or automatically publish
+its contents. The manager does not update or roll back these local products.
+
+One central skill is sufficient: read only the selected product's instructions
+on demand, without installing all its subskills into every host. Use
+`agent-setup codex|gemini|claude|cursor|grok|muse` to preview host registration,
+then `--apply` when authorized. `--directory` overrides the skill root.
+Registration is not live discovery proof; reload the host and invoke doctor.
+
+Before promising a GeoGrid report, run `report-readiness`. If the map browser
+is missing, follow the installed GeoGrid basemap setup instructions; do not
+silently substitute a bare grid. A credentials warning still requires resolution
+before fresh collection. Legends Obsidian's Windows mutation support must be
+checked separately: current transaction apply requires a POSIX/WSL host.
+
 ## Install what the task needs
 
 1. Match the goal: `legends-geogrid` for local rank grids; `legends-dataforseo-kit`
-   for search and keyword research; `legends-github` for repository improvement;
+   for search and keyword research; `legends-obsidian` for vault memory and evidence;
+   `legends-github` for repository improvement;
    `legends-stable-audio-3` for music/SFX; `legends-obs-kit` for recording;
    `hyperyap` for dictation; `legends-obs-cursor` for pointer overlays.
 2. Preview: `cto-legends install <module>`.
@@ -39,8 +58,8 @@ the lightweight CLI and skill, not GPU runtimes or model weights. Follow its
 model access, hardware, license, and paid-generation rules separately.
 
 GeoGrid's managed install includes the Python scan runner and pinned provider
-dependency. Its browser UI and PDF dependencies have additional setup documented
-in the module README. Do not claim those extras are installed by this manager.
+dependency plus report libraries. Browser binaries/system libraries and
+credentials still require module setup. Its default run entrypoint is study.py.
 GitHub's managed install includes its headless CLI and pinned optional research
 transport. Installing its native agent skills is a separate optional step.
 

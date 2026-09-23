@@ -30,6 +30,21 @@ class ManagerTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.home = Path(self.temp.name)
 
+    def test_obsidian_older_python_rejected_before_download(self):
+        with patch.object(m.sys, "version_info", (3, 10)), patch.object(m, "fetch", side_effect=AssertionError("network")):
+            with self.assertRaisesRegex(ValueError, "Python 3.11"):
+                m.prepare("legends-obsidian", {}, self.home)
+
+    def test_obsidian_probe_is_offline_and_never_mutates_a_vault(self):
+        release = self.home / "release"
+        with patch.object(m, "run") as run:
+            m.probe("legends-obsidian", release)
+        commands = [args.args[0] for args in run.call_args_list]
+        self.assertEqual(len(commands), 2)
+        self.assertEqual(commands[0][-2:], ["contracts", "--check-only"])
+        self.assertEqual(commands[1][-2:], ["package", "validate"])
+        self.assertTrue(all("--apply" not in command for command in commands))
+
     def test_catalog_pins_all_public_modules(self):
         self.assertEqual(set(m.catalog()["modules"]), m.RECIPES)
 

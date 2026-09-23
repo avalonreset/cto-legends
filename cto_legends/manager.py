@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent
 LIMIT = 100 * 1024 * 1024
 REPOSITORIES = {key: "avalonreset/" + key for key in (
     "legends-dataforseo-kit", "legends-geogrid", "legends-github",
-    "legends-stable-audio-3", "legends-obs-kit", "hyperyap")}
+    "legends-stable-audio-3", "legends-obs-kit", "hyperyap", "legends-obsidian")}
 REPOSITORIES["legends-obs-cursor"] = "cto-legends/legends-obs-cursor"
 RECIPES = set(REPOSITORIES)
 GUIDED_MODULES = {"hyperyap", "legends-obs-cursor"}
@@ -208,6 +208,9 @@ def probe(key, release):
     elif key == "legends-stable-audio-3":
         run([python, "-m", "legends_sa3", "skill", "validate"], release)
         run([python, "-m", "legends_sa3", "plan", "--hours", "1", "--vram-gb", "16"], release)
+    elif key == "legends-obsidian":
+        run([python, source / "scripts" / "claude-obsidian.py", "contracts", "--check-only"], source)
+        run([python, source / "scripts" / "claude-obsidian.py", "package", "validate"], source)
     elif key == "legends-obs-kit":
         run([node_binary(), source / "dist" / "index.js", "manifest"], release)
     else:
@@ -215,6 +218,8 @@ def probe(key, release):
 
 
 def prepare(key, module, home):
+    if key == "legends-obsidian" and sys.version_info < (3, 11):
+        raise ValueError("legends-obsidian requires Python 3.11 or newer; run cto-legends with a supported Python")
     if key in GUIDED_MODULES:
         raise ValueError("This module uses guided native setup")
     if key == "legends-obs-kit":
@@ -234,8 +239,10 @@ def prepare(key, module, home):
         python = python_at(release)
         if key in {"legends-dataforseo-kit", "legends-stable-audio-3"}:
             run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
-        else:
+        elif key != "legends-obsidian":
             run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-dataforseo.txt"], release)
+    if key == "legends-geogrid":
+        run([python_at(release), "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-report.txt"], release)
     probe(key, release)
     (release / "receipt.json").write_text(json.dumps(module, indent=2), encoding="utf-8")
     return relative
@@ -302,7 +309,7 @@ def status(home):
                        "python": str(python_at(release)) if key != "legends-obs-kit" else None,
                        "runtime": "node >=22" if key == "legends-obs-kit" else "isolated Python",
                        "source": str(release / "source"),
-                       "guide": str(release / "source" / "AGENTS.md"), "scope": receipt["scope"]}
+                       "guide": str(release / "source" / "skills" / "legends-obsidian" / "SKILL.md") if key == "legends-obsidian" else str(release / "source" / "AGENTS.md"), "scope": receipt["scope"]}
     return result
 
 

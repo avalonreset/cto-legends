@@ -33,3 +33,11 @@ jobs:
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-obs-kit -- manifest
       - run: cto-legends guide hyperyap
       - run: cto-legends guide legends-obs-cursor
+      - name: Install and verify Obsidian on its supported Python
+        if: matrix.python == '3.13'
+        run: cto-legends --home "${{ runner.temp }}/legends" install legends-obsidian --apply
+      - name: Check Obsidian portable surface
+        if: matrix.python == '3.13'
+        run: cto-legends --home "${{ runner.temp }}/legends" run legends-obsidian -- contracts --check-only
+      - name: Register central skill in a disposable discovery directory
+        run: cto-legends --home "${{ runner.temp }}/legends" agent-setup codex --directory "${{ runner.temp }}/skills" --apply
