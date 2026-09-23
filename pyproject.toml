@@ -20,5 +20,8 @@ Homepage = "https://cto-legends.com"
 Repository = "https://github.com/avalonreset/cto-legends"
 Issues = "https://github.com/avalonreset/cto-legends/issues"
 
+[tool.setuptools.packages.find]
+include = ["cto_legends*"]
+
 [tool.setuptools.package-data]
 cto_legends = ["catalog.json", "SKILL.md"]
