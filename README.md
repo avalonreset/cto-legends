@@ -16,14 +16,14 @@ Host discovery and operational verification are tracked separately.
 
 ## Start here
 
-Python 3.10 or newer is required. No Git, provider account, background service,
+Python 3.10 or newer is required for the manager; use Python 3.11+ to include Obsidian. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
 From a source checkout, install with `python -m pip install .`. The release
-wheel command below is for the published v0.1.0 artifact.
+wheel command below installs the v0.2.0 release.
 
 ```sh
-python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.1.0/cto_legends-0.1.0-py3-none-any.whl"
+python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.2.0/cto_legends-0.2.0-py3-none-any.whl"
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -62,10 +62,11 @@ depends on your agent's configuration. No plugin host is required.
 | [legends-github](https://github.com/avalonreset/legends-github) 1.4.0 | Repository audits, README, metadata, release preparation | Headless workflows + declared research transport 0.3.0 |
 | [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.4.1 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
 | [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) 0.4.0 | OBS recording, scenes, settings, verification | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
+| [legends-obsidian](https://github.com/avalonreset/legends-obsidian) 2.3.0 | Source-cited vault memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
 | [hyperyap](https://github.com/avalonreset/hyperyap) 1.0.11 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
 | [legends-obs-cursor](https://github.com/cto-legends/legends-obs-cursor) 0.1.0 | Animated OBS cursor overlays and click effects | Guided Windows OBS filter setup |
 
-Five modules have managed CLI installations. The two native modules use
+Six modules have managed CLI installations. The two native modules use
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
 platform information, and published asset checksums. `install` for those modules
 returns that handoff, including with `--apply`; it does not run an app installer,
