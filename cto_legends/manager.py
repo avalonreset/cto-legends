@@ -204,7 +204,7 @@ def probe(key, release):
         run([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert m.version('legends-dataforseo-kit') == '0.4.0'"], release)
     elif key == "legends-github":
         run([python, source / "legends_github.py", "capabilities"], release)
-        run([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert m.version('legends-dataforseo-kit') == '0.3.0'"], release)
+        run([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert callable(api_request); assert m.version('legends-dataforseo-kit') in ('0.3.0', '0.4.0')"], release)
     elif key == "legends-stable-audio-3":
         run([python, "-m", "legends_sa3", "skill", "validate"], release)
         run([python, "-m", "legends_sa3", "plan", "--hours", "1", "--vram-gb", "16"], release)
