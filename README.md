@@ -1,8 +1,8 @@
 <a name="cto-legends"></a>
 
-# ![cto-legends: discover, install, and maintain your legends tools](assets/banner.webp)
+# ![cto-legends: agent skills and tool management for the legends ecosystem](assets/banner.webp)
 
-**One front door to the Legends ecosystem. Install what your work needs.**
+**An open-source agent skills and tool manager for the Legends ecosystem.**
 
 [![checks](https://github.com/avalonreset/cto-legends/actions/workflows/checks.yml/badge.svg)](https://github.com/avalonreset/cto-legends/actions/workflows/checks.yml)
 [![release](https://img.shields.io/github/v/release/avalonreset/cto-legends)](https://github.com/avalonreset/cto-legends/releases)
@@ -10,7 +10,12 @@
 
 Tell your agent what you want to do. `cto-legends` helps it find the right module,
 install a verified version, and maintain the components you actually use.
-Each module remains its own open-source project.
+Each module remains its own open-source project. Register one central skill, then
+load specialized instructions only when a task needs them.
+
+This is a curated Legends module manager, not a directory of every third-party
+skill. It manages verified releases and separate tool environments, while your
+agent supplies the reasoning. [How agent skills and modules fit together](docs/AGENT-SKILLS.md).
 
 The central recipe targets **Grok, Codex, Gemini, Claude, Cursor, and MetaMuse**.
 Use the documented host registration or explicitly load the portable skill.
@@ -22,10 +27,10 @@ Python 3.10 or newer is required for the manager; use Python 3.11+ to include Ob
 or MCP server is needed to install the ecosystem manager.
 
 From a source checkout, install with `python -m pip install .`. The release
-wheel command below installs the v0.2.0 release.
+wheel command below installs the v0.2.1 release.
 
 ```sh
-python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.2.0/cto_legends-0.2.0-py3-none-any.whl"
+python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.2.1/cto_legends-0.2.1-py3-none-any.whl"
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -36,7 +41,7 @@ If your scripts directory is not on PATH, use `python -m cto_legends` instead
 of `cto-legends`. Installation previews are offline. `--apply` downloads source
 and Python dependencies; it never runs paid research.
 
-## Give your agent the map
+## Install agent skills for your chosen host
 
 Copy the included routing skill into **your chosen agent's skill directory**:
 
@@ -61,7 +66,7 @@ depends on your agent's configuration. No plugin host is required.
 |---|---|---|
 | [legends-geogrid](https://github.com/avalonreset/legends-geogrid) 0.4.0 | Google Maps rank grids and local visibility | Research workflow + report libraries + DataForSEO Kit 0.4.0 |
 | [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) 0.4.0 | Search, keywords, API documentation, queued research | Python library + CLI |
-| [legends-github](https://github.com/avalonreset/legends-github) 1.4.0 | Repository audits, README, metadata, release preparation | Headless workflows + declared research transport 0.3.0 |
+| [legends-github](https://github.com/avalonreset/legends-github) 1.5.0 | Repository audits, README, metadata, release preparation | Headless workflows + live research transport 0.4.0 |
 | [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.4.1 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
 | [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) 0.4.0 | OBS recording, scenes, settings, verification | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
 | [legends-obsidian](https://github.com/avalonreset/legends-obsidian) 2.3.0 | Source-cited vault memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
@@ -188,7 +193,7 @@ For an existing local product not in the public catalog:
 This registers a guide only: no installation, update, execution or readiness
 claim. Such guides appear in `status`, stay private, and remain user-managed.
 
-The published v0.2.0 wheel linked above includes these commands.
+The published v0.2.1 wheel linked above includes these commands.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 

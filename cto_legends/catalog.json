@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.4.0",
@@ -43,10 +43,10 @@
       "scope": "Research-first studies, reports and enhancement. Report libraries included; browser binaries and provider credentials require readiness checks."
     },
     "legends-github": {
-      "version": "1.4.0",
-      "commit": "35da7ee17ffb2be3921c1f320209303c19c1c8e4",
+      "version": "1.5.0",
+      "commit": "f5e08704961e125fe11d31c0ed1b8da83b2c2252",
       "repo": "avalonreset/legends-github",
-      "sha256": "ed468945714579a87aa2d2345653402d4ef70d72c1f86a8d884fab45f0e049d8",
+      "sha256": "8fca9bde634eef577ec4797ee9b8f2e90322c61db86ed4f72d2e3547c03611b5",
       "purpose": "Audit and improve GitHub repository presentation and releases.",
       "keywords": [
         "github",
