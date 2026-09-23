@@ -1,4 +1,6 @@
-# cto-legends
+<a name="cto-legends"></a>
+
+# ![cto-legends: discover, install, and maintain your legends tools](assets/banner.webp)
 
 **One front door to the Legends ecosystem. Install what your work needs.**
 
@@ -168,7 +170,7 @@ They remain separate projects and keep their own licensing and model terms.
 
 [cto-legends.com](https://cto-legends.com)
 
-## Central agent discovery (0.2.0 candidate)
+## Central agent discovery
 
 One shared skill supports Codex, Gemini, Claude, Cursor, Grok and Muse adapters.
 Preview `cto-legends agent-setup gemini`; add `--apply` to register it. Repeat
@@ -186,8 +188,7 @@ For an existing local product not in the public catalog:
 This registers a guide only: no installation, update, execution or readiness
 claim. Such guides appear in `status`, stay private, and remain user-managed.
 
-The 0.2.0 candidate is installed from source or a locally built wheel. The
-0.1.0 public wheel above does not contain these new commands.
+The published v0.2.0 wheel linked above includes these commands.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 
