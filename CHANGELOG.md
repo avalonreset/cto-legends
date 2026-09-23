@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 - 2026-09-23
+
+- Task readiness separates browser execution, research credentials, evidence
+  handoff and optional artwork from basic CLI health.
+- Register and audit the actual execution environment, including WSL and active
+  Codex homes. Consolidate known standalone skills with reversible backups.
+- Preserve unrelated skills and user edits; report injected-catalog limitations.
+- Include GitHub's artwork dependencies in managed installation.
+- Adopt DataForSEO Kit 0.5.0's verified research evidence export and reuse tools.
+- Clarify empty-workspace tasks and receipt delivery across agent hosts.
+
 ## 0.2.1 - 2026-09-23
 
 - Pin Legends GitHub 1.5.0 and its DataForSEO Kit 0.4.0 dependency.

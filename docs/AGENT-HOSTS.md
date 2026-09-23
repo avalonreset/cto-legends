@@ -42,3 +42,38 @@ Updates refresh only unedited registrations owned by this installer. Existing
 user-written skills, vaults, module outputs and global host settings are preserved.
 
 The bundled Obsidian module also documents its own adapters for Claude, Codex, Gemini, Cursor and Grok, and manual loading for MetaMuse. Its native Windows wrapper shows instructions without modifying host installations; use the central registration above or the module instructions for the chosen host.
+
+## Audit and consolidate discovery
+
+Run `cto-legends agent-audit codex` (or another host) from the environment that
+executes commands. It includes the active `CODEX_HOME/skills` when applicable.
+Use repeated `--directory PATH` arguments for explicitly configured roots.
+The output reports the interpreter, platform, WSL status and visible filesystem
+registrations. It cannot enumerate a host's remote tool catalog or cached plugin
+instructions. Fresh-session inspection is still required.
+
+To replace standalone registrations, preview `isolate-skills HOST`, then add
+`--apply`. It moves known replaced suites into a unique backup, preserves module
+source and unrelated skills, and returns a restoration manifest. Use
+`restore-skills MANIFEST` to preview restoration, then `--apply`. Conflicting
+destinations are preserved, never overwritten. Explicit directory selection can
+include host-specific skill roots; no blanket plugin removal is performed.
+
+A terminal running on Windows may launch its agent inside WSL. Install and
+register inside WSL in that case. A Windows manager and credentials do not
+automatically become a Linux installation. Select credentials through the
+provider's supported environment/secret mechanism; do not write them into skills.
+
+## Task delivery and acceptance
+
+Test a new session with a natural outcome and an empty workspace. Ask it to
+write a discovery report with its first skill, executed paths, command results
+and blockers. Do not tell it which router to choose. If the session host drops
+its initial message, that is a failed delivery, not a toolkit success. A portable
+fallback is a task Markdown file containing only the original user request,
+then asking the agent to read that file. Record the fallback as an intervention.
+
+An offline readiness run is not a live business study. Missing business facts,
+a selected vault or a Git target should be disclosed, while tool checks still
+complete. A missing library or failed credential check is never converted into
+a claim that the workflow works end to end.

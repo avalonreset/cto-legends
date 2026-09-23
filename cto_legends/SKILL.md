@@ -5,6 +5,11 @@ description: Discover and set up released Legends modules for rank grids, search
 
 # cto-legends
 
+Start with the user's request, including in an empty working directory. A chat
+request is a task specification; do not require a project manifest or a separate
+task file to run catalog, status or readiness. Read this entry point before
+unrelated desktop, browser or community skills for matching Legends goals.
+
 Use `cto-legends catalog` and `cto-legends route "<user goal>"` to discover
 capabilities. Use `cto-legends status` to find installed paths and interpreters.
 Only the public modules in the catalog are supported. Do not infer access to
@@ -21,6 +26,21 @@ on demand, without installing all its subskills into every host. Use
 `agent-setup codex|gemini|claude|cursor|grok|muse` to preview host registration,
 then `--apply` when authorized. `--directory` overrides the skill root.
 Registration is not live discovery proof; reload the host and invoke doctor.
+
+Run `agent-audit <host>` in the actual execution environment. Windows, WSL,
+remote Linux and temporary agent homes are separate discovery environments.
+When explicitly consolidating registrations, preview `isolate-skills <host>`,
+then apply it. It moves only known replaced registrations to a restorable backup.
+Host plugins and injected tool catalogs may remain; inspect the fresh session's
+advertised skills before declaring a central-only test. Never confuse an empty
+`local_guides` object with evidence that standalone skills are absent.
+
+Run `task-readiness` before describing the complete workflow as ready. It checks
+the report browser, provider credential presence, evidence module and artwork
+dependencies separately. A missing selected vault or target Git repository is
+an input requirement, not a failure to discover the installed tools. For an
+offline acceptance task, perform the available checks and write the requested
+receipt, including blockers; do not stop because the workspace is empty.
 
 Before promising a GeoGrid report, run `report-readiness`. If the map browser
 is missing, follow the installed GeoGrid basemap setup instructions; do not

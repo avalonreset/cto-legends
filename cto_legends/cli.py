@@ -8,7 +8,7 @@ import shutil
 import subprocess
 import sys
 from . import __version__, manager as m
-from . import agents
+from . import agents, readiness
 
 
 def route(goal):
@@ -44,6 +44,18 @@ def parser():
     sub.add_parser("status", help="Show managed paths and installed versions")
     sub.add_parser("doctor", help="Check installed environments without provider API calls")
     sub.add_parser("report-readiness", help="Check installed GeoGrid reports, map browser and transport without paid calls")
+    r = sub.add_parser("task-readiness", help="Offline checks for task prerequisites, separate from CLI installation")
+    r.add_argument("task", nargs="?", choices=readiness.TASKS, default="all")
+    r.add_argument("--browser-library-directory", type=Path)
+    for name in ("agent-audit", "isolate-skills"):
+        r = sub.add_parser(name)
+        r.add_argument("host", choices=sorted(agents.ROOTS))
+        r.add_argument("--directory", type=Path, action="append")
+        if name == "isolate-skills":
+            r.add_argument("--apply", action="store_true")
+    r = sub.add_parser("restore-skills")
+    r.add_argument("manifest", type=Path)
+    r.add_argument("--apply", action="store_true")
     sub.add_parser("check-updates", help="Compare public release tags without installing them")
     r = sub.add_parser("route", help="Find modules for a goal, offline")
     r.add_argument("goal")
@@ -76,6 +88,14 @@ def parser():
 def execute(args):
     home = args.home.expanduser().resolve()
     cmd = args.command
+    if cmd == "task-readiness":
+        return readiness.task_readiness(home, args.task, args.browser_library_directory)
+    if cmd == "agent-audit":
+        return agents.audit(args.host, directories=args.directory)
+    if cmd == "isolate-skills":
+        return agents.isolate(args.host, directories=args.directory, apply=args.apply)
+    if cmd == "restore-skills":
+        return agents.restore(args.manifest, apply=args.apply)
     if cmd == "catalog":
         return m.catalog()
     if cmd == "agent-setup":
@@ -160,7 +180,7 @@ def main(argv=None):
         if isinstance(result, int):
             return result
         print(json.dumps(result, indent=2))
-        return 0
+        return 1 if isinstance(result, dict) and result.get("ok") is False else 0
     except (ValueError, OSError, KeyError, subprocess.SubprocessError) as exc:
         # Raw subprocess output stays in the local install log.
         message = "Module setup or verification failed; inspect the managed install.log. Previous active versions are unchanged." if isinstance(exc, subprocess.SubprocessError) else str(exc)

@@ -243,6 +243,8 @@ def prepare(key, module, home):
             run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-dataforseo.txt"], release)
     if key == "legends-geogrid":
         run([python_at(release), "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-report.txt"], release)
+    if key == "legends-github":
+        run([python_at(release), "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "github" / "requirements.txt"], release)
     probe(key, release)
     (release / "receipt.json").write_text(json.dumps(module, indent=2), encoding="utf-8")
     return relative
@@ -263,7 +265,8 @@ def plan(home, keys):
         same = False
         if current:
             receipt = json.loads((managed_path(home, current) / "receipt.json").read_text(encoding="utf-8"))
-            same = receipt["commit"] == module["commit"] and receipt["sha256"] == module["sha256"]
+            same = (receipt["commit"] == module["commit"] and receipt["sha256"] == module["sha256"]
+                    and receipt.get("setup_revision", 0) == module.get("setup_revision", 0))
         result.append({"id": key, "version": module["version"], "action": "keep" if same else "install",
                        "commit": module["commit"], "dependencies": module["dependencies"], "scope": module["scope"]})
     return result

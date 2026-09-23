@@ -48,6 +48,18 @@ class ManagerTests(unittest.TestCase):
     def test_catalog_pins_all_public_modules(self):
         self.assertEqual(set(m.catalog()["modules"]), m.RECIPES)
 
+    def test_setup_revision_rebuilds_same_source(self):
+        module = m.catalog()['modules']['legends-github']
+        release = self.home / 'releases/legends-github/old'
+        release.mkdir(parents=True)
+        receipt = dict(module)
+        receipt.pop('setup_revision', None)
+        (release / 'receipt.json').write_text(json.dumps(receipt))
+        m.write_state(self.home, {'schema': 1, 'active': {'legends-github': 'releases/legends-github/old'}, 'previous': {}})
+        self.assertEqual(m.plan(self.home, ['legends-github'])[0]['action'], 'install')
+        (release / 'receipt.json').write_text(json.dumps(module))
+        self.assertEqual(m.plan(self.home, ['legends-github'])[0]['action'], 'keep')
+
     def test_excluded_module_is_not_discoverable_or_installable(self):
         self.assertNotIn("legends-seo-dungeon", m.catalog()["modules"])
         with self.assertRaises(ValueError):

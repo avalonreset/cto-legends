@@ -27,10 +27,10 @@ Python 3.10 or newer is required for the manager; use Python 3.11+ to include Ob
 or MCP server is needed to install the ecosystem manager.
 
 From a source checkout, install with `python -m pip install .`. The release
-wheel command below installs the v0.2.1 release.
+wheel command below installs the v0.3.0 release.
 
 ```sh
-python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.2.1/cto_legends-0.2.1-py3-none-any.whl"
+python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.3.0/cto_legends-0.3.0-py3-none-any.whl"
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -65,7 +65,7 @@ depends on your agent's configuration. No plugin host is required.
 | Module | Use it for | Managed setup |
 |---|---|---|
 | [legends-geogrid](https://github.com/avalonreset/legends-geogrid) 0.4.0 | Google Maps rank grids and local visibility | Research workflow + report libraries + DataForSEO Kit 0.4.0 |
-| [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) 0.4.0 | Search, keywords, API documentation, queued research | Python library + CLI |
+| [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) 0.5.0 | Search, keywords, queued research and reusable evidence | Python library + CLI + evidence exporter |
 | [legends-github](https://github.com/avalonreset/legends-github) 1.5.0 | Repository audits, README, metadata, release preparation | Headless workflows + live research transport 0.4.0 |
 | [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.4.1 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
 | [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) 0.4.0 | OBS recording, scenes, settings, verification | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
@@ -193,7 +193,7 @@ For an existing local product not in the public catalog:
 This registers a guide only: no installation, update, execution or readiness
 claim. Such guides appear in `status`, stay private, and remain user-managed.
 
-The published v0.2.1 wheel linked above includes these commands.
+The published v0.3.0 wheel linked above includes these commands.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 
@@ -205,3 +205,9 @@ public source in an isolated Python environment. Run
 portable contracts, then read the router path returned by `status`.
 Python 3.11+ is required. Vault writes use POSIX/WSL; native Windows supports
 inspection and previews. Installing the module never creates or changes a vault.
+
+## Verify the complete task
+
+`cto-legends task-readiness` checks more than CLI installation: map browser execution, provider credential presence, reusable evidence support, and artwork dependencies. It makes no paid calls and does not certify provider authentication. Missing credentials block live research, not offline analysis.
+
+Use `agent-audit HOST` to inspect discovery roots, and `isolate-skills HOST` to preview reversible consolidation. See [host setup and recovery](docs/AGENT-HOSTS.md). Windows and WSL are separate installations.

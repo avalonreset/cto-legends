@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "version": "0.2.1",
+  "version": "0.3.0",
   "modules": {
     "legends-dataforseo-kit": {
-      "version": "0.4.0",
-      "commit": "2b413367eec136e1cbd57d3d8f0dfd7bcdeffe31",
+      "version": "0.5.0",
+      "commit": "87ceb0bbfcc941683d936d31a08be14a9bd7dfee",
       "repo": "avalonreset/legends-dataforseo-kit",
-      "sha256": "582c984a6a9f7f10a05481bed6dc58a3f920953aa20b3f1b288a5daadc8eb017",
+      "sha256": "9377efa9b5d8f7ddcee32d985aede63bfa95d6c5b2f01866ae9e68006b680e06",
       "purpose": "Search and keyword research through DataForSEO.",
       "keywords": [
         "seo",
@@ -19,7 +19,7 @@
         "research"
       ],
       "dependencies": {},
-      "scope": "Python API and CLI; credentials required only for provider requests."
+      "scope": "Python API, CLI and offline research evidence export, verification and reuse checks. Credentials required only for provider requests."
     },
     "legends-geogrid": {
       "version": "0.4.0",
@@ -62,7 +62,8 @@
       "dependencies": {
         "legends-dataforseo-kit": "0.4.0"
       },
-      "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup."
+      "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup.",
+      "setup_revision": 1
     },
     "legends-stable-audio-3": {
       "version": "0.4.1",
