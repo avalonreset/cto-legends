@@ -45,10 +45,7 @@ class AgentSetupTests(unittest.TestCase):
     def test_overlay_appended_and_refresh_stable(self):
         with tempfile.TemporaryDirectory() as tmp:
             manager = Path(tmp)/"manager"; manager.mkdir()
-            (manager/"skill-local.md").write_text("## House rules
-
-Be brief.
-")
+            (manager/"skill-local.md").write_text("## House rules\n\nBe brief.\n")
             first = configure("codex", manager, user_home=tmp, apply=True)
             text = Path(first["skill"]).read_text()
             self.assertIn("## House rules", text)
@@ -63,15 +60,11 @@ Be brief.
             first = configure("codex", manager, user_home=tmp, apply=True)
             before = Path(first["skill"]).read_text()
             self.assertNotIn("House rules", before)
-            (manager/"skill-local.md").write_text("## House rules
-
-Be brief.
-")
+            (manager/"skill-local.md").write_text("## House rules\n\nBe brief.\n")
             second = configure("codex", manager, user_home=tmp, apply=True)
             after = Path(second["skill"]).read_text()
             self.assertIn("## House rules", after)
-            self.assertTrue(after.startswith(before.rstrip("
-")))
+            self.assertTrue(after.startswith(before.rstrip("\n")))
 
     def test_unmanaged_skill_preserved(self):
         with tempfile.TemporaryDirectory() as tmp:
