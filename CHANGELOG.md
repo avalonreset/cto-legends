@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.2
+
+- Fix docs-only module install: legends-grant skips the provider requirements step that broke 0.5.1 installs.
+- Graceful `run` error for docs-only modules pointing at the handoff recipe.
+- Regression tests: grant prepare needs no Python requirements, fails without lane files, run points at docs.
+
 ## 0.5.1
 
 - Onboard legends-grant 0.1.0: agentically assisted US business grant finding, matching, and application.
