@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent
 LIMIT = 100 * 1024 * 1024
 REPOSITORIES = {key: "avalonreset/" + key for key in (
     "legends-dataforseo-kit", "legends-geogrid", "legends-github",
-    "legends-stable-audio-3", "legends-obs-kit", "hyperyap", "legends-obsidian", "legends-grant")}
+    "legends-stable-audio-3", "legends-obs-kit", "hyperyap", "legends-obsidian", "legends-grant", "legends-firecrawl")}
 REPOSITORIES["legends-obs-cursor"] = "cto-legends/legends-obs-cursor"
 RECIPES = set(REPOSITORIES)
 GUIDED_MODULES = {"hyperyap", "legends-obs-cursor"}
@@ -223,6 +223,8 @@ def probe(key, release, *, log=False):
         check([node_binary(), source / "dist" / "index.js", "manifest"], release)
     elif key == "legends-grant":
         check([python, "-c", "import pathlib; root = pathlib.Path('source'); missing = [name for name in ('SKILL.md', 'find.md', 'match.md', 'qualify.md', 'apply.md', 'sources.md', 'submit-lanes.md', 'vault-map.md') if not (root / name).is_file()]; assert not missing, missing"], release)
+    elif key == "legends-firecrawl":
+        check([python, "-c", "from legends_firecrawl import __version__; assert __version__"], release)
     else:
         raise ValueError("No managed probe for this module")
 
@@ -247,7 +249,7 @@ def prepare(key, module, home):
         extract(raw, source, module["sha256"])
         run([sys.executable, "-m", "venv", release / "env"], release)
         python = python_at(release)
-        if key in {"legends-dataforseo-kit", "legends-stable-audio-3"}:
+        if key in {"legends-dataforseo-kit", "legends-stable-audio-3", "legends-firecrawl"}:
             run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
         elif key not in {"legends-obsidian", "legends-grant"}:
             run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-dataforseo.txt"], release)
