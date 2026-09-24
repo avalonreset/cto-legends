@@ -381,6 +381,54 @@
           "README.md"
         ]
       }
+    },
+    "legends-grant": {
+      "version": "0.1.0",
+      "commit": "217a17614518689fbd7e55b24f9875ef9322a114",
+      "repo": "avalonreset/legends-grant",
+      "sha256": "36da7ccb882708165d1ef0db49b6f48c4d0778da569a0a92be793454595e8825",
+      "purpose": "Find, qualify, and apply for US business grants with agent assistance.",
+      "keywords": [
+        "grant",
+        "grants",
+        "funding",
+        "microgrant",
+        "microgrants",
+        "sbir",
+        "sttr",
+        "application",
+        "fund"
+      ],
+      "dependencies": {},
+      "scope": "Markdown lanes plus verified federal API routes. The agent drafts and submits once per authorization; the human owns mailed packages and non-delegable logins.",
+      "discovery": {
+        "signals": [
+          "business grant",
+          "business grants",
+          "grant funding",
+          "small business funding",
+          "find grants",
+          "apply for a grant",
+          "grant application",
+          "microgrant",
+          "free funding"
+        ],
+        "examples": [
+          "Find grants for my business",
+          "Help me apply for a small business grant"
+        ],
+        "not_for": "Automatic approvals or a substitute for reading the live notice terms.",
+        "setup": "No credentials for federal search lanes; SAM.gov lanes need a free public API key; submissions need explicit per-send authorization.",
+        "instructions": [
+          "SKILL.md",
+          "find.md",
+          "match.md",
+          "qualify.md",
+          "apply.md",
+          "submit-lanes.md",
+          "vault-map.md"
+        ]
+      }
     }
   }
 }
