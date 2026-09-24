@@ -40,7 +40,7 @@ class StartupTests(unittest.TestCase):
             self.assertIn('handoff <module>', index)
 
     def test_explicit_only_hosts(self):
-        for host in ('cursor', 'grok', 'muse'):
+        for host in ('cursor', 'grok', 'muse', 'windsurf', 'aider'):
             with self.assertRaisesRegex(ValueError, 'explicit'):
                 self.configure(host)
             target = self.base / host / 'AGENTS.md'
