@@ -3,6 +3,7 @@
 Only bundled recipes execute. Remote discovery never supplies shell commands.
 """
 from contextlib import contextmanager
+from functools import partial
 from pathlib import Path, PurePosixPath
 import hashlib
 import json
@@ -185,34 +186,41 @@ def python_at(release):
     return release / "env" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
 
 
-def run(command, cwd):
-    # Never shell interpolation. Keep command output in the managed install log.
+def run(command, cwd, *, log=True):
+    # Readiness can run in a read-only agent sandbox. Only installation writes logs.
+    if not log:
+        environment = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
+        return subprocess.run([str(x) for x in command], cwd=cwd,
+                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                              check=True, timeout=600, env=environment)
+    # Never shell interpolation. Keep mutation output in the managed install log.
     with (cwd / "install.log").open("a", encoding="utf-8") as log:
         subprocess.run([str(x) for x in command], cwd=cwd, stdout=log,
                        stderr=subprocess.STDOUT, check=True, timeout=600)
 
 
-def probe(key, release):
+def probe(key, release, *, log=False):
     python = python_at(release)
     source = release / "source"
+    check = partial(run, log=log)
     if key == "legends-dataforseo-kit":
-        run([python, "-c", "from legends_dataforseo import api_request, API_ROOT, ApiError, CredentialError; assert callable(api_request)"], release)
+        check([python, "-c", "from legends_dataforseo import api_request, API_ROOT, ApiError, CredentialError; assert callable(api_request)"], release)
     elif key == "legends-geogrid":
         if not (source / "tests" / "test_dataforseo_transport.py").is_file():
             raise ValueError("GeoGrid transport acceptance tests are missing")
-        run([python, "-m", "unittest", "discover", "-s", str(source / "tests"), "-p", "*transport*"], release)
-        run([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert m.version('legends-dataforseo-kit') == '0.4.0'"], release)
+        check([python, "-m", "unittest", "discover", "-s", str(source / "tests"), "-p", "*transport*"], release)
+        check([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert m.version('legends-dataforseo-kit') == '0.4.0'"], release)
     elif key == "legends-github":
-        run([python, source / "legends_github.py", "capabilities"], release)
-        run([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert callable(api_request); assert m.version('legends-dataforseo-kit') in ('0.3.0', '0.4.0')"], release)
+        check([python, source / "legends_github.py", "capabilities"], release)
+        check([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert callable(api_request); assert m.version('legends-dataforseo-kit') in ('0.3.0', '0.4.0')"], release)
     elif key == "legends-stable-audio-3":
-        run([python, "-m", "legends_sa3", "skill", "validate"], release)
-        run([python, "-m", "legends_sa3", "plan", "--hours", "1", "--vram-gb", "16"], release)
+        check([python, "-m", "legends_sa3", "skill", "validate"], release)
+        check([python, "-m", "legends_sa3", "plan", "--hours", "1", "--vram-gb", "16"], release)
     elif key == "legends-obsidian":
-        run([python, source / "scripts" / "claude-obsidian.py", "contracts", "--check-only"], source)
-        run([python, source / "scripts" / "claude-obsidian.py", "package", "validate"], source)
+        check([python, source / "scripts" / "claude-obsidian.py", "contracts", "--check-only"], source)
+        check([python, source / "scripts" / "claude-obsidian.py", "package", "validate"], source)
     elif key == "legends-obs-kit":
-        run([node_binary(), source / "dist" / "index.js", "manifest"], release)
+        check([node_binary(), source / "dist" / "index.js", "manifest"], release)
     else:
         raise ValueError("No managed probe for this module")
 
@@ -245,7 +253,7 @@ def prepare(key, module, home):
         run([python_at(release), "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-report.txt"], release)
     if key == "legends-github":
         run([python_at(release), "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "github" / "requirements.txt"], release)
-    probe(key, release)
+    probe(key, release, log=True)
     (release / "receipt.json").write_text(json.dumps(module, indent=2), encoding="utf-8")
     return relative
 
