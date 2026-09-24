@@ -13,7 +13,7 @@ class StartupTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
-        self.base = Path(self.tmp.name)
+        self.base = Path(self.tmp.name).resolve()
         self.home = self.base / 'manager'
 
     def configure(self, host='codex', **kw):

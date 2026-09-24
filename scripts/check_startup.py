@@ -6,7 +6,7 @@ import sys
 import tempfile
 
 with tempfile.TemporaryDirectory() as tmp:
-    root = Path(tmp)
+    root = Path(tmp).resolve()
     home = root / 'manager'
     target = root / 'AGENTS.md'
     original = b'# User rules\r\n\r\nPreserve my work.\r\n'
