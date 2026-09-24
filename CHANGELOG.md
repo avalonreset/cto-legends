@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.1
+
+- Onboard legends-grant 0.1.0: agentically assisted US business grant finding, matching, and application.
+- Markdown lanes (find, match, qualify, apply) plus agent-agnostic submission contract and vault-mapped intake.
+- Verified federal no-key API routes, 50-state index, veteran lane, private rolling registry with dead programs marked.
+- Offline install probe checks the eight lane files; routing covers grant goals without disturbing existing matches.
+
 ## 0.5.0
 
 - Opt-in startup contract consults the central capability index before tool selection.
