@@ -1,12 +1,21 @@
-# 0.4.0
+# Changelog
+
+## 0.5.0
+
+- Opt-in startup contract consults the central capability index before tool selection.
+- Preserves existing host instructions with marked updates, backups and checked restoration.
+- Uses exact installed manager paths and no separate per-module registrations.
+- Distinguishes documented instruction loading from unverified explicit-file adapters.
+- Tests preview, refresh, conflicts, rollback, host paths and installed-wheel setup.
+- Module pins unchanged. Startup loading and model behavior still require live acceptance.
+
+## 0.4.0
 
 - Outcome-based capability index and ordinary-language routing hints.
 - Exact installed Markdown handoffs without separate module skill registration.
 - Explicit examples, exclusions, setup boundaries and ambiguous matches.
 - Regression coverage for a 100+ entry catalog and safe instruction paths.
 - Installer and module pins unchanged.
-
-# Changelog
 
 ## 0.3.0 - 2026-09-23
 

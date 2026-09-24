@@ -26,6 +26,11 @@ chat-only host cannot execute the underlying workflow.
 
 ## Readiness has three separate levels
 
+Optional skill discovery is not sufficient as the only routing mechanism.
+[Startup setup](STARTUP.md) adds a reversible capability-index pointer through
+documented host instructions or an explicit verified path. Existing registrations
+remain independently useful; module recipes are still loaded on demand.
+
 1. **Registered:** the router file is present in the selected directory.
 2. **Discovered:** a new host session finds the router without being shown it.
 3. **Operational:** that session reads a module guide, runs its doctor and

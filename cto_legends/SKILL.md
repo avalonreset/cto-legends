@@ -5,6 +5,12 @@ description: Use for making AI music, music beds or sound effects, Google Maps v
 
 # cto-legends
 
+For persistent discovery, use `startup-setup HOST` to preview the host's startup
+contract and `--apply` when authorized. `startup-status HOST` inspects the files;
+it does not prove a live session loaded them. Keep one central skill, not a
+registration per module. Startup instructions and the capability index establish
+the route; this recipe supplies the operating procedure.
+
 Start with the user's request, including in an empty working directory. A chat
 request is a task specification; do not require a project manifest or a separate
 task file to run catalog, status or readiness. Read this entry point before

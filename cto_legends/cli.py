@@ -8,7 +8,7 @@ import shutil
 import subprocess
 import sys
 from . import __version__, manager as m
-from . import agents, readiness, discovery
+from . import agents, readiness, discovery, startup
 
 
 from .discovery import route
@@ -48,6 +48,15 @@ def parser():
     r = sub.add_parser("restore-skills")
     r.add_argument("manifest", type=Path)
     r.add_argument("--apply", action="store_true")
+    for name in ("startup-setup", "startup-status"):
+        r = sub.add_parser(name, help="Configure or inspect the central startup contract")
+        r.add_argument("host", choices=sorted(agents.ROOTS))
+        r.add_argument("--instruction-file", type=Path)
+        if name == "startup-setup":
+            r.add_argument("--apply", action="store_true")
+    r = sub.add_parser("startup-restore", help="Restore a startup change from its checked backup")
+    r.add_argument("manifest", type=Path)
+    r.add_argument("--apply", action="store_true")
     sub.add_parser("check-updates", help="Compare public release tags without installing them")
     r = sub.add_parser("capabilities", help="Read the outcome-based capability index offline")
     r.add_argument("--markdown", action="store_true")
@@ -84,6 +93,12 @@ def parser():
 def execute(args):
     home = args.home.expanduser().resolve()
     cmd = args.command
+    if cmd == "startup-setup":
+        return startup.configure(args.host, home, instruction_file=args.instruction_file, apply=args.apply)
+    if cmd == "startup-status":
+        return startup.inspect(args.host, home, instruction_file=args.instruction_file)
+    if cmd == "startup-restore":
+        return startup.restore(args.manifest, apply=args.apply)
     if cmd == "task-readiness":
         return readiness.task_readiness(home, args.task, args.browser_library_directory)
     if cmd == "agent-audit":

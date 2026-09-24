@@ -27,10 +27,10 @@ Python 3.10 or newer is required for the manager; use Python 3.11+ to include Ob
 or MCP server is needed to install the ecosystem manager.
 
 From a source checkout, install with `python -m pip install .`. The release
-wheel command below installs the v0.4.0 release.
+wheel command below installs the v0.5.0 release.
 
 ```sh
-python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.4.0/cto_legends-0.4.0-py3-none-any.whl"
+python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.5.0/cto_legends-0.5.0-py3-none-any.whl"
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -66,6 +66,21 @@ and use the CLI. Registration writes the skill; successful automatic discovery
 depends on your agent's configuration. No plugin host is required.
 
 ## One entry point, instructions loaded on demand
+
+For dependable discovery, connect the central index to startup instructions as
+well as registering its skill:
+
+```sh
+cto-legends startup-setup codex
+cto-legends startup-setup codex --apply
+cto-legends startup-status codex
+```
+
+This preserves existing instructions and provides a checked restoration manifest.
+Use `gemini` or `claude` for their documented user instruction files. Cursor, Grok
+and MetaMuse need an explicit host-verified instruction file. Read the
+[startup contract and acceptance procedure](docs/STARTUP.md). Registration alone
+does not prove that a fresh agent loads or follows the instructions.
 
 Use `cto-legends capabilities --markdown` for the outcome-based directory and
 `cto-legends handoff <module>` for the exact installed instructions. Routing
@@ -206,7 +221,7 @@ For an existing local product not in the public catalog:
 This registers a guide only: no installation, update, execution or readiness
 claim. Such guides appear in `status`, stay private, and remain user-managed.
 
-The published v0.4.0 wheel linked above includes these commands.
+The v0.5.0 wheel linked above includes these commands.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 

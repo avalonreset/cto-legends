@@ -3,6 +3,19 @@
 The manager is a standard-library Python CLI. It has no background process and
 no LLM dependency. Agents interpret goals; offline keyword routing supplies hints.
 
+## Startup and progressive loading
+
+One host startup block points to a content-addressed local capability index.
+The index resolves selected module recipes through the installed manager; it
+does not register those recipes as host skills. This removes reliance on optional
+skill selection for the initial lookup while keeping detailed workflows out of
+startup context. An unrelated request need not load the index.
+
+`startup-setup` previews changes by default, preserves user text, and records a
+checked rollback. `startup-status` verifies the file and index, not agent behavior.
+Host documentation, live instruction loading and end-to-end task completion are
+different evidence levels. See [startup setup](STARTUP.md).
+
 The catalog is distributed inside the versioned package. Every entry binds a
 public repository, release version, immutable commit, archive hash, declared
 dependencies, and supported scope. Install recipes are code-reviewed Python,
