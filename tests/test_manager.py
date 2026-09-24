@@ -160,6 +160,24 @@ class ManagerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'docs-only'):
             execute(args)
 
+    def test_firecrawl_prepare_installs_package_source(self):
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream, 'w') as z:
+            z.writestr('legends-firecrawl-0.2.1/pyproject.toml', 'package')
+        raw = stream.getvalue()
+        module = dict(m.catalog()['modules']['legends-firecrawl'],
+                      sha256=hashlib.sha256(raw).hexdigest())
+        calls = []
+        def fake_run(command, cwd, *, log=True):
+            calls.append([str(part) for part in command])
+            return subprocess.CompletedProcess(command, 0, '', '')
+        with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=fake_run):
+            m.prepare('legends-firecrawl', module, self.home)
+        installs = [command for command in calls if 'pip' in command and 'install' in command]
+        self.assertEqual(len(installs), 1, calls)
+        self.assertNotIn('requirements-dataforseo.txt', ' '.join(installs[0]))
+        self.assertTrue(any(command[1:2] == ['-c'] for command in calls), calls)
+
     def test_tgz_extract_and_unsafe_entries(self):
         for name, kind in (("package/file.txt", tarfile.REGTYPE), ("package/../escape", tarfile.REGTYPE),
                            ("package/link", tarfile.SYMTYPE), ("package/a\\b", tarfile.REGTYPE)):
