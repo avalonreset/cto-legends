@@ -34,6 +34,7 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Local voice typing, dictation, and app-focused paste. | `hyperyap` |
 | Animated cursor overlay and click effects for OBS. | `legends-obs-cursor` |
 | Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions. | `legends-obsidian` |
+| Find, qualify, and apply for US business grants with agent assistance. | `legends-grant` |
 <!-- capability-directory:end -->
 
 For "can we generate some AI music?", choose legends-stable-audio-3, resolve its
