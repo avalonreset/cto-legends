@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -40,6 +41,37 @@ class AgentSetupTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 configure("codex", tmp, user_home=tmp, apply=True)
             self.assertEqual(p.read_text(), "user notes")
+
+    def test_overlay_appended_and_refresh_stable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            manager = Path(tmp)/"manager"; manager.mkdir()
+            (manager/"skill-local.md").write_text("## House rules
+
+Be brief.
+")
+            first = configure("codex", manager, user_home=tmp, apply=True)
+            text = Path(first["skill"]).read_text()
+            self.assertIn("## House rules", text)
+            second = configure("codex", manager, user_home=tmp, apply=True)
+            self.assertEqual(Path(second["skill"]).read_text(), text)
+            receipt = json.loads((Path(first["skill"]).parent/"installation.json").read_text())
+            self.assertEqual(receipt["overlay"], "skill-local.md")
+
+    def test_overlay_added_later_refreshes_cleanly(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            manager = Path(tmp)/"manager"; manager.mkdir()
+            first = configure("codex", manager, user_home=tmp, apply=True)
+            before = Path(first["skill"]).read_text()
+            self.assertNotIn("House rules", before)
+            (manager/"skill-local.md").write_text("## House rules
+
+Be brief.
+")
+            second = configure("codex", manager, user_home=tmp, apply=True)
+            after = Path(second["skill"]).read_text()
+            self.assertIn("## House rules", after)
+            self.assertTrue(after.startswith(before.rstrip("
+")))
 
     def test_unmanaged_skill_preserved(self):
         with tempfile.TemporaryDirectory() as tmp:
