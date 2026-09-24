@@ -35,6 +35,7 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Animated cursor overlay and click effects for OBS. | `legends-obs-cursor` |
 | Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions. | `legends-obsidian` |
 | Find, qualify, and apply for US business grants with agent assistance. | `legends-grant` |
+| Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing. | `legends-firecrawl` |
 <!-- capability-directory:end -->
 
 For "can we generate some AI music?", choose legends-stable-audio-3, resolve its
@@ -66,7 +67,7 @@ its contents. The manager does not update or roll back these local products.
 
 One central skill is sufficient: read only the selected product's instructions
 on demand, without installing all its subskills into every host. Use
-`agent-setup codex|gemini|claude|cursor|grok|muse` to preview host registration,
+`agent-setup codex|gemini|claude|cursor|grok|muse|windsurf|aider` to preview host registration,
 then `--apply` when authorized. `--directory` overrides the skill root.
 Registration is not live discovery proof; reload the host and invoke doctor.
 
