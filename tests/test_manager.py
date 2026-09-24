@@ -3,6 +3,8 @@ import io
 import json
 from pathlib import Path
 import stat
+import subprocess
+import sys
 import tarfile
 import tempfile
 import unittest
@@ -101,6 +103,61 @@ class ManagerTests(unittest.TestCase):
     def test_guided_run_explains_setup(self):
         args = parser().parse_args(["--home", str(self.home), "run", "hyperyap"])
         with self.assertRaisesRegex(ValueError, "guided"):
+            execute(args)
+
+    def test_grant_prepare_needs_no_python_requirements(self):
+        lanes = ['SKILL.md', 'find.md', 'match.md', 'qualify.md', 'apply.md',
+                 'sources.md', 'submit-lanes.md', 'vault-map.md']
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream, 'w') as z:
+            for name in lanes:
+                z.writestr('legends-grant-0.1.0/' + name, 'lane')
+        raw = stream.getvalue()
+        module = dict(m.catalog()['modules']['legends-grant'],
+                      sha256=hashlib.sha256(raw).hexdigest())
+        calls = []
+        def fake_run(command, cwd, *, log=True):
+            command = [str(part) for part in command]
+            calls.append(command)
+            if len(command) > 2 and command[1] == '-c':
+                done = subprocess.run([sys.executable, '-c', command[2]], cwd=cwd,
+                                      capture_output=True, text=True)
+                if done.returncode:
+                    raise subprocess.CalledProcessError(done.returncode, command,
+                                                       done.stdout + done.stderr)
+            return subprocess.CompletedProcess(command, 0, '', '')
+        with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=fake_run):
+            relative = m.prepare('legends-grant', module, self.home)
+        self.assertFalse(any('pip' in part for command in calls for part in command), calls)
+        for name in lanes:
+            self.assertTrue((self.home / relative / 'source' / name).is_file(), name)
+
+    def test_grant_prepare_fails_without_lane_files(self):
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream, 'w') as z:
+            z.writestr('legends-grant-0.1.0/SKILL.md', 'lane')
+        raw = stream.getvalue()
+        module = dict(m.catalog()['modules']['legends-grant'],
+                      sha256=hashlib.sha256(raw).hexdigest())
+        def probing(command, cwd, *, log=True):
+            command = [str(part) for part in command]
+            if len(command) > 2 and command[1] == '-c':
+                done = subprocess.run([sys.executable, '-c', command[2]], cwd=cwd,
+                                      capture_output=True, text=True)
+                if done.returncode:
+                    raise subprocess.CalledProcessError(done.returncode, command,
+                                                       done.stdout + done.stderr)
+            return subprocess.CompletedProcess(command, 0, '', '')
+        with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=probing):
+            with self.assertRaises(subprocess.CalledProcessError):
+                m.prepare('legends-grant', module, self.home)
+
+    def test_grant_run_points_at_docs(self):
+        relative = 'releases/legends-grant/doc'
+        (self.home / relative).mkdir(parents=True)
+        m.write_state(self.home, {'schema': 1, 'active': {'legends-grant': relative}, 'previous': {}})
+        args = parser().parse_args(['--home', str(self.home), 'run', 'legends-grant'])
+        with self.assertRaisesRegex(ValueError, 'docs-only'):
             execute(args)
 
     def test_tgz_extract_and_unsafe_entries(self):
