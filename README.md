@@ -100,8 +100,9 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-obsidian](https://github.com/avalonreset/legends-obsidian) 2.3.0 | Source-cited vault memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
 | [hyperyap](https://github.com/avalonreset/hyperyap) 1.0.11 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
 | [legends-obs-cursor](https://github.com/cto-legends/legends-obs-cursor) 0.1.0 | Animated OBS cursor overlays and click effects | Guided Windows OBS filter setup |
+| [legends-grant](https://github.com/avalonreset/legends-grant) 0.1.0 | Business grant finding, matching, and application | Markdown lanes + verified federal API routes; agent submits once per authorization |
 
-Six modules have managed CLI installations. The two native modules use
+Seven modules have managed CLI installations. The two native modules use
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
 platform information, and published asset checksums. `install` for those modules
 returns that handoff, including with `--apply`; it does not run an app installer,
