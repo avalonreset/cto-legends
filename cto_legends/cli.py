@@ -178,6 +178,8 @@ def execute(args):
         if args.module not in state["active"]:
             raise ValueError("Module is not installed; preview its installation first")
         release = m.managed_path(home, state["active"][args.module])
+        if args.module == "legends-grant":
+            raise ValueError("legends-grant is docs-only; read its recipe with cto-legends handoff legends-grant")
         entries = {"legends-obsidian": [str(release / "source" / "scripts" / "claude-obsidian.py")],
                    "legends-dataforseo-kit": ["-m", "legends_dataforseo"],
                    "legends-geogrid": [str(release / "source" / "tools" / "study.py")],
