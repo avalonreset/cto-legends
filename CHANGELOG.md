@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.4
+
+- Deprecate legends-obsidian; successor is the public legends-empire repo.
+- Catalog onboarding of Empire waits for its internal rename (skills, scripts, contract still obsidian-flavored).
+- Existing Obsidian installs keep working; no install paths removed in this release.
+
 ## 0.5.3
 
 - Eight-host story: Windsurf and Aider presets join agent-setup with honest unverified-native Discovery warnings.
