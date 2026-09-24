@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.3
+
+- Eight-host story: Windsurf and Aider presets join agent-setup with honest unverified-native Discovery warnings.
+- Onboard legends-firecrawl 0.2.1: web search, scraping, crawling, offline provider catalog.
+- Firecrawl installs its Python package from source; probe checks the installed version; run maps to its CLI.
+- Regression coverage for the firecrawl prepare path and the explicit-host startup set.
+
 ## 0.5.2
 
 - Fix docs-only module install: legends-grant skips the provider requirements step that broke 0.5.1 installs.
