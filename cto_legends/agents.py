@@ -11,6 +11,7 @@ ROOTS = {
     "codex": ".codex/skills", "gemini": ".gemini/skills",
     "claude": ".claude/skills", "cursor": ".cursor/skills",
     "grok": ".grok/skills", "muse": ".agents/skills",
+    "windsurf": ".windsurf/skills", "aider": ".aider/skills",
 }
 
 # Only suites actually replaced by the four central catalog workflows.
