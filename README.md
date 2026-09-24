@@ -21,6 +21,12 @@ The central recipe targets **Grok, Codex, Gemini, Claude, Cursor, and MetaMuse**
 Use the documented host registration or explicitly load the portable skill.
 Host discovery and operational verification are tracked separately.
 
+## Why this exists
+
+`cto-legends` is the tool coordinator for Empire Craft: building and maintaining your own working environment, with independent modules for research, recording, audio, development, and knowledge capture. [legends-empire](https://github.com/avalonreset/legends-empire) supplies the workspace and memory direction.
+
+It can sit alongside AI Marketing Hub workflows and other agent tools. Its focus is discovering and operating Legends modules and connecting their work to your chosen workspace. It is independently developed and maintained by Benjamin; it is not an AI Marketing Hub product or an official integration.
+
 ## Start here
 
 Python 3.10 or newer is required for the manager; use Python 3.11+ to include Obsidian. No Git, provider account, background service,
