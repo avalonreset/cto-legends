@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent
 LIMIT = 100 * 1024 * 1024
 REPOSITORIES = {key: "avalonreset/" + key for key in (
     "legends-dataforseo-kit", "legends-geogrid", "legends-github",
-    "legends-stable-audio-3", "legends-obs-kit", "hyperyap", "legends-obsidian")}
+    "legends-stable-audio-3", "legends-obs-kit", "hyperyap", "legends-obsidian", "legends-grant")}
 REPOSITORIES["legends-obs-cursor"] = "cto-legends/legends-obs-cursor"
 RECIPES = set(REPOSITORIES)
 GUIDED_MODULES = {"hyperyap", "legends-obs-cursor"}
@@ -221,6 +221,8 @@ def probe(key, release, *, log=False):
         check([python, source / "scripts" / "claude-obsidian.py", "package", "validate"], source)
     elif key == "legends-obs-kit":
         check([node_binary(), source / "dist" / "index.js", "manifest"], release)
+    elif key == "legends-grant":
+        check([python, "-c", "import pathlib; root = pathlib.Path('source'); missing = [name for name in ('SKILL.md', 'find.md', 'match.md', 'qualify.md', 'apply.md', 'sources.md', 'submit-lanes.md', 'vault-map.md') if not (root / name).is_file()]; assert not missing, missing"], release)
     else:
         raise ValueError("No managed probe for this module")
 
