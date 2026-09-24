@@ -249,7 +249,7 @@ def prepare(key, module, home):
         python = python_at(release)
         if key in {"legends-dataforseo-kit", "legends-stable-audio-3"}:
             run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
-        elif key != "legends-obsidian":
+        elif key not in {"legends-obsidian", "legends-grant"}:
             run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-dataforseo.txt"], release)
     if key == "legends-geogrid":
         run([python_at(release), "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-report.txt"], release)
