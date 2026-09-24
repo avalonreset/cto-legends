@@ -17,7 +17,7 @@ This is a curated Legends module manager, not a directory of every third-party
 skill. It manages verified releases and separate tool environments, while your
 agent supplies the reasoning. [How agent skills and modules fit together](docs/AGENT-SKILLS.md).
 
-The central recipe targets **Grok, Codex, Gemini, Claude, Cursor, and MetaMuse**.
+The central recipe targets **Grok, Codex, Gemini, Claude, Cursor, Windsurf, Aider, and MetaMuse**.
 Use the documented host registration or explicitly load the portable skill.
 Host discovery and operational verification are tracked separately.
 
@@ -107,8 +107,9 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [hyperyap](https://github.com/avalonreset/hyperyap) 1.0.11 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
 | [legends-obs-cursor](https://github.com/cto-legends/legends-obs-cursor) 0.1.0 | Animated OBS cursor overlays and click effects | Guided Windows OBS filter setup |
 | [legends-grant](https://github.com/avalonreset/legends-grant) 0.1.0 | Business grant finding, matching, and application | Markdown lanes + verified federal API routes; agent submits once per authorization |
+| [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) 0.2.1 | Web search, scraping, crawling, provider catalog | Python client + offline catalog; vendor CLI and key need module setup |
 
-Seven modules have managed CLI installations. The two native modules use
+Eight modules have managed CLI installations. The two native modules use
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
 platform information, and published asset checksums. `install` for those modules
 returns that handoff, including with `--apply`; it does not run an app installer,
