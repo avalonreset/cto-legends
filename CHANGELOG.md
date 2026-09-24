@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.5
+
+- House overlay: skill-local.md in the managed home appends to every host skill on agent-setup apply and survives refreshes.
+- Receipt records the overlay file and hash; hand edits outside the overlay still block refresh.
+- Regression tests for overlay append, refresh stability, and late-added overlay.
+
 ## 0.5.4
 
 - Deprecate legends-obsidian; successor is the public legends-empire repo.
