@@ -22,7 +22,7 @@ jobs:
       - run: python -m pip install build twine
       - run: python -m build
       - run: python -m twine check dist/*
-      - run: python -m pip install dist/cto_legends-0.5.3-py3-none-any.whl
+      - run: python -m pip install dist/cto_legends-0.5.4-py3-none-any.whl
       - run: cto-legends route "Google Maps ranking grids"
       - run: python scripts/check_startup.py
       - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo-kit legends-geogrid legends-github legends-stable-audio-3 legends-obs-kit --apply
