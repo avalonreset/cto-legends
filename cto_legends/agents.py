@@ -121,6 +121,10 @@ def configure(host, managed_home, *, user_home=None, directory=None, apply=False
         f"`-m cto_legends --home \"{Path(managed_home).resolve()}\"`.\n"
         "Read only the chosen module's instructions returned by status. "
         "Registration does not prove live discovery or task readiness.\n")
+    overlay_path = Path(managed_home).resolve() / "skill-local.md"
+    overlay_text = overlay_path.read_text(encoding="utf-8").strip() if overlay_path.is_file() else ""
+    if overlay_text:
+        content = content.rstrip("\n") + "\n\n" + overlay_text + "\n"
     digest = hashlib.sha256(content.encode()).hexdigest()
     if target.exists():
         if not receipt.is_file() or not skill.is_file() or skill.is_symlink() or receipt.is_symlink():
@@ -134,6 +138,8 @@ def configure(host, managed_home, *, user_home=None, directory=None, apply=False
         target.mkdir(parents=True, exist_ok=True)
         skill.write_bytes(content.encode())
         receipt.write_text(json.dumps({"host": host, "sha256": digest,
-            "python": sys.executable, "managed_home": str(Path(managed_home).resolve())}, indent=2), encoding="utf-8")
+            "python": sys.executable, "managed_home": str(Path(managed_home).resolve()),
+            "overlay": overlay_path.name if overlay_text else None,
+            "overlay_sha256": hashlib.sha256(overlay_text.encode()).hexdigest() if overlay_text else None}, indent=2), encoding="utf-8")
         result["registration"] = "installed"
     return result
