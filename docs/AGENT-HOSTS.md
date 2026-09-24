@@ -4,7 +4,7 @@ CTO Legends keeps one canonical `SKILL.md`. Host registration copies this small
 router, not every module skill. The selected module instructions load only when
 needed; Python tools run in independent environments.
 
-`agent-setup` provides six named directory presets and an explicit `--directory`
+`agent-setup` provides eight named directory presets and an explicit `--directory`
 override. A preset is a registration convenience, not a claim that every version
 of that host discovers it. Use the skill directory configured in the actual
 application, reload it, and verify a fresh invocation before claiming support.
@@ -17,6 +17,8 @@ application, reload it, and verify a fresh invocation before claiming support.
 | Cursor | `~/.cursor/skills` |
 | Grok | `~/.grok/skills` |
 | MetaMuse | `~/.agents/skills` (explicit generic registration, not verified native discovery) |
+| Windsurf | `~/.windsurf/skills` (unverified; native surface is workspace rules) |
+| Aider | `~/.aider/skills` (no native skill directory; load SKILL.md with an explicit file read) |
 
 All presets use identical portable instructions. The manager tests registration,
 conflict handling and preservation of edited skills. These tests do not prove
