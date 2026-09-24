@@ -102,6 +102,10 @@ def inspect(host, managed_home, *, user_home=None, instruction_file=None):
         warnings.append('AGENTS.override.md is present and may take precedence; this AGENTS.md block may not load.')
     if host == 'gemini':
         warnings.append('Default is Gemini CLI global instructions; Antigravity and other Gemini hosts require separate loading proof.')
+    if host == 'windsurf':
+        warnings.append('Windsurf natively reads workspace .windsurf/rules; the global skills preset is unverified until a fresh session proves it.')
+    if host == 'aider':
+        warnings.append('Aider has no native skill directory; load the installed SKILL.md with an explicit file read. Registration alone proves nothing.')
     issues = []
     if span:
         record = safe_path(home / 'startup' / ('active-' + digest(str(target).encode()) + '.json'))
