@@ -84,3 +84,7 @@ An offline readiness run is not a live business study. Missing business facts,
 a selected vault or a Git target should be disclosed, while tool checks still
 complete. A missing library or failed credential check is never converted into
 a claim that the workflow works end to end.
+
+## House overlay
+
+Put house style in skill-local.md inside the managed home. agent-setup --apply appends it to every host skill and records it in the receipt, so refreshes keep it. Hand-editing an installed SKILL.md anywhere else still blocks refresh until you restore or back it up.
