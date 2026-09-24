@@ -429,6 +429,51 @@
           "vault-map.md"
         ]
       }
+    },
+    "legends-firecrawl": {
+      "version": "0.2.1",
+      "commit": "e376006471d33682e93318fce704fee27f8ba4a3",
+      "repo": "avalonreset/legends-firecrawl",
+      "sha256": "ea1d29a0c00289a81ba70afdc6dba4019d1696f8643db5c1ed0334161e52671b",
+      "purpose": "Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing.",
+      "keywords": [
+        "firecrawl",
+        "scrape",
+        "scraping",
+        "crawl",
+        "crawling",
+        "search",
+        "alexandria",
+        "web",
+        "proxy"
+      ],
+      "dependencies": {},
+      "scope": "Python client plus offline catalog. Vendor CLI and API key need module setup; paid calls need explicit authorization.",
+      "discovery": {
+        "signals": [
+          "web search",
+          "search the web",
+          "scrape a page",
+          "scrape this page",
+          "crawl a site",
+          "discover urls",
+          "firecrawl",
+          "alexandria",
+          "provider catalog",
+          "site map"
+        ],
+        "examples": [
+          "Scrape this page to markdown",
+          "Search the web for competitors"
+        ],
+        "not_for": "Bypassing authentication, CAPTCHA, robots policy, or access controls; a substitute for vendor billing.",
+        "setup": "Needs firecrawl-cli 1.23.3 and FIRECRAWL_API_KEY for live calls; the offline catalog needs neither.",
+        "instructions": [
+          "skills/legends-firecrawl/SKILL.md",
+          "skills/legends-alexandria/SKILL.md",
+          "README.md"
+        ]
+      }
     }
   }
 }
