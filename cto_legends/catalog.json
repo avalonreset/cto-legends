@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.5.0",
@@ -19,7 +19,29 @@
         "research"
       ],
       "dependencies": {},
-      "scope": "Python API, CLI and offline research evidence export, verification and reuse checks. Credentials required only for provider requests."
+      "scope": "Python API, CLI and offline research evidence export, verification and reuse checks. Credentials required only for provider requests.",
+      "discovery": {
+        "signals": [
+          "keyword demand",
+          "search demand",
+          "search volume",
+          "serp",
+          "backlinks",
+          "keyword research",
+          "search results"
+        ],
+        "examples": [
+          "Research keyword demand",
+          "Collect search results and preserve reusable evidence"
+        ],
+        "not_for": "Automatic marketing conclusions or a substitute for GeoGrid study design.",
+        "setup": "Offline inspection needs no credentials; fresh API work requires credentials and explicit execution authorization.",
+        "instructions": [
+          "skills/legends-dataforseo-kit/SKILL.md",
+          "docs/RESEARCH-MEMORY.md",
+          "README.md"
+        ]
+      }
     },
     "legends-geogrid": {
       "version": "0.4.0",
@@ -40,7 +62,29 @@
       "dependencies": {
         "legends-dataforseo-kit": "0.4.0"
       },
-      "scope": "Research-first studies, reports and enhancement. Report libraries included; browser binaries and provider credentials require readiness checks."
+      "scope": "Research-first studies, reports and enhancement. Report libraries included; browser binaries and provider credentials require readiness checks.",
+      "discovery": {
+        "signals": [
+          "local visibility",
+          "google maps",
+          "map rankings",
+          "nearby customers",
+          "local rankings",
+          "rank grid",
+          "rank grids"
+        ],
+        "examples": [
+          "Where does my pizza shop appear on Google Maps?",
+          "Study local visibility for my business"
+        ],
+        "not_for": "A complete website audit or proof of why Google ranks a business.",
+        "setup": "Needs report libraries, map browser and research credentials for fresh studies.",
+        "instructions": [
+          "SKILL.md",
+          "docs/START_A_STUDY.md",
+          "docs/QUERY_SELECTION_POLICY.md"
+        ]
+      }
     },
     "legends-github": {
       "version": "1.5.0",
@@ -63,7 +107,27 @@
         "legends-dataforseo-kit": "0.4.0"
       },
       "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup.",
-      "setup_revision": 1
+      "setup_revision": 1,
+      "discovery": {
+        "signals": [
+          "github",
+          "readme",
+          "repository discovery",
+          "repository visibility",
+          "repo visibility",
+          "open source project"
+        ],
+        "examples": [
+          "Improve discovery of my GitHub project",
+          "Optimize my repository with search evidence"
+        ],
+        "not_for": "General website SEO or merely adding unresearched keywords.",
+        "setup": "Requires target repository and appropriate GitHub access; live research needs provider credentials.",
+        "instructions": [
+          "github/SKILL.md",
+          "README.md"
+        ]
+      }
     },
     "legends-stable-audio-3": {
       "version": "0.4.1",
@@ -88,7 +152,32 @@
         "macos",
         "linux"
       ],
-      "sha256": "75b052002c23e6a52fc48c4c19eaa93c4a10331b5f29e4994497d290ada49970"
+      "sha256": "75b052002c23e6a52fc48c4c19eaa93c4a10331b5f29e4994497d290ada49970",
+      "discovery": {
+        "signals": [
+          "make music",
+          "generate music",
+          "ai music",
+          "music beds",
+          "background music",
+          "instrumental tracks",
+          "sound effects",
+          "reggae",
+          "dubstep",
+          "soundtrack"
+        ],
+        "examples": [
+          "Can we generate some AI music?",
+          "Make background music for my video",
+          "Create sound effects"
+        ],
+        "not_for": "Speech transcription, voice cloning, or guaranteed vocal songs.",
+        "setup": "Lightweight planner install does not install models. Read the audio recipe for model access, hardware and hosted options.",
+        "instructions": [
+          "skills/legends-stable-audio-3/SKILL.md",
+          "README.md"
+        ]
+      }
     },
     "legends-obs-kit": {
       "version": "0.4.0",
@@ -110,7 +199,27 @@
         "windows"
       ],
       "sha256": "5f3036aaabc90a4fbc557370cda12dcd6386bba01e977a3cf93e48c82a88697d",
-      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.4.0/avalonreset-legends-obs-kit-0.4.0.tgz"
+      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.4.0/avalonreset-legends-obs-kit-0.4.0.tgz",
+      "discovery": {
+        "signals": [
+          "record my screen",
+          "screen recording",
+          "recording setup",
+          "obs",
+          "record a tutorial",
+          "capture my desktop"
+        ],
+        "examples": [
+          "Record my screen",
+          "Prepare OBS scenes for a tutorial"
+        ],
+        "not_for": "Music generation, transcription or editing a finished video.",
+        "setup": "Node.js 22+, Windows OBS and authenticated WebSocket setup; follow module doctor.",
+        "instructions": [
+          "skills/legends-obs-kit/SKILL.md",
+          "README.md"
+        ]
+      }
     },
     "hyperyap": {
       "version": "1.0.11",
@@ -166,7 +275,25 @@
           "sha256": "bc28315185db73580783a0c762b49ab7a59f3b4dad067b611dbe5013eadbd12c"
         }
       ],
-      "next": "Choose the installer for the user platform, verify its SHA-256, and follow the pinned README. Model downloads and native permissions need user setup."
+      "next": "Choose the installer for the user platform, verify its SHA-256, and follow the pinned README. Model downloads and native permissions need user setup.",
+      "discovery": {
+        "signals": [
+          "voice typing",
+          "dictation",
+          "dictate",
+          "speech to text",
+          "type with my voice"
+        ],
+        "examples": [
+          "Type with my voice",
+          "Dictate into another application"
+        ],
+        "not_for": "Creating music or voice synthesis.",
+        "setup": "Native app, microphone permissions and speech models are configured separately.",
+        "instructions": [
+          "README.md"
+        ]
+      }
     },
     "legends-obs-cursor": {
       "version": "0.1.0",
@@ -195,7 +322,25 @@
           "sha256": "4244b4dcf201ad22bc810f40b058d561f2f6a5942f52a3c51c741e9f4611c4ce"
         }
       ],
-      "next": "Download and verify the ZIP, extract it, read the pinned README, and use the module installer after closing OBS and reviewing its scene changes."
+      "next": "Download and verify the ZIP, extract it, read the pinned README, and use the module installer after closing OBS and reviewing its scene changes.",
+      "discovery": {
+        "signals": [
+          "cursor overlay",
+          "pointer overlay",
+          "click effects",
+          "highlight my mouse",
+          "highlight my cursor"
+        ],
+        "examples": [
+          "Highlight my mouse while recording",
+          "Add click effects to OBS"
+        ],
+        "not_for": "The Cursor coding agent or general desktop automation.",
+        "setup": "Windows OBS filter setup; preserve scenes and close OBS before installation.",
+        "instructions": [
+          "README.md"
+        ]
+      }
     },
     "legends-obsidian": {
       "version": "2.3.0",
@@ -213,7 +358,29 @@
         "wiki"
       ],
       "dependencies": {},
-      "scope": "Python 3.11+ standard-library core. Windows supports read-only inspection and previews; canonical vault writes require POSIX/WSL. Obsidian Desktop is optional."
+      "scope": "Python 3.11+ standard-library core. Windows supports read-only inspection and previews; canonical vault writes require POSIX/WSL. Obsidian Desktop is optional.",
+      "discovery": {
+        "signals": [
+          "remember this",
+          "save research",
+          "bank research",
+          "vault",
+          "obsidian",
+          "knowledge base",
+          "research history",
+          "source cited notes"
+        ],
+        "examples": [
+          "Save this research in my vault",
+          "Find what we already know about this business"
+        ],
+        "not_for": "Inventing sources or modifying a vault without selecting it.",
+        "setup": "Select a vault. Native Windows supports inspection; transaction writes require POSIX/WSL.",
+        "instructions": [
+          "skills/legends-obsidian/SKILL.md",
+          "README.md"
+        ]
+      }
     }
   }
 }

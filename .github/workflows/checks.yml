@@ -22,7 +22,7 @@ jobs:
       - run: python -m pip install build twine
       - run: python -m build
       - run: python -m twine check dist/*
-      - run: python -m pip install dist/cto_legends-0.3.0-py3-none-any.whl
+      - run: python -m pip install dist/cto_legends-0.4.0-py3-none-any.whl
       - run: cto-legends route "Google Maps ranking grids"
       - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo-kit legends-geogrid legends-github legends-stable-audio-3 legends-obs-kit --apply
       - run: cto-legends --home "${{ runner.temp }}/legends" doctor
@@ -43,5 +43,6 @@ jobs:
       - name: Check complete evidence handoff prerequisites
         if: matrix.python == '3.13'
         run: cto-legends --home "${{ runner.temp }}/legends" task-readiness evidence
+      - run: python scripts/check_handoffs.py --home "${{ runner.temp }}/legends"
       - name: Register central skill in a disposable discovery directory
         run: cto-legends --home "${{ runner.temp }}/legends" agent-setup codex --directory "${{ runner.temp }}/skills" --apply

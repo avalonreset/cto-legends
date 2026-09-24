@@ -1,6 +1,6 @@
 ---
 name: cto-legends
-description: Discover and set up released Legends modules for rank grids, search research, GitHub improvements, audio generation, OBS recording, cursor overlays, and voice typing, and source-cited Obsidian vault memory. Use for cto-legends, ecosystem updates, or matching these goals to installable tools.
+description: Use for making AI music, music beds or sound effects, Google Maps visibility studies, keyword research, GitHub optimization, saving or retrieving research in a vault, recording a screen with OBS, voice typing, and cursor effects. Discover the matching Legends tool from ordinary requests without requiring product names or separate module skills. Also use for Legends setup and updates.
 ---
 
 # cto-legends
@@ -10,10 +10,46 @@ request is a task specification; do not require a project manifest or a separate
 task file to run catalog, status or readiness. Read this entry point before
 unrelated desktop, browser or community skills for matching Legends goals.
 
-Use `cto-legends catalog` and `cto-legends route "<user goal>"` to discover
-capabilities. Use `cto-legends status` to find installed paths and interpreters.
-Only the public modules in the catalog are supported. Do not infer access to
-other Legends projects or private infrastructure.
+## Intent first, one registered skill
+
+Do not ask users to name a module or install its skill. Read this directory and
+select the narrowest capability that fits the requested outcome. Module recipes
+are ordinary Markdown loaded from their installed source, not separately
+registered skills. A question in chat is sufficient context to begin discovery.
+
+<!-- capability-directory:start -->
+| Outcome | Module |
+|---------|--------|
+| Search and keyword research through DataForSEO. | `legends-dataforseo-kit` |
+| Google Maps ranking grids and local visibility research. | `legends-geogrid` |
+| Research search demand and improve repository copy, metadata, presentation, and releases. | `legends-github` |
+| Create instrumental music, sound effects, and continuous mixes. | `legends-stable-audio-3` |
+| Inspect, configure, and verify OBS Studio recording workflows. | `legends-obs-kit` |
+| Local voice typing, dictation, and app-focused paste. | `hyperyap` |
+| Animated cursor overlay and click effects for OBS. | `legends-obs-cursor` |
+| Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions. | `legends-obsidian` |
+<!-- capability-directory:end -->
+
+For "can we generate some AI music?", choose legends-stable-audio-3, resolve its
+handoff, read its audio recipe, and check its generation setup. Do not detour to
+OBS recording or require a project manifest. Do not claim model weights or a
+working generator merely because the planning CLI is installed.
+
+Use `cto-legends capabilities --markdown` for examples, boundaries and setup.
+`cto-legends route "<user goal>"` offers offline lexical hints, not semantic
+judgment. No lexical match is not proof that no capability fits: read the index.
+For several outcomes, choose a small ordered set of modules. Do not install all
+matches. Clarify only a meaningful ambiguity, not the user's choice of tool.
+
+Run `cto-legends handoff <module>` to resolve the active recipe paths. If missing,
+preview and perform authorized setup, then repeat the handoff. Read returned
+files in order and use `status` for the isolated runtime. A missing recipe is a
+setup defect, not permission to substitute unrelated installed global skills.
+Read only the selected workflow and references; do not preload every module.
+
+Only cataloged public modules and explicitly registered local guides are known.
+Unsupported requests must remain unsupported rather than being forced into a
+nearby match. Discovery never grants paid, destructive, or publishing authority.
 
 `status` may also list explicitly registered `local_guides`. These are existing
 user-selected Markdown instructions, not catalog installs or proof of readiness.

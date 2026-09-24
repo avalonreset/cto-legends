@@ -27,10 +27,10 @@ Python 3.10 or newer is required for the manager; use Python 3.11+ to include Ob
 or MCP server is needed to install the ecosystem manager.
 
 From a source checkout, install with `python -m pip install .`. The release
-wheel command below installs the v0.3.0 release.
+wheel command below installs the v0.4.0 release.
 
 ```sh
-python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.3.0/cto_legends-0.3.0-py3-none-any.whl"
+python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.4.0/cto_legends-0.4.0-py3-none-any.whl"
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -54,11 +54,24 @@ skills directory or `~/.claude/skills`). This is an explicit choice: the install
 does not scan or rewrite every agent configuration. Existing skills are never
 overwritten. Reload your agent's skills, then ask:
 
-> Use cto-legends to help me track my business's Google Maps rankings.
+> Can we generate some AI music?
+
+The central skill selects the audio workflow and reads its installed recipe.
+It checks model access and hardware before promising generation. No separate
+Stable Audio skill registration is needed. Try "study my business on Google Maps"
+or "save this research in my vault" for other outcomes.
 
 Agents without native skill loading can read [the same instructions](cto_legends/SKILL.md)
 and use the CLI. Registration writes the skill; successful automatic discovery
 depends on your agent's configuration. No plugin host is required.
+
+## One entry point, instructions loaded on demand
+
+Use `cto-legends capabilities --markdown` for the outcome-based directory and
+`cto-legends handoff <module>` for the exact installed instructions. Routing
+returns bounded candidates and reasons, not an automatic installation decision.
+The agent handles paraphrases and multi-part goals using the capability index.
+[Discovery contract and limits](docs/CAPABILITY-DISCOVERY.md).
 
 ## The first module set
 
@@ -193,7 +206,7 @@ For an existing local product not in the public catalog:
 This registers a guide only: no installation, update, execution or readiness
 claim. Such guides appear in `status`, stay private, and remain user-managed.
 
-The published v0.3.0 wheel linked above includes these commands.
+The published v0.4.0 wheel linked above includes these commands.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 

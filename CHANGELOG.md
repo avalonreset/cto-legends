@@ -1,3 +1,11 @@
+# 0.4.0
+
+- Outcome-based capability index and ordinary-language routing hints.
+- Exact installed Markdown handoffs without separate module skill registration.
+- Explicit examples, exclusions, setup boundaries and ambiguous matches.
+- Regression coverage for a 100+ entry catalog and safe instruction paths.
+- Installer and module pins unchanged.
+
 # Changelog
 
 ## 0.3.0 - 2026-09-23

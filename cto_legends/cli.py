@@ -8,18 +8,10 @@ import shutil
 import subprocess
 import sys
 from . import __version__, manager as m
-from . import agents, readiness
+from . import agents, readiness, discovery
 
 
-def route(goal):
-    words = set(re.findall(r"[a-z0-9]+", goal.lower()))
-    matches = []
-    for key, module in m.catalog()["modules"].items():
-        score = len(words.intersection(module["keywords"]))
-        if score:
-            matches.append({"id": key, "score": score, "purpose": module["purpose"], "scope": module["scope"]})
-    return {"matches": sorted(matches, key=lambda x: -x["score"]),
-            "hint": "Inspect the module and preview installation. No match means ask about the goal; do not invent capabilities."}
+from .discovery import route
 
 
 def install_skill(directory, home):
@@ -57,6 +49,10 @@ def parser():
     r.add_argument("manifest", type=Path)
     r.add_argument("--apply", action="store_true")
     sub.add_parser("check-updates", help="Compare public release tags without installing them")
+    r = sub.add_parser("capabilities", help="Read the outcome-based capability index offline")
+    r.add_argument("--markdown", action="store_true")
+    r = sub.add_parser("handoff", help="Resolve selected module instructions without registering another skill")
+    r.add_argument("module", choices=sorted(m.RECIPES))
     r = sub.add_parser("route", help="Find modules for a goal, offline")
     r.add_argument("goal")
     r = sub.add_parser("guide", help="Show pinned setup instructions, platform requirements, and release downloads")
@@ -116,6 +112,13 @@ def execute(args):
                 guides[args.name] = result
                 file.write_text(json.dumps(guides, indent=2), encoding="utf-8")
         return {"preview": not args.apply, "guide": result}
+    if cmd == "capabilities":
+        if args.markdown:
+            print(discovery.markdown())
+            return 0
+        return discovery.index()
+    if cmd == "handoff":
+        return discovery.handoff(args.module, home)
     if cmd == "route":
         return route(args.goal)
     if cmd == "guide":
