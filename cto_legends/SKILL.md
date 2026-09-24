@@ -38,6 +38,8 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing. | `legends-firecrawl` |
 <!-- capability-directory:end -->
 
+> **Deprecation notice:** `legends-obsidian` is deprecated. Its successor is `legends-empire' (public repo live; catalog onboarding follows its internal rename). Existing installs keep working; new vault-memory work should target Empire. Never install both for the same vault.
+
 For "can we generate some AI music?", choose legends-stable-audio-3, resolve its
 handoff, read its audio recipe, and check its generation setup. Do not detour to
 OBS recording or require a project manifest. Do not claim model weights or a
