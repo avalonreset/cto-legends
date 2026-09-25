@@ -8,9 +8,9 @@ class GithubTransportVersions(unittest.TestCase):
         with patch.object(manager, 'run') as run:
             manager.probe('legends-github', Path('example'))
         code = run.call_args.args[0][-1]
-        for version in ('0.1.0',):
+        for version in ('0.1.0', '0.1.2', '0.2.0'):
             with patch('importlib.metadata.version', return_value=version), patch.dict('sys.modules', {'legends_dataforseo': type('Kit', (), {'api_request': staticmethod(lambda: None)})}):
                 exec(code)
-        with patch('importlib.metadata.version', return_value='9.9.9'), patch.dict('sys.modules', {'legends_dataforseo': type('Kit', (), {'api_request': staticmethod(lambda: None)})}):
+        with patch('importlib.metadata.version', return_value='0.0.9'), patch.dict('sys.modules', {'legends_dataforseo': type('Kit', (), {'api_request': staticmethod(lambda: None)})}):
             with self.assertRaises(AssertionError):
                 exec(code)
