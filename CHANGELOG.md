@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.7
+
+- Fold legends-obs-cursor into legends-obs-kit 0.4.1 as the optional extras/cursor/ Lua filter; the standalone module is retired and its repo archived.
+- install/plan output for legends-obs-kit advertises the cursor extra with setup pointer; no extra installed by default.
+- Cursor discovery (signals, keywords, purpose) moves to the obs-kit catalog row; router and tests updated.
+- Catalog now holds nine modules; hyperyap is the only guided native module.
+
 ## 0.5.6
 
 - Name the pattern: single-skill router (install one skill; every module loads on demand).
