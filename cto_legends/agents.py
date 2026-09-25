@@ -17,7 +17,7 @@ ROOTS = {
 # Only suites actually replaced by the four central catalog workflows.
 # Desktop-control and GitHub's gh wrapper are different products.
 REPLACED = frozenset(('cto-legends-library legends-geogrid legends-dataforseo-kit '
-    'legends-github legends-obsidian autoresearch canvas defuddle obsidian-bases '
+    'legends-github legends-empire autoresearch canvas defuddle obsidian-bases '
     'obsidian-markdown save think wiki wiki-cli wiki-fold wiki-ingest wiki-lint '
     'wiki-mode wiki-query wiki-retrieve github github-audit github-community '
     'github-dataforseo github-empire github-legal github-meta github-readme '
