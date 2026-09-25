@@ -16,7 +16,7 @@ class CapabilitiesTests(unittest.TestCase):
             'Where does my pizza shop appear on Google Maps?': 'legends-geogrid',
             'Improve discovery of my GitHub project': 'legends-github',
             'Research keyword demand': 'legends-dataforseo-kit',
-            'Save this research in my vault': 'legends-obsidian',
+            'Save this research in my vault': 'legends-empire',
             'Record my screen': 'legends-obs-kit',
             'Type with my voice': 'hyperyap',
             'Highlight my mouse while recording': 'legends-obs-kit',
