@@ -1,15 +1,16 @@
 # One skill, independent modules
 
-Register cto-legends once per agent execution environment. Its Markdown directory
-matches outcomes to capabilities. Read only the selected module's canonical
-recipe; it does not need native skill registration. Windows, WSL and remote
-hosts still require their own runtime setup.
+Register cto-legends once per agent execution environment. The live capability
+index matches outcomes to capabilities; the skill text itself names no
+modules. Read only the selected module's canonical recipe; it does not need
+native skill registration. Windows, WSL and remote hosts still require their
+own runtime setup.
 
 ## Workflow
 
 1. Understand the user's outcome from chat, even in an empty workspace.
-2. Select a capability using the central directory. `capabilities --markdown`
-   expands it with examples, exclusions and setup requirements.
+2. Run `capabilities --markdown` for the live index with examples, exclusions
+   and setup requirements.
 3. Optionally use `route "goal"` for lexical hints. The top result is not a
    semantic verdict; the agent resolves paraphrases and multi-part requests.
 4. Run `handoff <module>`. It reads local state without networking or execution.
@@ -28,10 +29,11 @@ audit is not a GeoGrid study merely because both concern SEO.
 
 Capability metadata lives in the reviewed catalog alongside immutable module
 pins. Adding a module requires purpose, routing signals, natural examples,
-exclusions, setup boundaries and source-relative instruction paths. No downloaded
-metadata is executed. Candidate output is limited to five matches; the full
-directory remains available to the agent. Tests exercise over 100 entries,
-ambiguous ties, compound goals, unknown requests and path containment.
+exclusions, setup boundaries, source-relative instruction paths, and a
+closed-vocabulary install/probe/run recipe. No downloaded metadata is
+executed. Candidate output is limited to five matches; the full index remains
+available to the agent. Tests exercise over 100 entries, ambiguous ties,
+compound goals, unknown requests and path containment.
 
 This release verifies deterministic discovery and installed recipe resolution.
 It does not certify every model's autonomous choice, every paraphrase, or a live

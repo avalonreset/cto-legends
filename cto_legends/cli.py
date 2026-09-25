@@ -57,21 +57,24 @@ def parser():
     r = sub.add_parser("startup-restore", help="Restore a startup change from its checked backup")
     r.add_argument("manifest", type=Path)
     r.add_argument("--apply", action="store_true")
-    sub.add_parser("check-updates", help="Compare public release tags without installing them")
+    sub.add_parser("check-updates", help="Compare installed, catalog, and upstream versions without installing")
+    r = sub.add_parser("sync", help="Preview a catalog refresh; add --apply to adopt it, --rollback to revert")
+    r.add_argument("--apply", action="store_true")
+    r.add_argument("--rollback", action="store_true")
     r = sub.add_parser("capabilities", help="Read the outcome-based capability index offline")
     r.add_argument("--markdown", action="store_true")
     r = sub.add_parser("handoff", help="Resolve selected module instructions without registering another skill")
-    r.add_argument("module", choices=sorted(m.CLI_MODULES))
+    r.add_argument("module")
     r = sub.add_parser("route", help="Find modules for a goal, offline")
     r.add_argument("goal")
     r = sub.add_parser("guide", help="Show pinned setup instructions, platform requirements, and release downloads")
-    r.add_argument("module", choices=sorted(m.CLI_MODULES))
+    r.add_argument("module")
     for name in ("install", "update"):
         s = sub.add_parser(name, help="Preview changes; add --apply to install")
         s.add_argument("modules", nargs="+" if name == "install" else "*")
         s.add_argument("--apply", action="store_true")
     r = sub.add_parser("rollback", help="Switch to a retained previous environment")
-    r.add_argument("module", choices=sorted(m.CLI_MODULES))
+    r.add_argument("module")
     r.add_argument("--apply", action="store_true")
     r = sub.add_parser("install-skill", help="Register the router in an explicit agent skill directory")
     r.add_argument("--directory", type=Path, required=True)
@@ -85,7 +88,7 @@ def parser():
     r.add_argument("path", type=Path)
     r.add_argument("--apply", action="store_true")
     r = sub.add_parser("run", help="Run an installed module; following arguments go directly to it")
-    r.add_argument("module", choices=sorted(m.CLI_MODULES))
+    r.add_argument("module")
     r.add_argument("args", nargs=argparse.REMAINDER)
     return p
 
@@ -120,48 +123,71 @@ def execute(args):
         result = {"name": args.name, "path": str(path), "readiness": "unverified", "source": "user-selected-local-guide"}
         if args.apply:
             with m.lock(home):
-                file = home / "local-guides.json"
-                guides = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
+                guides = m.read_guides(home)
                 if args.name in guides and guides[args.name] != result:
                     raise ValueError("Existing guide differs; preserved")
                 guides[args.name] = result
-                file.write_text(json.dumps(guides, indent=2), encoding="utf-8")
-        return {"preview": not args.apply, "guide": result}
+                (home / "local-guides.json").write_text(json.dumps(guides, indent=2), encoding="utf-8")
+        return {"preview": not args.apply, "guide": result,
+                "next": "cto-legends handoff " + args.name}
     if cmd == "capabilities":
         if args.markdown:
-            print(discovery.markdown())
+            print(discovery.markdown(home))
             return 0
-        return discovery.index()
+        return discovery.index(home)
     if cmd == "handoff":
-        return discovery.handoff(m.resolve_module(args.module), home)
+        return discovery.handoff(args.module, home)
     if cmd == "route":
-        return route(args.goal)
+        return route(args.goal, home)
     if cmd == "guide":
-        return m.guide(m.resolve_module(args.module))
+        cat = m.active_catalog(home)
+        key = m.resolve_module(args.module, cat)
+        if key not in cat["modules"]:
+            if key in m.read_guides(home):
+                raise ValueError(f"{key} is a registered local guide, not a catalog module; "
+                                 "guide only covers catalog modules. Use cto-legends handoff " + key)
+            raise m.known_module_error(args.module, cat)
+        return m.guide(key, cat)
     if cmd == "status":
         result = m.status(home)
-        file = home / "local-guides.json"
-        result["local_guides"] = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
+        result["local_guides"] = m.read_guides(home)
         return result
     if cmd == "check-updates":
-        return m.updates()
+        return m.updates(home)
+    if cmd == "sync":
+        return m.sync(home, apply=args.apply, rollback_catalog=args.rollback)
     if cmd in ("install", "update"):
-        keys = list(dict.fromkeys(m.resolve_module(k) for k in (args.modules or m.read_state(home)["active"])))
-        if cmd == "update" and any(k not in m.read_state(home)["active"] for k in keys):
-            raise ValueError("Update only operates on installed modules; use install for new modules")
-        return m.install(home, keys) if args.apply else {"preview": True, "changes": m.plan(home, keys)}
+        cat = m.active_catalog(home)
+        raw = args.modules if args.modules else list(m.read_state(home)["active"])
+        keys = list(dict.fromkeys(m.resolve_module(k, cat) for k in raw))
+        if cmd == "update":
+            if any(k not in m.read_state(home)["active"] for k in keys):
+                raise ValueError("Update only operates on installed modules; use install for new modules")
+            if not args.modules:
+                dropped = [k for k in keys if k not in cat["modules"]]
+                keys = [k for k in keys if k in cat["modules"]]
+            else:
+                dropped = []
+        else:
+            dropped = []
+        result = m.install(home, keys) if args.apply else {"preview": True, "changes": m.plan(home, keys)}
+        if dropped:
+            result["skipped_not_in_catalog"] = dropped
+        return result
     if cmd == "rollback":
-        key = m.resolve_module(args.module)
+        cat = m.active_catalog(home)
+        key = m.resolve_module(args.module, cat)
         return m.rollback(home, key) if args.apply else {"preview": True, "previous": m.read_state(home)["previous"].get(key)}
     if cmd == "install-skill":
         return install_skill(args.directory, home) if args.apply else {"preview": True, "destination": str(args.directory / "cto-legends" / "SKILL.md")}
     if cmd == "doctor":
+        cat = m.active_catalog(home)
         state = m.read_state(home)
         checks = {}
         for key, relative in state["active"].items():
-            m.probe(key, m.managed_path(home, relative))
+            m.probe(key, m.managed_path(home, relative), m.recipe_for(home, key, relative, cat))
             checks[key] = "passed"
-        return {"ok": True, "version": __version__, "modules": checks,
+        return {"ok": True, "version": __version__, "catalog_version": cat["version"], "modules": checks,
                 "optional_tools": {x: bool(shutil.which(x)) for x in ("node", "pnpm", "gh")},
                 "note": "Checks managed CLI capabilities only. Native apps, OBS connection, GPU/models, browser UI, PDFs, credentials and paid calls require module setup."}
     if cmd == "report-readiness":
@@ -173,28 +199,36 @@ def execute(args):
             str(release / "source" / "tools" / "geogrid_doctor.py"),
             "--reports", "--basemaps", "--dataforseo"]).returncode
     if cmd == "run":
-        key = m.resolve_module(args.module)
-        if key in m.GUIDED_MODULES:
+        cat = m.active_catalog(home)
+        key = m.resolve_module(args.module, cat)
+        if key not in cat["modules"]:
+            raise m.known_module_error(args.module, cat)
+        recipe = cat["modules"][key]["recipe"]
+        if recipe.get("mode", "managed") == "guided":
             raise ValueError("Native application setup is guided; use cto-legends guide " + key)
         state = m.read_state(home)
         if key not in state["active"]:
             raise ValueError("Module is not installed; preview its installation first")
         release = m.managed_path(home, state["active"][key])
-        if key == "legends-grant":
-            raise ValueError("legends-grant is docs-only; read its recipe with cto-legends handoff legends-grant")
-        entries = {"legends-empire": [str(release / "source" / "scripts" / "claude-empire.py")],
-                   "legends-dataforseo-kit": ["-m", "legends_dataforseo"],
-                   "legends-geogrid": [str(release / "source" / "tools" / "study.py")],
-                   "legends-github": [str(release / "source" / "legends_github.py")],
-                   "legends-stable-audio-3": ["-m", "legends_sa3"],
-                   "legends-obs-kit": [str(release / "source" / "dist" / "index.js")],
-                   "legends-firecrawl": ["-c", "import sys; from legends_firecrawl.cli import main; raise SystemExit(main())"],
-                   "legends-yt-dlp": ["-m", "legends_ytdlp"],
-                   "legends-ambient-intelligence": ["-m", "legends_ambient"],
-                   "legends-captions": ["-m", "legends_captions"]}
+        run_spec = recipe.get("run")
+        if run_spec is None or run_spec["runtime"] == "none":
+            raise ValueError(f"{key} is docs-only; read its recipe with cto-legends handoff {key}")
         remaining = args.args[1:] if args.args[:1] == ["--"] else args.args
-        binary = m.node_binary() if key == "legends-obs-kit" else str(m.python_at(release))
-        result = subprocess.run([binary, *entries[key], *remaining])
+        source = release / "source"
+        if run_spec["runtime"] == "node":
+            binary = m.node_binary(recipe.get("requires_node", 22), key)
+            entry = [str(m.confine(source, run_spec["path"]))]
+        else:
+            binary = str(m.python_at(release))
+            if run_spec["kind"] == "module":
+                entry = ["-m", run_spec["module"]]
+            elif run_spec["kind"] == "script":
+                entry = [str(m.confine(source, run_spec["path"]))]
+            else:
+                code = "import sys; from %s import %s; raise SystemExit(%s())" % (
+                    run_spec["module"], run_spec["func"], run_spec["func"])
+                entry = ["-c", code]
+        result = subprocess.run([binary, *entry, *remaining])
         return result.returncode
     raise ValueError("Unknown command")
 

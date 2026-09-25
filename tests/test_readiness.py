@@ -63,8 +63,9 @@ class ReadinessTests(unittest.TestCase):
 
     def test_github_install_includes_declared_image_requirements(self):
         with tempfile.TemporaryDirectory() as directory:
+            module = manager.catalog()["modules"]["legends-github"]
             with patch.object(manager, 'fetch', return_value=b'archive'), patch.object(manager, 'extract'), patch.object(manager, 'run') as run, patch.object(manager, 'probe'):
-                manager.prepare('legends-github', {'repo': 'owner/repo', 'commit': 'abc', 'sha256': 'def', 'version': 'test'}, Path(directory))
+                manager.prepare('legends-github', module, Path(directory))
             installs = [str(call.args[0][-1]).replace('\\', '/') for call in run.call_args_list]
             self.assertTrue(any(path.endswith('/source/github/requirements.txt') for path in installs))
 

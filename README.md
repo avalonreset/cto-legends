@@ -32,10 +32,10 @@ It can sit alongside AI Marketing Hub workflows and other agent tools. Its focus
 Python 3.10 or newer is required for the manager; use Python 3.11+ to include Empire vault memory. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
-Install the 0.1.0 wheel, or from source.
+Install the 0.2.0 wheel, or from source.
 
 ```sh
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.1.4/cto_legends-0.1.4-py3-none-any.whl
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.0/cto_legends-0.2.0-py3-none-any.whl
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -97,18 +97,22 @@ The agent handles paraphrases and multi-part goals using the capability index.
 
 | Module | Use it for | Managed setup |
 |---|---|---|
-| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) 0.1.0 | Google Maps rank grids and local visibility | Research workflow + report libraries + DataForSEO Kit 0.1.0 |
-| [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) 0.1.0 | Search, keywords, queued research and reusable evidence | Python library + CLI + evidence exporter |
-| [legends-github](https://github.com/avalonreset/legends-github) 0.1.0 | Repository audits, README, metadata, release preparation | Headless workflows + live research transport 0.1.0 |
-| [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.1.0 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
-| [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) 0.1.0 | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
-| [legends-empire](https://github.com/avalonreset/legends-empire) 0.1.0 | Source-cited Empire memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
-| [legends-hyperyap](https://github.com/avalonreset/legends-hyperyap) 0.1.0 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
-| [legends-grant](https://github.com/avalonreset/legends-grant) 0.1.0 | Business grant finding, matching, and application | Markdown lanes + verified federal API routes; agent submits once per authorization |
-| [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) 0.1.0 | Web search, scraping, crawling, provider catalog | Python client + offline catalog; vendor CLI and key need module setup |
-| [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) 0.1.0 | Repeatable video pulls, transcripts, search, clip-building | Pip-installed CLI + skill; yt-dlp binary and ffmpeg need module setup; Mullvad opt-in |
-| [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) 0.1.0 | Ambient audio capture, archiving, transcription, distillation | Pip-installed CLI + skill; ffmpeg and faster-whisper/NeMo need module setup |
-| [legends-captions](https://github.com/avalonreset/legends-captions) 0.1.0 | Caption correction, timing, rendering, proof | Pip-installed CLI + skill; stdlib only, speech envs optional |
+| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) | Google Maps rank grids and local visibility | Research workflow + report libraries + DataForSEO Kit |
+| [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) | Search, keywords, queued research and reusable evidence | Python library + CLI + evidence exporter |
+| [legends-github](https://github.com/avalonreset/legends-github) | Repository audits, README, metadata, release preparation | Headless workflows + live research transport |
+| [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) | Instrumental music, sound effects, continuous mixes | Python planning CLI; model/GPU setup separate |
+| [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
+| [legends-empire](https://github.com/avalonreset/legends-empire) | Source-cited Empire memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
+| [legends-hyperyap](https://github.com/avalonreset/legends-hyperyap) | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
+| [legends-grant](https://github.com/avalonreset/legends-grant) | Business grant finding, matching, and application | Markdown lanes + verified federal API routes; agent submits once per authorization |
+| [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) | Web search, scraping, crawling, provider catalog | Python client + offline catalog; vendor CLI and key need module setup |
+| [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) | Repeatable video pulls, transcripts, search, clip-building | Pip-installed CLI; yt-dlp binary and ffmpeg need module setup; Mullvad opt-in |
+| [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) | Ambient audio capture, archiving, transcription, distillation | Pip-installed CLI; ffmpeg and faster-whisper/NeMo need module setup |
+| [legends-captions](https://github.com/avalonreset/legends-captions) | Caption correction, timing, rendering, proof | Pip-installed CLI; stdlib only, speech envs optional |
+
+Pinned versions live in the catalog, not here: `cto-legends catalog`
+shows the exact verified set your manager carries. Module recipes load
+through the router on demand; no module needs its own skill registration.
 
 Eleven modules have managed CLI installations. The one native module uses
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
@@ -159,15 +163,19 @@ authorizes paid calls.
 
 ```sh
 cto-legends check-updates
-cto-legends update
+cto-legends sync
+cto-legends sync --apply
 cto-legends update --apply
 ```
 
-`check-updates` shows upstream releases. `update` previews changes to **installed
-modules only**, using the compatible set shipped with your manager version.
-To obtain a newer set, upgrade the manager from its [latest release](https://github.com/avalonreset/cto-legends/releases/latest),
-then run `update --apply`. Your agent can handle those steps when you ask it to
-update cto-legends. A new upstream tag is not automatically a tested combination.
+`check-updates` compares installed versions, your active catalog, and upstream
+releases, naming the next step for each drift. `sync` previews a refreshed
+catalog from the canonical live copy; `--apply` adopts it (the previous
+catalog is kept, and `sync --rollback` restores it). `update --apply` then
+refreshes **installed modules only** to the new pins. Module updates and new
+modules arrive through catalog syncs: no manager upgrade and no skill change
+needed. Your agent can handle those steps when you ask it to update
+cto-legends. A new upstream tag is not automatically a tested combination.
 
 Source archives and the prebuilt OBS package are pinned to versions and SHA-256
 checksums, with their source commits recorded. New managed installations
@@ -186,8 +194,9 @@ dependencies. It does not undo work performed by that module.
 
 Default: `~/.cto-legends`. Set `CTO_LEGENDS_HOME` or pass `--home PATH` **before**
 the command to choose another location. Module versions live under `releases/`;
-`state.json` selects active versions. Do not move this folder after installation:
-Python virtual environments are not relocatable.
+`state.json` selects active versions, and `catalog.json` holds your synced
+catalog with `catalog.previous.json` as its rollback copy. Do not move this
+folder after installation: Python virtual environments are not relocatable.
 
 Interrupted installations retain diagnostics in `install.log`. If a process was
 killed while holding `operation.lock`, confirm it has stopped before removing
@@ -225,20 +234,18 @@ instructions on demand. Host tool permissions and operating-system dependency
 support still apply. Gemini on a remote execution host needs installation there.
 
 For an existing local product not in the public catalog:
-`cto-legends register-guide legends-empire /path/to/skills/legends-empire/SKILL.md --apply`.
+`cto-legends register-guide my-notes /path/to/notes/SKILL.md --apply`.
 This registers a guide only: no installation, update, execution or readiness
-claim. Such guides appear in `status`, stay private, and remain user-managed.
-
-<!-- RELEASE WORKER: replace the source install above with the 0.1.0 wheel URL
-once the 0.1.0 release is cut (wheel URL TBD at release). -->
-These commands ship in the source tree and will be included in the 0.1.0 wheel at release.
+claim. Such guides resolve through `capabilities`, `route`, and `handoff`,
+appear in `status`, stay private, and remain user-managed. They never shadow
+a catalog module of the same name.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 
 ## Research memory
 
-`cto-legends install legends-empire --apply` installs the verified v0.1.0
-public source in an isolated Python environment. Run
+`cto-legends install legends-empire --apply` installs the verified catalog pin
+of the public source in an isolated Python environment. Run
 `cto-legends run legends-empire -- contracts --check-only` to verify its
 portable contracts, then read the router path returned by `status`.
 Python 3.11+ is required. Vault writes use POSIX/WSL; native Windows supports

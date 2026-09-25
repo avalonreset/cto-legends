@@ -2,12 +2,17 @@
 """Fleet audit for the Legends ecosystem reset.
 
 Checks all 13 repos in org ``avalonreset`` for:
-  (a) 4-way version match: authoritative version string in the local tree
-      vs latest gh release tag vs CHANGELOG head vs catalog pinned version.
+  (a) Version match: modules need a 4-way match (authoritative version
+      string in the local tree vs latest gh release tag vs CHANGELOG head
+      vs catalog pinned version); the router needs a 3-way match
+      (tree/release/changelog) because the catalog versions independently.
   (b) Contract shape per module repo: skills/ allowlist, .legends-module,
       forbidden files, README agent block, .legends-router-pin.
   (c) Byte-exact vendor check: vendored skills/cto-legends/SKILL.md vs the
       canonical cto_legends/SKILL.md bytes at the pinned router commit.
+  (d) Living catalog: the audited catalog validates against the router
+      engine, its changelog head matches, and the canonical live copy on
+      the router main branch validates too.
 
 Python 3.10+, stdlib only. Network access goes through the ``gh`` CLI.
 
@@ -41,7 +46,7 @@ REPOS: list[dict] = [
     {"id": "legends-obs-kit", "repo": "legends-obs-kit", "local": "/mnt/e/legends-obs-kit"},
     {"id": "legends-hyperyap", "repo": "legends-hyperyap", "local": None},
     {"id": "legends-empire", "repo": "legends-empire", "local": None},
-    {"id": "legends-grant", "repo": "legends-grant", "local": "/mnt/e/legends-grant"},
+    {"id": "legends-grant", "repo": "legends-grant", "local": "/mnt/e/legends-grant-public"},
     {"id": "legends-firecrawl", "repo": "legends-firecrawl", "local": "/mnt/e/legends-firecrawl"},
     {"id": "legends-yt-dlp", "repo": "legends-yt-dlp", "local": None},
     {"id": "legends-ambient-intelligence", "repo": "legends-ambient-intelligence", "local": "/mnt/e/legends-ambient-intelligence"},
@@ -360,13 +365,55 @@ def audit_repo(entry: dict, catalog: dict) -> tuple[str, list[Check]]:
 
     # --- catalog side.
     if is_router:
-        cat_ver = catalog.get("version")
-        checks.append(Check(
-            True if cat_ver is None else cat_ver == rel_ver,
-            "catalog version equals router release",
-            f"catalog={cat_ver}, release={rel_ver}",
-        ))
         catalog_ver: str | None = None
+        router_local = entry.get("local")
+        validator = None
+        if not router_local or not Path(router_local).is_dir():
+            checks.append(Check(None, "bundled catalog validates", "no router checkout"))
+        else:
+            sys.path.insert(0, router_local)
+            for mod in [name for name in sys.modules
+                        if name == "cto_legends" or name.startswith("cto_legends.")]:
+                del sys.modules[mod]
+            try:
+                from cto_legends.manager import validate_catalog as validator  # noqa
+            except ImportError as exc:
+                checks.append(Check(False, "bundled catalog validates", f"engine import failed: {exc}"))
+                validator = None
+            finally:
+                sys.path.remove(router_local)
+            if validator is not None:
+                try:
+                    validator(catalog)
+                    checks.append(Check(True, "bundled catalog validates",
+                                        f"catalog={catalog.get('version')}"))
+                except ValueError as exc:
+                    checks.append(Check(False, "bundled catalog validates", str(exc)[:300]))
+            changelog = Path(router_local) / "docs" / "CATALOG-CHANGELOG.md"
+            head = CHANGELOG_RE.search(changelog.read_text(encoding="utf-8", errors="replace")) if changelog.is_file() else None
+            head = head.group(1) if head else None
+            checks.append(Check(
+                head is not None and head == catalog.get("version"),
+                "catalog changelog head matches",
+                f"head={head}, catalog={catalog.get('version')}",
+            ))
+        try:
+            payload = gh_api(f"repos/{ORG}/{ROUTER_REPO}/contents/cto_legends/catalog.json?ref=main")
+            live = json.loads(base64.b64decode(payload["content"]))
+        except (RuntimeError, ValueError, KeyError) as exc:
+            checks.append(Check(False, "canonical live catalog validates", f"fetch failed: {exc}"))
+        else:
+            if validator is None:
+                checks.append(Check(None, "canonical live catalog validates", "no engine to validate with"))
+            else:
+                try:
+                    validator(live)
+                    same = live.get("version") == catalog.get("version")
+                    checks.append(Check(True, "canonical live catalog validates",
+                                        f"live={live.get('version')}, audited={catalog.get('version')}"
+                                        + ("" if same else " (main differs from audited tree)")))
+                except ValueError as exc:
+                    checks.append(Check(False, "canonical live catalog validates", str(exc)[:300]))
     else:
         mod = catalog.get("modules", {}).get(module)
         if mod is None:
@@ -403,7 +450,7 @@ def audit_repo(entry: dict, catalog: dict) -> tuple[str, list[Check]]:
             vendor_checks, _ = audit_vendor(root, full)
             checks.extend(vendor_checks)
 
-    # --- 4-way match legs (router: tree vs release vs changelog vs catalog version).
+    # --- version match legs (modules: 4-way with catalog pin; router: 3-way, catalog decoupled).
     if not is_router and catalog_ver is not None:
         legs = {"tree": tree_ver, "release": rel_ver,
                 "changelog": head, "catalog": catalog_ver}
@@ -418,18 +465,17 @@ def audit_repo(entry: dict, catalog: dict) -> tuple[str, list[Check]]:
         else:
             checks.append(Check(False, "4-way version match", str(legs)))
     elif is_router:
-        legs = {"tree": tree_ver, "release": rel_ver,
-                "changelog": head, "catalog": catalog.get("version")}
+        legs = {"tree": tree_ver, "release": rel_ver, "changelog": head}
         known = {k: v for k, v in legs.items() if v is not None}
-        if len(known) < 4:
+        if len(known) < 3:
             missing = sorted(set(legs) - set(known))
-            checks.append(Check(None, "4-way version match",
+            checks.append(Check(None, "3-way version match (catalog decoupled)",
                                 f"cannot judge, missing: {missing} {legs}"))
         elif len(set(known.values())) == 1:
-            checks.append(Check(True, "4-way version match",
+            checks.append(Check(True, "3-way version match (catalog decoupled)",
                                 f"all = {tree_ver}"))
         else:
-            checks.append(Check(False, "4-way version match", str(legs)))
+            checks.append(Check(False, "3-way version match (catalog decoupled)", str(legs)))
 
     failed = any(c.ok is False for c in checks)
     return ("FAIL" if failed else "PASS"), checks

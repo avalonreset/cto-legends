@@ -66,7 +66,7 @@ class CapabilitiesTests(unittest.TestCase):
                 result = d.handoff('legends-stable-audio-3', home)
             self.assertEqual(result['instructions'], [str(source.resolve() / 'README.md')])
             self.assertEqual(result['missing_instructions'], ['docs/first-run.md'])
-            self.assertEqual(result['readiness'], 'not_checked')
+            self.assertIsNone(result['readiness'])
 
     def test_instruction_escape_rejected(self):
         catalog = copy.deepcopy(m.catalog())
@@ -81,7 +81,13 @@ class CapabilitiesTests(unittest.TestCase):
                 result = d.handoff(name, Path('unused'))
                 self.assertEqual(result['module'], 'legends-hyperyap')
                 self.assertEqual(result['installation'], 'guided_native')
-                self.assertEqual(result['readiness'], 'not_checked')
+                self.assertIsNone(result['readiness'])
+
+    def test_handoff_names_readiness_command(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = d.handoff('legends-geogrid', Path(tmp))
+        self.assertEqual(result['readiness'], 'report-readiness')
+        self.assertEqual(result['installation'], 'not_installed')
 
     def test_all_catalog_modules_have_complete_contract(self):
         for row in d.index()['capabilities']:
@@ -97,9 +103,17 @@ class CapabilitiesTests(unittest.TestCase):
         for key in m.catalog()['modules']:
             self.assertIn('## ' + key, rendered)
 
-    def test_central_skill_directory_matches_catalog(self):
+    def test_router_skill_names_no_modules(self):
+        # Frozen-router contract: the skill text must never enumerate modules.
+        # New and updated modules flow through the catalog with no skill change.
+        import re
         skill = (m.ROOT / 'SKILL.md').read_text(encoding='utf-8')
-        directory = skill.split('<!-- capability-directory:start -->')[1].split('<!-- capability-directory:end -->')[0]
-        expected = ['| ' + row['purpose'] + ' | `' + key + '` |'
-                    for key, row in m.catalog()['modules'].items()]
-        self.assertEqual([line for line in directory.splitlines() if line.startswith('| ') and '`' in line], expected)
+        self.assertNotIn('capability-directory', skill)
+        self.assertEqual(re.findall(r'legends-[a-z0-9]', skill), [])
+        for section in ('## Intent first', '## Install law', '## Install what the task needs',
+                        '## Startup and host registration', '## Update and recover',
+                        '## Research and credentials'):
+            self.assertIn(section, skill)
+        self.assertIn('cto-legends capabilities --markdown', skill)
+        self.assertIn('cto-legends check-updates', skill)
+        self.assertIn('cto-legends sync', skill)

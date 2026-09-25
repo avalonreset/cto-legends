@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.1.4",
+  "version": "1.0.0",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -40,7 +40,32 @@
           "README.md",
           "docs/RESEARCH-MEMORY.md"
         ]
-      }
+      },
+      "recipe": {
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_dataforseo",
+            "present": [
+              "API_ROOT",
+              "ApiError",
+              "CredentialError"
+            ],
+            "callable": [
+              "api_request"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_dataforseo"
+        }
+      },
+      "readiness": "task-readiness research"
     },
     "legends-geogrid": {
       "version": "0.1.0",
@@ -82,7 +107,47 @@
           "README.md",
           "docs/STUDY-RECIPE.md"
         ]
-      }
+      },
+      "recipe": {
+        "pip": {
+          "kind": "requirements",
+          "files": [
+            "requirements-dataforseo.txt",
+            "requirements-report.txt"
+          ]
+        },
+        "probe": [
+          {
+            "do": "files-exist",
+            "paths": [
+              "tests/test_dataforseo_transport.py"
+            ]
+          },
+          {
+            "do": "unittest",
+            "dir": "tests",
+            "pattern": "*transport*"
+          },
+          {
+            "do": "import",
+            "module": "legends_dataforseo",
+            "callable": [
+              "api_request"
+            ]
+          },
+          {
+            "do": "version-floor",
+            "package": "legends-dataforseo-kit",
+            "min": "0.1.0"
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "script",
+          "path": "tools/study.py"
+        }
+      },
+      "readiness": "report-readiness"
     },
     "legends-github": {
       "version": "0.1.1",
@@ -125,7 +190,43 @@
           "README.md",
           "docs/GITHUB-RECIPE.md"
         ]
-      }
+      },
+      "recipe": {
+        "pip": {
+          "kind": "requirements",
+          "files": [
+            "requirements-dataforseo.txt",
+            "github/requirements.txt"
+          ]
+        },
+        "probe": [
+          {
+            "do": "script",
+            "path": "legends_github.py",
+            "args": [
+              "capabilities"
+            ]
+          },
+          {
+            "do": "import",
+            "module": "legends_dataforseo",
+            "callable": [
+              "api_request"
+            ]
+          },
+          {
+            "do": "version-floor",
+            "package": "legends-dataforseo-kit",
+            "min": "0.1.0"
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "script",
+          "path": "legends_github.py"
+        }
+      },
+      "readiness": "task-readiness github"
     },
     "legends-stable-audio-3": {
       "version": "0.1.0",
@@ -175,6 +276,37 @@
           "README.md",
           "docs/first-run.md"
         ]
+      },
+      "recipe": {
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "module-cli",
+            "module": "legends_sa3",
+            "args": [
+              "skill",
+              "validate"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_sa3",
+            "args": [
+              "plan",
+              "--hours",
+              "1",
+              "--vram-gb",
+              "16"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_sa3"
+        }
       }
     },
     "legends-obs-kit": {
@@ -224,7 +356,32 @@
           "docs/RECIPES.md"
         ]
       },
-      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.1.1/avalonreset-legends-obs-kit-0.1.1.tgz"
+      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.1.1/avalonreset-legends-obs-kit-0.1.1.tgz",
+      "recipe": {
+        "requires_node": 22,
+        "env": false,
+        "source": "release-tgz",
+        "pip": {
+          "kind": "none"
+        },
+        "probe": [
+          {
+            "do": "node",
+            "path": "dist/index.js",
+            "args": [
+              "manifest"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "node",
+          "kind": "script",
+          "path": "dist/index.js"
+        },
+        "extras": {
+          "cursor": "Optional animated cursor overlay plus click effects (GPL Lua filter, not installed by default). After install, copy extras/cursor/legends-cursor.lua into the OBS scripts folder and enable it under Tools > Scripts."
+        }
+      }
     },
     "legends-hyperyap": {
       "version": "0.1.1",
@@ -267,6 +424,9 @@
         "instructions": [
           "README.md"
         ]
+      },
+      "recipe": {
+        "mode": "guided"
       }
     },
     "legends-empire": {
@@ -310,7 +470,43 @@
           "README.md",
           "docs/install-guide.md"
         ]
-      }
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "pip": {
+          "kind": "none"
+        },
+        "probe": [
+          {
+            "do": "script",
+            "path": "scripts/claude-empire.py",
+            "args": [
+              "contracts",
+              "--check-only"
+            ],
+            "cwd": "source"
+          },
+          {
+            "do": "script",
+            "path": "scripts/claude-empire.py",
+            "args": [
+              "package",
+              "validate"
+            ],
+            "cwd": "source"
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "script",
+          "path": "scripts/claude-empire.py"
+        },
+        "guide_file": "skills/legends-empire/SKILL.md"
+      },
+      "readiness": "task-readiness evidence"
     },
     "legends-grant": {
       "version": "0.1.0",
@@ -359,6 +555,30 @@
           "submit-lanes.md",
           "vault-map.md"
         ]
+      },
+      "recipe": {
+        "pip": {
+          "kind": "none"
+        },
+        "probe": [
+          {
+            "do": "files-exist",
+            "paths": [
+              "README.md",
+              "docs/GRANT-RECIPE.md",
+              "find.md",
+              "match.md",
+              "qualify.md",
+              "apply.md",
+              "sources.md",
+              "submit-lanes.md",
+              "vault-map.md"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "none"
+        }
       }
     },
     "legends-firecrawl": {
@@ -403,6 +623,26 @@
           "README.md",
           "docs/RECIPES.md"
         ]
+      },
+      "recipe": {
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_firecrawl",
+            "present": [
+              "__version__"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "callable",
+          "module": "legends_firecrawl.cli",
+          "func": "main"
+        }
       }
     },
     "legends-yt-dlp": {
@@ -452,6 +692,32 @@
           "README.md",
           "docs/OPERATOR-ROUTING.md"
         ]
+      },
+      "recipe": {
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_ytdlp",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_ytdlp",
+            "args": [
+              "--help"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_ytdlp"
+        }
       }
     },
     "legends-ambient-intelligence": {
@@ -501,6 +767,32 @@
         "instructions": [
           "README.md"
         ]
+      },
+      "recipe": {
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_ambient",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_ambient",
+            "args": [
+              "--help"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_ambient"
+        }
       }
     },
     "legends-captions": {
@@ -546,7 +838,40 @@
           "README.md",
           "docs/install/agent-install-guide.md"
         ]
+      },
+      "recipe": {
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_captions",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_captions",
+            "args": [
+              "--help"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_captions"
+        }
       }
     }
+  },
+  "aliases": {
+    "hyperyap": "legends-hyperyap",
+    "legends-ultimate-captions": "legends-captions"
+  },
+  "retired": {
+    "legends-obsidian": "legends-empire"
   }
 }

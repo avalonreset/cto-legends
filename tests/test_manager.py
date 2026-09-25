@@ -37,14 +37,16 @@ class ManagerTests(unittest.TestCase):
             m.plan(self.home, ["legends-obsidian"])
 
     def test_empire_older_python_rejected_before_download(self):
+        module = {"recipe": {"requires_python": [3, 11]}}
         with patch.object(m.sys, "version_info", (3, 10)), patch.object(m, "fetch", side_effect=AssertionError("network")):
             with self.assertRaisesRegex(ValueError, "Python 3.11"):
-                m.prepare("legends-empire", {}, self.home)
+                m.prepare("legends-empire", module, self.home)
 
     def test_empire_probe_is_offline_and_never_mutates_a_vault(self):
         release = self.home / "release"
+        recipe = m.catalog()["modules"]["legends-empire"]["recipe"]
         with patch.object(m, "run") as run:
-            m.probe("legends-empire", release)
+            m.probe("legends-empire", release, recipe)
         commands = [args.args[0] for args in run.call_args_list]
         self.assertEqual(len(commands), 2)
         self.assertEqual(commands[0][-2:], ["contracts", "--check-only"])
@@ -52,7 +54,11 @@ class ManagerTests(unittest.TestCase):
         self.assertTrue(all("--apply" not in command for command in commands))
 
     def test_catalog_pins_all_public_modules(self):
-        self.assertEqual(set(m.catalog()["modules"]), m.RECIPES)
+        self.assertEqual(set(m.catalog()["modules"]), {
+            "legends-dataforseo-kit", "legends-geogrid", "legends-github",
+            "legends-stable-audio-3", "legends-obs-kit", "legends-hyperyap",
+            "legends-empire", "legends-grant", "legends-firecrawl",
+            "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions"})
 
     def test_setup_revision_rebuilds_same_source(self):
         module = m.catalog()['modules']['legends-github']
@@ -92,49 +98,52 @@ class ManagerTests(unittest.TestCase):
         self.assertTrue(all(x["action"] == "guided-setup" for x in result["changes"]))
 
     def test_hyperyap_alias_resolves_to_canonical_guided_module(self):
-        self.assertEqual(m.resolve_module("hyperyap"), "legends-hyperyap")
-        self.assertEqual(m.resolve_module("legends-hyperyap"), "legends-hyperyap")
-        self.assertIn("legends-hyperyap", m.catalog()["modules"])
-        self.assertNotIn("hyperyap", m.catalog()["modules"])
-        self.assertIn("hyperyap", m.CLI_MODULES)
+        cat = m.catalog()
+        self.assertEqual(m.resolve_module("hyperyap", cat), "legends-hyperyap")
+        self.assertEqual(m.resolve_module("legends-hyperyap", cat), "legends-hyperyap")
+        self.assertIn("legends-hyperyap", cat["modules"])
+        self.assertNotIn("hyperyap", cat["modules"])
         with patch.object(m, "prepare", side_effect=AssertionError("must not prepare")), patch.object(m, "fetch", side_effect=AssertionError("network")):
             planned = m.plan(self.home, ["hyperyap"])
             installed = m.install(self.home, ["hyperyap"])
         self.assertEqual(planned[0]["id"], "legends-hyperyap")
         self.assertEqual(planned[0]["action"], "guided-setup")
         self.assertEqual(installed["guided_setup"][0]["id"], "legends-hyperyap")
-        self.assertEqual(m.guide("hyperyap")["id"], "legends-hyperyap")
-        self.assertIn("avalonreset/legends-hyperyap", m.guide("hyperyap")["release"])
+        self.assertEqual(m.guide(m.resolve_module("hyperyap", cat), cat)["id"], "legends-hyperyap")
+        self.assertIn("avalonreset/legends-hyperyap", m.guide(m.resolve_module("hyperyap", cat), cat)["release"])
         for name in ("guide", "handoff", "run", "rollback"):
             args = parser().parse_args(["--home", str(self.home), name, "hyperyap"])
             self.assertEqual(args.module, "hyperyap")
         self.assertEqual(route("set up hyperyap for me")["matches"][0]["id"], "legends-hyperyap")
 
     def test_captions_alias_resolves_to_canonical_managed_module(self):
-        self.assertEqual(m.resolve_module("legends-ultimate-captions"), "legends-captions")
-        self.assertEqual(m.resolve_module("legends-captions"), "legends-captions")
-        self.assertIn("legends-captions", m.catalog()["modules"])
-        self.assertNotIn("legends-ultimate-captions", m.catalog()["modules"])
-        self.assertIn("legends-ultimate-captions", m.CLI_MODULES)
+        cat = m.catalog()
+        self.assertEqual(m.resolve_module("legends-ultimate-captions", cat), "legends-captions")
+        self.assertEqual(m.resolve_module("legends-captions", cat), "legends-captions")
+        self.assertIn("legends-captions", cat["modules"])
+        self.assertNotIn("legends-ultimate-captions", cat["modules"])
         with patch.object(m, "prepare", side_effect=AssertionError("must not prepare")), patch.object(m, "fetch", side_effect=AssertionError("network")):
             planned = m.plan(self.home, ["legends-ultimate-captions"])
         self.assertEqual(planned[0]["id"], "legends-captions")
         self.assertEqual(planned[0]["action"], "install")
-        self.assertEqual(m.guide("legends-ultimate-captions")["id"], "legends-captions")
-        self.assertIn("avalonreset/legends-captions", m.guide("legends-ultimate-captions")["release"])
+        self.assertEqual(m.guide(m.resolve_module("legends-ultimate-captions", cat), cat)["id"], "legends-captions")
+        self.assertIn("avalonreset/legends-captions", m.guide(m.resolve_module("legends-ultimate-captions", cat), cat)["release"])
         for name in ("guide", "handoff", "run", "rollback"):
             args = parser().parse_args(["--home", str(self.home), name, "legends-ultimate-captions"])
             self.assertEqual(args.module, "legends-ultimate-captions")
         self.assertEqual(route("caption this video")["matches"][0]["id"], "legends-captions")
 
     def test_guided_assets_and_licenses(self):
-        for key in m.GUIDED_MODULES:
-            data = m.guide(key)
+        cat = m.catalog()
+        guided = [key for key, row in cat["modules"].items() if row["recipe"].get("mode") == "guided"]
+        self.assertEqual(guided, ["legends-hyperyap"])
+        for key in guided:
+            data = m.guide(key, cat)
             self.assertEqual(data["mode"], "guided")
             self.assertEqual(data["assets"], [])
             self.assertIn("pending", data["scope"])
             self.assertIn("pending", data["next"])
-            self.assertIn(m.catalog()["modules"][key]["commit"], data["instructions"])
+            self.assertIn(cat["modules"][key]["commit"], data["instructions"])
             self.assertNotEqual(data["license"], "MIT")
 
     def test_node_missing_and_old_are_rejected(self):
@@ -200,7 +209,7 @@ class ManagerTests(unittest.TestCase):
                                                        done.stdout + done.stderr)
             return subprocess.CompletedProcess(command, 0, '', '')
         with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=probing):
-            with self.assertRaises(subprocess.CalledProcessError):
+            with self.assertRaisesRegex(ValueError, 'missing'):
                 m.prepare('legends-grant', module, self.home)
 
     def test_grant_run_points_at_docs(self):
@@ -378,11 +387,11 @@ class ManagerTests(unittest.TestCase):
         key = "legends-geogrid"
         initial = {"schema": 1, "active": {key: "releases/new"}, "previous": {key: "releases/old"}}
         m.write_state(self.home, initial)
-        with patch.object(m, "probe", side_effect=ValueError("broken")):
+        with patch.object(m, "probe", side_effect=ValueError("broken")), patch.object(m, "recipe_for", return_value={}):
             with self.assertRaises(ValueError):
                 m.rollback(self.home, key)
         self.assertEqual(m.read_state(self.home), initial)
-        with patch.object(m, "probe"):
+        with patch.object(m, "probe"), patch.object(m, "recipe_for", return_value={}):
             result = m.rollback(self.home, key)
         self.assertEqual(result["active"][key], "releases/old")
         self.assertEqual(result["previous"][key], "releases/new")
@@ -428,7 +437,10 @@ class ManagerTests(unittest.TestCase):
 
     def test_untrusted_fetch_origin(self):
         with self.assertRaises(ValueError):
-            m.fetch("http://example.com/file")
+            m.fetch("http://example.com/file", set())
+        with self.assertRaises(ValueError):
+            m.fetch("https://codeload.github.com/evil-fork/legends-geogrid/zip/" + "0" * 40,
+                    {"avalonreset/legends-geogrid"})
 
 
 if __name__ == "__main__":

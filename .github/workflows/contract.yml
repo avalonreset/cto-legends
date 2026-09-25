@@ -61,8 +61,11 @@ jobs:
                   errors.append('canonical skill frontmatter must start with name: cto-legends')
               if '\u2014' in text:
                   errors.append('canonical skill contains an em dash')
+              if re.search(r'legends-[a-z0-9]', text):
+                  errors.append('frozen router: canonical skill names a module')
 
-          # 3. Version agreement: pyproject, package, catalog, changelog head.
+          # 3. Version agreement: pyproject, package, changelog head.
+          #    The catalog versions independently; see check 4.
           def fail(msg):
               errors.append(msg)
 
@@ -78,11 +81,6 @@ jobs:
           if not pkg_version:
               fail('cto_legends/__init__.py has no __version__ string')
 
-          catalog = json.loads((root / 'cto_legends' / 'catalog.json').read_text(encoding='utf-8'))
-          catalog_version = catalog.get('version')
-          if not catalog_version:
-              fail('catalog.json has no version')
-
           changelog = (root / 'CHANGELOG.md').read_text(encoding='utf-8')
           m = re.search(r'^##\s+(\d+\.\d+\.\d+)', changelog, re.M)
           changelog_head = m.group(1) if m else None
@@ -90,15 +88,34 @@ jobs:
               fail('CHANGELOG.md has no versioned head entry')
 
           versions = {'pyproject': py_version, 'package': pkg_version,
-                      'catalog': catalog_version, 'changelog': changelog_head}
+                      'changelog': changelog_head}
           distinct = {v for v in versions.values() if v}
           if len(distinct) != 1:
               fail('version mismatch: %s' % versions)
+
+          # 4. Living catalog: validates against the engine, and its own
+          #    changelog head matches its version.
+          sys.path.insert(0, '.')
+          from cto_legends.manager import validate_catalog
+          try:
+              catalog = validate_catalog(json.loads(
+                  (root / 'cto_legends' / 'catalog.json').read_text(encoding='utf-8')))
+          except ValueError as exc:
+              fail('catalog invalid: %s' % exc)
+              catalog = {}
+          if catalog:
+              cat_changelog = (root / 'docs' / 'CATALOG-CHANGELOG.md').read_text(encoding='utf-8')
+              m = re.search(r'^##\s+(\d+\.\d+\.\d+)', cat_changelog, re.M)
+              cat_head = m.group(1) if m else None
+              if cat_head != catalog.get('version'):
+                  fail('catalog changelog head %r does not match catalog version %r'
+                       % (cat_head, catalog.get('version')))
 
           if errors:
               print('contract FAILED:')
               for error in errors:
                   print(' - %s' % error)
               sys.exit(1)
-          print('contract OK: version %s' % py_version)
+          print('contract OK: manager %s, catalog %s'
+                % (py_version, (catalog or {}).get('version')))
           EOF

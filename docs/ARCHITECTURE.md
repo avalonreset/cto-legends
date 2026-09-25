@@ -20,15 +20,18 @@ checked rollback. `startup-status` verifies the file and index, not agent behavi
 Host documentation, live instruction loading and end-to-end task completion are
 different evidence levels. See [startup setup](STARTUP.md).
 
-The catalog is distributed inside the versioned package. Every entry binds a
-public repository, release version, immutable commit, archive hash, declared
-dependencies, and supported scope. Install recipes are code-reviewed Python,
-not remote shell strings. GitHub release discovery is read-only.
+The catalog ships as a bundled seed inside the versioned package, and lives
+as a synced copy in each manager home. Every entry binds a public
+repository, release version, immutable commit, archive hash, declared
+dependencies, supported scope, and a closed-vocabulary install/probe/run
+recipe. The manager engine interprets only hardcoded primitives with
+validated parameters: catalogs never supply shell commands. GitHub release
+discovery is read-only.
 
 ## Installation transaction
 
 1. Acquire an exclusive per-home operation lock.
-2. Resolve requested modules against the bundled catalog.
+2. Resolve requested modules against the active catalog (synced home copy, else the bundled seed).
 3. Download and verify each source archive, rejecting unsafe members.
 4. Create a fresh version directory and, for Python modules, an environment at its final path.
 5. Install the Python module/requirements or unpack the prebuilt OBS Node package.
@@ -48,10 +51,13 @@ back provider requests or changes a module made to other repositories.
 
 Verify its public release and license. Review its installation instructions and
 cost gates. Resolve the release tag to a full commit, download its codeload ZIP,
-and record the SHA-256 hash. Update the catalog, recipes/probes where needed,
-and compatibility documentation. Run unit tests, install all modules in a fresh
-home, run doctor and CLI smoke checks, and test dependency versions. Publish a
-new manager release only after platform CI succeeds.
+and record the SHA-256 hash. Update the catalog entry (pins plus recipe data),
+bump the catalog version, and record the change in the catalog changelog. No
+manager code or skill change is needed: users adopt the new pins with
+`cto-legends sync`, then `update --apply` for installed modules. A new manager
+release is only needed for engine, primitive, or CLI changes, and only after
+platform CI succeeds. See [module release checklist](MODULE-RELEASE.md) and
+[router stability](ROUTER-STABILITY.md).
 
 Do not add a private module, placeholder, or merely available repository to the
 catalog. The current set contains twelve independently released projects: eleven
@@ -68,11 +74,12 @@ Doctor runs offline CLI probes, not OBS control, microphones, or GPU generation.
 
 ## Trust and boundaries
 
-The public catalog and manager release are the trust root. Hashes verify the
-download matches the reviewed source; they are not signatures. GitHub-generated
-archive byte changes fail closed and require maintainer investigation. Module
-dependency installation executes Python package build code and uses normal pip
-indexes. Not every transitive dependency is locked. This is not a sandbox.
+The canonical catalog on the router main branch and the manager release are
+the trust root. Hashes verify the download matches the reviewed source; they
+are not signatures. GitHub-generated archive byte changes fail closed and
+require maintainer investigation. Module dependency installation executes
+Python package build code and uses normal pip indexes. Not every transitive
+dependency is locked. This is not a sandbox.
 
 The manager never reads provider credentials. Child module processes inherit
 the caller's environment so modules can use credentials when requested. Their

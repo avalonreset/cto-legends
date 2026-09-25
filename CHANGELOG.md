@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.2.0 - 2026-09-25
+
+- Frozen router, living catalog. Module updates and brand-new modules now
+  reach every user with zero router changes: no skill edit, no manager
+  release per module event.
+- The catalog decouples from the manager with its own version (starting
+  1.0.0) and CATALOG-CHANGELOG. New `cto-legends sync` previews and adopts
+  the canonical live catalog from the router repo main branch, keeps the
+  previous catalog, and rolls back with `sync --rollback`.
+- Closed-vocabulary recipe engine: install kinds, probe steps, and run
+  targets move from manager code into validated per-module catalog data.
+  Remote catalogs still never supply shell commands; repos stay pinned to
+  the house org and artifacts stay checksum-pinned.
+- `check-updates` answers "any updates?": installed vs catalog vs upstream
+  for every module, with the exact next command for each drift.
+- The router skill is fully generic and names no modules; a contract test
+  enforces zero module tokens. Agents read the live index from
+  `capabilities`, `route`, and `handoff`.
+- Registered local guides now resolve through capabilities, route,
+  handoff, markdown, and the startup index, always labeled unverified and
+  never shadowing catalog modules.
+- Docs: ROUTER-STABILITY.md (what may change the router), MODULE-RELEASE.md
+  (module release checklist), CATALOG-CHANGELOG.md (catalog history).
+
 ## 0.1.4 - 2026-09-25
 
 - Catalog: pinned github 0.1.1 (kit re-pin to the router-native

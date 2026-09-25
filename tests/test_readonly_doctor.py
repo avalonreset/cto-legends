@@ -18,6 +18,9 @@ class ReadOnlyDoctorTests(unittest.TestCase):
             release = home / 'releases/legends-dataforseo-kit/example'
             release.mkdir(parents=True)
             (release / 'install.log').write_bytes(b'Original installation receipt\n')
+            import json
+            module = manager.catalog()["modules"]["legends-dataforseo-kit"]
+            (release / 'receipt.json').write_text(json.dumps(module))
             manager.write_state(home, {'schema': 1, 'active': {
                 'legends-dataforseo-kit': str(release.relative_to(home))}, 'previous': {}})
             original_open = Path.open
@@ -49,8 +52,9 @@ class ReadOnlyDoctorTests(unittest.TestCase):
             release = Path(temp)
             manager.run([sys.executable, '-c', 'print("installation evidence")'], release)
             self.assertIn('installation evidence', (release / 'install.log').read_text())
+            recipe = manager.catalog()["modules"]["legends-dataforseo-kit"]["recipe"]
             with patch.object(manager, 'run') as run:
-                manager.probe('legends-dataforseo-kit', release, log=True)
+                manager.probe('legends-dataforseo-kit', release, recipe, log=True)
             self.assertTrue(run.call_args.kwargs['log'])
 
     def test_all_readiness_probes_default_to_no_log(self):
@@ -58,11 +62,21 @@ class ReadOnlyDoctorTests(unittest.TestCase):
             release = Path(temp)
             (release / 'source/tests').mkdir(parents=True)
             (release / 'source/tests/test_dataforseo_transport.py').write_text('')
-            for key in manager.RECIPES - manager.GUIDED_MODULES:
+            managed = [(key, row["recipe"]) for key, row in manager.catalog()["modules"].items()
+                       if row["recipe"].get("mode", "managed") == "managed"]
+            self.assertTrue(managed)
+            for key, recipe in managed:
+                for step in recipe["probe"]:
+                    if step["do"] == "files-exist":
+                        for name in step["paths"]:
+                            target = release / "source" / name
+                            target.parent.mkdir(parents=True, exist_ok=True)
+                            target.write_text("probe fixture")
                 with patch.object(manager, 'run') as run, patch.object(manager, 'node_binary', return_value='node'):
-                    manager.probe(key, release)
-                self.assertTrue(run.call_args_list)
-                self.assertTrue(all(call.kwargs['log'] is False for call in run.call_args_list))
+                    manager.probe(key, release, recipe)
+                self.assertTrue(run.call_args_list or
+                                all(step["do"] == "files-exist" for step in recipe["probe"]), key)
+                self.assertTrue(all(call.kwargs['log'] is False for call in run.call_args_list), key)
 
 
 if __name__ == '__main__':

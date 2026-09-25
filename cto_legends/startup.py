@@ -69,9 +69,17 @@ def compact_index(managed_home=None):
         lines += [f'Manager: `{command}`',
                   f'Resolve instructions: `{command} handoff <module>`.',
                   f'If the goal is ambiguous, inspect `{command} capabilities --markdown` or `{command} route "user goal"`; these return hints, not authorization.', '']
-    for row in discovery.index()['capabilities']:
+    catalog = discovery.index(safe_path(managed_home)) if managed_home is not None else discovery.index()
+    for row in catalog['capabilities']:
         lines += [f"- **{row['id']}**: {row['purpose']} Examples: {'; '.join(row['examples'])}. "
                   f"Excludes: {row['not_for']}"]
+    if managed_home is not None:
+        guides = [row for row in catalog['local_guides'] if not row['catalog_module']]
+        if guides:
+            lines += ['', '## Local guides (user-selected, readiness unverified)']
+            for row in guides:
+                lines += [f"- **{row['id']}** (local guide, unverified): `{row['path']}`. "
+                          f"Read it when the user requests that capability; readiness is unverified."]
     return ('\n'.join(lines) + '\n').encode('utf-8')
 
 
@@ -80,7 +88,7 @@ def block(index_file, home, newline):
     text = '\n'.join([
         BEGIN.decode(), '## CTO Legends capability discovery', '',
         f'Before choosing tools for a matching user task, read the local capability index: `{index_file}`.',
-        'It covers music/sound effects, local visibility, SEO research, GitHub improvement, vault memory, recording, voice typing and cursor effects.',
+        'It lists every cataloged capability with examples and exclusions; read the live index rather than assuming a fixed module set.',
         'Select by the user outcome; do not require a product name or a separately registered module skill.',
         f'For a match, run `{command} handoff <module>` and read the returned installed Markdown recipe.',
         f'Use `{command} status` and the recipe\'s task-readiness checks before execution; a catalog entry is not proof of readiness.',
