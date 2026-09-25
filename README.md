@@ -136,7 +136,6 @@ cto-legends run legends-stable-audio-3 -- plan --hours 1 --vram-gb 16
 cto-legends install legends-obs-kit --apply
 cto-legends run legends-obs-kit -- manifest
 cto-legends guide hyperyap
-cto-legends guide legends-obs-cursor
 cto-legends status
 ```
 
