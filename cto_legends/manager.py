@@ -23,9 +23,8 @@ LIMIT = 100 * 1024 * 1024
 REPOSITORIES = {key: "avalonreset/" + key for key in (
     "legends-dataforseo-kit", "legends-geogrid", "legends-github",
     "legends-stable-audio-3", "legends-obs-kit", "hyperyap", "legends-obsidian", "legends-grant", "legends-firecrawl")}
-REPOSITORIES["legends-obs-cursor"] = "cto-legends/legends-obs-cursor"
 RECIPES = set(REPOSITORIES)
-GUIDED_MODULES = {"hyperyap", "legends-obs-cursor"}
+GUIDED_MODULES = {"hyperyap"}
 
 
 def catalog():
