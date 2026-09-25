@@ -35,6 +35,7 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions. | `legends-obsidian` |
 | Find, qualify, and apply for US business grants with agent assistance. | `legends-grant` |
 | Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing. | `legends-firecrawl` |
+| Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails. | `legends-yt-dlp` |
 <!-- capability-directory:end -->
 
 > **Deprecation notice:** `legends-obsidian` is deprecated. Its successor is `legends-empire` (public repo live; catalog onboarding follows its internal rename). Existing installs keep working; new vault-memory work should target Empire. Never install both for the same vault.
@@ -97,9 +98,10 @@ checked separately: current transaction apply requires a POSIX/WSL host.
 
 1. Match the goal: `legends-geogrid` for local rank grids; `legends-dataforseo-kit`
    for search and keyword research; `legends-obsidian` for vault memory and evidence;
-   `legends-github` for repository improvement;
-   `legends-stable-audio-3` for music/SFX; `legends-obs-kit` for recording;
-   `hyperyap` for dictation; `legends-obs-kit` for OBS plus pointer overlays.
+   `legends-github` for repository improvement; `legends-stable-audio-3` for music/SFX;
+   `legends-obs-kit` for OBS recording plus pointer overlays; `hyperyap` for dictation;
+   `legends-grant` for grant finding and applications; `legends-firecrawl` for web
+   search and scraping; `legends-yt-dlp` for video pulls, transcripts, and clips.
 2. Preview: `cto-legends install <module>`.
 3. When installation is within the user's request, run the same command with
    `--apply`. Otherwise explain the proposed install and ask before doing it.
