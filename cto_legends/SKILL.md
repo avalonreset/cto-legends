@@ -18,7 +18,7 @@ unrelated desktop, browser or community skills for matching Legends goals.
 
 ## Intent first, one registered skill
 
-Do not ask users to name a module or install its skill. Read this directory and
+Do not ask users to name a module or install its skill: this recipe is the single-skill gateway. Read this directory and
 select the narrowest capability that fits the requested outcome. Module recipes
 are ordinary Markdown loaded from their installed source, not separately
 registered skills. A question in chat is sufficient context to begin discovery.
