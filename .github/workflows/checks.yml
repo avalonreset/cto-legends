@@ -28,6 +28,7 @@ jobs:
       - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo-kit legends-geogrid legends-github legends-stable-audio-3 legends-obs-kit legends-yt-dlp --apply
       - run: cto-legends --home "${{ runner.temp }}/legends" doctor
       - run: cto-legends --home "${{ runner.temp }}/legends" check-updates
+      - run: cto-legends --home "${{ runner.temp }}/legends" sync
       - run: python scripts/smoke_installed.py --home "${{ runner.temp }}/legends" --browser
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-geogrid -- --help
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-dataforseo-kit -- routes
