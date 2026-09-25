@@ -229,7 +229,7 @@ def probe(key, release, *, log=False):
     elif key == "legends-obs-kit":
         check([node_binary(), source / "dist" / "index.js", "manifest"], release)
     elif key == "legends-grant":
-        check([python, "-c", "import pathlib; root = pathlib.Path('source'); missing = [name for name in ('SKILL.md', 'find.md', 'match.md', 'qualify.md', 'apply.md', 'sources.md', 'submit-lanes.md', 'vault-map.md') if not (root / name).is_file()]; assert not missing, missing"], release)
+        check([python, "-c", "import pathlib; root = pathlib.Path('source'); missing = [name for name in ('README.md', 'docs/GRANT-RECIPE.md', 'find.md', 'match.md', 'qualify.md', 'apply.md', 'sources.md', 'submit-lanes.md', 'vault-map.md') if not (root / name).is_file()]; assert not missing, missing"], release)
     elif key == "legends-firecrawl":
         check([python, "-c", "from legends_firecrawl import __version__; assert __version__"], release)
     elif key == "legends-yt-dlp":

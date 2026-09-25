@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "modules": {
     "legends-dataforseo-kit": {
-      "version": "0.1.0",
-      "commit": "dd00fb030393f300226ca18db3644bb141f96fb0",
+      "version": "0.1.1",
+      "commit": "b0981cbd68ba18210bac3de07d94582bd1fc2f44",
       "repo": "avalonreset/legends-dataforseo-kit",
-      "sha256": "3226dba269baf99813a57caad37e633a37434cfe2279041c85a30c88c310c029",
+      "sha256": "0cfb07d64913ccaad8fc990fbaf3b8ff43956602ebcef0c83264b1881fa14a8e",
       "purpose": "Search and keyword research through DataForSEO.",
       "keywords": [
         "seo",
@@ -178,9 +178,9 @@
       }
     },
     "legends-obs-kit": {
-      "version": "0.1.0",
+      "version": "0.1.1",
       "repo": "avalonreset/legends-obs-kit",
-      "commit": "aa49941a5e2bb08bf590f505c65f2dd70f5c0426",
+      "commit": "74d7161e1e400253f794f53987e2fd14fa19ead3",
       "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
       "keywords": [
         "obs",
@@ -200,7 +200,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "e8d48a50208bb5523e6008ba1f854f7f255c10d1c9dfb9ee9e6570174123bb6a",
+      "sha256": "120d6ee49a2b636df02f1432bd4a275ac352517f286bbbb336a4aad51c5e4cc3",
       "discovery": {
         "signals": [
           "record my screen",
@@ -223,12 +223,13 @@
           "README.md",
           "docs/RECIPES.md"
         ]
-      }
+      },
+      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.1.1/avalonreset-legends-obs-kit-0.1.1.tgz"
     },
     "legends-hyperyap": {
-      "version": "0.1.0",
+      "version": "0.1.1",
       "repo": "avalonreset/legends-hyperyap",
-      "commit": "d2271c065af8580505589a4f587e0416a8b8b5f8",
+      "commit": "3aff10e8df84b37b37e90445472c8ff097be9674",
       "purpose": "Local voice typing, dictation, and app-focused paste.",
       "keywords": [
         "voice",
@@ -247,7 +248,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "f12b38d914c97d2619878885a69305d3d5545929c9a6b0bf67d3b846a7225b35",
+      "sha256": "db6e314af087457cec0f40bce993a56ea601ca75a4933c2e8b9982732d2beced",
       "next": "v0.1.0 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
       "discovery": {
         "signals": [
@@ -269,10 +270,10 @@
       }
     },
     "legends-empire": {
-      "version": "0.1.0",
-      "commit": "10ac9e84af7981c38e598c564f5e1c03a20302f0",
+      "version": "0.1.1",
+      "commit": "60c4fe506bc28bf8c2b991a5246985a2e447863c",
       "repo": "avalonreset/legends-empire",
-      "sha256": "9c76b61feb3d22c9bee4bc95aca74e5a652f3289a8f4df2fadbfd0f094cd44b6",
+      "sha256": "3df5492881d577735111512960bbd20d384f2d0d18ff84a4c35366a5315e0576",
       "purpose": "Source-cited Empire memory, research evidence, retrieval and recoverable knowledge transactions.",
       "keywords": [
         "empire",

@@ -226,6 +226,25 @@ def audit_contract(root: Path, module: str, is_router: bool) -> list[Check]:
     if legends.is_file():
         checks.append(Check(None, "LEGENDS.md manual review",
                             "LEGENDS.md present: verify it is not a skill shim"))
+    # IDE rule dispatchers: auto-loaded rule files must not route to skills.
+    dispatcher_markers = re.compile(
+        r"SKILL\.md|setup-multi-agent|install-spine|skills/[A-Za-z0-9_.-]+/",
+        re.IGNORECASE)
+    dispatchers = []
+    for rules_dir in (".cursor/rules", ".windsurf/rules", ".codex", ".gemini"):
+        rd = root / rules_dir
+        if rd.is_dir():
+            for f in sorted(rd.rglob("*")):
+                if f.is_file():
+                    text = f.read_text(encoding="utf-8", errors="replace")
+                    # References to the one router skill are compliant routing.
+                    text = re.sub(r"cto-legends", "", text, flags=re.IGNORECASE)
+                    if dispatcher_markers.search(text):
+                        dispatchers.append(f.relative_to(root).as_posix())
+    checks.append(Check(
+        not dispatchers, "IDE rules carry no skill dispatch",
+        "" if not dispatchers else f"dispatchers: {', '.join(dispatchers)}",
+    ))
     agents = root / "AGENTS.md"
     if agents.is_file():
         text = agents.read_text(encoding="utf-8", errors="replace")

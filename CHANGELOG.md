@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.2 - 2026-09-25
+
+- Catalog: pinned obs-kit, empire, hyperyap, and dataforseo-kit 0.1.1
+  releases. Obs-kit installs from its prebuilt release artifact again
+  (artifact_url plus tgz sha256); the 0.1.0 source-zip pin could never
+  satisfy the prebuilt extractor.
+- Probes: grant install check follows the post-reset recipe paths
+  (docs/GRANT-RECIPE.md plus lane files); empire readiness follows its
+  README plus install guide.
+- Version: package __version__ joins pyproject, catalog, and changelog
+  at 0.1.2. Fleet audit gains the native-installer carve-out and the
+  IDE-rule dispatcher check.
+
 ## 0.1.1 - 2026-09-25
 
 - Patch: the 0.1.0 wheel shipped a catalog whose module sha256 values did not

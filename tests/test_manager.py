@@ -156,8 +156,9 @@ class ManagerTests(unittest.TestCase):
                     execute(args)
 
     def test_grant_prepare_needs_no_python_requirements(self):
-        lanes = ['SKILL.md', 'find.md', 'match.md', 'qualify.md', 'apply.md',
-                 'sources.md', 'submit-lanes.md', 'vault-map.md']
+        lanes = ['README.md', 'docs/GRANT-RECIPE.md', 'find.md', 'match.md',
+                 'qualify.md', 'apply.md', 'sources.md', 'submit-lanes.md',
+                 'vault-map.md']
         stream = io.BytesIO()
         with zipfile.ZipFile(stream, 'w') as z:
             for name in lanes:
