@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.4 - 2026-09-25
+
+- Catalog: pinned github 0.1.1 (kit re-pin to the router-native
+  generation).
+- Probes: the geogrid and github kit checks now assert the catalog
+  floor (>= 0.1.0) instead of an exact version. Exact matching broke
+  the batch install the moment the kit patched.
+
 ## 0.1.3 - 2026-09-25
 
 - Catalog: pinned dataforseo-kit 0.1.2 (in-package version join).

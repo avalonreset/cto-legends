@@ -216,10 +216,10 @@ def probe(key, release, *, log=False):
         if not (source / "tests" / "test_dataforseo_transport.py").is_file():
             raise ValueError("GeoGrid transport acceptance tests are missing")
         check([python, "-m", "unittest", "discover", "-s", str(source / "tests"), "-p", "*transport*"], release)
-        check([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert m.version('legends-dataforseo-kit') == '0.1.0'"], release)
+        check([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; v = tuple(int(x) for x in m.version('legends-dataforseo-kit').split('.')[:3]); assert v >= (0, 1, 0), v"], release)
     elif key == "legends-github":
         check([python, source / "legends_github.py", "capabilities"], release)
-        check([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert callable(api_request); assert m.version('legends-dataforseo-kit') == '0.1.0'"], release)
+        check([python, "-c", "from legends_dataforseo import api_request; import importlib.metadata as m; assert callable(api_request); v = tuple(int(x) for x in m.version('legends-dataforseo-kit').split('.')[:3]); assert v >= (0, 1, 0), v"], release)
     elif key == "legends-stable-audio-3":
         check([python, "-m", "legends_sa3", "skill", "validate"], release)
         check([python, "-m", "legends_sa3", "plan", "--hours", "1", "--vram-gb", "16"], release)
