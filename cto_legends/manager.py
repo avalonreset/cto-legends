@@ -280,6 +280,8 @@ def plan(home, keys):
                     and receipt.get("setup_revision", 0) == module.get("setup_revision", 0))
         result.append({"id": key, "version": module["version"], "action": "keep" if same else "install",
                        "commit": module["commit"], "dependencies": module["dependencies"], "scope": module["scope"]})
+        if key == "legends-obs-kit":
+            result[-1]["extras"] = {"cursor": "Optional animated cursor overlay plus click effects (GPL Lua filter, not installed by default). After install, copy extras/cursor/legends-cursor.lua into the OBS scripts folder and enable it under Tools > Scripts."}
     return result
 
 
