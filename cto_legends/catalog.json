@@ -202,7 +202,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "5f3036aaabc90a4fbc557370cda12dcd6386bba01e977a3cf93e48c82a88697d",
+      "sha256": "2c4745d4192a9d30862cf4271a3a6d326c864745b873389ba413b1725f6fced8",
       "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.4.1/avalonreset-legends-obs-kit-0.4.1.tgz",
       "discovery": {
         "signals": [
@@ -436,10 +436,10 @@
       }
     },
     "legends-yt-dlp": {
-      "version": "0.3.0",
-      "commit": "d6cdc6080a9246e1e2c5737831de495cc19a58d9",
+      "version": "0.3.1",
+      "commit": "fcd20c3e85e1868f8ab66b049469b04bfa4b930c",
       "repo": "avalonreset/legends-yt-dlp",
-      "sha256": "99fc5281136405f9fbbd8e09e5588c14fafc86971c5af294c5f06f2a8c270574",
+      "sha256": "2b27d9f910619d78ff9b5859830bfe32b45d420b10ac6dec2bcaf53f0e91c442",
       "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
       "keywords": [
         "youtube",
