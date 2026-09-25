@@ -37,6 +37,9 @@ jobs:
       - run: cto-legends guide legends-hyperyap
       - run: cto-legends guide hyperyap
       - run: cto-legends handoff hyperyap
+      - run: cto-legends guide legends-captions
+      - run: cto-legends guide legends-ultimate-captions
+      - run: cto-legends handoff legends-ultimate-captions
       - run: cto-legends route "rip this video"
       - name: Install and verify Empire on its supported Python
         if: matrix.python == '3.13'

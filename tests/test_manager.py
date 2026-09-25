@@ -76,7 +76,7 @@ class ManagerTests(unittest.TestCase):
                                ("music audio", "legends-stable-audio-3"), ("OBS recording", "legends-obs-kit"),
                                ("rip this video", "legends-yt-dlp"),
                                ("transcribe my voice memos", "legends-ambient-intelligence"),
-                               ("caption this video", "legends-ultimate-captions")):
+                               ("caption this video", "legends-captions")):
             self.assertEqual(route(goal)["matches"][0]["id"], expected)
 
     def test_obs_kit_plan_advertises_cursor_extra(self):
@@ -109,6 +109,23 @@ class ManagerTests(unittest.TestCase):
             args = parser().parse_args(["--home", str(self.home), name, "hyperyap"])
             self.assertEqual(args.module, "hyperyap")
         self.assertEqual(route("set up hyperyap for me")["matches"][0]["id"], "legends-hyperyap")
+
+    def test_captions_alias_resolves_to_canonical_managed_module(self):
+        self.assertEqual(m.resolve_module("legends-ultimate-captions"), "legends-captions")
+        self.assertEqual(m.resolve_module("legends-captions"), "legends-captions")
+        self.assertIn("legends-captions", m.catalog()["modules"])
+        self.assertNotIn("legends-ultimate-captions", m.catalog()["modules"])
+        self.assertIn("legends-ultimate-captions", m.CLI_MODULES)
+        with patch.object(m, "prepare", side_effect=AssertionError("must not prepare")), patch.object(m, "fetch", side_effect=AssertionError("network")):
+            planned = m.plan(self.home, ["legends-ultimate-captions"])
+        self.assertEqual(planned[0]["id"], "legends-captions")
+        self.assertEqual(planned[0]["action"], "install")
+        self.assertEqual(m.guide("legends-ultimate-captions")["id"], "legends-captions")
+        self.assertIn("avalonreset/legends-captions", m.guide("legends-ultimate-captions")["release"])
+        for name in ("guide", "handoff", "run", "rollback"):
+            args = parser().parse_args(["--home", str(self.home), name, "legends-ultimate-captions"])
+            self.assertEqual(args.module, "legends-ultimate-captions")
+        self.assertEqual(route("caption this video")["matches"][0]["id"], "legends-captions")
 
     def test_guided_assets_and_licenses(self):
         for key in m.GUIDED_MODULES:

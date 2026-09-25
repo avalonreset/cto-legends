@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.14
+
+- Rename the managed module to legends-captions 0.2.0 (repo
+  avalonreset/legends-captions). `legends-ultimate-captions` remains a
+  compatibility alias across route, guide, handoff, install, run, and
+  rollback.
+- Repinned commit and source-archive checksum for the renamed release;
+  package `legends_captions` and skill slug `legends-captions`.
+- Catalog still holds twelve modules (eleven managed, legends-hyperyap the
+  only guided native module).
+
 ## 0.5.13
 
 - Rename the guided native module to legends-hyperyap (repo

@@ -538,11 +538,11 @@
         ]
       }
     },
-    "legends-ultimate-captions": {
-      "version": "0.1.0",
-      "commit": "e8a26ecdc953369689a0baaaf8c79a5009f93140",
-      "repo": "avalonreset/legends-ultimate-captions",
-      "sha256": "25ea1ebd3dcda54f2ee43d65e68f208902c269a2cf86875d75ccf0cc7da89bed",
+    "legends-captions": {
+      "version": "0.2.0",
+      "commit": "d145c55fc253c880598333e3ccf1c82db1625562",
+      "repo": "avalonreset/legends-captions",
+      "sha256": "8cafaa9915d93081b72a5f02c87715fdddf290b6249c1e51070c86a475998c64",
       "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
       "keywords": [
         "caption",
@@ -578,7 +578,7 @@
         "not_for": "Recording audio or running ASR (see legends-ambient-intelligence); generic video editing.",
         "setup": "No services or keys. Optional WSL speech env via LEGENDS_CAPTIONS_WSL_PYTHON for full production runs.",
         "instructions": [
-          "skills/legends-ultimate-captions/SKILL.md",
+          "skills/legends-captions/SKILL.md",
           "README.md"
         ]
       }

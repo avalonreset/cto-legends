@@ -33,10 +33,10 @@ Python 3.10 or newer is required for the manager; use Python 3.11+ to include Em
 or MCP server is needed to install the ecosystem manager.
 
 From a source checkout, install with `python -m pip install .`. The release
-wheel command below installs the v0.5.13 release.
+wheel command below installs the v0.5.14 release.
 
 ```sh
-python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.5.13/cto_legends-0.5.13-py3-none-any.whl"
+python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.5.14/cto_legends-0.5.14-py3-none-any.whl"
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -109,7 +109,7 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) 0.2.1 | Web search, scraping, crawling, provider catalog | Python client + offline catalog; vendor CLI and key need module setup |
 | [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) 0.3.1 | Repeatable video pulls, transcripts, search, clip-building | Pip-installed CLI + skill; yt-dlp binary and ffmpeg need module setup; Mullvad opt-in |
 | [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) 0.1.0 | Ambient audio capture, archiving, transcription, distillation | Pip-installed CLI + skill; ffmpeg and faster-whisper/NeMo need module setup |
-| [legends-ultimate-captions](https://github.com/avalonreset/legends-ultimate-captions) 0.1.0 | Caption correction, timing, rendering, proof | Pip-installed CLI + skill; stdlib only, speech envs optional |
+| [legends-captions](https://github.com/avalonreset/legends-captions) 0.2.0 | Caption correction, timing, rendering, proof | Pip-installed CLI + skill; stdlib only, speech envs optional |
 
 Eleven modules have managed CLI installations. The one native module uses
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
@@ -230,7 +230,7 @@ For an existing local product not in the public catalog:
 This registers a guide only: no installation, update, execution or readiness
 claim. Such guides appear in `status`, stay private, and remain user-managed.
 
-The v0.5.13 wheel linked above includes these commands.
+The v0.5.14 wheel linked above includes these commands.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 

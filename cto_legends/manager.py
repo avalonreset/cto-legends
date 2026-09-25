@@ -22,10 +22,10 @@ ROOT = Path(__file__).resolve().parent
 LIMIT = 100 * 1024 * 1024
 REPOSITORIES = {key: "avalonreset/" + key for key in (
     "legends-dataforseo-kit", "legends-geogrid", "legends-github",
-    "legends-stable-audio-3", "legends-obs-kit", "legends-hyperyap", "legends-empire", "legends-grant", "legends-firecrawl", "legends-yt-dlp", "legends-ambient-intelligence", "legends-ultimate-captions")}
+    "legends-stable-audio-3", "legends-obs-kit", "legends-hyperyap", "legends-empire", "legends-grant", "legends-firecrawl", "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions")}
 RECIPES = set(REPOSITORIES)
 GUIDED_MODULES = {"legends-hyperyap"}
-MODULE_ALIASES = {"hyperyap": "legends-hyperyap"}
+MODULE_ALIASES = {"hyperyap": "legends-hyperyap", "legends-ultimate-captions": "legends-captions"}
 CLI_MODULES = set(REPOSITORIES) | set(MODULE_ALIASES)
 
 
@@ -238,9 +238,9 @@ def probe(key, release, *, log=False):
     elif key == "legends-ambient-intelligence":
         check([python, "-c", "from legends_ambient import __version__; assert __version__"], release)
         check([python, "-m", "legends_ambient", "--help"], release)
-    elif key == "legends-ultimate-captions":
-        check([python, "-c", "from legends_ultimate_captions import __version__; assert __version__"], release)
-        check([python, "-m", "legends_ultimate_captions", "--help"], release)
+    elif key == "legends-captions":
+        check([python, "-c", "from legends_captions import __version__; assert __version__"], release)
+        check([python, "-m", "legends_captions", "--help"], release)
     else:
         raise ValueError("No managed probe for this module")
 
@@ -265,7 +265,7 @@ def prepare(key, module, home):
         extract(raw, source, module["sha256"])
         run([sys.executable, "-m", "venv", release / "env"], release)
         python = python_at(release)
-        if key in {"legends-dataforseo-kit", "legends-stable-audio-3", "legends-firecrawl", "legends-yt-dlp", "legends-ambient-intelligence", "legends-ultimate-captions"}:
+        if key in {"legends-dataforseo-kit", "legends-stable-audio-3", "legends-firecrawl", "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions"}:
             run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
         elif key not in {"legends-empire", "legends-grant"}:
             run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-dataforseo.txt"], release)
