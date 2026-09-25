@@ -32,13 +32,13 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Create instrumental music, sound effects, and continuous mixes. | `legends-stable-audio-3` |
 | Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra. | `legends-obs-kit` |
 | Local voice typing, dictation, and app-focused paste. | `hyperyap` |
-| Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions. | `legends-obsidian` |
+| Source-cited Empire memory, research evidence, retrieval and recoverable knowledge transactions. | `legends-empire` |
 | Find, qualify, and apply for US business grants with agent assistance. | `legends-grant` |
 | Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing. | `legends-firecrawl` |
 | Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails. | `legends-yt-dlp` |
 <!-- capability-directory:end -->
 
-> **Deprecation notice:** `legends-obsidian` is deprecated. Its successor is `legends-empire` (public repo live; catalog onboarding follows its internal rename). Existing installs keep working; new vault-memory work should target Empire. Never install both for the same vault.
+> **Cutover note:** `legends-obsidian` was renamed to `legends-empire` in 3.0.0. Install `legends-empire` for vault memory; the old key refuses with a pointer. Never install both for the same vault.
 
 For "can we generate some AI music?", choose legends-stable-audio-3, resolve its
 handoff, read its audio recipe, and check its generation setup. Do not detour to
@@ -97,7 +97,7 @@ checked separately: current transaction apply requires a POSIX/WSL host.
 ## Install what the task needs
 
 1. Match the goal: `legends-geogrid` for local rank grids; `legends-dataforseo-kit`
-   for search and keyword research; `legends-obsidian` for vault memory and evidence;
+   for search and keyword research; `legends-empire` for vault memory and evidence;
    `legends-github` for repository improvement; `legends-stable-audio-3` for music/SFX;
    `legends-obs-kit` for OBS recording plus pointer overlays; `hyperyap` for dictation;
    `legends-grant` for grant finding and applications; `legends-firecrawl` for web
