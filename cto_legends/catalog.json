@@ -182,7 +182,7 @@
     "legends-obs-kit": {
       "version": "0.4.1",
       "repo": "avalonreset/legends-obs-kit",
-      "commit": "40cf026ad50674d6176a29cd5ce1c4170b58fcbf",
+      "commit": "81eaa20822686a74e19ab039972039e4f2516d59",
       "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
       "keywords": [
         "obs",
@@ -192,7 +192,9 @@
         "scenes",
         "encoder",
         "cursor",
-        "mouse"
+        "overlay",
+        "mouse",
+        "highlight"
       ],
       "license": "MIT",
       "scope": "Managed prebuilt Node CLI; Node 22+ required. Live OBS operation targets Windows and needs local OBS WebSocket setup.",
@@ -200,7 +202,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "2c4745d4192a9d30862cf4271a3a6d326c864745b873389ba413b1725f6fced8",
+      "sha256": "5f3036aaabc90a4fbc557370cda12dcd6386bba01e977a3cf93e48c82a88697d",
       "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.4.1/avalonreset-legends-obs-kit-0.4.1.tgz",
       "discovery": {
         "signals": [
@@ -210,10 +212,9 @@
           "obs",
           "record a tutorial",
           "capture my desktop",
-          "highlight my mouse",
-          "mouse highlight",
           "cursor overlay",
-          "click effects"
+          "highlight my mouse",
+          "mouse highlight"
         ],
         "examples": [
           "Record my screen",
@@ -223,8 +224,7 @@
         "setup": "Node.js 22+, Windows OBS and authenticated WebSocket setup; follow module doctor.",
         "instructions": [
           "skills/legends-obs-kit/SKILL.md",
-          "README.md",
-          "extras/cursor/README.md"
+          "README.md"
         ]
       }
     },
