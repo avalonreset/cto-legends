@@ -36,6 +36,7 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Find, qualify, and apply for US business grants with agent assistance. | `legends-grant` |
 | Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing. | `legends-firecrawl` |
 | Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails. | `legends-yt-dlp` |
+| Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation. | `legends-ambient-intelligence` |
 <!-- capability-directory:end -->
 
 > **Cutover note:** `legends-obsidian` was renamed to `legends-empire` in 3.0.0. Install `legends-empire` for vault memory; the old key refuses with a pointer. Never install both for the same vault.
@@ -101,7 +102,8 @@ checked separately: current transaction apply requires a POSIX/WSL host.
    `legends-github` for repository improvement; `legends-stable-audio-3` for music/SFX;
    `legends-obs-kit` for OBS recording plus pointer overlays; `hyperyap` for dictation;
    `legends-grant` for grant finding and applications; `legends-firecrawl` for web
-   search and scraping; `legends-yt-dlp` for video pulls, transcripts, and clips.
+   search and scraping; `legends-yt-dlp` for video pulls, transcripts, and clips;
+   `legends-ambient-intelligence` for ambient recording, voice memos, and distillation.
 2. Preview: `cto-legends install <module>`.
 3. When installation is within the user's request, run the same command with
    `--apply`. Otherwise explain the proposed install and ask before doing it.
