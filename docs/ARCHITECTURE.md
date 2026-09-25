@@ -11,7 +11,7 @@ does not register those recipes as host skills. This removes reliance on optiona
 skill selection for the initial lookup while keeping detailed workflows out of
 startup context. An unrelated request need not load the index.
 
-## Single-skill gateway
+## Single-skill router
 
 One registered host skill; every module resolves on demand. Install one skill; every module loads on demand. Module recipes are ordinary Markdown read from verified managed installs, never separately registered host skills. Discovery stays unverified until a fresh session proves it.
 
