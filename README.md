@@ -11,7 +11,7 @@
 Tell your agent what you want to do. `cto-legends` helps it find the right module,
 install a verified version, and maintain the components you actually use.
 Each module remains its own open-source project. Register one central skill, then
-load specialized instructions only when a task needs them.
+load specialized instructions only when a task needs them. This is the single-skill gateway: install one skill; every module loads on demand.
 
 This is a curated Legends module manager, not a directory of every third-party
 skill. It manages verified releases and separate tool environments, while your
