@@ -1,10 +1,18 @@
 # Changelog
 
+## 0.1.1 - 2026-09-25
+
+- Patch: the 0.1.0 wheel shipped a catalog whose module sha256 values did not
+  match the codeload archives the manager downloads, so `install --apply`
+  refused with an archive checksum mismatch. The tree catalog was corrected
+  after the 0.1.0 tag; this release ships the corrected catalog. No module
+  changes. Install from the 0.1.1 wheel.
+
 ## 0.1.0 - 2026-09-25
 
 - Router-native generation: the whole 13-repo Legends ecosystem resets to
-  0.1.0 as the contract-compliant baseline. No release is cut from this tree
-  yet; the module resets land first.
+  0.1.0 as the contract-compliant baseline. All 12 modules released at 0.1.0
+  with the catalog refreshed same-day.
 - Canonical router skill (`cto_legends/SKILL.md`) finalized as the single
   registered skill that all 12 modules vendor byte-exact. Module recipes live
   in README plus docs with no per-module skill registrations. Install law
