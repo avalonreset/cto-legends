@@ -302,13 +302,14 @@
         ]
       }
     },
-    "legends-obsidian": {
-      "version": "2.3.0",
-      "commit": "722ad1498d54f21aeaba9975d1830d952082718b",
-      "repo": "avalonreset/legends-obsidian",
-      "sha256": "74922fe0c1c1b302576b333d116d53fe3ffbb0ebde92f270946c18f6e856fe71",
-      "purpose": "Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions.",
+    "legends-empire": {
+      "version": "3.0.0",
+      "commit": "e81202beb24ce67f3f161e6d29540b06f4e42609",
+      "repo": "avalonreset/legends-empire",
+      "sha256": "d6820376cdc09831c98f090dc0d919df8d7abca38b23878e46af04acfff90a2f",
+      "purpose": "Source-cited Empire memory, research evidence, retrieval and recoverable knowledge transactions.",
       "keywords": [
+        "empire",
         "obsidian",
         "vault",
         "memory",
@@ -326,6 +327,8 @@
           "bank research",
           "vault",
           "obsidian",
+          "empire",
+          "empire memory",
           "knowledge base",
           "research history",
           "source cited notes"
@@ -337,7 +340,7 @@
         "not_for": "Inventing sources or modifying a vault without selecting it.",
         "setup": "Select a vault. Native Windows supports inspection; transaction writes require POSIX/WSL.",
         "instructions": [
-          "skills/legends-obsidian/SKILL.md",
+          "skills/legends-empire/SKILL.md",
           "README.md"
         ]
       }
