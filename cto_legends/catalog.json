@@ -180,17 +180,19 @@
       }
     },
     "legends-obs-kit": {
-      "version": "0.4.0",
+      "version": "0.4.1",
       "repo": "avalonreset/legends-obs-kit",
-      "commit": "81eaa20822686a74e19ab039972039e4f2516d59",
-      "purpose": "Inspect, configure, and verify OBS Studio recording workflows.",
+      "commit": "40cf026ad50674d6176a29cd5ce1c4170b58fcbf",
+      "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
       "keywords": [
         "obs",
         "recording",
         "record",
         "streaming",
         "scenes",
-        "encoder"
+        "encoder",
+        "cursor",
+        "mouse"
       ],
       "license": "MIT",
       "scope": "Managed prebuilt Node CLI; Node 22+ required. Live OBS operation targets Windows and needs local OBS WebSocket setup.",
@@ -198,8 +200,8 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "5f3036aaabc90a4fbc557370cda12dcd6386bba01e977a3cf93e48c82a88697d",
-      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.4.0/avalonreset-legends-obs-kit-0.4.0.tgz",
+      "sha256": "2c4745d4192a9d30862cf4271a3a6d326c864745b873389ba413b1725f6fced8",
+      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.4.1/avalonreset-legends-obs-kit-0.4.1.tgz",
       "discovery": {
         "signals": [
           "record my screen",
@@ -207,7 +209,11 @@
           "recording setup",
           "obs",
           "record a tutorial",
-          "capture my desktop"
+          "capture my desktop",
+          "highlight my mouse",
+          "mouse highlight",
+          "cursor overlay",
+          "click effects"
         ],
         "examples": [
           "Record my screen",
@@ -217,7 +223,8 @@
         "setup": "Node.js 22+, Windows OBS and authenticated WebSocket setup; follow module doctor.",
         "instructions": [
           "skills/legends-obs-kit/SKILL.md",
-          "README.md"
+          "README.md",
+          "extras/cursor/README.md"
         ]
       }
     },
@@ -290,53 +297,6 @@
         ],
         "not_for": "Creating music or voice synthesis.",
         "setup": "Native app, microphone permissions and speech models are configured separately.",
-        "instructions": [
-          "README.md"
-        ]
-      }
-    },
-    "legends-obs-cursor": {
-      "version": "0.1.0",
-      "repo": "cto-legends/legends-obs-cursor",
-      "commit": "f12f120b4b351ca8c7cd19f01e74dd61412ca7ce",
-      "purpose": "Animated cursor overlay and click effects for OBS.",
-      "keywords": [
-        "cursor",
-        "pointer",
-        "overlay",
-        "click",
-        "halo"
-      ],
-      "license": "GPL-2.0-or-later",
-      "scope": "Guided Windows OBS filter setup. Back up scenes and close OBS before the module installer; the manager does not modify OBS or track this native installation.",
-      "dependencies": {},
-      "platforms": [
-        "windows"
-      ],
-      "sha256": "4244b4dcf201ad22bc810f40b058d561f2f6a5942f52a3c51c741e9f4611c4ce",
-      "assets": [
-        {
-          "name": "legends-obs-cursor-v0.1.0.zip",
-          "url": "https://github.com/cto-legends/legends-obs-cursor/releases/download/v0.1.0/legends-obs-cursor-v0.1.0.zip",
-          "size": 16300169,
-          "sha256": "4244b4dcf201ad22bc810f40b058d561f2f6a5942f52a3c51c741e9f4611c4ce"
-        }
-      ],
-      "next": "Download and verify the ZIP, extract it, read the pinned README, and use the module installer after closing OBS and reviewing its scene changes.",
-      "discovery": {
-        "signals": [
-          "cursor overlay",
-          "pointer overlay",
-          "click effects",
-          "highlight my mouse",
-          "highlight my cursor"
-        ],
-        "examples": [
-          "Highlight my mouse while recording",
-          "Add click effects to OBS"
-        ],
-        "not_for": "The Cursor coding agent or general desktop automation.",
-        "setup": "Windows OBS filter setup; preserve scenes and close OBS before installation.",
         "instructions": [
           "README.md"
         ]
