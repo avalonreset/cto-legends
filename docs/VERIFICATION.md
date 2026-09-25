@@ -1,4 +1,4 @@
-# Release verification: 0.5.0
+# Release verification: 0.1.0
 
 This release adds explicit startup discovery. Package installation, instruction
 loading, workflow selection and task completion are separate claims.

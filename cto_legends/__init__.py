@@ -1,2 +1,2 @@
 """cto-legends: a small, agent-neutral ecosystem manager."""
-__version__ = "0.5.14"
+__version__ = "0.1.0"

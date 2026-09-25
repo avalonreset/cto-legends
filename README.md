@@ -32,11 +32,13 @@ It can sit alongside AI Marketing Hub workflows and other agent tools. Its focus
 Python 3.10 or newer is required for the manager; use Python 3.11+ to include Empire vault memory. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
-From a source checkout, install with `python -m pip install .`. The release
-wheel command below installs the v0.5.14 release.
+Install from source. No release wheel exists yet, so there is no wheel URL
+to install from.
 
 ```sh
-python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.5.14/cto_legends-0.5.14-py3-none-any.whl"
+git clone https://github.com/avalonreset/cto-legends.git
+cd cto-legends
+python -m pip install .
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -98,18 +100,18 @@ The agent handles paraphrases and multi-part goals using the capability index.
 
 | Module | Use it for | Managed setup |
 |---|---|---|
-| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) 0.4.0 | Google Maps rank grids and local visibility | Research workflow + report libraries + DataForSEO Kit 0.4.0 |
-| [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) 0.5.0 | Search, keywords, queued research and reusable evidence | Python library + CLI + evidence exporter |
-| [legends-github](https://github.com/avalonreset/legends-github) 1.5.0 | Repository audits, README, metadata, release preparation | Headless workflows + live research transport 0.4.0 |
-| [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.4.1 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
-| [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) 0.4.1 | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
-| [legends-empire](https://github.com/avalonreset/legends-empire) 3.0.0 | Source-cited Empire memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
-| [legends-hyperyap](https://github.com/avalonreset/legends-hyperyap) 1.0.11 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
+| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) 0.1.0 | Google Maps rank grids and local visibility | Research workflow + report libraries + DataForSEO Kit 0.1.0 |
+| [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) 0.1.0 | Search, keywords, queued research and reusable evidence | Python library + CLI + evidence exporter |
+| [legends-github](https://github.com/avalonreset/legends-github) 0.1.0 | Repository audits, README, metadata, release preparation | Headless workflows + live research transport 0.1.0 |
+| [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.1.0 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
+| [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) 0.1.0 | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
+| [legends-empire](https://github.com/avalonreset/legends-empire) 0.1.0 | Source-cited Empire memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
+| [legends-hyperyap](https://github.com/avalonreset/legends-hyperyap) 0.1.0 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
 | [legends-grant](https://github.com/avalonreset/legends-grant) 0.1.0 | Business grant finding, matching, and application | Markdown lanes + verified federal API routes; agent submits once per authorization |
-| [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) 0.2.1 | Web search, scraping, crawling, provider catalog | Python client + offline catalog; vendor CLI and key need module setup |
-| [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) 0.3.1 | Repeatable video pulls, transcripts, search, clip-building | Pip-installed CLI + skill; yt-dlp binary and ffmpeg need module setup; Mullvad opt-in |
+| [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) 0.1.0 | Web search, scraping, crawling, provider catalog | Python client + offline catalog; vendor CLI and key need module setup |
+| [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) 0.1.0 | Repeatable video pulls, transcripts, search, clip-building | Pip-installed CLI + skill; yt-dlp binary and ffmpeg need module setup; Mullvad opt-in |
 | [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) 0.1.0 | Ambient audio capture, archiving, transcription, distillation | Pip-installed CLI + skill; ffmpeg and faster-whisper/NeMo need module setup |
-| [legends-captions](https://github.com/avalonreset/legends-captions) 0.2.0 | Caption correction, timing, rendering, proof | Pip-installed CLI + skill; stdlib only, speech envs optional |
+| [legends-captions](https://github.com/avalonreset/legends-captions) 0.1.0 | Caption correction, timing, rendering, proof | Pip-installed CLI + skill; stdlib only, speech envs optional |
 
 Eleven modules have managed CLI installations. The one native module uses
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
@@ -230,13 +232,15 @@ For an existing local product not in the public catalog:
 This registers a guide only: no installation, update, execution or readiness
 claim. Such guides appear in `status`, stay private, and remain user-managed.
 
-The v0.5.14 wheel linked above includes these commands.
+<!-- RELEASE WORKER: replace the source install above with the 0.1.0 wheel URL
+once the 0.1.0 release is cut (wheel URL TBD at release). -->
+These commands ship in the source tree and will be included in the 0.1.0 wheel at release.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 
 ## Research memory
 
-`cto-legends install legends-empire --apply` installs the verified v3.0.0
+`cto-legends install legends-empire --apply` installs the verified v0.1.0
 public source in an isolated Python environment. Run
 `cto-legends run legends-empire -- contracts --check-only` to verify its
 portable contracts, then read the router path returned by `status`.

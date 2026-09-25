@@ -1,0 +1,104 @@
+name: contract
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Router contract checks
+        run: |
+          python - <<'EOF'
+          import json
+          import re
+          import sys
+          from pathlib import Path
+
+          root = Path('.')
+          errors = []
+
+          # 1. Forbidden files: the router owns the single central skill, so
+          #    no per-module skill registration may appear anywhere in this repo.
+          forbidden = [
+              Path('skills'),
+              Path('SKILL.md'),
+              Path('CLAUDE.md'),
+              Path('GEMINI.md'),
+              Path('CODEX.md'),
+              Path('GROK.md'),
+              Path('LEGENDS.md'),
+              Path('gemini-extension.json'),
+              Path('skill-package.json'),
+              Path('.claude-plugin'),
+              Path('.agents/skills'),
+              Path('.claude/skills'),
+              Path('NEXT.md'),
+              Path('bin/setup-multi-agent.ps1'),
+              Path('bin/setup-multi-agent.sh'),
+              Path('install.ps1'),
+              Path('install.sh'),
+              Path('install-codex.ps1'),
+              Path('install-codex.sh'),
+              Path('install-spine.ps1'),
+              Path('install-spine.sh'),
+          ]
+          for path in forbidden:
+              if (root / path).exists():
+                  errors.append('forbidden path present: %s' % path.as_posix())
+
+          # 2. Canonical skill: the manager OWNS cto_legends/SKILL.md, so there
+          #    is no vendored copy to compare. Check presence and frontmatter.
+          skill = root / 'cto_legends' / 'SKILL.md'
+          if not skill.is_file():
+              errors.append('missing canonical skill: cto_legends/SKILL.md')
+          else:
+              text = skill.read_text(encoding='utf-8')
+              if not text.startswith('---\nname: cto-legends\n'):
+                  errors.append('canonical skill frontmatter must start with name: cto-legends')
+              if '\u2014' in text:
+                  errors.append('canonical skill contains an em dash')
+
+          # 3. Version agreement: pyproject, package, catalog, changelog head.
+          def fail(msg):
+              errors.append(msg)
+
+          pyproject = (root / 'pyproject.toml').read_text(encoding='utf-8')
+          m = re.search(r'^version\s*=\s*"([^"]+)"', pyproject, re.M)
+          py_version = m.group(1) if m else None
+          if not py_version:
+              fail('pyproject.toml has no version string')
+
+          init = (root / 'cto_legends' / '__init__.py').read_text(encoding='utf-8')
+          m = re.search(r'^__version__\s*=\s*"([^"]+)"', init, re.M)
+          pkg_version = m.group(1) if m else None
+          if not pkg_version:
+              fail('cto_legends/__init__.py has no __version__ string')
+
+          catalog = json.loads((root / 'cto_legends' / 'catalog.json').read_text(encoding='utf-8'))
+          catalog_version = catalog.get('version')
+          if not catalog_version:
+              fail('catalog.json has no version')
+
+          changelog = (root / 'CHANGELOG.md').read_text(encoding='utf-8')
+          m = re.search(r'^##\s+(\d+\.\d+\.\d+)', changelog, re.M)
+          changelog_head = m.group(1) if m else None
+          if not changelog_head:
+              fail('CHANGELOG.md has no versioned head entry')
+
+          versions = {'pyproject': py_version, 'package': pkg_version,
+                      'catalog': catalog_version, 'changelog': changelog_head}
+          distinct = {v for v in versions.values() if v}
+          if len(distinct) != 1:
+              fail('version mismatch: %s' % versions)
+
+          if errors:
+              print('contract FAILED:')
+              for error in errors:
+                  print(' - %s' % error)
+              sys.exit(1)
+          print('contract OK: version %s' % py_version)
+          EOF

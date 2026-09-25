@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.0 - 2026-09-25
+
+- Router-native generation: the whole 13-repo Legends ecosystem resets to
+  0.1.0 as the contract-compliant baseline. No release is cut from this tree
+  yet; the module resets land first.
+- Canonical router skill (`cto_legends/SKILL.md`) finalized as the single
+  registered skill that all 12 modules vendor byte-exact. Module recipes live
+  in README plus docs with no per-module skill registrations. Install law
+  holds: suggest, never seize, with explicit per-module `--apply`, no bundles,
+  and no silent installs.
+- All 19 pre-reset release objects and version tags deleted; commit history
+  preserved.
+- Catalog version set to 0.1.0; the 12 module entries are untouched and will be
+  rewritten by a later worker after the module 0.1.0 releases.
+- Contract CI added (`.github/workflows/contract.yml`) enforcing the release
+  train shape for this repo.
+
 ## 0.5.14
 
 - Rename the managed module to legends-captions 0.2.0 (repo
