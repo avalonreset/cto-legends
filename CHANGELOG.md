@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.9
+
+- Catalog bump: legends-yt-dlp 0.3.0 to 0.3.1 (upstream yt-dlp version check).
+- Fix: re-pin legends-obs-kit 0.4.1 tarball SHA to the published asset; the
+  catalog carried a pre-recut hash and CI installs failed verification.
+
 ## 0.5.8
 
 - Onboard legends-yt-dlp 0.3.0: repeatable yt-dlp pulls, verification, transcripts, search, and clip-building with pacing plus bulk guardrails.
