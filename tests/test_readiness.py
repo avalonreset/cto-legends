@@ -32,12 +32,12 @@ class ReadinessTests(unittest.TestCase):
         self.assertFalse(result['ok'])
         self.assertFalse(any(c['authenticated'] for c in result['checks']))
 
-    def test_missing_exporter_blocks_handoff_even_with_obsidian(self):
+    def test_missing_exporter_blocks_handoff_even_with_empire(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / 'source' / 'skills' / 'legends-obsidian').mkdir(parents=True)
-            (root / 'source' / 'skills' / 'legends-obsidian' / 'SKILL.md').write_text('instructions')
-            with patch.object(manager, 'read_state', return_value={'active': {'legends-dataforseo-kit': 'kit', 'legends-obsidian': 'obs'}}), patch.object(manager, 'managed_path', return_value=root), patch.object(readiness, '_imports', return_value=None):
+            (root / 'source' / 'skills' / 'legends-empire').mkdir(parents=True)
+            (root / 'source' / 'skills' / 'legends-empire' / 'SKILL.md').write_text('instructions')
+            with patch.object(manager, 'read_state', return_value={'active': {'legends-dataforseo-kit': 'kit', 'legends-empire': 'obs'}}), patch.object(manager, 'managed_path', return_value=root), patch.object(readiness, '_imports', return_value=None):
                 result = readiness.task_readiness(root, 'evidence')
             self.assertFalse(result['ok'])
             self.assertEqual(result['checks'][0]['name'], 'evidence_export')
