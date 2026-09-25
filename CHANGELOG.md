@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.11
+
+- Onboard legends-ambient-intelligence 0.1.0: passive ambient audio capture,
+  deduplicated archiving, offline transcription, and vault distillation.
+- Catalog now holds eleven modules (ten managed, hyperyap the only guided
+  native module).
+
 ## 0.5.10
 
 - Cutover: legends-obsidian is renamed to legends-empire 3.0.0 (repo
