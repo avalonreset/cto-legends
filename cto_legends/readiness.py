@@ -72,9 +72,9 @@ def task_readiness(home, task='all', browser_library_directory=None):
         root = release(key)
         add('evidence_export', key, root and _imports(root, 'import legends_dataforseo.evidence'),
             'Install the DataForSEO Kit release containing the evidence module. Obsidian intake instructions alone do not provide the exporter.')
-        key = 'legends-obsidian'
+        key = 'legends-empire'
         root = release(key)
-        add('vault_instructions', key, root and (root / 'source' / 'skills' / 'legends-obsidian' / 'SKILL.md').is_file(),
+        add('vault_instructions', key, root and (root / 'source' / 'skills' / 'legends-empire' / 'SKILL.md').is_file(),
             'Install Legends Obsidian before selecting a vault. This check does not write to a vault.',
             canonical_writes='requires POSIX/WSL' if os.name == 'nt' else 'requires explicit vault selection and transaction checks')
     if task in ('all', 'github'):
