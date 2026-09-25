@@ -180,7 +180,7 @@ def execute(args):
         release = m.managed_path(home, state["active"][args.module])
         if args.module == "legends-grant":
             raise ValueError("legends-grant is docs-only; read its recipe with cto-legends handoff legends-grant")
-        entries = {"legends-obsidian": [str(release / "source" / "scripts" / "claude-obsidian.py")],
+        entries = {"legends-empire": [str(release / "source" / "scripts" / "claude-empire.py")],
                    "legends-dataforseo-kit": ["-m", "legends_dataforseo"],
                    "legends-geogrid": [str(release / "source" / "tools" / "study.py")],
                    "legends-github": [str(release / "source" / "legends_github.py")],
