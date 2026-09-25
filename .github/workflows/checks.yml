@@ -36,12 +36,12 @@ jobs:
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-yt-dlp -- --help
       - run: cto-legends guide hyperyap
       - run: cto-legends route "rip this video"
-      - name: Install and verify Obsidian on its supported Python
+      - name: Install and verify Empire on its supported Python
         if: matrix.python == '3.13'
-        run: cto-legends --home "${{ runner.temp }}/legends" install legends-obsidian --apply
-      - name: Check Obsidian portable surface
+        run: cto-legends --home "${{ runner.temp }}/legends" install legends-empire --apply
+      - name: Check Empire portable surface
         if: matrix.python == '3.13'
-        run: cto-legends --home "${{ runner.temp }}/legends" run legends-obsidian -- contracts --check-only
+        run: cto-legends --home "${{ runner.temp }}/legends" run legends-empire -- contracts --check-only
       - name: Check complete evidence handoff prerequisites
         if: matrix.python == '3.13'
         run: cto-legends --home "${{ runner.temp }}/legends" task-readiness evidence
