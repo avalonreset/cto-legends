@@ -35,7 +35,7 @@ or MCP server is needed to install the ecosystem manager.
 Install the 0.1.0 wheel, or from source.
 
 ```sh
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.1.2/cto_legends-0.1.2-py3-none-any.whl
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.1.3/cto_legends-0.1.3-py3-none-any.whl
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
