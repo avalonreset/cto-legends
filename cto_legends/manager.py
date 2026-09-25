@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent
 LIMIT = 100 * 1024 * 1024
 REPOSITORIES = {key: "avalonreset/" + key for key in (
     "legends-dataforseo-kit", "legends-geogrid", "legends-github",
-    "legends-stable-audio-3", "legends-obs-kit", "hyperyap", "legends-obsidian", "legends-grant", "legends-firecrawl", "legends-yt-dlp")}
+    "legends-stable-audio-3", "legends-obs-kit", "hyperyap", "legends-empire", "legends-grant", "legends-firecrawl", "legends-yt-dlp")}
 RECIPES = set(REPOSITORIES)
 GUIDED_MODULES = {"hyperyap"}
 
@@ -215,9 +215,9 @@ def probe(key, release, *, log=False):
     elif key == "legends-stable-audio-3":
         check([python, "-m", "legends_sa3", "skill", "validate"], release)
         check([python, "-m", "legends_sa3", "plan", "--hours", "1", "--vram-gb", "16"], release)
-    elif key == "legends-obsidian":
-        check([python, source / "scripts" / "claude-obsidian.py", "contracts", "--check-only"], source)
-        check([python, source / "scripts" / "claude-obsidian.py", "package", "validate"], source)
+    elif key == "legends-empire":
+        check([python, source / "scripts" / "claude-empire.py", "contracts", "--check-only"], source)
+        check([python, source / "scripts" / "claude-empire.py", "package", "validate"], source)
     elif key == "legends-obs-kit":
         check([node_binary(), source / "dist" / "index.js", "manifest"], release)
     elif key == "legends-grant":
@@ -232,8 +232,8 @@ def probe(key, release, *, log=False):
 
 
 def prepare(key, module, home):
-    if key == "legends-obsidian" and sys.version_info < (3, 11):
-        raise ValueError("legends-obsidian requires Python 3.11 or newer; run cto-legends with a supported Python")
+    if key == "legends-empire" and sys.version_info < (3, 11):
+        raise ValueError("legends-empire requires Python 3.11 or newer; run cto-legends with a supported Python")
     if key in GUIDED_MODULES:
         raise ValueError("This module uses guided native setup")
     if key == "legends-obs-kit":
@@ -253,7 +253,7 @@ def prepare(key, module, home):
         python = python_at(release)
         if key in {"legends-dataforseo-kit", "legends-stable-audio-3", "legends-firecrawl", "legends-yt-dlp"}:
             run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
-        elif key not in {"legends-obsidian", "legends-grant"}:
+        elif key not in {"legends-empire", "legends-grant"}:
             run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-dataforseo.txt"], release)
     if key == "legends-geogrid":
         run([python_at(release), "-m", "pip", "install", "--disable-pip-version-check", "-r", source / "requirements-report.txt"], release)
@@ -269,6 +269,8 @@ def plan(home, keys):
     state = read_state(home)
     result = []
     for key in keys:
+        if key == "legends-obsidian":
+            raise ValueError("legends-obsidian was renamed to legends-empire; install legends-empire instead")
         if key not in modules:
             raise ValueError(f"Unknown module: {key}")
         module = modules[key]
@@ -328,7 +330,7 @@ def status(home):
                        "python": str(python_at(release)) if key != "legends-obs-kit" else None,
                        "runtime": "node >=22" if key == "legends-obs-kit" else "isolated Python",
                        "source": str(release / "source"),
-                       "guide": str(release / "source" / "skills" / "legends-obsidian" / "SKILL.md") if key == "legends-obsidian" else str(release / "source" / "AGENTS.md"), "scope": receipt["scope"]}
+                       "guide": str(release / "source" / "skills" / "legends-empire" / "SKILL.md") if key == "legends-empire" else str(release / "source" / "AGENTS.md"), "scope": receipt["scope"]}
     return result
 
 
