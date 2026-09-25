@@ -32,7 +32,6 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Create instrumental music, sound effects, and continuous mixes. | `legends-stable-audio-3` |
 | Inspect, configure, and verify OBS Studio recording workflows. | `legends-obs-kit` |
 | Local voice typing, dictation, and app-focused paste. | `hyperyap` |
-| Animated cursor overlay and click effects for OBS. | `legends-obs-cursor` |
 | Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions. | `legends-obsidian` |
 | Find, qualify, and apply for US business grants with agent assistance. | `legends-grant` |
 | Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing. | `legends-firecrawl` |
