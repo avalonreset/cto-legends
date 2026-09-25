@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.8
+
+- Onboard legends-yt-dlp 0.3.0: repeatable yt-dlp pulls, verification, transcripts, search, and clip-building with pacing plus bulk guardrails.
+- Catalog now holds ten modules (nine managed, hyperyap the only guided native module).
+- Central skill match list covers all ten modules.
+
 ## 0.5.7
 
 - Fold legends-obs-cursor into legends-obs-kit 0.4.1 as the optional extras/cursor/ Lua filter; the standalone module is retired and its repo archived.
