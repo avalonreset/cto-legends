@@ -434,6 +434,55 @@
           "README.md"
         ]
       }
+    },
+    "legends-yt-dlp": {
+      "version": "0.3.0",
+      "commit": "d6cdc6080a9246e1e2c5737831de495cc19a58d9",
+      "repo": "avalonreset/legends-yt-dlp",
+      "sha256": "99fc5281136405f9fbbd8e09e5588c14fafc86971c5af294c5f06f2a8c270574",
+      "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
+      "keywords": [
+        "youtube",
+        "ytdlp",
+        "yt-dlp",
+        "download",
+        "downloads",
+        "video",
+        "videos",
+        "clip",
+        "clips",
+        "archive",
+        "archiving",
+        "rip",
+        "transcript",
+        "playlist",
+        "channel"
+      ],
+      "dependencies": {},
+      "scope": "Pip-installed Python CLI in an isolated env. Needs local yt-dlp binary plus ffmpeg for media work; Mullvad VPN is opt-in via --with-vpn.",
+      "discovery": {
+        "signals": [
+          "download this video",
+          "rip this video",
+          "archive this channel",
+          "archive this playlist",
+          "pull this video",
+          "youtube download",
+          "yt-dlp",
+          "clip this video",
+          "transcribe this video"
+        ],
+        "examples": [
+          "Rip this video for my edit",
+          "Archive this channel with pacing"
+        ],
+        "not_for": "Bypassing DRM, paywalls, logins, captchas, or access controls; rotating relays to push through throttles or blocks.",
+        "setup": "Managed yt-dlp binary via legends-yt-dlp yt-dlp install; ffmpeg on PATH for clips; CrispASR external for transcription.",
+        "instructions": [
+          "skills/legends-yt-dlp/SKILL.md",
+          "README.md"
+        ]
+      }
     }
   }
 }
