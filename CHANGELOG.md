@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.10
+
+- Cutover: legends-obsidian is renamed to legends-empire 3.0.0 (repo
+  avalonreset/legends-empire, skill slug legends-empire, operator script
+  claude-empire.py, package claude_empire). Obsidian-the-app support is
+  unchanged.
+- The retired legends-obsidian key refuses with a pointer to legends-empire.
+  Existing installs stay on disk and usable; new vault-memory work installs
+  Empire. Never install both for the same vault.
+- Catalog still holds ten modules (nine managed, hyperyap the only guided
+  native module). CI now installs and probes Empire on Python 3.13.
+
 ## 0.5.9
 
 - Catalog bump: legends-yt-dlp 0.3.0 to 0.3.1 (upstream yt-dlp version check).
