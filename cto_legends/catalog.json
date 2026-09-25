@@ -1,551 +1,551 @@
 {
- "schema": 1,
- "version": "0.1.1",
- "modules": {
-  "legends-dataforseo-kit": {
-   "version": "0.1.0",
-   "commit": "dd00fb030393f300226ca18db3644bb141f96fb0",
-   "repo": "avalonreset/legends-dataforseo-kit",
-   "sha256": "3226dba269baf99813a57caad37e633a37434cfe2279041c85a30c88c310c029",
-   "purpose": "Search and keyword research through DataForSEO.",
-   "keywords": [
-    "seo",
-    "keywords",
-    "keyword",
-    "search",
-    "serp",
-    "dataforseo",
-    "backlinks",
-    "research"
-   ],
-   "dependencies": {},
-   "scope": "Python API, CLI and offline research evidence export, verification and reuse checks. Credentials required only for provider requests.",
-   "discovery": {
-    "signals": [
-     "keyword demand",
-     "search demand",
-     "search volume",
-     "serp",
-     "backlinks",
-     "keyword research",
-     "search results"
-    ],
-    "examples": [
-     "Research keyword demand",
-     "Collect search results and preserve reusable evidence"
-    ],
-    "not_for": "Automatic marketing conclusions or a substitute for GeoGrid study design.",
-    "setup": "Offline inspection needs no credentials; fresh API work requires credentials and explicit execution authorization.",
-    "instructions": [
-     "README.md",
-     "docs/RESEARCH-MEMORY.md"
-    ]
-   }
-  },
-  "legends-geogrid": {
-   "version": "0.1.0",
-   "commit": "5dec8e33538cf54aab9cfe2e2e07c0db0e51458d",
-   "repo": "avalonreset/legends-geogrid",
-   "sha256": "0a55964f770e56a78bcea9d850ecc434049508031f5ed36327f8ef27308a0959",
-   "purpose": "Google Maps ranking grids and local visibility research.",
-   "keywords": [
-    "maps",
-    "grid",
-    "grids",
-    "geogrid",
-    "local",
-    "rank",
-    "ranking",
-    "rankings"
-   ],
-   "dependencies": {
-    "legends-dataforseo-kit": "0.1.0"
-   },
-   "scope": "Research-first studies, reports and enhancement. Report libraries included; browser binaries and provider credentials require readiness checks.",
-   "discovery": {
-    "signals": [
-     "local visibility",
-     "google maps",
-     "map rankings",
-     "nearby customers",
-     "local rankings",
-     "rank grid",
-     "rank grids"
-    ],
-    "examples": [
-     "Where does my pizza shop appear on Google Maps?",
-     "Study local visibility for my business"
-    ],
-    "not_for": "A complete website audit or proof of why Google ranks a business.",
-    "setup": "Needs report libraries, map browser and research credentials for fresh studies.",
-    "instructions": [
-     "README.md",
-     "docs/STUDY-RECIPE.md"
-    ]
-   }
-  },
-  "legends-github": {
-   "version": "0.1.0",
-   "commit": "49e998624dcef4cb511bcdca3b8aafa23152a305",
-   "repo": "avalonreset/legends-github",
-   "sha256": "4274312e1e31d62158b7935c4e9f9360c517fb5801e1b89f5bae05d829692973",
-   "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
-   "keywords": [
-    "github",
-    "repository",
-    "repositories",
-    "readme",
-    "release",
-    "packaging",
-    "seo",
-    "optimization",
-    "keywords"
-   ],
-   "dependencies": {
-    "legends-dataforseo-kit": "0.1.0"
-   },
-   "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup.",
-   "setup_revision": 1,
-   "discovery": {
-    "signals": [
-     "github",
-     "readme",
-     "repository discovery",
-     "repository visibility",
-     "repo visibility",
-     "open source project"
-    ],
-    "examples": [
-     "Improve discovery of my GitHub project",
-     "Optimize my repository with search evidence"
-    ],
-    "not_for": "General website SEO or merely adding unresearched keywords.",
-    "setup": "Requires target repository and appropriate GitHub access; live research needs provider credentials.",
-    "instructions": [
-     "README.md",
-     "docs/GITHUB-RECIPE.md"
-    ]
-   }
-  },
-  "legends-stable-audio-3": {
-   "version": "0.1.0",
-   "repo": "avalonreset/legends-stable-audio-3",
-   "commit": "1236b53fdecb6ff2f7aff1ec3a92839d22aa5385",
-   "purpose": "Create instrumental music, sound effects, and continuous mixes.",
-   "keywords": [
-    "music",
-    "audio",
-    "sound",
-    "instrumental",
-    "mix",
-    "mixes",
-    "stable",
-    "sfx"
-   ],
-   "license": "Apache-2.0",
-   "scope": "Managed planning CLI and agent skill. GPU runtime, model access, weights, and hosted credentials are separate setup.",
-   "dependencies": {},
-   "platforms": [
-    "windows",
-    "macos",
-    "linux"
-   ],
-   "sha256": "f1f7cfe3bd9a565c423c527959f14c151fdbbfba833d6ce21b34d73579ef71f0",
-   "discovery": {
-    "signals": [
-     "make music",
-     "generate music",
-     "ai music",
-     "music beds",
-     "background music",
-     "instrumental tracks",
-     "sound effects",
-     "reggae",
-     "dubstep",
-     "soundtrack"
-    ],
-    "examples": [
-     "Can we generate some AI music?",
-     "Make background music for my video",
-     "Create sound effects"
-    ],
-    "not_for": "Speech transcription, voice cloning, or guaranteed vocal songs.",
-    "setup": "Lightweight planner install does not install models. Read the audio recipe for model access, hardware and hosted options.",
-    "instructions": [
-     "README.md",
-     "docs/first-run.md"
-    ]
-   }
-  },
-  "legends-obs-kit": {
-   "version": "0.1.0",
-   "repo": "avalonreset/legends-obs-kit",
-   "commit": "aa49941a5e2bb08bf590f505c65f2dd70f5c0426",
-   "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
-   "keywords": [
-    "obs",
-    "recording",
-    "record",
-    "streaming",
-    "scenes",
-    "encoder",
-    "cursor",
-    "overlay",
-    "mouse",
-    "highlight"
-   ],
-   "license": "MIT",
-   "scope": "Managed prebuilt Node CLI; Node 22+ required. Live OBS operation targets Windows and needs local OBS WebSocket setup.",
-   "dependencies": {},
-   "platforms": [
-    "windows"
-   ],
-   "sha256": "e8d48a50208bb5523e6008ba1f854f7f255c10d1c9dfb9ee9e6570174123bb6a",
-   "discovery": {
-    "signals": [
-     "record my screen",
-     "screen recording",
-     "recording setup",
-     "obs",
-     "record a tutorial",
-     "capture my desktop",
-     "cursor overlay",
-     "highlight my mouse",
-     "mouse highlight"
-    ],
-    "examples": [
-     "Record my screen",
-     "Prepare OBS scenes for a tutorial"
-    ],
-    "not_for": "Music generation, transcription or editing a finished video.",
-    "setup": "Node.js 22+, Windows OBS and authenticated WebSocket setup; follow module doctor.",
-    "instructions": [
-     "README.md",
-     "docs/RECIPES.md"
-    ]
-   }
-  },
-  "legends-hyperyap": {
-   "version": "0.1.0",
-   "repo": "avalonreset/legends-hyperyap",
-   "commit": "d2271c065af8580505589a4f587e0416a8b8b5f8",
-   "purpose": "Local voice typing, dictation, and app-focused paste.",
-   "keywords": [
-    "voice",
-    "dictation",
-    "transcription",
-    "speech",
-    "typing",
-    "hyperyap",
-    "legends-hyperyap"
-   ],
-   "license": "AGPL-3.0",
-   "scope": "Guided native desktop installation. v0.1.0 is source-only; platform installer binaries are pending. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
-   "dependencies": {},
-   "platforms": [
-    "windows",
-    "macos",
-    "linux"
-   ],
-   "sha256": "f12b38d914c97d2619878885a69305d3d5545929c9a6b0bf67d3b846a7225b35",
-   "next": "v0.1.0 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
-   "discovery": {
-    "signals": [
-     "voice typing",
-     "dictation",
-     "dictate",
-     "speech to text",
-     "type with my voice"
-    ],
-    "examples": [
-     "Type with my voice",
-     "Dictate into another application"
-    ],
-    "not_for": "Creating music or voice synthesis.",
-    "setup": "Native app, microphone permissions and speech models are configured separately.",
-    "instructions": [
-     "README.md"
-    ]
-   }
-  },
-  "legends-empire": {
-   "version": "0.1.0",
-   "commit": "10ac9e84af7981c38e598c564f5e1c03a20302f0",
-   "repo": "avalonreset/legends-empire",
-   "sha256": "9c76b61feb3d22c9bee4bc95aca74e5a652f3289a8f4df2fadbfd0f094cd44b6",
-   "purpose": "Source-cited Empire memory, research evidence, retrieval and recoverable knowledge transactions.",
-   "keywords": [
-    "empire",
-    "obsidian",
-    "vault",
-    "memory",
-    "knowledge",
-    "notes",
-    "evidence",
-    "wiki"
-   ],
-   "dependencies": {},
-   "scope": "Python 3.11+ standard-library core. Windows supports read-only inspection and previews; canonical vault writes require POSIX/WSL. Obsidian Desktop is optional.",
-   "discovery": {
-    "signals": [
-     "remember this",
-     "save research",
-     "bank research",
-     "vault",
-     "obsidian",
-     "empire",
-     "empire memory",
-     "knowledge base",
-     "research history",
-     "source cited notes"
-    ],
-    "examples": [
-     "Save this research in my vault",
-     "Find what we already know about this business"
-    ],
-    "not_for": "Inventing sources or modifying a vault without selecting it.",
-    "setup": "Select a vault. Native Windows supports inspection; transaction writes require POSIX/WSL.",
-    "instructions": [
-     "README.md",
-     "docs/install-guide.md"
-    ]
-   }
-  },
-  "legends-grant": {
-   "version": "0.1.0",
-   "commit": "943728934ecd6b8955519c9b5d860d121195f805",
-   "repo": "avalonreset/legends-grant",
-   "sha256": "11dab379d983185f00298805790b9f9a981f34ba57f377653976d8e4594220ae",
-   "purpose": "Find, qualify, and apply for US business grants with agent assistance.",
-   "keywords": [
-    "grant",
-    "grants",
-    "funding",
-    "microgrant",
-    "microgrants",
-    "sbir",
-    "sttr",
-    "application",
-    "fund"
-   ],
-   "dependencies": {},
-   "scope": "Markdown lanes plus verified federal API routes. The agent drafts and submits once per authorization; the human owns mailed packages and non-delegable logins.",
-   "discovery": {
-    "signals": [
-     "business grant",
-     "business grants",
-     "grant funding",
-     "small business funding",
-     "find grants",
-     "apply for a grant",
-     "grant application",
-     "microgrant",
-     "free funding"
-    ],
-    "examples": [
-     "Find grants for my business",
-     "Help me apply for a small business grant"
-    ],
-    "not_for": "Automatic approvals or a substitute for reading the live notice terms.",
-    "setup": "No credentials for federal search lanes; SAM.gov lanes need a free public API key; submissions need explicit per-send authorization.",
-    "instructions": [
-     "README.md",
-     "docs/GRANT-RECIPE.md",
-     "find.md",
-     "match.md",
-     "qualify.md",
-     "apply.md",
-     "submit-lanes.md",
-     "vault-map.md"
-    ]
-   }
-  },
-  "legends-firecrawl": {
-   "version": "0.1.0",
-   "commit": "0cd474db3dccbb1f08de2f522fe69e45b0fcc450",
-   "repo": "avalonreset/legends-firecrawl",
-   "sha256": "a01248a0285adc4fdb7e0833111cce8d4c5db4fcf9dc4205c3becc14d25c3691",
-   "purpose": "Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing.",
-   "keywords": [
-    "firecrawl",
-    "scrape",
-    "scraping",
-    "crawl",
-    "crawling",
-    "search",
-    "alexandria",
-    "web",
-    "proxy"
-   ],
-   "dependencies": {},
-   "scope": "Python client plus offline catalog. Vendor CLI and API key need module setup; paid calls need explicit authorization.",
-   "discovery": {
-    "signals": [
-     "web search",
-     "search the web",
-     "scrape a page",
-     "scrape this page",
-     "crawl a site",
-     "discover urls",
-     "firecrawl",
-     "alexandria",
-     "provider catalog",
-     "site map"
-    ],
-    "examples": [
-     "Scrape this page to markdown",
-     "Search the web for competitors"
-    ],
-    "not_for": "Bypassing authentication, CAPTCHA, robots policy, or access controls; a substitute for vendor billing.",
-    "setup": "Needs firecrawl-cli 1.23.3 and FIRECRAWL_API_KEY for live calls; the offline catalog needs neither.",
-    "instructions": [
-     "README.md",
-     "docs/RECIPES.md"
-    ]
-   }
-  },
-  "legends-yt-dlp": {
-   "version": "0.1.0",
-   "commit": "134ce07151abaffe551380df084e62f29c079d3d",
-   "repo": "avalonreset/legends-yt-dlp",
-   "sha256": "fb1bb4b6589e2854895f673e0d6ff1cd90c05c401ae3c2c399af3c19cc86ce32",
-   "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
-   "keywords": [
-    "youtube",
-    "ytdlp",
-    "yt-dlp",
-    "download",
-    "downloads",
-    "video",
-    "videos",
-    "clip",
-    "clips",
-    "archive",
-    "archiving",
-    "rip",
-    "transcript",
-    "playlist",
-    "channel"
-   ],
-   "dependencies": {},
-   "scope": "Pip-installed Python CLI in an isolated env. Needs local yt-dlp binary plus ffmpeg for media work; Mullvad VPN is opt-in via --with-vpn.",
-   "discovery": {
-    "signals": [
-     "download this video",
-     "rip this video",
-     "archive this channel",
-     "archive this playlist",
-     "pull this video",
-     "youtube download",
-     "yt-dlp",
-     "clip this video",
-     "transcribe this video"
-    ],
-    "examples": [
-     "Rip this video for my edit",
-     "Archive this channel with pacing"
-    ],
-    "not_for": "Bypassing DRM, paywalls, logins, captchas, or access controls; rotating relays to push through throttles or blocks.",
-    "setup": "Managed yt-dlp binary via legends-yt-dlp yt-dlp install; ffmpeg on PATH for clips; CrispASR external for transcription.",
-    "instructions": [
-     "README.md",
-     "docs/OPERATOR-ROUTING.md"
-    ]
-   }
-  },
-  "legends-ambient-intelligence": {
-   "version": "0.1.0",
-   "commit": "711207aa8783d46a50d7d5d815e1a2ce16c444f9",
-   "repo": "avalonreset/legends-ambient-intelligence",
-   "sha256": "d09667852d3551edc3557d9c9a783450773d29bacf32403779b751adb5f5dea3",
-   "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
-   "keywords": [
-    "ambient",
-    "audio",
-    "transcribe",
-    "transcription",
-    "whisper",
-    "voice",
-    "sketchpad",
-    "recorder",
-    "recorders",
-    "recordings",
-    "memos",
-    "ingest",
-    "parakeet",
-    "distill",
-    "kt5000"
-   ],
-   "dependencies": {},
-   "scope": "Pip-installed Python CLI in an isolated env. Needs ffmpeg plus faster-whisper or NeMo for transcription; USB recorder ingest is Windows-first.",
-   "discovery": {
-    "signals": [
-     "voice memos",
-     "transcribe my recordings",
-     "ingest recordings",
-     "kt5000",
-     "ambient recording",
-     "voice sketchpad",
-     "distill transcript",
-     "prompt recovery",
-     "usb recorder",
-     "offline transcription"
-    ],
-    "examples": [
-     "Transcribe my voice memos offline",
-     "Ingest recordings from my KT5000"
-    ],
-    "not_for": "Live keyboard dictation (that is legends-hyperyap); cloud transcription endpoints.",
-    "setup": "ffmpeg on PATH; pip install .[whisper] for local Whisper; NeMo optional for GPU Parakeet.",
-    "instructions": [
-     "README.md"
-    ]
-   }
-  },
-  "legends-captions": {
-   "version": "0.1.0",
-   "commit": "c21364236477325bae1a5a295adc9a4d07d8df83",
-   "repo": "avalonreset/legends-captions",
-   "sha256": "ec4ce94a83b427c43ebd81183cac734e2b6d2639544f3cad2c15db8529bd7a7a",
-   "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
-   "keywords": [
-    "caption",
-    "captions",
-    "subtitle",
-    "subtitles",
-    "ass",
-    "srt",
-    "alignment",
-    "proof",
-    "correction",
-    "karaoke",
-    "word-timing"
-   ],
-   "dependencies": {},
-   "scope": "Pip-installed Python CLI in an isolated env. Pure standard library for policy, manifests, and CLI; Parakeet, NeMo, and renderers are operator-managed externals.",
-   "discovery": {
-    "signals": [
-     "add captions",
-     "caption this video",
-     "fix captions",
-     "caption timing",
-     "active-word captions",
-     "proof frames",
-     "subtitle file",
-     "caption QA",
-     "burn in captions"
-    ],
-    "examples": [
-     "Caption this video with active-word timing",
-     "Fix these captions and prove the render"
-    ],
-    "not_for": "Recording audio or running ASR (see legends-ambient-intelligence); generic video editing.",
-    "setup": "No services or keys. Optional WSL speech env via LEGENDS_CAPTIONS_WSL_PYTHON for full production runs.",
-    "instructions": [
-     "README.md",
-     "docs/install/agent-install-guide.md"
-    ]
-   }
+  "schema": 1,
+  "version": "0.1.1",
+  "modules": {
+    "legends-dataforseo-kit": {
+      "version": "0.1.1",
+      "commit": "dd00fb030393f300226ca18db3644bb141f96fb0",
+      "repo": "avalonreset/legends-dataforseo-kit",
+      "sha256": "3226dba269baf99813a57caad37e633a37434cfe2279041c85a30c88c310c029",
+      "purpose": "Search and keyword research through DataForSEO.",
+      "keywords": [
+        "seo",
+        "keywords",
+        "keyword",
+        "search",
+        "serp",
+        "dataforseo",
+        "backlinks",
+        "research"
+      ],
+      "dependencies": {},
+      "scope": "Python API, CLI and offline research evidence export, verification and reuse checks. Credentials required only for provider requests.",
+      "discovery": {
+        "signals": [
+          "keyword demand",
+          "search demand",
+          "search volume",
+          "serp",
+          "backlinks",
+          "keyword research",
+          "search results"
+        ],
+        "examples": [
+          "Research keyword demand",
+          "Collect search results and preserve reusable evidence"
+        ],
+        "not_for": "Automatic marketing conclusions or a substitute for GeoGrid study design.",
+        "setup": "Offline inspection needs no credentials; fresh API work requires credentials and explicit execution authorization.",
+        "instructions": [
+          "README.md",
+          "docs/RESEARCH-MEMORY.md"
+        ]
+      }
+    },
+    "legends-geogrid": {
+      "version": "0.1.1",
+      "commit": "5dec8e33538cf54aab9cfe2e2e07c0db0e51458d",
+      "repo": "avalonreset/legends-geogrid",
+      "sha256": "0a55964f770e56a78bcea9d850ecc434049508031f5ed36327f8ef27308a0959",
+      "purpose": "Google Maps ranking grids and local visibility research.",
+      "keywords": [
+        "maps",
+        "grid",
+        "grids",
+        "geogrid",
+        "local",
+        "rank",
+        "ranking",
+        "rankings"
+      ],
+      "dependencies": {
+        "legends-dataforseo-kit": "0.1.0"
+      },
+      "scope": "Research-first studies, reports and enhancement. Report libraries included; browser binaries and provider credentials require readiness checks.",
+      "discovery": {
+        "signals": [
+          "local visibility",
+          "google maps",
+          "map rankings",
+          "nearby customers",
+          "local rankings",
+          "rank grid",
+          "rank grids"
+        ],
+        "examples": [
+          "Where does my pizza shop appear on Google Maps?",
+          "Study local visibility for my business"
+        ],
+        "not_for": "A complete website audit or proof of why Google ranks a business.",
+        "setup": "Needs report libraries, map browser and research credentials for fresh studies.",
+        "instructions": [
+          "README.md",
+          "docs/STUDY-RECIPE.md"
+        ]
+      }
+    },
+    "legends-github": {
+      "version": "0.1.1",
+      "commit": "49e998624dcef4cb511bcdca3b8aafa23152a305",
+      "repo": "avalonreset/legends-github",
+      "sha256": "4274312e1e31d62158b7935c4e9f9360c517fb5801e1b89f5bae05d829692973",
+      "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
+      "keywords": [
+        "github",
+        "repository",
+        "repositories",
+        "readme",
+        "release",
+        "packaging",
+        "seo",
+        "optimization",
+        "keywords"
+      ],
+      "dependencies": {
+        "legends-dataforseo-kit": "0.1.0"
+      },
+      "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup.",
+      "setup_revision": 1,
+      "discovery": {
+        "signals": [
+          "github",
+          "readme",
+          "repository discovery",
+          "repository visibility",
+          "repo visibility",
+          "open source project"
+        ],
+        "examples": [
+          "Improve discovery of my GitHub project",
+          "Optimize my repository with search evidence"
+        ],
+        "not_for": "General website SEO or merely adding unresearched keywords.",
+        "setup": "Requires target repository and appropriate GitHub access; live research needs provider credentials.",
+        "instructions": [
+          "README.md",
+          "docs/GITHUB-RECIPE.md"
+        ]
+      }
+    },
+    "legends-stable-audio-3": {
+      "version": "0.1.1",
+      "repo": "avalonreset/legends-stable-audio-3",
+      "commit": "1236b53fdecb6ff2f7aff1ec3a92839d22aa5385",
+      "purpose": "Create instrumental music, sound effects, and continuous mixes.",
+      "keywords": [
+        "music",
+        "audio",
+        "sound",
+        "instrumental",
+        "mix",
+        "mixes",
+        "stable",
+        "sfx"
+      ],
+      "license": "Apache-2.0",
+      "scope": "Managed planning CLI and agent skill. GPU runtime, model access, weights, and hosted credentials are separate setup.",
+      "dependencies": {},
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "sha256": "f1f7cfe3bd9a565c423c527959f14c151fdbbfba833d6ce21b34d73579ef71f0",
+      "discovery": {
+        "signals": [
+          "make music",
+          "generate music",
+          "ai music",
+          "music beds",
+          "background music",
+          "instrumental tracks",
+          "sound effects",
+          "reggae",
+          "dubstep",
+          "soundtrack"
+        ],
+        "examples": [
+          "Can we generate some AI music?",
+          "Make background music for my video",
+          "Create sound effects"
+        ],
+        "not_for": "Speech transcription, voice cloning, or guaranteed vocal songs.",
+        "setup": "Lightweight planner install does not install models. Read the audio recipe for model access, hardware and hosted options.",
+        "instructions": [
+          "README.md",
+          "docs/first-run.md"
+        ]
+      }
+    },
+    "legends-obs-kit": {
+      "version": "0.1.1",
+      "repo": "avalonreset/legends-obs-kit",
+      "commit": "aa49941a5e2bb08bf590f505c65f2dd70f5c0426",
+      "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
+      "keywords": [
+        "obs",
+        "recording",
+        "record",
+        "streaming",
+        "scenes",
+        "encoder",
+        "cursor",
+        "overlay",
+        "mouse",
+        "highlight"
+      ],
+      "license": "MIT",
+      "scope": "Managed prebuilt Node CLI; Node 22+ required. Live OBS operation targets Windows and needs local OBS WebSocket setup.",
+      "dependencies": {},
+      "platforms": [
+        "windows"
+      ],
+      "sha256": "e8d48a50208bb5523e6008ba1f854f7f255c10d1c9dfb9ee9e6570174123bb6a",
+      "discovery": {
+        "signals": [
+          "record my screen",
+          "screen recording",
+          "recording setup",
+          "obs",
+          "record a tutorial",
+          "capture my desktop",
+          "cursor overlay",
+          "highlight my mouse",
+          "mouse highlight"
+        ],
+        "examples": [
+          "Record my screen",
+          "Prepare OBS scenes for a tutorial"
+        ],
+        "not_for": "Music generation, transcription or editing a finished video.",
+        "setup": "Node.js 22+, Windows OBS and authenticated WebSocket setup; follow module doctor.",
+        "instructions": [
+          "README.md",
+          "docs/RECIPES.md"
+        ]
+      }
+    },
+    "legends-hyperyap": {
+      "version": "0.1.1",
+      "repo": "avalonreset/legends-hyperyap",
+      "commit": "d2271c065af8580505589a4f587e0416a8b8b5f8",
+      "purpose": "Local voice typing, dictation, and app-focused paste.",
+      "keywords": [
+        "voice",
+        "dictation",
+        "transcription",
+        "speech",
+        "typing",
+        "hyperyap",
+        "legends-hyperyap"
+      ],
+      "license": "AGPL-3.0",
+      "scope": "Guided native desktop installation. v0.1.0 is source-only; platform installer binaries are pending. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
+      "dependencies": {},
+      "platforms": [
+        "windows",
+        "macos",
+        "linux"
+      ],
+      "sha256": "f12b38d914c97d2619878885a69305d3d5545929c9a6b0bf67d3b846a7225b35",
+      "next": "v0.1.0 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
+      "discovery": {
+        "signals": [
+          "voice typing",
+          "dictation",
+          "dictate",
+          "speech to text",
+          "type with my voice"
+        ],
+        "examples": [
+          "Type with my voice",
+          "Dictate into another application"
+        ],
+        "not_for": "Creating music or voice synthesis.",
+        "setup": "Native app, microphone permissions and speech models are configured separately.",
+        "instructions": [
+          "README.md"
+        ]
+      }
+    },
+    "legends-empire": {
+      "version": "0.1.1",
+      "commit": "10ac9e84af7981c38e598c564f5e1c03a20302f0",
+      "repo": "avalonreset/legends-empire",
+      "sha256": "9c76b61feb3d22c9bee4bc95aca74e5a652f3289a8f4df2fadbfd0f094cd44b6",
+      "purpose": "Source-cited Empire memory, research evidence, retrieval and recoverable knowledge transactions.",
+      "keywords": [
+        "empire",
+        "obsidian",
+        "vault",
+        "memory",
+        "knowledge",
+        "notes",
+        "evidence",
+        "wiki"
+      ],
+      "dependencies": {},
+      "scope": "Python 3.11+ standard-library core. Windows supports read-only inspection and previews; canonical vault writes require POSIX/WSL. Obsidian Desktop is optional.",
+      "discovery": {
+        "signals": [
+          "remember this",
+          "save research",
+          "bank research",
+          "vault",
+          "obsidian",
+          "empire",
+          "empire memory",
+          "knowledge base",
+          "research history",
+          "source cited notes"
+        ],
+        "examples": [
+          "Save this research in my vault",
+          "Find what we already know about this business"
+        ],
+        "not_for": "Inventing sources or modifying a vault without selecting it.",
+        "setup": "Select a vault. Native Windows supports inspection; transaction writes require POSIX/WSL.",
+        "instructions": [
+          "README.md",
+          "docs/install-guide.md"
+        ]
+      }
+    },
+    "legends-grant": {
+      "version": "0.1.1",
+      "commit": "943728934ecd6b8955519c9b5d860d121195f805",
+      "repo": "avalonreset/legends-grant",
+      "sha256": "11dab379d983185f00298805790b9f9a981f34ba57f377653976d8e4594220ae",
+      "purpose": "Find, qualify, and apply for US business grants with agent assistance.",
+      "keywords": [
+        "grant",
+        "grants",
+        "funding",
+        "microgrant",
+        "microgrants",
+        "sbir",
+        "sttr",
+        "application",
+        "fund"
+      ],
+      "dependencies": {},
+      "scope": "Markdown lanes plus verified federal API routes. The agent drafts and submits once per authorization; the human owns mailed packages and non-delegable logins.",
+      "discovery": {
+        "signals": [
+          "business grant",
+          "business grants",
+          "grant funding",
+          "small business funding",
+          "find grants",
+          "apply for a grant",
+          "grant application",
+          "microgrant",
+          "free funding"
+        ],
+        "examples": [
+          "Find grants for my business",
+          "Help me apply for a small business grant"
+        ],
+        "not_for": "Automatic approvals or a substitute for reading the live notice terms.",
+        "setup": "No credentials for federal search lanes; SAM.gov lanes need a free public API key; submissions need explicit per-send authorization.",
+        "instructions": [
+          "README.md",
+          "docs/GRANT-RECIPE.md",
+          "find.md",
+          "match.md",
+          "qualify.md",
+          "apply.md",
+          "submit-lanes.md",
+          "vault-map.md"
+        ]
+      }
+    },
+    "legends-firecrawl": {
+      "version": "0.1.1",
+      "commit": "0cd474db3dccbb1f08de2f522fe69e45b0fcc450",
+      "repo": "avalonreset/legends-firecrawl",
+      "sha256": "a01248a0285adc4fdb7e0833111cce8d4c5db4fcf9dc4205c3becc14d25c3691",
+      "purpose": "Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing.",
+      "keywords": [
+        "firecrawl",
+        "scrape",
+        "scraping",
+        "crawl",
+        "crawling",
+        "search",
+        "alexandria",
+        "web",
+        "proxy"
+      ],
+      "dependencies": {},
+      "scope": "Python client plus offline catalog. Vendor CLI and API key need module setup; paid calls need explicit authorization.",
+      "discovery": {
+        "signals": [
+          "web search",
+          "search the web",
+          "scrape a page",
+          "scrape this page",
+          "crawl a site",
+          "discover urls",
+          "firecrawl",
+          "alexandria",
+          "provider catalog",
+          "site map"
+        ],
+        "examples": [
+          "Scrape this page to markdown",
+          "Search the web for competitors"
+        ],
+        "not_for": "Bypassing authentication, CAPTCHA, robots policy, or access controls; a substitute for vendor billing.",
+        "setup": "Needs firecrawl-cli 1.23.3 and FIRECRAWL_API_KEY for live calls; the offline catalog needs neither.",
+        "instructions": [
+          "README.md",
+          "docs/RECIPES.md"
+        ]
+      }
+    },
+    "legends-yt-dlp": {
+      "version": "0.1.1",
+      "commit": "134ce07151abaffe551380df084e62f29c079d3d",
+      "repo": "avalonreset/legends-yt-dlp",
+      "sha256": "fb1bb4b6589e2854895f673e0d6ff1cd90c05c401ae3c2c399af3c19cc86ce32",
+      "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
+      "keywords": [
+        "youtube",
+        "ytdlp",
+        "yt-dlp",
+        "download",
+        "downloads",
+        "video",
+        "videos",
+        "clip",
+        "clips",
+        "archive",
+        "archiving",
+        "rip",
+        "transcript",
+        "playlist",
+        "channel"
+      ],
+      "dependencies": {},
+      "scope": "Pip-installed Python CLI in an isolated env. Needs local yt-dlp binary plus ffmpeg for media work; Mullvad VPN is opt-in via --with-vpn.",
+      "discovery": {
+        "signals": [
+          "download this video",
+          "rip this video",
+          "archive this channel",
+          "archive this playlist",
+          "pull this video",
+          "youtube download",
+          "yt-dlp",
+          "clip this video",
+          "transcribe this video"
+        ],
+        "examples": [
+          "Rip this video for my edit",
+          "Archive this channel with pacing"
+        ],
+        "not_for": "Bypassing DRM, paywalls, logins, captchas, or access controls; rotating relays to push through throttles or blocks.",
+        "setup": "Managed yt-dlp binary via legends-yt-dlp yt-dlp install; ffmpeg on PATH for clips; CrispASR external for transcription.",
+        "instructions": [
+          "README.md",
+          "docs/OPERATOR-ROUTING.md"
+        ]
+      }
+    },
+    "legends-ambient-intelligence": {
+      "version": "0.1.1",
+      "commit": "711207aa8783d46a50d7d5d815e1a2ce16c444f9",
+      "repo": "avalonreset/legends-ambient-intelligence",
+      "sha256": "d09667852d3551edc3557d9c9a783450773d29bacf32403779b751adb5f5dea3",
+      "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
+      "keywords": [
+        "ambient",
+        "audio",
+        "transcribe",
+        "transcription",
+        "whisper",
+        "voice",
+        "sketchpad",
+        "recorder",
+        "recorders",
+        "recordings",
+        "memos",
+        "ingest",
+        "parakeet",
+        "distill",
+        "kt5000"
+      ],
+      "dependencies": {},
+      "scope": "Pip-installed Python CLI in an isolated env. Needs ffmpeg plus faster-whisper or NeMo for transcription; USB recorder ingest is Windows-first.",
+      "discovery": {
+        "signals": [
+          "voice memos",
+          "transcribe my recordings",
+          "ingest recordings",
+          "kt5000",
+          "ambient recording",
+          "voice sketchpad",
+          "distill transcript",
+          "prompt recovery",
+          "usb recorder",
+          "offline transcription"
+        ],
+        "examples": [
+          "Transcribe my voice memos offline",
+          "Ingest recordings from my KT5000"
+        ],
+        "not_for": "Live keyboard dictation (that is legends-hyperyap); cloud transcription endpoints.",
+        "setup": "ffmpeg on PATH; pip install .[whisper] for local Whisper; NeMo optional for GPU Parakeet.",
+        "instructions": [
+          "README.md"
+        ]
+      }
+    },
+    "legends-captions": {
+      "version": "0.1.1",
+      "commit": "c21364236477325bae1a5a295adc9a4d07d8df83",
+      "repo": "avalonreset/legends-captions",
+      "sha256": "ec4ce94a83b427c43ebd81183cac734e2b6d2639544f3cad2c15db8529bd7a7a",
+      "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
+      "keywords": [
+        "caption",
+        "captions",
+        "subtitle",
+        "subtitles",
+        "ass",
+        "srt",
+        "alignment",
+        "proof",
+        "correction",
+        "karaoke",
+        "word-timing"
+      ],
+      "dependencies": {},
+      "scope": "Pip-installed Python CLI in an isolated env. Pure standard library for policy, manifests, and CLI; Parakeet, NeMo, and renderers are operator-managed externals.",
+      "discovery": {
+        "signals": [
+          "add captions",
+          "caption this video",
+          "fix captions",
+          "caption timing",
+          "active-word captions",
+          "proof frames",
+          "subtitle file",
+          "caption QA",
+          "burn in captions"
+        ],
+        "examples": [
+          "Caption this video with active-word timing",
+          "Fix these captions and prove the render"
+        ],
+        "not_for": "Recording audio or running ASR (see legends-ambient-intelligence); generic video editing.",
+        "setup": "No services or keys. Optional WSL speech env via LEGENDS_CAPTIONS_WSL_PYTHON for full production runs.",
+        "instructions": [
+          "README.md",
+          "docs/install/agent-install-guide.md"
+        ]
+      }
+    }
   }
- }
 }
