@@ -29,14 +29,14 @@ It can sit alongside AI Marketing Hub workflows and other agent tools. Its focus
 
 ## Start here
 
-Python 3.10 or newer is required for the manager; use Python 3.11+ to include Obsidian. No Git, provider account, background service,
+Python 3.10 or newer is required for the manager; use Python 3.11+ to include Empire vault memory. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
 From a source checkout, install with `python -m pip install .`. The release
-wheel command below installs the v0.5.9 release.
+wheel command below installs the v0.5.10 release.
 
 ```sh
-python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.5.9/cto_legends-0.5.9-py3-none-any.whl"
+python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.5.10/cto_legends-0.5.10-py3-none-any.whl"
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -103,7 +103,7 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-github](https://github.com/avalonreset/legends-github) 1.5.0 | Repository audits, README, metadata, release preparation | Headless workflows + live research transport 0.4.0 |
 | [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.4.1 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
 | [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) 0.4.1 | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
-| [legends-obsidian](https://github.com/avalonreset/legends-obsidian) 2.3.0 | Source-cited vault memory and research evidence (DEPRECATED; successor: [legends-empire](https://github.com/avalonreset/legends-empire)) | Python 3.11+; POSIX/WSL required for vault writes |
+| [legends-empire](https://github.com/avalonreset/legends-empire) 3.0.0 | Source-cited Empire memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
 | [hyperyap](https://github.com/avalonreset/hyperyap) 1.0.11 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
 | [legends-grant](https://github.com/avalonreset/legends-grant) 0.1.0 | Business grant finding, matching, and application | Markdown lanes + verified federal API routes; agent submits once per authorization |
 | [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) 0.2.1 | Web search, scraping, crawling, provider catalog | Python client + offline catalog; vendor CLI and key need module setup |
@@ -224,19 +224,19 @@ instructions on demand. Host tool permissions and operating-system dependency
 support still apply. Gemini on a remote execution host needs installation there.
 
 For an existing local product not in the public catalog:
-`cto-legends register-guide legends-obsidian /path/to/skills/legends-obsidian/SKILL.md --apply`.
+`cto-legends register-guide legends-empire /path/to/skills/legends-empire/SKILL.md --apply`.
 This registers a guide only: no installation, update, execution or readiness
 claim. Such guides appear in `status`, stay private, and remain user-managed.
 
-The v0.5.9 wheel linked above includes these commands.
+The v0.5.10 wheel linked above includes these commands.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 
 ## Research memory
 
-`cto-legends install legends-obsidian --apply` installs the verified v2.3.0
+`cto-legends install legends-empire --apply` installs the verified v3.0.0
 public source in an isolated Python environment. Run
-`cto-legends run legends-obsidian -- contracts --check-only` to verify its
+`cto-legends run legends-empire -- contracts --check-only` to verify its
 portable contracts, then read the router path returned by `status`.
 Python 3.11+ is required. Vault writes use POSIX/WSL; native Windows supports
 inspection and previews. Installing the module never creates or changes a vault.
