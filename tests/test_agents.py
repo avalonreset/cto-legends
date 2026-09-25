@@ -12,12 +12,12 @@ class AgentSetupTests(unittest.TestCase):
             home = Path(tmp)/"managed"
             guide = Path(tmp)/"SKILL.md"
             guide.write_text("# local guide")
-            argv = ["--home", str(home), "register-guide", "legends-obsidian", str(guide)]
+            argv = ["--home", str(home), "register-guide", "legends-empire", str(guide)]
             self.assertTrue(execute(parser().parse_args(argv))["preview"])
             self.assertFalse(home.exists())
             execute(parser().parse_args(argv+["--apply"]))
             state = execute(parser().parse_args(["--home",str(home),"status"]))
-            self.assertEqual(state["local_guides"]["legends-obsidian"]["readiness"], "unverified")
+            self.assertEqual(state["local_guides"]["legends-empire"]["readiness"], "unverified")
             other = Path(tmp)/"other.md"
             other.write_text("# other")
             with self.assertRaises(ValueError):
