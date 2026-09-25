@@ -536,6 +536,51 @@
           "README.md"
         ]
       }
+    },
+    "legends-ultimate-captions": {
+      "version": "0.1.0",
+      "commit": "e8a26ecdc953369689a0baaaf8c79a5009f93140",
+      "repo": "avalonreset/legends-ultimate-captions",
+      "sha256": "25ea1ebd3dcda54f2ee43d65e68f208902c269a2cf86875d75ccf0cc7da89bed",
+      "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
+      "keywords": [
+        "caption",
+        "captions",
+        "subtitle",
+        "subtitles",
+        "ass",
+        "srt",
+        "alignment",
+        "proof",
+        "correction",
+        "karaoke",
+        "word-timing"
+      ],
+      "dependencies": {},
+      "scope": "Pip-installed Python CLI in an isolated env. Pure standard library for policy, manifests, and CLI; Parakeet, NeMo, and renderers are operator-managed externals.",
+      "discovery": {
+        "signals": [
+          "add captions",
+          "caption this video",
+          "fix captions",
+          "caption timing",
+          "active-word captions",
+          "proof frames",
+          "subtitle file",
+          "caption QA",
+          "burn in captions"
+        ],
+        "examples": [
+          "Caption this video with active-word timing",
+          "Fix these captions and prove the render"
+        ],
+        "not_for": "Recording audio or running ASR (see legends-ambient-intelligence); generic video editing.",
+        "setup": "No services or keys. Optional WSL speech env via LEGENDS_CAPTIONS_WSL_PYTHON for full production runs.",
+        "instructions": [
+          "skills/legends-ultimate-captions/SKILL.md",
+          "README.md"
+        ]
+      }
     }
   }
 }
