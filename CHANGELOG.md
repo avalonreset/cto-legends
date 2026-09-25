@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.6
+
+- Name the pattern: single-skill gateway (install one skill; every module loads on demand).
+- README tagline, central recipe, and architecture doc aligned; local doc link sweep clean.
+
 ## 0.5.5
 
 - House overlay: skill-local.md in the managed home appends to every host skill on agent-setup apply and survives refreshes.
