@@ -30,7 +30,7 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Google Maps ranking grids and local visibility research. | `legends-geogrid` |
 | Research search demand and improve repository copy, metadata, presentation, and releases. | `legends-github` |
 | Create instrumental music, sound effects, and continuous mixes. | `legends-stable-audio-3` |
-| Inspect, configure, and verify OBS Studio recording workflows. | `legends-obs-kit` |
+| Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra. | `legends-obs-kit` |
 | Local voice typing, dictation, and app-focused paste. | `hyperyap` |
 | Source-cited vault memory, research evidence, retrieval and recoverable knowledge transactions. | `legends-obsidian` |
 | Find, qualify, and apply for US business grants with agent assistance. | `legends-grant` |
@@ -99,7 +99,7 @@ checked separately: current transaction apply requires a POSIX/WSL host.
    for search and keyword research; `legends-obsidian` for vault memory and evidence;
    `legends-github` for repository improvement;
    `legends-stable-audio-3` for music/SFX; `legends-obs-kit` for recording;
-   `hyperyap` for dictation; `legends-obs-kit` cursor extra for pointer overlays.
+   `hyperyap` for dictation; `legends-obs-kit` for OBS plus pointer overlays.
 2. Preview: `cto-legends install <module>`.
 3. When installation is within the user's request, run the same command with
    `--apply`. Otherwise explain the proposed install and ask before doing it.
