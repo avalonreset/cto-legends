@@ -74,7 +74,8 @@ class ManagerTests(unittest.TestCase):
     def test_new_module_routes(self):
         for goal, expected in (("voice dictation", "hyperyap"), ("cursor overlay", "legends-obs-kit"),
                                ("music audio", "legends-stable-audio-3"), ("OBS recording", "legends-obs-kit"),
-                               ("rip this video", "legends-yt-dlp")):
+                               ("rip this video", "legends-yt-dlp"),
+                               ("transcribe my voice memos", "legends-ambient-intelligence")):
             self.assertEqual(route(goal)["matches"][0]["id"], expected)
 
     def test_obs_kit_plan_advertises_cursor_extra(self):
