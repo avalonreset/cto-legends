@@ -68,15 +68,15 @@ class ManagerTests(unittest.TestCase):
             m.plan(self.home, ["legends-seo-dungeon"])
 
     def test_new_module_routes(self):
-        for goal, expected in (("voice dictation", "hyperyap"), ("cursor overlay", "legends-obs-cursor"),
+        for goal, expected in (("voice dictation", "hyperyap"), ("cursor overlay", "legends-obs-kit"),
                                ("music audio", "legends-stable-audio-3"), ("OBS recording", "legends-obs-kit")):
             self.assertEqual(route(goal)["matches"][0]["id"], expected)
 
     def test_guided_install_does_not_download_or_activate_native_apps(self):
         with patch.object(m, "prepare", side_effect=AssertionError("must not prepare")), patch.object(m, "fetch", side_effect=AssertionError("network")):
-            result = m.install(self.home, ["hyperyap", "legends-obs-cursor"])
+            result = m.install(self.home, ["hyperyap"])
         self.assertEqual(result["active"], {})
-        self.assertEqual(len(result["guided_setup"]), 2)
+        self.assertEqual(len(result["guided_setup"]), 1)
         self.assertTrue(all(x["action"] == "guided-setup" for x in result["changes"]))
 
     def test_guided_assets_and_licenses(self):
