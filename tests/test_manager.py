@@ -32,15 +32,19 @@ class ManagerTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.home = Path(self.temp.name)
 
-    def test_obsidian_older_python_rejected_before_download(self):
+    def test_retired_obsidian_key_points_to_empire(self):
+        with self.assertRaisesRegex(ValueError, "renamed to legends-empire"):
+            m.plan(self.home, ["legends-obsidian"])
+
+    def test_empire_older_python_rejected_before_download(self):
         with patch.object(m.sys, "version_info", (3, 10)), patch.object(m, "fetch", side_effect=AssertionError("network")):
             with self.assertRaisesRegex(ValueError, "Python 3.11"):
-                m.prepare("legends-obsidian", {}, self.home)
+                m.prepare("legends-empire", {}, self.home)
 
-    def test_obsidian_probe_is_offline_and_never_mutates_a_vault(self):
+    def test_empire_probe_is_offline_and_never_mutates_a_vault(self):
         release = self.home / "release"
         with patch.object(m, "run") as run:
-            m.probe("legends-obsidian", release)
+            m.probe("legends-empire", release)
         commands = [args.args[0] for args in run.call_args_list]
         self.assertEqual(len(commands), 2)
         self.assertEqual(commands[0][-2:], ["contracts", "--check-only"])
