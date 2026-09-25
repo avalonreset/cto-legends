@@ -33,10 +33,10 @@ Python 3.10 or newer is required for the manager; use Python 3.11+ to include Em
 or MCP server is needed to install the ecosystem manager.
 
 From a source checkout, install with `python -m pip install .`. The release
-wheel command below installs the v0.5.12 release.
+wheel command below installs the v0.5.13 release.
 
 ```sh
-python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.5.12/cto_legends-0.5.12-py3-none-any.whl"
+python -m pip install "https://github.com/avalonreset/cto-legends/releases/download/v0.5.13/cto_legends-0.5.13-py3-none-any.whl"
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -104,7 +104,7 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) 0.4.1 | Instrumental music, sound effects, continuous mixes | Python planning CLI + bundled operating skill; model/GPU setup separate |
 | [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) 0.4.1 | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
 | [legends-empire](https://github.com/avalonreset/legends-empire) 3.0.0 | Source-cited Empire memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
-| [hyperyap](https://github.com/avalonreset/hyperyap) 1.0.11 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
+| [legends-hyperyap](https://github.com/avalonreset/legends-hyperyap) 1.0.11 | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
 | [legends-grant](https://github.com/avalonreset/legends-grant) 0.1.0 | Business grant finding, matching, and application | Markdown lanes + verified federal API routes; agent submits once per authorization |
 | [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) 0.2.1 | Web search, scraping, crawling, provider catalog | Python client + offline catalog; vendor CLI and key need module setup |
 | [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) 0.3.1 | Repeatable video pulls, transcripts, search, clip-building | Pip-installed CLI + skill; yt-dlp binary and ffmpeg need module setup; Mullvad opt-in |
@@ -138,7 +138,7 @@ cto-legends install legends-stable-audio-3 --apply
 cto-legends run legends-stable-audio-3 -- plan --hours 1 --vram-gb 16
 cto-legends install legends-obs-kit --apply
 cto-legends run legends-obs-kit -- manifest
-cto-legends guide hyperyap
+cto-legends guide legends-hyperyap
 cto-legends status
 ```
 
@@ -207,7 +207,7 @@ See [architecture](docs/ARCHITECTURE.md), [contributing](CONTRIBUTING.md), and
 [security](SECURITY.md). Python dependencies installed by individual modules may
 come from PyPI and are not all reproducibly locked by this manager. Module
 licenses remain in their packages. The manager is [MIT licensed](LICENSE).
-Audio uses Apache-2.0; hyperyap uses AGPL-3.0; OBS Cursor uses GPL-2.0-or-later.
+Audio uses Apache-2.0; legends-hyperyap uses AGPL-3.0; OBS Cursor uses GPL-2.0-or-later.
 They remain separate projects and keep their own licensing and model terms.
 
 [cto-legends.com](https://cto-legends.com)
@@ -230,7 +230,7 @@ For an existing local product not in the public catalog:
 This registers a guide only: no installation, update, execution or readiness
 claim. Such guides appear in `status`, stay private, and remain user-managed.
 
-The v0.5.12 wheel linked above includes these commands.
+The v0.5.13 wheel linked above includes these commands.
 
 See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
 

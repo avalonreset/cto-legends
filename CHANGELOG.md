@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.13
+
+- Rename the guided native module to legends-hyperyap (repo
+  avalonreset/legends-hyperyap). `hyperyap` remains a compatibility alias
+  across route, guide, handoff, install, run, and rollback.
+- Pinned installer filenames, version 1.0.11, and asset checksums are
+  unchanged; only the catalog key, repository path, and download URLs moved.
+- Catalog still holds twelve modules (eleven managed, legends-hyperyap the
+  only guided native module).
+
 ## 0.5.12
 
 - Onboard legends-ultimate-captions 0.1.0: agentic video caption QA and

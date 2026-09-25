@@ -33,6 +33,9 @@ def route(goal, limit=5):
         found = sorted({normalize(term) for term in row['discovery']['signals']
                         if ' ' + normalize(term) + ' ' in ' ' + text + ' '})
         explicit = ' ' + normalize(key) + ' ' in ' ' + text + ' '
+        if not explicit:
+            explicit = any(target == key and ' ' + normalize(alias) + ' ' in ' ' + text + ' '
+                           for alias, target in m.MODULE_ALIASES.items())
         score = (100 if explicit else 0) + sum(4 * len(t.split()) for t in found)
         score += len(words.intersection(row['keywords']))
         if score:
@@ -47,6 +50,7 @@ def route(goal, limit=5):
 
 
 def handoff(key, home):
+    key = m.resolve_module(key)
     row = m.catalog()['modules'][key]
     result = {'module': key, 'purpose': row['purpose'], 'scope': row['scope'],
               'setup': row['discovery']['setup'], 'not_for': row['discovery']['not_for'],

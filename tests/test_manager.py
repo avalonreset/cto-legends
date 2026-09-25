@@ -72,7 +72,7 @@ class ManagerTests(unittest.TestCase):
             m.plan(self.home, ["legends-seo-dungeon"])
 
     def test_new_module_routes(self):
-        for goal, expected in (("voice dictation", "hyperyap"), ("cursor overlay", "legends-obs-kit"),
+        for goal, expected in (("voice dictation", "legends-hyperyap"), ("cursor overlay", "legends-obs-kit"),
                                ("music audio", "legends-stable-audio-3"), ("OBS recording", "legends-obs-kit"),
                                ("rip this video", "legends-yt-dlp"),
                                ("transcribe my voice memos", "legends-ambient-intelligence"),
@@ -86,10 +86,29 @@ class ManagerTests(unittest.TestCase):
 
     def test_guided_install_does_not_download_or_activate_native_apps(self):
         with patch.object(m, "prepare", side_effect=AssertionError("must not prepare")), patch.object(m, "fetch", side_effect=AssertionError("network")):
-            result = m.install(self.home, ["hyperyap"])
+            result = m.install(self.home, ["legends-hyperyap"])
         self.assertEqual(result["active"], {})
         self.assertEqual(len(result["guided_setup"]), 1)
         self.assertTrue(all(x["action"] == "guided-setup" for x in result["changes"]))
+
+    def test_hyperyap_alias_resolves_to_canonical_guided_module(self):
+        self.assertEqual(m.resolve_module("hyperyap"), "legends-hyperyap")
+        self.assertEqual(m.resolve_module("legends-hyperyap"), "legends-hyperyap")
+        self.assertIn("legends-hyperyap", m.catalog()["modules"])
+        self.assertNotIn("hyperyap", m.catalog()["modules"])
+        self.assertIn("hyperyap", m.CLI_MODULES)
+        with patch.object(m, "prepare", side_effect=AssertionError("must not prepare")), patch.object(m, "fetch", side_effect=AssertionError("network")):
+            planned = m.plan(self.home, ["hyperyap"])
+            installed = m.install(self.home, ["hyperyap"])
+        self.assertEqual(planned[0]["id"], "legends-hyperyap")
+        self.assertEqual(planned[0]["action"], "guided-setup")
+        self.assertEqual(installed["guided_setup"][0]["id"], "legends-hyperyap")
+        self.assertEqual(m.guide("hyperyap")["id"], "legends-hyperyap")
+        self.assertIn("avalonreset/legends-hyperyap", m.guide("hyperyap")["release"])
+        for name in ("guide", "handoff", "run", "rollback"):
+            args = parser().parse_args(["--home", str(self.home), name, "hyperyap"])
+            self.assertEqual(args.module, "hyperyap")
+        self.assertEqual(route("set up hyperyap for me")["matches"][0]["id"], "legends-hyperyap")
 
     def test_guided_assets_and_licenses(self):
         for key in m.GUIDED_MODULES:
@@ -113,9 +132,11 @@ class ManagerTests(unittest.TestCase):
             self.assertEqual(m.node_binary(), "node")
 
     def test_guided_run_explains_setup(self):
-        args = parser().parse_args(["--home", str(self.home), "run", "hyperyap"])
-        with self.assertRaisesRegex(ValueError, "guided"):
-            execute(args)
+        for name in ("legends-hyperyap", "hyperyap"):
+            with self.subTest(name=name):
+                args = parser().parse_args(["--home", str(self.home), "run", name])
+                with self.assertRaisesRegex(ValueError, "guided"):
+                    execute(args)
 
     def test_grant_prepare_needs_no_python_requirements(self):
         lanes = ['SKILL.md', 'find.md', 'match.md', 'qualify.md', 'apply.md',

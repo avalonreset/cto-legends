@@ -228,9 +228,9 @@
         ]
       }
     },
-    "hyperyap": {
+    "legends-hyperyap": {
       "version": "1.0.11",
-      "repo": "avalonreset/hyperyap",
+      "repo": "avalonreset/legends-hyperyap",
       "commit": "681b06be5613bdb6048ea43056eb0014bc5d82d1",
       "purpose": "Local voice typing, dictation, and app-focused paste.",
       "keywords": [
@@ -239,7 +239,8 @@
         "transcription",
         "speech",
         "typing",
-        "hyperyap"
+        "hyperyap",
+        "legends-hyperyap"
       ],
       "license": "AGPL-3.0",
       "scope": "Guided native desktop installation. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
@@ -253,31 +254,31 @@
       "assets": [
         {
           "name": "hyperyap_1.0.11_x64-setup.exe",
-          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/hyperyap_1.0.11_x64-setup.exe",
+          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/hyperyap_1.0.11_x64-setup.exe",
           "size": 130267421,
           "sha256": "d16c0ae4cd2a053d1fe9d51ba9cf93574326ec324746c28ba259d91d483e9596"
         },
         {
           "name": "HyperYap_aarch64_darwin.dmg",
-          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/HyperYap_aarch64_darwin.dmg",
+          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/HyperYap_aarch64_darwin.dmg",
           "size": 19348538,
           "sha256": "b4dbace270f51033014486b183225a6e7730f135cfe42012cb0d1e1ffb271f96"
         },
         {
           "name": "HyperYap_amd64.AppImage",
-          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/HyperYap_amd64.AppImage",
+          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/HyperYap_amd64.AppImage",
           "size": 555448824,
           "sha256": "0a7dea0aa54b7c644efa9622c19a8005885b7ee7771ce8ff1e19ffd534dbbb72"
         },
         {
           "name": "HyperYap_amd64.deb",
-          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/HyperYap_amd64.deb",
+          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/HyperYap_amd64.deb",
           "size": 21594132,
           "sha256": "5828a6097fe57148fcde29733ff88f308de62a1cad217699a98b0ad4ff5b9cf6"
         },
         {
           "name": "HyperYap_x86_64_darwin.dmg",
-          "url": "https://github.com/avalonreset/hyperyap/releases/download/v1.0.11/HyperYap_x86_64_darwin.dmg",
+          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/HyperYap_x86_64_darwin.dmg",
           "size": 20875417,
           "sha256": "bc28315185db73580783a0c762b49ab7a59f3b4dad067b611dbe5013eadbd12c"
         }
@@ -529,7 +530,7 @@
           "Transcribe my voice memos offline",
           "Ingest recordings from my KT5000"
         ],
-        "not_for": "Live keyboard dictation (that is hyperyap); cloud transcription endpoints.",
+        "not_for": "Live keyboard dictation (that is legends-hyperyap); cloud transcription endpoints.",
         "setup": "ffmpeg on PATH; pip install .[whisper] for local Whisper; NeMo optional for GPU Parakeet.",
         "instructions": [
           "skills/legends-ambient-intelligence/SKILL.md",

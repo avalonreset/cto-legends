@@ -18,7 +18,7 @@ class CapabilitiesTests(unittest.TestCase):
             'Research keyword demand': 'legends-dataforseo-kit',
             'Save this research in my vault': 'legends-empire',
             'Record my screen': 'legends-obs-kit',
-            'Type with my voice': 'hyperyap',
+            'Type with my voice': 'legends-hyperyap',
             'Highlight my mouse while recording': 'legends-obs-kit',
             'Archive this channel with pacing': 'legends-yt-dlp',
             'Ingest recordings from my KT5000': 'legends-ambient-intelligence',
@@ -77,9 +77,12 @@ class CapabilitiesTests(unittest.TestCase):
                 d.handoff('legends-stable-audio-3', Path(tmp))
 
     def test_native_handoff_does_not_claim_installation(self):
-        result = d.handoff('hyperyap', Path('unused'))
-        self.assertEqual(result['installation'], 'guided_native')
-        self.assertEqual(result['readiness'], 'not_checked')
+        for name in ('legends-hyperyap', 'hyperyap'):
+            with self.subTest(name=name):
+                result = d.handoff(name, Path('unused'))
+                self.assertEqual(result['module'], 'legends-hyperyap')
+                self.assertEqual(result['installation'], 'guided_native')
+                self.assertEqual(result['readiness'], 'not_checked')
 
     def test_all_catalog_modules_have_complete_contract(self):
         for row in d.index()['capabilities']:

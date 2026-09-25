@@ -22,9 +22,16 @@ ROOT = Path(__file__).resolve().parent
 LIMIT = 100 * 1024 * 1024
 REPOSITORIES = {key: "avalonreset/" + key for key in (
     "legends-dataforseo-kit", "legends-geogrid", "legends-github",
-    "legends-stable-audio-3", "legends-obs-kit", "hyperyap", "legends-empire", "legends-grant", "legends-firecrawl", "legends-yt-dlp", "legends-ambient-intelligence", "legends-ultimate-captions")}
+    "legends-stable-audio-3", "legends-obs-kit", "legends-hyperyap", "legends-empire", "legends-grant", "legends-firecrawl", "legends-yt-dlp", "legends-ambient-intelligence", "legends-ultimate-captions")}
 RECIPES = set(REPOSITORIES)
-GUIDED_MODULES = {"hyperyap"}
+GUIDED_MODULES = {"legends-hyperyap"}
+MODULE_ALIASES = {"hyperyap": "legends-hyperyap"}
+CLI_MODULES = set(REPOSITORIES) | set(MODULE_ALIASES)
+
+
+def resolve_module(key):
+    """Map a compatibility alias to its canonical catalog key."""
+    return MODULE_ALIASES.get(key, key)
 
 
 def catalog():
@@ -135,6 +142,7 @@ def node_binary():
 
 
 def guide(key):
+    key = resolve_module(key)
     module = catalog()["modules"][key]
     return {"id": key, "version": module["version"], "mode": "guided" if key in GUIDED_MODULES else "managed",
             "platforms": module.get("platforms", ["windows", "linux", "macos"]),
@@ -277,6 +285,7 @@ def plan(home, keys):
     for key in keys:
         if key == "legends-obsidian":
             raise ValueError("legends-obsidian was renamed to legends-empire; install legends-empire instead")
+        key = resolve_module(key)
         if key not in modules:
             raise ValueError(f"Unknown module: {key}")
         module = modules[key]
@@ -316,6 +325,7 @@ def install(home, keys):
 
 
 def rollback(home, key):
+    key = resolve_module(key)
     with lock(home):
         state = read_state(home)
         if key not in state["previous"]:

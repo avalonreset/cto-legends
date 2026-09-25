@@ -31,7 +31,7 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Research search demand and improve repository copy, metadata, presentation, and releases. | `legends-github` |
 | Create instrumental music, sound effects, and continuous mixes. | `legends-stable-audio-3` |
 | Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra. | `legends-obs-kit` |
-| Local voice typing, dictation, and app-focused paste. | `hyperyap` |
+| Local voice typing, dictation, and app-focused paste. | `legends-hyperyap` |
 | Source-cited Empire memory, research evidence, retrieval and recoverable knowledge transactions. | `legends-empire` |
 | Find, qualify, and apply for US business grants with agent assistance. | `legends-grant` |
 | Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing. | `legends-firecrawl` |
@@ -40,7 +40,7 @@ registered skills. A question in chat is sufficient context to begin discovery.
 | Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence. | `legends-ultimate-captions` |
 <!-- capability-directory:end -->
 
-> **Cutover note:** `legends-obsidian` was renamed to `legends-empire` in 3.0.0. Install `legends-empire` for vault memory; the old key refuses with a pointer. Never install both for the same vault.
+> **Cutover note:** `legends-obsidian` was renamed to `legends-empire` in 3.0.0. Install `legends-empire` for vault memory; the old key refuses with a pointer. Never install both for the same vault. `hyperyap` remains a compatibility alias for `legends-hyperyap` across route, guide, handoff, install, run, and rollback.
 
 For "can we generate some AI music?", choose legends-stable-audio-3, resolve its
 handoff, read its audio recipe, and check its generation setup. Do not detour to
@@ -101,7 +101,7 @@ checked separately: current transaction apply requires a POSIX/WSL host.
 1. Match the goal: `legends-geogrid` for local rank grids; `legends-dataforseo-kit`
    for search and keyword research; `legends-empire` for vault memory and evidence;
    `legends-github` for repository improvement; `legends-stable-audio-3` for music/SFX;
-   `legends-obs-kit` for OBS recording plus pointer overlays; `hyperyap` for dictation;
+   `legends-obs-kit` for OBS recording plus pointer overlays; `legends-hyperyap` for dictation;
    `legends-grant` for grant finding and applications; `legends-firecrawl` for web
    search and scraping; `legends-yt-dlp` for video pulls, transcripts, and clips;
    `legends-ambient-intelligence` for ambient recording, voice memos, and distillation;
@@ -114,7 +114,7 @@ checked separately: current transaction apply requires a POSIX/WSL host.
 5. Use `cto-legends run <module> -- <arguments>` or the exact isolated Python
    path from `status`. Do not use a global Python for managed module commands.
 
-For hyperyap and OBS Cursor, `install` returns a guided setup handoff. Use
+For legends-hyperyap and OBS Cursor, `install` returns a guided setup handoff. Use
 `guide <module>` to read the pinned README, release assets, platform support,
 and SHA-256 values. Do not call these native applications installed merely
 because the guide was returned. Native installation and upgrades use their
