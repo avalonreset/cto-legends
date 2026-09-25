@@ -54,8 +54,8 @@ home, run doctor and CLI smoke checks, and test dependency versions. Publish a
 new manager release only after platform CI succeeds.
 
 Do not add a private module, placeholder, or merely available repository to the
-catalog. The current set contains eight independently released projects: six
-managed CLIs and two native setup guides. Native entries supply pinned release
+catalog. The current set contains nine independently released projects: eight
+managed CLIs and one native setup guide. Native entries supply pinned release
 assets and checksums but are never recorded as managed installed environments.
 Other public projects need the same review before admission. The intentionally
 excluded SEO Dungeon project is not routable or installable through this catalog.
