@@ -250,13 +250,13 @@
         "macos",
         "linux"
       ],
-      "sha256": "d16c0ae4cd2a053d1fe9d51ba9cf93574326ec324746c28ba259d91d483e9596",
+      "sha256": "38f64eaff9a3bfe08dfe8d4912b94b28411c2c152dedd5733d44538b70eb54dd",
       "assets": [
         {
           "name": "hyperyap_1.0.11_x64-setup.exe",
           "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/hyperyap_1.0.11_x64-setup.exe",
           "size": 130267421,
-          "sha256": "d16c0ae4cd2a053d1fe9d51ba9cf93574326ec324746c28ba259d91d483e9596"
+          "sha256": "38f64eaff9a3bfe08dfe8d4912b94b28411c2c152dedd5733d44538b70eb54dd"
         },
         {
           "name": "HyperYap_aarch64_darwin.dmg",
