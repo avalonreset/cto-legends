@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "version": "0.1.2",
+  "version": "0.1.3",
   "modules": {
     "legends-dataforseo-kit": {
-      "version": "0.1.1",
-      "commit": "b0981cbd68ba18210bac3de07d94582bd1fc2f44",
+      "version": "0.1.2",
+      "commit": "2c8d817ab41d9085f89a6e0b4583082bf92ebcd0",
       "repo": "avalonreset/legends-dataforseo-kit",
-      "sha256": "0cfb07d64913ccaad8fc990fbaf3b8ff43956602ebcef0c83264b1881fa14a8e",
+      "sha256": "3782f2ea90bcdd3077c7bec91682fcdd12b575cfd7f818dd6e818107a309b8eb",
       "purpose": "Search and keyword research through DataForSEO.",
       "keywords": [
         "seo",

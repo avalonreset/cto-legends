@@ -149,6 +149,35 @@ def latest_release(full: str) -> tuple[dict | None, str]:
 
 # ---------------------------------------------------------------- contract
 
+DUNDER_VERSION_RE = re.compile(r"""__version__\s*=\s*[\"'](\d+\.\d+\.\d+)[\"']""")
+
+
+def audit_package_versions(root: Path, tree_ver: str | None) -> list[Check]:
+    """In-package __version__ strings must equal the authoritative version."""
+    found: dict[str, str] = {}
+    layouts = ["src/*/__init__.py", "python/*/__init__.py", "*/__init__.py"]
+    inits = []
+    for pattern in layouts:
+        inits.extend(sorted(root.glob(pattern)))
+    for init in inits:
+        try:
+            text = init.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        m = DUNDER_VERSION_RE.search(text)
+        if m:
+            found[init.relative_to(root).as_posix()] = m.group(1)
+    if tree_ver is None:
+        return [Check(None, "in-package versions join tree version",
+                      "no authoritative tree version to compare")]
+    bad = {k: v for k, v in found.items() if v != tree_ver}
+    if not found:
+        return [Check(True, "in-package versions join tree version",
+                      "no __version__ found")]
+    return [Check(not bad, "in-package versions join tree version",
+                  "" if not bad else "drift: %s (tree %s)" % (
+                      ", ".join(f"{k}={v}" for k, v in sorted(bad.items())), tree_ver))]
+
 def audit_contract(root: Path, module: str, is_router: bool) -> list[Check]:
     checks: list[Check] = []
     if is_router:
@@ -369,6 +398,7 @@ def audit_repo(entry: dict, catalog: dict) -> tuple[str, list[Check]]:
             f"head={head}" if head else "CHANGELOG.md missing or no version head",
         ))
         checks.extend(audit_contract(root, module, is_router))
+        checks.extend(audit_package_versions(root, tree_ver))
         if not is_router:
             vendor_checks, _ = audit_vendor(root, full)
             checks.extend(vendor_checks)

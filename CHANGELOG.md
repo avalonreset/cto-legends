@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.3 - 2026-09-25
+
+- Catalog: pinned dataforseo-kit 0.1.2 (in-package version join).
+- Audit: in-package __version__ strings must now equal the authoritative
+  tree version, in the fleet audit and the contract CI template. This
+  check would have caught the 0.1.1 kit drift and the 0.1.0 manager
+  drift at the source.
+
 ## 0.1.2 - 2026-09-25
 
 - Catalog: pinned obs-kit, empire, hyperyap, and dataforseo-kit 0.1.1
