@@ -6,7 +6,7 @@
       "version": "0.1.0",
       "commit": "dd00fb030393f300226ca18db3644bb141f96fb0",
       "repo": "avalonreset/legends-dataforseo-kit",
-      "sha256": "337ba78de9d2d26bf622621e5d383c48fc022782a8c95525f6cb0d9f43506c10",
+      "sha256": "3226dba269baf99813a57caad37e633a37434cfe2279041c85a30c88c310c029",
       "purpose": "Search and keyword research through DataForSEO.",
       "keywords": [
         "seo",
@@ -46,7 +46,7 @@
       "version": "0.1.0",
       "commit": "5dec8e33538cf54aab9cfe2e2e07c0db0e51458d",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "c5c555753303cd313b62d7b3d5ea18d1536bb3feec2564cedbd3fdce9b875fe7",
+      "sha256": "0a55964f770e56a78bcea9d850ecc434049508031f5ed36327f8ef27308a0959",
       "purpose": "Google Maps ranking grids and local visibility research.",
       "keywords": [
         "maps",
@@ -88,7 +88,7 @@
       "version": "0.1.0",
       "commit": "49e998624dcef4cb511bcdca3b8aafa23152a305",
       "repo": "avalonreset/legends-github",
-      "sha256": "3a70d212ffdf6ac90bb225cbcb934fdfd6b8de9de405a3c04ef2c5349267b332",
+      "sha256": "4274312e1e31d62158b7935c4e9f9360c517fb5801e1b89f5bae05d829692973",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
@@ -150,7 +150,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "66d5cfcc1a3792da04399bf3ea3c7bfa8457e0c2aefff5b711e34d8f741af713",
+      "sha256": "f1f7cfe3bd9a565c423c527959f14c151fdbbfba833d6ce21b34d73579ef71f0",
       "discovery": {
         "signals": [
           "make music",
@@ -200,7 +200,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "2a776b57363b5ecc8e0508b5bc5032f8fd77b50e7a4a609e1be22703cdc2d705",
+      "sha256": "e8d48a50208bb5523e6008ba1f854f7f255c10d1c9dfb9ee9e6570174123bb6a",
       "discovery": {
         "signals": [
           "record my screen",
@@ -247,7 +247,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "52a6777e9ff7dbb950f55ee77cdf74975e1ee0ba92abc40716b6c846381fccdf",
+      "sha256": "f12b38d914c97d2619878885a69305d3d5545929c9a6b0bf67d3b846a7225b35",
       "next": "v0.1.0 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
       "discovery": {
         "signals": [
@@ -272,7 +272,7 @@
       "version": "0.1.0",
       "commit": "10ac9e84af7981c38e598c564f5e1c03a20302f0",
       "repo": "avalonreset/legends-empire",
-      "sha256": "94230e09a02b6b5a1248adac8fc8454ec5df184835a5c95eebc3833372dbd8cb",
+      "sha256": "9c76b61feb3d22c9bee4bc95aca74e5a652f3289a8f4df2fadbfd0f094cd44b6",
       "purpose": "Source-cited Empire memory, research evidence, retrieval and recoverable knowledge transactions.",
       "keywords": [
         "empire",
@@ -315,7 +315,7 @@
       "version": "0.1.0",
       "commit": "943728934ecd6b8955519c9b5d860d121195f805",
       "repo": "avalonreset/legends-grant",
-      "sha256": "5983ce367bd7bb4568f54a1b77d31d474765cbbf2448a2702aed70a290d45365",
+      "sha256": "11dab379d983185f00298805790b9f9a981f34ba57f377653976d8e4594220ae",
       "purpose": "Find, qualify, and apply for US business grants with agent assistance.",
       "keywords": [
         "grant",
@@ -364,7 +364,7 @@
       "version": "0.1.0",
       "commit": "0cd474db3dccbb1f08de2f522fe69e45b0fcc450",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "54050e0e3daac7e00474d7c012907c654581956f6184b057662580fdd704511e",
+      "sha256": "a01248a0285adc4fdb7e0833111cce8d4c5db4fcf9dc4205c3becc14d25c3691",
       "purpose": "Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing.",
       "keywords": [
         "firecrawl",
@@ -408,7 +408,7 @@
       "version": "0.1.0",
       "commit": "134ce07151abaffe551380df084e62f29c079d3d",
       "repo": "avalonreset/legends-yt-dlp",
-      "sha256": "fe48ca412187fba075c8aca59001240ea23a71a1d107c71a12ff0863d0dc5f0a",
+      "sha256": "fb1bb4b6589e2854895f673e0d6ff1cd90c05c401ae3c2c399af3c19cc86ce32",
       "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
       "keywords": [
         "youtube",
@@ -457,7 +457,7 @@
       "version": "0.1.0",
       "commit": "711207aa8783d46a50d7d5d815e1a2ce16c444f9",
       "repo": "avalonreset/legends-ambient-intelligence",
-      "sha256": "625e445c226a02ec9a0e780eb0188203c5884d13813ce5ad977da6c6c6757fb8",
+      "sha256": "d09667852d3551edc3557d9c9a783450773d29bacf32403779b751adb5f5dea3",
       "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
       "keywords": [
         "ambient",
@@ -506,7 +506,7 @@
       "version": "0.1.0",
       "commit": "c21364236477325bae1a5a295adc9a4d07d8df83",
       "repo": "avalonreset/legends-captions",
-      "sha256": "ace6d895f72330c48251d15ed3d9da608b0959301ef3f6401db33f9d71873231",
+      "sha256": "ec4ce94a83b427c43ebd81183cac734e2b6d2639544f3cad2c15db8529bd7a7a",
       "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
       "keywords": [
         "caption",
