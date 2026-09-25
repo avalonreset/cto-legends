@@ -61,12 +61,11 @@ class CapabilitiesTests(unittest.TestCase):
             home = Path(tmp)
             source = home / 'releases/audio/source'
             source.mkdir(parents=True)
-            (source / 'skills/legends-stable-audio-3').mkdir(parents=True)
-            (source / 'skills/legends-stable-audio-3/SKILL.md').write_text('canonical recipe')
+            (source / 'README.md').write_text('canonical recipe')
             with patch.object(m, 'read_state', return_value={'active': {'legends-stable-audio-3': 'releases/audio'}}):
                 result = d.handoff('legends-stable-audio-3', home)
-            self.assertEqual(result['instructions'], [str(source.resolve() / 'skills/legends-stable-audio-3/SKILL.md')])
-            self.assertEqual(result['missing_instructions'], ['README.md'])
+            self.assertEqual(result['instructions'], [str(source.resolve() / 'README.md')])
+            self.assertEqual(result['missing_instructions'], ['docs/first-run.md'])
             self.assertEqual(result['readiness'], 'not_checked')
 
     def test_instruction_escape_rejected(self):

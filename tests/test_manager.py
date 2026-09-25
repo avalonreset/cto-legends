@@ -131,11 +131,11 @@ class ManagerTests(unittest.TestCase):
         for key in m.GUIDED_MODULES:
             data = m.guide(key)
             self.assertEqual(data["mode"], "guided")
-            self.assertTrue(data["assets"])
+            self.assertEqual(data["assets"], [])
+            self.assertIn("pending", data["scope"])
+            self.assertIn("pending", data["next"])
             self.assertIn(m.catalog()["modules"][key]["commit"], data["instructions"])
             self.assertNotEqual(data["license"], "MIT")
-            for asset in data["assets"]:
-                self.assertEqual(len(asset["sha256"]), 64)
 
     def test_node_missing_and_old_are_rejected(self):
         with patch.object(m.shutil, "which", return_value=None):
@@ -213,7 +213,7 @@ class ManagerTests(unittest.TestCase):
     def test_firecrawl_prepare_installs_package_source(self):
         stream = io.BytesIO()
         with zipfile.ZipFile(stream, 'w') as z:
-            z.writestr('legends-firecrawl-0.2.1/pyproject.toml', 'package')
+            z.writestr('legends-firecrawl-0.1.0/pyproject.toml', 'package')
         raw = stream.getvalue()
         module = dict(m.catalog()['modules']['legends-firecrawl'],
                       sha256=hashlib.sha256(raw).hexdigest())
@@ -272,7 +272,7 @@ class ManagerTests(unittest.TestCase):
         with patch.object(m, "fetch", side_effect=AssertionError("network")):
             plan = m.plan(home, ["legends-geogrid"])
         self.assertFalse(home.exists())
-        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo-kit"], "0.4.0")
+        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo-kit"], "0.1.0")
 
     def test_unknown_module_rejected(self):
         with self.assertRaises(ValueError):

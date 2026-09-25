@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "modules": {
     "legends-dataforseo-kit": {
-      "version": "0.5.0",
-      "commit": "87ceb0bbfcc941683d936d31a08be14a9bd7dfee",
+      "version": "0.1.0",
+      "commit": "dd00fb030393f300226ca18db3644bb141f96fb0",
       "repo": "avalonreset/legends-dataforseo-kit",
-      "sha256": "9377efa9b5d8f7ddcee32d985aede63bfa95d6c5b2f01866ae9e68006b680e06",
+      "sha256": "337ba78de9d2d26bf622621e5d383c48fc022782a8c95525f6cb0d9f43506c10",
       "purpose": "Search and keyword research through DataForSEO.",
       "keywords": [
         "seo",
@@ -37,17 +37,16 @@
         "not_for": "Automatic marketing conclusions or a substitute for GeoGrid study design.",
         "setup": "Offline inspection needs no credentials; fresh API work requires credentials and explicit execution authorization.",
         "instructions": [
-          "skills/legends-dataforseo-kit/SKILL.md",
-          "docs/RESEARCH-MEMORY.md",
-          "README.md"
+          "README.md",
+          "docs/RESEARCH-MEMORY.md"
         ]
       }
     },
     "legends-geogrid": {
-      "version": "0.4.0",
-      "commit": "35048a60c320b4bae3f5e77fd4f7509632511070",
+      "version": "0.1.0",
+      "commit": "5dec8e33538cf54aab9cfe2e2e07c0db0e51458d",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "aff01a3fa8a87a74feb89f3945246a0d325a0d2682629465cd5a602ceb82979f",
+      "sha256": "c5c555753303cd313b62d7b3d5ea18d1536bb3feec2564cedbd3fdce9b875fe7",
       "purpose": "Google Maps ranking grids and local visibility research.",
       "keywords": [
         "maps",
@@ -60,7 +59,7 @@
         "rankings"
       ],
       "dependencies": {
-        "legends-dataforseo-kit": "0.4.0"
+        "legends-dataforseo-kit": "0.1.0"
       },
       "scope": "Research-first studies, reports and enhancement. Report libraries included; browser binaries and provider credentials require readiness checks.",
       "discovery": {
@@ -80,17 +79,16 @@
         "not_for": "A complete website audit or proof of why Google ranks a business.",
         "setup": "Needs report libraries, map browser and research credentials for fresh studies.",
         "instructions": [
-          "SKILL.md",
-          "docs/START_A_STUDY.md",
-          "docs/QUERY_SELECTION_POLICY.md"
+          "README.md",
+          "docs/STUDY-RECIPE.md"
         ]
       }
     },
     "legends-github": {
-      "version": "1.5.0",
-      "commit": "f5e08704961e125fe11d31c0ed1b8da83b2c2252",
+      "version": "0.1.0",
+      "commit": "49e998624dcef4cb511bcdca3b8aafa23152a305",
       "repo": "avalonreset/legends-github",
-      "sha256": "8fca9bde634eef577ec4797ee9b8f2e90322c61db86ed4f72d2e3547c03611b5",
+      "sha256": "3a70d212ffdf6ac90bb225cbcb934fdfd6b8de9de405a3c04ef2c5349267b332",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
@@ -104,7 +102,7 @@
         "keywords"
       ],
       "dependencies": {
-        "legends-dataforseo-kit": "0.4.0"
+        "legends-dataforseo-kit": "0.1.0"
       },
       "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup.",
       "setup_revision": 1,
@@ -124,15 +122,15 @@
         "not_for": "General website SEO or merely adding unresearched keywords.",
         "setup": "Requires target repository and appropriate GitHub access; live research needs provider credentials.",
         "instructions": [
-          "github/SKILL.md",
-          "README.md"
+          "README.md",
+          "docs/GITHUB-RECIPE.md"
         ]
       }
     },
     "legends-stable-audio-3": {
-      "version": "0.4.1",
+      "version": "0.1.0",
       "repo": "avalonreset/legends-stable-audio-3",
-      "commit": "d32b9dc9cb98d5480e93b378d39e55bfe06eafdf",
+      "commit": "1236b53fdecb6ff2f7aff1ec3a92839d22aa5385",
       "purpose": "Create instrumental music, sound effects, and continuous mixes.",
       "keywords": [
         "music",
@@ -152,7 +150,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "75b052002c23e6a52fc48c4c19eaa93c4a10331b5f29e4994497d290ada49970",
+      "sha256": "66d5cfcc1a3792da04399bf3ea3c7bfa8457e0c2aefff5b711e34d8f741af713",
       "discovery": {
         "signals": [
           "make music",
@@ -174,15 +172,15 @@
         "not_for": "Speech transcription, voice cloning, or guaranteed vocal songs.",
         "setup": "Lightweight planner install does not install models. Read the audio recipe for model access, hardware and hosted options.",
         "instructions": [
-          "skills/legends-stable-audio-3/SKILL.md",
-          "README.md"
+          "README.md",
+          "docs/first-run.md"
         ]
       }
     },
     "legends-obs-kit": {
-      "version": "0.4.1",
+      "version": "0.1.0",
       "repo": "avalonreset/legends-obs-kit",
-      "commit": "81eaa20822686a74e19ab039972039e4f2516d59",
+      "commit": "aa49941a5e2bb08bf590f505c65f2dd70f5c0426",
       "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
       "keywords": [
         "obs",
@@ -202,8 +200,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "2c4745d4192a9d30862cf4271a3a6d326c864745b873389ba413b1725f6fced8",
-      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.4.1/avalonreset-legends-obs-kit-0.4.1.tgz",
+      "sha256": "2a776b57363b5ecc8e0508b5bc5032f8fd77b50e7a4a609e1be22703cdc2d705",
       "discovery": {
         "signals": [
           "record my screen",
@@ -223,15 +220,15 @@
         "not_for": "Music generation, transcription or editing a finished video.",
         "setup": "Node.js 22+, Windows OBS and authenticated WebSocket setup; follow module doctor.",
         "instructions": [
-          "skills/legends-obs-kit/SKILL.md",
-          "README.md"
+          "README.md",
+          "docs/RECIPES.md"
         ]
       }
     },
     "legends-hyperyap": {
-      "version": "1.0.11",
+      "version": "0.1.0",
       "repo": "avalonreset/legends-hyperyap",
-      "commit": "681b06be5613bdb6048ea43056eb0014bc5d82d1",
+      "commit": "d2271c065af8580505589a4f587e0416a8b8b5f8",
       "purpose": "Local voice typing, dictation, and app-focused paste.",
       "keywords": [
         "voice",
@@ -243,47 +240,15 @@
         "legends-hyperyap"
       ],
       "license": "AGPL-3.0",
-      "scope": "Guided native desktop installation. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
+      "scope": "Guided native desktop installation. v0.1.0 is source-only; platform installer binaries are pending. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
       "dependencies": {},
       "platforms": [
         "windows",
         "macos",
         "linux"
       ],
-      "sha256": "d16c0ae4cd2a053d1fe9d51ba9cf93574326ec324746c28ba259d91d483e9596",
-      "assets": [
-        {
-          "name": "hyperyap_1.0.11_x64-setup.exe",
-          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/hyperyap_1.0.11_x64-setup.exe",
-          "size": 130267421,
-          "sha256": "d16c0ae4cd2a053d1fe9d51ba9cf93574326ec324746c28ba259d91d483e9596"
-        },
-        {
-          "name": "HyperYap_aarch64_darwin.dmg",
-          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/HyperYap_aarch64_darwin.dmg",
-          "size": 19348538,
-          "sha256": "b4dbace270f51033014486b183225a6e7730f135cfe42012cb0d1e1ffb271f96"
-        },
-        {
-          "name": "HyperYap_amd64.AppImage",
-          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/HyperYap_amd64.AppImage",
-          "size": 555448824,
-          "sha256": "0a7dea0aa54b7c644efa9622c19a8005885b7ee7771ce8ff1e19ffd534dbbb72"
-        },
-        {
-          "name": "HyperYap_amd64.deb",
-          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/HyperYap_amd64.deb",
-          "size": 21594132,
-          "sha256": "5828a6097fe57148fcde29733ff88f308de62a1cad217699a98b0ad4ff5b9cf6"
-        },
-        {
-          "name": "HyperYap_x86_64_darwin.dmg",
-          "url": "https://github.com/avalonreset/legends-hyperyap/releases/download/v1.0.11/HyperYap_x86_64_darwin.dmg",
-          "size": 20875417,
-          "sha256": "bc28315185db73580783a0c762b49ab7a59f3b4dad067b611dbe5013eadbd12c"
-        }
-      ],
-      "next": "Choose the installer for the user platform, verify its SHA-256, and follow the pinned README. Model downloads and native permissions need user setup.",
+      "sha256": "52a6777e9ff7dbb950f55ee77cdf74975e1ee0ba92abc40716b6c846381fccdf",
+      "next": "v0.1.0 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
       "discovery": {
         "signals": [
           "voice typing",
@@ -304,10 +269,10 @@
       }
     },
     "legends-empire": {
-      "version": "3.0.0",
-      "commit": "e81202beb24ce67f3f161e6d29540b06f4e42609",
+      "version": "0.1.0",
+      "commit": "10ac9e84af7981c38e598c564f5e1c03a20302f0",
       "repo": "avalonreset/legends-empire",
-      "sha256": "d6820376cdc09831c98f090dc0d919df8d7abca38b23878e46af04acfff90a2f",
+      "sha256": "94230e09a02b6b5a1248adac8fc8454ec5df184835a5c95eebc3833372dbd8cb",
       "purpose": "Source-cited Empire memory, research evidence, retrieval and recoverable knowledge transactions.",
       "keywords": [
         "empire",
@@ -341,16 +306,16 @@
         "not_for": "Inventing sources or modifying a vault without selecting it.",
         "setup": "Select a vault. Native Windows supports inspection; transaction writes require POSIX/WSL.",
         "instructions": [
-          "skills/legends-empire/SKILL.md",
-          "README.md"
+          "README.md",
+          "docs/install-guide.md"
         ]
       }
     },
     "legends-grant": {
       "version": "0.1.0",
-      "commit": "217a17614518689fbd7e55b24f9875ef9322a114",
+      "commit": "943728934ecd6b8955519c9b5d860d121195f805",
       "repo": "avalonreset/legends-grant",
-      "sha256": "36da7ccb882708165d1ef0db49b6f48c4d0778da569a0a92be793454595e8825",
+      "sha256": "5983ce367bd7bb4568f54a1b77d31d474765cbbf2448a2702aed70a290d45365",
       "purpose": "Find, qualify, and apply for US business grants with agent assistance.",
       "keywords": [
         "grant",
@@ -384,7 +349,8 @@
         "not_for": "Automatic approvals or a substitute for reading the live notice terms.",
         "setup": "No credentials for federal search lanes; SAM.gov lanes need a free public API key; submissions need explicit per-send authorization.",
         "instructions": [
-          "SKILL.md",
+          "README.md",
+          "docs/GRANT-RECIPE.md",
           "find.md",
           "match.md",
           "qualify.md",
@@ -395,10 +361,10 @@
       }
     },
     "legends-firecrawl": {
-      "version": "0.2.1",
-      "commit": "e376006471d33682e93318fce704fee27f8ba4a3",
+      "version": "0.1.0",
+      "commit": "0cd474db3dccbb1f08de2f522fe69e45b0fcc450",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "ea1d29a0c00289a81ba70afdc6dba4019d1696f8643db5c1ed0334161e52671b",
+      "sha256": "54050e0e3daac7e00474d7c012907c654581956f6184b057662580fdd704511e",
       "purpose": "Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing.",
       "keywords": [
         "firecrawl",
@@ -433,17 +399,16 @@
         "not_for": "Bypassing authentication, CAPTCHA, robots policy, or access controls; a substitute for vendor billing.",
         "setup": "Needs firecrawl-cli 1.23.3 and FIRECRAWL_API_KEY for live calls; the offline catalog needs neither.",
         "instructions": [
-          "skills/legends-firecrawl/SKILL.md",
-          "skills/legends-alexandria/SKILL.md",
-          "README.md"
+          "README.md",
+          "docs/RECIPES.md"
         ]
       }
     },
     "legends-yt-dlp": {
-      "version": "0.3.1",
-      "commit": "fcd20c3e85e1868f8ab66b049469b04bfa4b930c",
+      "version": "0.1.0",
+      "commit": "134ce07151abaffe551380df084e62f29c079d3d",
       "repo": "avalonreset/legends-yt-dlp",
-      "sha256": "2b27d9f910619d78ff9b5859830bfe32b45d420b10ac6dec2bcaf53f0e91c442",
+      "sha256": "fe48ca412187fba075c8aca59001240ea23a71a1d107c71a12ff0863d0dc5f0a",
       "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
       "keywords": [
         "youtube",
@@ -483,16 +448,16 @@
         "not_for": "Bypassing DRM, paywalls, logins, captchas, or access controls; rotating relays to push through throttles or blocks.",
         "setup": "Managed yt-dlp binary via legends-yt-dlp yt-dlp install; ffmpeg on PATH for clips; CrispASR external for transcription.",
         "instructions": [
-          "skills/legends-yt-dlp/SKILL.md",
-          "README.md"
+          "README.md",
+          "docs/OPERATOR-ROUTING.md"
         ]
       }
     },
     "legends-ambient-intelligence": {
       "version": "0.1.0",
-      "commit": "66957dee11b427ddbe99d9fe4e837360ab64c421",
+      "commit": "711207aa8783d46a50d7d5d815e1a2ce16c444f9",
       "repo": "avalonreset/legends-ambient-intelligence",
-      "sha256": "aaead3396020bb9ff79e92a320571ce22ee437f4709c7cc2c2ec467fccabb78d",
+      "sha256": "625e445c226a02ec9a0e780eb0188203c5884d13813ce5ad977da6c6c6757fb8",
       "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
       "keywords": [
         "ambient",
@@ -533,16 +498,15 @@
         "not_for": "Live keyboard dictation (that is legends-hyperyap); cloud transcription endpoints.",
         "setup": "ffmpeg on PATH; pip install .[whisper] for local Whisper; NeMo optional for GPU Parakeet.",
         "instructions": [
-          "skills/legends-ambient-intelligence/SKILL.md",
           "README.md"
         ]
       }
     },
     "legends-captions": {
-      "version": "0.2.0",
-      "commit": "d145c55fc253c880598333e3ccf1c82db1625562",
+      "version": "0.1.0",
+      "commit": "c21364236477325bae1a5a295adc9a4d07d8df83",
       "repo": "avalonreset/legends-captions",
-      "sha256": "8cafaa9915d93081b72a5f02c87715fdddf290b6249c1e51070c86a475998c64",
+      "sha256": "ace6d895f72330c48251d15ed3d9da608b0959301ef3f6401db33f9d71873231",
       "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
       "keywords": [
         "caption",
@@ -578,8 +542,8 @@
         "not_for": "Recording audio or running ASR (see legends-ambient-intelligence); generic video editing.",
         "setup": "No services or keys. Optional WSL speech env via LEGENDS_CAPTIONS_WSL_PYTHON for full production runs.",
         "instructions": [
-          "skills/legends-captions/SKILL.md",
-          "README.md"
+          "README.md",
+          "docs/install/agent-install-guide.md"
         ]
       }
     }
