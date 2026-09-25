@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.12
+
+- Onboard legends-ultimate-captions 0.1.0: agentic video caption QA and
+  rendering with contextual correction, alignment timing, and proof evidence.
+- Catalog now holds twelve modules (eleven managed, hyperyap the only guided
+  native module).
+
 ## 0.5.11
 
 - Onboard legends-ambient-intelligence 0.1.0: passive ambient audio capture,
