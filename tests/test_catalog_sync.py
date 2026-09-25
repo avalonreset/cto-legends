@@ -187,6 +187,50 @@ class SyncTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "No previous catalog"):
             m.sync(self.home, rollback_catalog=True)
 
+    def test_rate_limited_module_degrades_honestly(self):
+        def fetch(url, repos):
+            if url == m.CANONICAL_CATALOG_URL:
+                return json.dumps(m.catalog()).encode()
+            if "legends-grant" in url:
+                raise OSError("HTTP Error 403: rate limit exceeded")
+            return json.dumps({"tag_name": "v0.0.0"}).encode()
+
+        with patch.object(m, "fetch", side_effect=fetch):
+            result = m.updates(self.home)
+        by_id = {row["id"]: row for row in result["modules"]}
+        self.assertEqual(by_id["legends-grant"]["status"], "upstream_unreachable")
+        self.assertIsNone(by_id["legends-grant"]["upstream_tag"])
+        self.assertIn("retry later", by_id["legends-grant"]["next"])
+        self.assertEqual(len(result["modules"]), 12)
+
+    def test_api_token_sent_only_to_api_host(self):
+        seen = {}
+
+        class FakeResponse:
+            url = "https://api.github.com/repos/avalonreset/cto-legends"
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                return False
+
+            def read(self, limit):
+                return b"{}"
+
+        def fake_urlopen(request, timeout):
+            seen[request.full_url] = request.get_header("Authorization")
+            response = FakeResponse()
+            response.url = request.full_url
+            return response
+
+        with patch.dict("os.environ", {"GH_TOKEN": "secret"}):
+            with patch.object(m.urllib.request, "urlopen", side_effect=fake_urlopen):
+                m.fetch("https://api.github.com/repos/avalonreset/cto-legends/releases", set())
+                m.fetch("https://raw.githubusercontent.com/avalonreset/cto-legends/main/x", set())
+        self.assertEqual(seen["https://api.github.com/repos/avalonreset/cto-legends/releases"], "Bearer secret")
+        self.assertIsNone(seen["https://raw.githubusercontent.com/avalonreset/cto-legends/main/x"])
+
     def test_cli_sync_parses(self):
         args = parser().parse_args(["--home", str(self.home), "sync"])
         self.assertFalse(args.apply)

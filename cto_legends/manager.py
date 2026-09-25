@@ -451,7 +451,12 @@ def fetch(url, repos):
     raw = ("https://raw.githubusercontent.com/" + CATALOG_REPO + "/",)
     if not url.startswith(allowed + releases + raw):
         raise ValueError("Unexpected download origin")
-    request = urllib.request.Request(url, headers={"User-Agent": "cto-legends/" + MANAGER_VERSION})
+    headers = {"User-Agent": "cto-legends/" + MANAGER_VERSION}
+    if url.startswith("https://api.github.com/"):
+        token = (os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN") or "").strip()
+        if token:
+            headers["Authorization"] = "Bearer " + token
+    request = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(request, timeout=90) as response:
         if not response.url.startswith(("https://codeload.github.com/", "https://api.github.com/",
                                         "https://release-assets.githubusercontent.com/",
@@ -813,13 +818,19 @@ def updates(home):
         canonical_version = f"unreachable: {exc}"
     result = []
     for key, module in cat["modules"].items():
-        release = json.loads(fetch(f"https://api.github.com/repos/{module['repo']}/releases/latest", {module["repo"]}))
-        tag = release["tag_name"]
         installed = None
         current = state["active"].get(key)
         if current:
             receipt = json.loads((managed_path(home, current) / "receipt.json").read_text(encoding="utf-8"))
             installed = receipt.get("version")
+        try:
+            release = json.loads(fetch(f"https://api.github.com/repos/{module['repo']}/releases/latest", {module["repo"]}))
+            tag = release["tag_name"]
+        except (OSError, ValueError, KeyError) as exc:
+            result.append({"id": key, "installed": installed, "catalog_version": module["version"],
+                           "upstream_tag": None, "status": "upstream_unreachable",
+                           "next": f"upstream check failed ({exc}); retry later"})
+            continue
         if installed is None:
             action = "not_installed"
             hint = "install only if a task needs it"
