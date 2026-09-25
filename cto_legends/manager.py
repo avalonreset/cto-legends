@@ -746,7 +746,7 @@ def catalog_diff(current, candidate):
                and (old[key]["commit"], old[key]["sha256"]) != (new[key]["commit"], new[key]["sha256"])]
     added = sorted(set(new) - set(old))
     removed = sorted(set(old) - set(new))
-    changed = (current["version"] != candidate["version"] or added or removed or updated or revised)
+    changed = bool(current["version"] != candidate["version"] or added or removed or updated or revised)
     return {"changed": changed, "catalog_version": {"old": current["version"], "new": candidate["version"]},
             "added": added, "removed": removed, "updated": updated, "revised_same_version": revised}
 

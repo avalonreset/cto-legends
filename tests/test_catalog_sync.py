@@ -154,6 +154,7 @@ class SyncTests(unittest.TestCase):
         self.assertEqual(preview["diff"]["added"], ["legends-fixture"])
         self.assertEqual(preview["diff"]["updated"],
                          [{"id": "legends-grant", "old": "0.1.0", "new": "0.1.1"}])
+        self.assertIs(preview["diff"]["changed"], True)
         self.assertFalse((self.home / "catalog.json").exists())
         with patch.object(m, "fetch", side_effect=self.fetch):
             applied = m.sync(self.home, apply=True)
