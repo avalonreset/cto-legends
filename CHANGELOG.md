@@ -2,7 +2,7 @@
 
 ## 0.5.6
 
-- Name the pattern: single-skill gateway (install one skill; every module loads on demand).
+- Name the pattern: single-skill router (install one skill; every module loads on demand).
 - README tagline, central recipe, and architecture doc aligned; local doc link sweep clean.
 
 ## 0.5.5
