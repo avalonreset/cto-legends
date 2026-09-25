@@ -12,19 +12,19 @@ class DiscoveryTests(unittest.TestCase):
     def test_round_trip_preserves_unrelated_and_edited_skills(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp) / '.agents/skills'
-            for name in ('cto-legends', 'legends-obsidian', 'legends-shell-kit'):
+            for name in ('cto-legends', 'legends-empire', 'legends-shell-kit'):
                 (root / name).mkdir(parents=True)
                 (root / name / 'SKILL.md').write_text('user customization')
             preview = isolate('muse', user_home=tmp)
             self.assertEqual(len(preview['sources']), 1)
-            self.assertTrue((root / 'legends-obsidian').exists())
+            self.assertTrue((root / 'legends-empire').exists())
             saved = isolate('muse', user_home=tmp, apply=True)
-            self.assertFalse((root / 'legends-obsidian').exists())
+            self.assertFalse((root / 'legends-empire').exists())
             self.assertTrue((root / 'legends-shell-kit').exists())
             self.assertTrue((root / 'cto-legends').exists())
             self.assertEqual(restore(saved['manifest'])['planned'], 1)
             self.assertEqual(restore(saved['manifest'], apply=True)['restored'], 1)
-            self.assertEqual((root / 'legends-obsidian/SKILL.md').read_text(), 'user customization')
+            self.assertEqual((root / 'legends-empire/SKILL.md').read_text(), 'user customization')
             self.assertEqual(restore(saved['manifest'], apply=True)['restored'], 0)
 
     def test_codex_active_home_is_inventoried_but_not_certified(self):
