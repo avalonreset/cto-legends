@@ -486,6 +486,56 @@
           "README.md"
         ]
       }
+    },
+    "legends-ambient-intelligence": {
+      "version": "0.1.0",
+      "commit": "66957dee11b427ddbe99d9fe4e837360ab64c421",
+      "repo": "avalonreset/legends-ambient-intelligence",
+      "sha256": "aaead3396020bb9ff79e92a320571ce22ee437f4709c7cc2c2ec467fccabb78d",
+      "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
+      "keywords": [
+        "ambient",
+        "audio",
+        "transcribe",
+        "transcription",
+        "whisper",
+        "voice",
+        "sketchpad",
+        "recorder",
+        "recorders",
+        "recordings",
+        "memos",
+        "ingest",
+        "parakeet",
+        "distill",
+        "kt5000"
+      ],
+      "dependencies": {},
+      "scope": "Pip-installed Python CLI in an isolated env. Needs ffmpeg plus faster-whisper or NeMo for transcription; USB recorder ingest is Windows-first.",
+      "discovery": {
+        "signals": [
+          "voice memos",
+          "transcribe my recordings",
+          "ingest recordings",
+          "kt5000",
+          "ambient recording",
+          "voice sketchpad",
+          "distill transcript",
+          "prompt recovery",
+          "usb recorder",
+          "offline transcription"
+        ],
+        "examples": [
+          "Transcribe my voice memos offline",
+          "Ingest recordings from my KT5000"
+        ],
+        "not_for": "Live keyboard dictation (that is hyperyap); cloud transcription endpoints.",
+        "setup": "ffmpeg on PATH; pip install .[whisper] for local Whisper; NeMo optional for GPU Parakeet.",
+        "instructions": [
+          "skills/legends-ambient-intelligence/SKILL.md",
+          "README.md"
+        ]
+      }
     }
   }
 }
