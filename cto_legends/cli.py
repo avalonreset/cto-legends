@@ -187,7 +187,8 @@ def execute(args):
                    "legends-stable-audio-3": ["-m", "legends_sa3"],
                    "legends-obs-kit": [str(release / "source" / "dist" / "index.js")],
                    "legends-firecrawl": ["-c", "import sys; from legends_firecrawl.cli import main; raise SystemExit(main())"],
-                   "legends-yt-dlp": ["-m", "legends_ytdlp"]}
+                   "legends-yt-dlp": ["-m", "legends_ytdlp"],
+                   "legends-ambient-intelligence": ["-m", "legends_ambient"]}
         remaining = args.args[1:] if args.args[:1] == ["--"] else args.args
         binary = m.node_binary() if args.module == "legends-obs-kit" else str(m.python_at(release))
         result = subprocess.run([binary, *entries[args.module], *remaining])
