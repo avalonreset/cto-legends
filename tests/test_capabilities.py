@@ -20,6 +20,7 @@ class CapabilitiesTests(unittest.TestCase):
             'Record my screen': 'legends-obs-kit',
             'Type with my voice': 'hyperyap',
             'Highlight my mouse while recording': 'legends-obs-kit',
+            'Archive this channel with pacing': 'legends-yt-dlp',
         }
         for goal, expected in cases.items():
             with self.subTest(goal=goal):
