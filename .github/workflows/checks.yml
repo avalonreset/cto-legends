@@ -22,10 +22,10 @@ jobs:
       - run: python -m pip install build twine
       - run: python -m build
       - run: python -m twine check dist/*
-      - run: python -m pip install dist/cto_legends-0.5.6-py3-none-any.whl
+      - run: python -c "import glob,subprocess,sys; w=glob.glob('dist/*.whl'); assert len(w)==1, w; subprocess.run([sys.executable,'-m','pip','install',w[0]],check=True)"
       - run: cto-legends route "Google Maps ranking grids"
       - run: python scripts/check_startup.py
-      - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo-kit legends-geogrid legends-github legends-stable-audio-3 legends-obs-kit --apply
+      - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo-kit legends-geogrid legends-github legends-stable-audio-3 legends-obs-kit legends-yt-dlp --apply
       - run: cto-legends --home "${{ runner.temp }}/legends" doctor
       - run: python scripts/smoke_installed.py --home "${{ runner.temp }}/legends" --browser
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-geogrid -- --help
@@ -33,8 +33,9 @@ jobs:
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-github -- capabilities
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-stable-audio-3 -- plan --hours 1 --vram-gb 16
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-obs-kit -- manifest
+      - run: cto-legends --home "${{ runner.temp }}/legends" run legends-yt-dlp -- --help
       - run: cto-legends guide hyperyap
-      - run: cto-legends guide legends-obs-cursor
+      - run: cto-legends route "rip this video"
       - name: Install and verify Obsidian on its supported Python
         if: matrix.python == '3.13'
         run: cto-legends --home "${{ runner.temp }}/legends" install legends-obsidian --apply
