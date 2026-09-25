@@ -99,7 +99,7 @@ checked separately: current transaction apply requires a POSIX/WSL host.
    for search and keyword research; `legends-obsidian` for vault memory and evidence;
    `legends-github` for repository improvement;
    `legends-stable-audio-3` for music/SFX; `legends-obs-kit` for recording;
-   `hyperyap` for dictation; `legends-obs-cursor` for pointer overlays.
+   `hyperyap` for dictation; `legends-obs-kit` cursor extra for pointer overlays.
 2. Preview: `cto-legends install <module>`.
 3. When installation is within the user's request, run the same command with
    `--apply`. Otherwise explain the proposed install and ask before doing it.
