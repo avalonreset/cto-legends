@@ -23,6 +23,8 @@ class CapabilitiesTests(unittest.TestCase):
             'Archive this channel with pacing': 'legends-yt-dlp',
             'Ingest recordings from my KT5000': 'legends-ambient-intelligence',
             'Fix these captions and prove the render': 'legends-captions',
+            'Inspect my Coolify applications': 'legends-coolify',
+            'Review Coolify backup readiness': 'legends-coolify',
         }
         for goal, expected in cases.items():
             with self.subTest(goal=goal):

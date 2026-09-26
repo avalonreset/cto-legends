@@ -5,6 +5,13 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.1 - 2026-09-26
+
+- Admit legends-coolify 0.1.0: a source-cited Coolify vault and portable read-only CLI.
+- Pin its released commit and source archive checksum. Installation verifies the offline CLI and knowledge entrypoints.
+- Discovery and installation use existing Python recipe primitives. No manager release or router skill change.
+- Thirteen public modules: twelve managed CLIs and one native setup guide.
+
 ## 1.0.0 - 2026-09-25
 
 - Catalog decouples from the manager (previously version-locked to it).

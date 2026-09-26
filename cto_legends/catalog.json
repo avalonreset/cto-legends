@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -865,6 +865,80 @@
           "module": "legends_captions"
         }
       }
+    },
+    "legends-coolify": {
+      "purpose": "Source-cited Coolify knowledge vault and read-only operational checks for agents.",
+      "recipe": {
+        "probe": [
+          {
+            "module": "legends_coolify",
+            "do": "import",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "module": "legends_coolify",
+            "args": [
+              "doctor"
+            ],
+            "do": "module-cli"
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "wiki/index.md",
+              "references/sources.md",
+              "docs/AGENT-RECIPE.md"
+            ]
+          }
+        ],
+        "run": {
+          "kind": "module",
+          "module": "legends_coolify",
+          "runtime": "python"
+        },
+        "pip": {
+          "kind": "path"
+        }
+      },
+      "commit": "1af1719a0518d0f869c99d801b38b10a31017034",
+      "sha256": "e5393fddee00af38f7aebdffa242ad5d4b590db6bf5e13a3d7322549891b3df9",
+      "license": "MIT",
+      "version": "0.1.0",
+      "discovery": {
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "wiki/index.md"
+        ],
+        "setup": "Python 3.10+. Offline doctor needs no credentials. Live reads require a trusted HTTPS COOLIFY_BASE_URL and COOLIFY_API_TOKEN with read permission.",
+        "not_for": "Deploying, restarting, restoring, changing DNS, or managing provider servers.",
+        "signals": [
+          "inspect Coolify",
+          "Coolify inventory",
+          "Coolify health",
+          "Coolify backups",
+          "Coolify deployment plan",
+          "Coolify vault"
+        ],
+        "examples": [
+          "Inspect my Coolify applications",
+          "Review Coolify backup readiness"
+        ]
+      },
+      "repo": "avalonreset/legends-coolify",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "keywords": [
+        "coolify",
+        "coolify-api"
+      ],
+      "scope": "Portable standard-library Python CLI and source-cited vault. Read-only inventory, status, environment names, backup schedules and advisory plans. No deployment or configuration mutation.",
+      "dependencies": {}
     }
   },
   "aliases": {

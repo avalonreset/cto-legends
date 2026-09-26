@@ -60,7 +60,7 @@ platform CI succeeds. See [module release checklist](MODULE-RELEASE.md) and
 [router stability](ROUTER-STABILITY.md).
 
 Do not add a private module, placeholder, or merely available repository to the
-catalog. The current set contains twelve independently released projects: eleven
+catalog. The current set contains thirteen independently released projects: twelve
 managed CLIs and one native setup guide. Native entries supply pinned release
 assets and checksums but are never recorded as managed installed environments.
 Other public projects need the same review before admission. The intentionally
