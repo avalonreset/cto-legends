@@ -32,10 +32,10 @@ It can sit alongside AI Marketing Hub workflows and other agent tools. Its focus
 Python 3.10 or newer is required for the manager; use Python 3.11+ to include Empire vault memory. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
-Install the 0.2.0 wheel, or from source.
+Install the 0.2.1 wheel, or from source.
 
 ```sh
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.0/cto_legends-0.2.0-py3-none-any.whl
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.1/cto_legends-0.2.1-py3-none-any.whl
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply

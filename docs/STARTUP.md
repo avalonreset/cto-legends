@@ -26,6 +26,24 @@ no changes. Keep the manifest; `startup-restore MANIFEST` previews restoration,
 and `--apply` restores only when the installed files still match the receipt.
 User edits are preserved by refusing unsafe restoration.
 
+## Keep registered indexes current
+
+With manager 0.2.1 or newer, `sync` previews both catalog changes and refreshes
+needed by existing startup registrations. `sync --apply` refreshes their
+content-addressed indexes and marked blocks, even when the catalog version
+itself is unchanged. `sync --rollback` refreshes against the restored catalog.
+
+Only recorded registrations are considered. Edited blocks, missing targets
+and invalid receipts are reported without overwriting them. A deleted active
+receipt cannot be rediscovered by scanning a user's instruction directories.
+Repair that registration explicitly with the host's verified instruction file.
+No module is installed and no new host registration is created during sync.
+
+Reload the host to load changed startup instructions, or query
+`capabilities --markdown` in the current session. Catalog availability is not
+installed readiness: handoff reports the installed version, available version
+and any update or repair requirement separately.
+
 ## Host contracts
 
 | Host | Startup route |

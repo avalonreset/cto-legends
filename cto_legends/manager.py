@@ -758,36 +758,42 @@ def catalog_diff(current, candidate):
 
 def sync(home, *, apply=False, rollback_catalog=False):
     """Refresh the home catalog from the canonical live copy. Preview unless applied."""
-    home.mkdir(parents=True, exist_ok=True)
+    from . import startup
+
+    def refresh(candidate):
+        # configure takes the manager lock itself. Always call after catalog lock
+        # release, including no-change syncs that may still have stale indexes.
+        try:
+            return startup.refresh_registered(home, catalog=None if apply else candidate, apply=apply)
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            return {"preview": not apply, "registrations": [], "residuals": 1,
+                    "issue": f"Startup refresh failed; inspect existing registrations: {exc}"}
+
     if rollback_catalog:
         previous_path = home / "catalog.previous.json"
         if not previous_path.exists():
             raise ValueError("No previous catalog to roll back to")
         previous = json.loads(previous_path.read_text(encoding="utf-8"))
         try:
-            target = (json.loads(previous["text"])["version"] if previous.get("was_synced")
-                      else catalog()["version"])
-        except (ValueError, KeyError, TypeError):
-            target = "unreadable previous catalog"
+            restored = validate_catalog(json.loads(previous["text"])) if previous.get("was_synced") else catalog()
+        except (ValueError, KeyError, TypeError) as exc:
+            raise ValueError(f"Previous catalog failed validation; nothing changed: {exc}") from None
+        target = restored["version"]
         detail = {"preview": not apply, "rollback_to": target,
                   "was_synced": previous.get("was_synced", False),
                   "next": "run with --apply when authorized" if not apply else "restored"}
         if not apply:
-            return detail
+            return {**detail, "startup_refresh": refresh(restored)}
         with lock(home):
             active_path = home / "catalog.json"
             rotation = {"was_synced": active_path.exists(),
                         "text": active_path.read_text(encoding="utf-8") if active_path.exists() else None}
             previous_path.write_text(json.dumps(rotation, indent=2) + "\n", encoding="utf-8")
             if previous.get("was_synced"):
-                try:
-                    restored = validate_catalog(json.loads(previous["text"]))
-                except (ValueError, TypeError) as exc:
-                    raise ValueError(f"Previous catalog failed validation; nothing changed: {exc}") from None
                 active_path.write_text(json.dumps(restored, indent=2) + "\n", encoding="utf-8")
             else:
                 active_path.unlink(missing_ok=True)
-        return detail
+        return {**detail, "startup_refresh": refresh(restored)}
     current = active_catalog(home)
     try:
         candidate = validate_catalog(json.loads(fetch(CANONICAL_CATALOG_URL, set())))
@@ -796,17 +802,21 @@ def sync(home, *, apply=False, rollback_catalog=False):
     diff = catalog_diff(current, candidate)
     detail = {"preview": not apply, "catalog_version": diff["catalog_version"], "diff": diff,
               "next": ("run with --apply when authorized" if diff["changed"]
-                       else "catalog already current; nothing to apply")}
-    if not apply or not diff["changed"]:
-        return detail
-    with lock(home):
-        active_path = home / "catalog.json"
-        rotation = {"was_synced": active_path.exists(),
-                    "text": active_path.read_text(encoding="utf-8") if active_path.exists()
-                    else (ROOT / "catalog.json").read_text(encoding="utf-8")}
-        (home / "catalog.previous.json").write_text(json.dumps(rotation, indent=2) + "\n", encoding="utf-8")
-        active_path.write_text(json.dumps(candidate, indent=2) + "\n", encoding="utf-8")
-    return {**detail, "preview": False, "next": "synced; run check-updates, then update --apply for installed modules"}
+                       else "catalog already current; inspect startup_refresh for existing registration updates")}
+    if not apply:
+        return {**detail, "startup_refresh": refresh(candidate)}
+    if diff["changed"]:
+        with lock(home):
+            active_path = home / "catalog.json"
+            rotation = {"was_synced": active_path.exists(),
+                        "text": active_path.read_text(encoding="utf-8") if active_path.exists()
+                        else (ROOT / "catalog.json").read_text(encoding="utf-8")}
+            (home / "catalog.previous.json").write_text(json.dumps(rotation, indent=2) + "\n", encoding="utf-8")
+            active_path.write_text(json.dumps(candidate, indent=2) + "\n", encoding="utf-8")
+    refreshed = refresh(candidate)
+    return {**detail, "preview": False, "startup_refresh": refreshed,
+            "next": ("synced" if diff["changed"] else "catalog already current") +
+                    "; inspect startup_refresh residuals, reload refreshed hosts, then check-updates for installed modules"}
 
 
 def updates(home):

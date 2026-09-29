@@ -1,7 +1,8 @@
 # Module release checklist
 
-Follow this order for every module release. No manager release and no skill
-change are part of it.
+Follow this order for every module release. Most releases use the existing
+manager and skill. When a release exposes an integration gap, fix and version
+the affected component, with its own compatibility evidence.
 
 ## 1. Cut the module release
 
@@ -9,6 +10,12 @@ change are part of it.
    GitHub release with notes.
 2. For prebuilt modules (OBS Kit), attach the release artifact and record
    its URL and SHA-256.
+
+Before publication, test the packaged artifact outside its source checkout.
+It must include version and module identity, recipe files, runtime data and any
+declared knowledge pack. Verify the pack's attachment and update behavior using
+[the knowledge contract](MODULE-KNOWLEDGE.md). Private house material must not
+be present in the artifact.
 
 ## 2. Update the catalog
 
@@ -30,12 +37,18 @@ change are part of it.
    preview first, `--apply`, then `doctor`.
 3. `cto-legends handoff <module>` resolves every instruction file.
 4. `cto-legends check-updates` reports the module current.
+5. Verify ordinary outcome phrases select the capability and that existing
+   startup registrations see refreshed wording after sync. Test a stale install
+   too: handoff must report that it needs an update, rather than claiming the
+   new instructions are already installed.
 
 ## 4. Ship it
 
 Push the catalog change to the router main branch. That push IS the release
-to the world: every user picks it up with `sync`. No announcements inside
-the router are needed; the skill text stays frozen.
+to the world: users pick it up with `sync`. Discovery is available after the
+host's startup index is refreshed or the agent queries the live capability
+index. It is not an unsolicited push into every already-running conversation.
+Keep generic skill text unchanged when it remains correct.
 
 ## Rules
 
@@ -44,5 +57,6 @@ the router are needed; the skill text stays frozen.
   release instead.
 - Removing a module from the catalog never deletes user installs; their
   receipts keep doctor, run, and rollback working.
-- If a module needs a recipe primitive that does not exist, stop: that is
-  a manager release with platform CI, not a catalog edit.
+- If a module needs a new recipe primitive or exposes a manager defect,
+  include a manager release with platform CI before claiming the path works.
+  Version a skill correction too if its instructions actually need to change.

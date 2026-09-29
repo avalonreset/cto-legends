@@ -61,7 +61,7 @@ def bounds(raw):
     return start, end
 
 
-def compact_index(managed_home=None):
+def compact_index(managed_home=None, *, catalog=None):
     lines = ['# CTO Legends capabilities', '',
              'Match the user goal, then read only its selected recipe. Inclusion is not installation or readiness.', '']
     if managed_home is not None:
@@ -69,7 +69,13 @@ def compact_index(managed_home=None):
         lines += [f'Manager: `{command}`',
                   f'Resolve instructions: `{command} handoff <module>`.',
                   f'If the goal is ambiguous, inspect `{command} capabilities --markdown` or `{command} route "user goal"`; these return hints, not authorization.', '']
-    catalog = discovery.index(safe_path(managed_home)) if managed_home is not None else discovery.index()
+    if catalog is None:
+        catalog = discovery.index(safe_path(managed_home)) if managed_home is not None else discovery.index()
+    else:
+        # Render the proposed catalog without temporarily writing it to the home.
+        catalog = {'capabilities': [dict(id=key, purpose=row['purpose'], **row['discovery'])
+                                    for key, row in catalog['modules'].items()],
+                   'local_guides': discovery._guide_rows(safe_path(managed_home), set(catalog['modules']))}
     for row in catalog['capabilities']:
         lines += [f"- **{row['id']}**: {row['purpose']} Examples: {'; '.join(row['examples'])}. "
                   f"Excludes: {row['not_for']}"]
@@ -146,13 +152,14 @@ def _atomic(path, raw, mode=None):
         temporary.unlink(missing_ok=True)
 
 
-def configure(host, managed_home, *, user_home=None, instruction_file=None, apply=False):
+def configure(host, managed_home, *, user_home=None, instruction_file=None, apply=False,
+              _catalog=None, _registered_receipt=None):
     home = safe_path(managed_home)
     target = destination(host, user_home=user_home, instruction_file=instruction_file)
     raw = target.read_bytes() if target.exists() else b''
     raw.decode('utf-8-sig')  # refuse binary/non-UTF8 instruction files
     span = bounds(raw)
-    index = compact_index(home)
+    index = compact_index(home) if _catalog is None else compact_index(home, catalog=_catalog)
     index_file = safe_path(home / 'startup' / ('capabilities-' + digest(index) + '.md'))
     if index_file.exists() and index_file.read_bytes() != index:
         raise ValueError('Existing index differs from its content hash; preserved')
@@ -160,6 +167,9 @@ def configure(host, managed_home, *, user_home=None, instruction_file=None, appl
     new_block = block(index_file, home, newline)
     key = digest(str(target).encode())
     record = safe_path(home / 'startup' / ('active-' + key + '.json'))
+    if _registered_receipt is not None:
+        if not span or not record.is_file() or record.read_bytes() != _registered_receipt:
+            raise ValueError('Registered startup changed during refresh; preserved')
     if span:
         if not record.is_file():
             raise ValueError('Existing startup block is unmanaged; preserved')
@@ -177,6 +187,8 @@ def configure(host, managed_home, *, user_home=None, instruction_file=None, appl
     if not apply:
         return result
     with manager.lock(home):
+        if _registered_receipt is not None and (not record.is_file() or record.read_bytes() != _registered_receipt):
+            raise ValueError('Registered startup receipt changed during refresh; preserved')
         if (target.read_bytes() if target.exists() else b'') != raw:
             raise ValueError('Startup instructions changed during preview; preserved')
         index_file.parent.mkdir(parents=True, exist_ok=True)
@@ -193,17 +205,115 @@ def configure(host, managed_home, *, user_home=None, instruction_file=None, appl
             (backup_dir / 'before-receipt.bin').write_bytes(old_receipt)
         manifest = backup_dir / 'manifest.json'
         mode = stat.S_IMODE(target.stat().st_mode) if target.exists() else None
-        data = {'schema': 1, 'instruction_file': str(target), 'existed': target.exists(),
+        data = {'schema': 1, 'host': host, 'instruction_file': str(target), 'existed': target.exists(),
                 'before_sha256': digest(raw), 'after_sha256': digest(updated),
                 'block_sha256': digest(new_block), 'mode': mode,
                 'active_record': str(record), 'manifest': str(manifest),
                 'index_file': str(index_file),
                 'previous_receipt_sha256': digest(old_receipt) if old_receipt is not None else None}
+        if _registered_receipt is not None and 'host' not in previous:
+            # A legacy receipt proves the path, not which host originally used it.
+            data.pop('host')
         manifest.write_text(json.dumps(data, indent=2), encoding='utf-8')
         target.parent.mkdir(parents=True, exist_ok=True)
-        _atomic(target, updated, mode)
-        _atomic(record, json.dumps(data, indent=2).encode())
+        new_receipt = json.dumps(data, indent=2).encode()
+        try:
+            _atomic(target, updated, mode)
+            _atomic(record, new_receipt)
+        except OSError as failure:
+            # The two files cannot be replaced atomically together. Restore the
+            # pre-transaction pair when either write fails, so an old receipt
+            # never describes a newly written block as a human edit on retry.
+            # Check both files first: the lock does not exclude human editors.
+            try:
+                current_target = target.read_bytes() if target.exists() else None
+                current_receipt = record.read_bytes() if record.exists() else None
+                before_target = raw if data['existed'] else None
+                if current_target not in (before_target, updated):
+                    raise ValueError('Instructions changed during failed setup; preserved')
+                if current_receipt not in (old_receipt, new_receipt):
+                    raise ValueError('Receipt changed during failed setup; preserved')
+                if current_target != before_target:
+                    if data['existed']:
+                        _atomic(target, raw, mode)
+                    else:
+                        target.unlink()
+                if current_receipt != old_receipt:
+                    if old_receipt is not None:
+                        _atomic(record, old_receipt)
+                    else:
+                        record.unlink()
+            except (OSError, ValueError) as rollback_failure:
+                raise OSError(f'Startup setup failed ({failure}); automatic rollback incomplete '
+                              f'({rollback_failure}). Inspect recovery backup: {manifest}') from failure
+            raise OSError(f'Startup setup failed ({failure}); previous instructions and receipt restored') from failure
     return {**result, 'configured': True, 'issues': [], 'manifest': str(manifest)}
+
+
+def refresh_registered(managed_home, *, catalog=None, apply=False):
+    """Refresh existing registrations only; report each preserved residual.
+
+    Pre-host receipts use codex solely to select the common structural configure
+    engine with their explicit recorded target. No host path is inferred and no
+    registration is created. Host discovery remains unverified.
+    """
+    home = safe_path(managed_home)
+    directory = safe_path(home / 'startup')
+    results = []
+    for record in sorted(directory.glob('active-*.json')):
+        row = {'receipt': str(record), 'status': 'preserved', 'changed': False}
+        attempted_write = False
+        try:
+            record = safe_path(record)
+            receipt = record.read_bytes()
+            data = json.loads(receipt)
+            if not isinstance(data, dict) or data.get('schema') != 1:
+                raise ValueError('Invalid startup receipt schema')
+            target_text = data.get('instruction_file')
+            if not isinstance(target_text, str) or not Path(target_text).is_absolute():
+                raise ValueError('Receipt requires an explicit absolute instruction file')
+            target = safe_path(target_text)
+            row['instruction_file'] = str(target)
+            expected_record = directory / ('active-' + digest(str(target).encode()) + '.json')
+            if record != expected_record or data.get('active_record') != str(record):
+                raise ValueError('Startup receipt target does not match its registration')
+            if not target.is_file():
+                raise ValueError('Registered instruction file is missing; preserved')
+            raw = target.read_bytes()
+            span = bounds(raw)
+            if not span or digest(raw[span[0]:span[1]]) != data.get('block_sha256'):
+                raise ValueError('Registered startup block was edited or removed; preserved')
+            index_text = data.get('index_file')
+            if not isinstance(index_text, str) or not Path(index_text).is_absolute():
+                raise ValueError('Invalid registered index path')
+            index_file = safe_path(index_text)
+            if index_file.parent != directory or not index_file.is_file():
+                raise ValueError('Registered capability index is missing or outside startup directory; preserved')
+            if index_file.name != 'capabilities-' + digest(index_file.read_bytes()) + '.md':
+                raise ValueError('Registered capability index was edited; preserved')
+            host = data.get('host', 'codex')
+            if host not in ROOTS:
+                raise ValueError('Invalid registered host; preserved')
+            row['host'] = data.get('host')
+            if 'host' not in data:
+                row['legacy_host'] = 'Shared configure engine; explicit recorded target only. Original host unknown.'
+            attempted_write = apply
+            result = configure(host, home, instruction_file=target, apply=apply,
+                               _catalog=catalog, _registered_receipt=receipt)
+            row.update(status=('refreshed' if apply else 'refresh_pending') if result['changed'] else 'current',
+                       changed=result['changed'], index_file=result['index_file'])
+            if result.get('manifest'):
+                row['manifest'] = result['manifest']
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            row['issue'] = str(exc)
+            if attempted_write:
+                row.update(status='failed', changed=None,
+                           next='Inspect instructions and active receipt before retrying; refresh did not complete.')
+        results.append(row)
+    return {'preview': not apply, 'registrations': results,
+            'residuals': sum(row['status'] in ('preserved', 'failed') for row in results),
+            'discovery': 'unverified',
+            'limit': 'Existing registrations only. Reload the host and verify a fresh ordinary request.'}
 
 
 def restore(manifest, *, apply=False):

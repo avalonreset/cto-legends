@@ -1,4 +1,5 @@
 import copy
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -64,16 +65,92 @@ class CapabilitiesTests(unittest.TestCase):
             source = home / 'releases/audio/source'
             source.mkdir(parents=True)
             (source / 'README.md').write_text('canonical recipe')
+            (source.parent / 'receipt.json').write_text(json.dumps(m.catalog()['modules']['legends-stable-audio-3']))
             with patch.object(m, 'read_state', return_value={'active': {'legends-stable-audio-3': 'releases/audio'}}):
                 result = d.handoff('legends-stable-audio-3', home)
             self.assertEqual(result['instructions'], [str(source.resolve() / 'README.md')])
             self.assertEqual(result['missing_instructions'], ['docs/first-run.md'])
             self.assertIsNone(result['readiness'])
+            self.assertEqual(result['handoff_status'], 'instructions_missing')
+            self.assertFalse(result['update_required'])
+
+    def test_catalog_upgrade_keeps_installed_instructions_and_requires_update(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp)
+            source = home / 'releases/empire/source'
+            source.mkdir(parents=True)
+            (source / 'README.md').write_text('old installed recipe')
+            old = copy.deepcopy(m.catalog()['modules']['legends-empire'])
+            old['discovery']['instructions'] = ['README.md']
+            (source.parent / 'receipt.json').write_text(json.dumps(old))
+            catalog = copy.deepcopy(m.catalog())
+            new = catalog['modules']['legends-empire']
+            new['version'] = '9.0.0'
+            new['commit'] = 'f' * 40
+            new['purpose'] = 'New stewardship capability'
+            new['discovery']['instructions'] = ['docs/stewardship.md']
+            with patch.object(m, 'catalog', return_value=catalog), patch.object(m, 'read_state', return_value={'active': {'legends-empire': 'releases/empire'}}):
+                result = d.handoff('legends-empire', home)
+            self.assertEqual(result['handoff_status'], 'update_required')
+            self.assertEqual(result['installed_version'], old['version'])
+            self.assertEqual(result['catalog_version'], '9.0.0')
+            self.assertEqual(result['purpose'], old['purpose'])
+            self.assertEqual(result['instructions'], [str(source.resolve() / 'README.md')])
+            self.assertEqual(result['missing_instructions'], [])
+            self.assertIn('cto-legends update legends-empire', result['next'])
+
+    def test_missing_receipt_does_not_claim_catalog_capability(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(m, 'read_state', return_value={'active': {'legends-empire': 'releases/empire'}}):
+            result = d.handoff('legends-empire', Path(tmp))
+        self.assertEqual(result['handoff_status'], 'receipt_unverified')
+        self.assertEqual(result['instructions'], [])
+        self.assertIsNone(result['installed_version'])
+        self.assertIsNone(result['readiness'])
+
+    def test_version_label_only_change_does_not_request_noop_update(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp)
+            source = home / 'releases/empire/source'
+            source.mkdir(parents=True)
+            catalog = copy.deepcopy(m.catalog())
+            row = catalog['modules']['legends-empire']
+            row['discovery']['instructions'] = ['README.md']
+            (source / 'README.md').write_text('same immutable source')
+            receipt = copy.deepcopy(row)
+            receipt['version'] = '0.0.1'
+            row['version'] = '9.0.0'
+            (source.parent / 'receipt.json').write_text(json.dumps(receipt))
+            state = {'active': {'legends-empire': 'releases/empire'}}
+            with patch.object(m, 'catalog', return_value=catalog), patch.object(m, 'read_state', return_value=state):
+                plan = m.plan(home, ['legends-empire'])
+                result = d.handoff('legends-empire', home)
+            self.assertEqual(plan[0]['action'], 'keep')
+            self.assertFalse(result['update_required'])
+            self.assertEqual(result['handoff_status'], 'instructions_available')
+            self.assertEqual(result['installed_version'], '0.0.1')
+            self.assertEqual(result['catalog_version'], '9.0.0')
+            self.assertNotIn('cto-legends update', result['next'])
+
+    def test_same_version_revised_pin_requires_update(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp)
+            source = home / 'releases/empire/source'
+            source.mkdir(parents=True)
+            old = copy.deepcopy(m.catalog()['modules']['legends-empire'])
+            old['setup_revision'] = -1
+            (source.parent / 'receipt.json').write_text(json.dumps(old))
+            with patch.object(m, 'read_state', return_value={'active': {'legends-empire': 'releases/empire'}}):
+                result = d.handoff('legends-empire', home)
+            self.assertTrue(result['update_required'])
+            self.assertEqual(result['handoff_status'], 'update_required')
 
     def test_instruction_escape_rejected(self):
         catalog = copy.deepcopy(m.catalog())
         catalog['modules']['legends-stable-audio-3']['discovery']['instructions'] = ['../secret.md']
         with tempfile.TemporaryDirectory() as tmp, patch.object(m, 'catalog', return_value=catalog), patch.object(m, 'read_state', return_value={'active': {'legends-stable-audio-3': 'releases/audio'}}):
+            release = Path(tmp) / 'releases/audio'
+            release.mkdir(parents=True)
+            (release / 'receipt.json').write_text(json.dumps(catalog['modules']['legends-stable-audio-3']))
             with self.assertRaisesRegex(ValueError, 'escapes'):
                 d.handoff('legends-stable-audio-3', Path(tmp))
 

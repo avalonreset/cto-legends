@@ -1,5 +1,6 @@
 """Offline capability discovery. Routing never installs or executes a module."""
 from pathlib import Path
+import json
 import re
 from . import manager as m
 
@@ -119,8 +120,30 @@ def handoff(key, home):
         return {**result, 'installation': 'not_installed',
                 'next': 'cto-legends install ' + key,
                 'policy': 'Preview setup; apply when authorized. Then repeat handoff.'}
-    source = (m.managed_path(home, state['active'][key]) / 'source').resolve()
-    for relative in row['discovery']['instructions']:
+    release = m.managed_path(home, state['active'][key])
+    source = (release / 'source').resolve()
+    receipt_path = release / 'receipt.json'
+    receipt = json.loads(receipt_path.read_text(encoding='utf-8')) if receipt_path.is_file() else None
+    # Match manager.plan's immutable install identity. A version-label-only
+    # catalog correction does not reinstall identical source bytes.
+    current = bool(receipt and all(receipt.get(field) == row.get(field)
+                                  for field in ('commit', 'sha256'))
+                   and receipt.get('setup_revision', 0) == row.get('setup_revision', 0))
+    result.update({'installed_version': receipt.get('version') if receipt else None,
+                   'catalog_version': row['version'],
+                   'update_required': not current})
+    # The newer catalog may name files and capabilities absent from the retained
+    # install. Resolve that install from its own receipt until it is updated.
+    installed = row if current else receipt
+    if installed is None or not installed.get('discovery', {}).get('instructions'):
+        return {**result, 'installation': 'installed', 'source': str(source),
+                'handoff_status': 'receipt_unverified',
+                'readiness': None,
+                'next': 'Inspect the missing or legacy install receipt with status and doctor; do not assume catalog capabilities are installed.'}
+    if not current:
+        result.update({field: installed.get(field) for field in ('purpose', 'scope', 'readiness')})
+        result.update({field: installed['discovery'].get(field) for field in ('setup', 'not_for')})
+    for relative in installed['discovery']['instructions']:
         path = (source / relative).resolve()
         if source not in path.parents:
             raise ValueError('Instruction path escapes module source')
@@ -128,9 +151,17 @@ def handoff(key, home):
             result['instructions'].append(str(path))
         else:
             result['missing_instructions'].append(relative)
+    status = ('update_required' if not current else
+              'instructions_missing' if result['missing_instructions'] else 'instructions_available')
+    next_step = ('cto-legends update ' + key + '; preview, apply when authorized, then repeat handoff.'
+                 if not current else
+                 'Run doctor and inspect the incomplete install; missing recipe files prevent a complete handoff.'
+                 if result['missing_instructions'] else
+                 'Read these files in order, follow their task-specific setup checks, then use the isolated module runtime from status. Do not substitute global skills.')
     return {**result, 'installation': 'installed', 'source': str(source),
+            'handoff_status': status,
             'version_scope': 'Instructions from the active installed version, not an assumed catalog upgrade.',
-            'next': 'Read these files in order, follow their task-specific setup checks, then use the isolated module runtime from status. Do not substitute global skills.'}
+            'next': next_step}
 
 
 def _guide_handoff(name, row):

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.1 - 2026-09-29
+
+- Catalog sync previews and refreshes existing unedited startup registrations,
+  including unchanged-catalog sync and rollback. Human edits and missing or
+  invalid registrations produce explicit repair residuals.
+- Handoff distinguishes installed source from catalog availability, loads the
+  installed receipt's recipe paths, and reports update or repair requirements.
+- Document a reusable module knowledge contract and clarify that router
+  stability permits necessary manager and skill improvements. The generic
+  registered skill remains unchanged in this release.
+
 ## 0.2.0 - 2026-09-25
 
 - Frozen router, living catalog. Module updates and brand-new modules now
@@ -234,4 +245,3 @@
 - Retained versions, rollback, status, and offline environment checks.
 - Explicit agent skill registration with no overwrite.
 - Informational upstream release checks and a versioned compatibility catalog.
-
