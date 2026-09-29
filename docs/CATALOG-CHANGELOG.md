@@ -5,6 +5,12 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.2 - 2026-09-28
+
+- Pin legends-yt-dlp 0.1.1: ordinary doctor, preflight, and downloads no longer require Mullvad or its account file.
+- Conversational intent drives the workflow. Agents handle flags and may offer optional VPN assistance for large batches; VPN remains optional at every batch size.
+- No manager engine or router skill change.
+
 ## 1.0.1 - 2026-09-26
 
 - Admit legends-coolify 0.1.0: a source-cited Coolify vault and portable read-only CLI.

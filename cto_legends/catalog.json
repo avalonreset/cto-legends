@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -646,10 +646,10 @@
       }
     },
     "legends-yt-dlp": {
-      "version": "0.1.0",
-      "commit": "134ce07151abaffe551380df084e62f29c079d3d",
+      "version": "0.1.1",
+      "commit": "c2bd7adcc9104cbf7ab1a945f9b3f7591fec8a56",
       "repo": "avalonreset/legends-yt-dlp",
-      "sha256": "fb1bb4b6589e2854895f673e0d6ff1cd90c05c401ae3c2c399af3c19cc86ce32",
+      "sha256": "750ab47bde2ad3d8f9b82e91def3abdec9a159238749d129fa212b75fb10a77a",
       "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
       "keywords": [
         "youtube",
@@ -669,7 +669,7 @@
         "channel"
       ],
       "dependencies": {},
-      "scope": "Pip-installed Python CLI in an isolated env. Needs local yt-dlp binary plus ffmpeg for media work; Mullvad VPN is opt-in via --with-vpn.",
+      "scope": "Pip-installed Python CLI in an isolated env. Needs local yt-dlp binary plus ffmpeg for media work. Ordinary downloads need no VPN; agents offer optional VPN help conversationally for large batches and handle the commands.",
       "discovery": {
         "signals": [
           "download this video",
