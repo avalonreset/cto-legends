@@ -31,6 +31,8 @@ class StewardshipDiscoveryTests(unittest.TestCase):
             self.assertEqual(handoff['module'], 'legends-empire')
             self.assertEqual(handoff['installation'], 'not_installed')
             self.assertEqual(handoff['next'], 'cto-legends install legends-empire')
+            self.assertIsNone(handoff['readiness'])
+            self.assertIn('steward doctor', handoff['setup'])
             self.assertFalse(home.exists())
 
     def test_named_handoff_loads_installed_stewardship_recipe(self):
@@ -65,4 +67,3 @@ class StewardshipDiscoveryTests(unittest.TestCase):
             command = run.call_args.args[0]
             self.assertEqual(command[-2:], ['steward', 'doctor'])
             self.assertEqual(Path(command[1]), home / 'releases/empire/source/scripts/claude-empire.py')
-

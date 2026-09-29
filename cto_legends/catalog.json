@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -488,7 +488,7 @@
           "Attach the stewardship knowledge library to my Empire"
         ],
         "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it.",
-        "setup": "Select a vault. Scans and previews run on native Windows; transactions and knowledge attachment apply require POSIX filesystem semantics, with metadata enabled on WSL DrvFS mounts.",
+        "setup": "Select a vault. For vault stewardship, follow the installed recipe and run cto-legends run legends-vault-stewardship -- steward doctor. Research-export readiness applies only to research-export tasks. Scans and previews run on native Windows; transactions and knowledge attachment apply require POSIX filesystem semantics, with metadata enabled on WSL DrvFS mounts.",
         "instructions": [
           "README.md",
           "docs/install-guide.md",
@@ -539,8 +539,7 @@
           "path": "scripts/claude-empire.py"
         },
         "guide_file": "README.md"
-      },
-      "readiness": "task-readiness evidence"
+      }
     },
     "legends-grant": {
       "version": "0.1.0",

@@ -5,6 +5,13 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.7 - 2026-09-29
+
+- Scope Empire readiness to the selected workflow. Local vault inspection uses
+  the installed stewardship doctor; it does not require the DataForSEO research
+  exporter. Remove the module-wide research-evidence gate and name the local
+  check in setup guidance. Source pins and module versions are unchanged.
+
 ## 1.0.6 - 2026-09-29
 
 - Expose vault stewardship by name in Empire's startup discovery and ordinary
