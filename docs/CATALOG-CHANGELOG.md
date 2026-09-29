@@ -5,6 +5,12 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.4 - 2026-09-29
+
+- Pin `legends-empire` 0.2.1, accepting validated historical transaction journals
+  so existing vaults can attach the stewardship knowledge shelf.
+- Knowledge pack content remains 0.2.0. No manager or router skill change.
+
 ## 1.0.3 - 2026-09-29
 
 - Pin `legends-empire` 0.2.0 with integrated vault stewardship and its attachable

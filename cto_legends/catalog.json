@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -430,10 +430,10 @@
       }
     },
     "legends-empire": {
-      "version": "0.2.0",
-      "commit": "79c376eb19171fddfec8c7008b263200c60a22f0",
+      "version": "0.2.1",
+      "commit": "17a968aacd71c0c47a67a915657d7414fbd91cf7",
       "repo": "avalonreset/legends-empire",
-      "sha256": "f8308d25a54052d6f547313dc0e60fce9e920da1fceb38dc97cc68d6d9aa0621",
+      "sha256": "c68559f50635882cdc2e820eb1de28d2e7ce2604092ec818a58573d0724908e7",
       "purpose": "Markdown knowledge foundation, vault stewardship, project and session continuity, source-cited research and recoverable transactions.",
       "keywords": [
         "empire",
