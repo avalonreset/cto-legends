@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.5",
+  "version": "1.0.6",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -430,11 +430,11 @@
       }
     },
     "legends-empire": {
-      "version": "0.2.2",
-      "commit": "0aea9cff728d2b07e6a8b6351464a0e609b6f3ef",
+      "version": "0.2.3",
+      "commit": "4fa773799bef6f5219dfe3cb43cfa75bc30a73ad",
       "repo": "avalonreset/legends-empire",
-      "sha256": "9f5cf1045db0b3a2822d29da245795571f557b330a7272dde9ea1ad96b0b5590",
-      "purpose": "Markdown knowledge foundation, vault stewardship, project and session continuity, source-cited research and recoverable transactions.",
+      "sha256": "cd7ce0711ab67a094c5d0a7fbcc21d63a1682b4a06692d5144f9c62e61040653",
+      "purpose": "Markdown knowledge foundation. For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work.",
       "keywords": [
         "empire",
         "obsidian",
@@ -472,12 +472,17 @@
           "unfinished work",
           "session handoff",
           "project management",
-          "tighten up"
+          "tighten up",
+          "organize my vault",
+          "organise my vault",
+          "organize these notes",
+          "orphaned notes"
         ],
         "examples": [
           "Save this research in my vault",
           "Find what we already know about this business",
-          "Clean and organize my vault",
+          "Clean and organize my vault with vault stewardship",
+          "Invoke legends-vault-stewardship",
           "Review neglected projects and their next actions",
           "Help me resume unfinished work from session handoffs",
           "Attach the stewardship knowledge library to my Empire"
@@ -972,7 +977,8 @@
   },
   "aliases": {
     "hyperyap": "legends-hyperyap",
-    "legends-ultimate-captions": "legends-captions"
+    "legends-ultimate-captions": "legends-captions",
+    "legends-vault-stewardship": "legends-empire"
   },
   "retired": {
     "legends-obsidian": "legends-empire"

@@ -5,6 +5,25 @@ is the durable Markdown foundation. Vault stewardship is a named maintenance
 capability within Empire. Other modules provide specialized capabilities.
 Product prominence does not require another installation or skill namespace.
 
+## Name capabilities without splitting packages
+
+Vault stewardship is visibly invoked as a workflow of `legends-empire`.
+`legends-vault-stewardship` is a catalog alias for that same installation,
+not another distributable module. An ordinary request such as "organize my
+vault" should lead the agent to name vault stewardship, load its installed
+recipe, check readiness and then perform the authorized work.
+
+Put important capability names and outcomes in catalog purpose/examples, which
+appear in the startup index. Signals alone are not visible there. The installed
+Markdown recipe owns task-specific announcements and commands. A named alias
+resolves the package; it does not insert workflow arguments into `run`.
+
+Create an independent package when its lifecycle and installation need to be
+independent. A useful named workflow within an existing module is sufficient
+when it shares that module's implementation and updates. Release acceptance
+must check both ordinary requests and named invocation, including the actual
+installed recipe; homepage presentation alone does not prove discoverability.
+
 ## Declare the knowledge shape
 
 A module may ship plain recipes, a reusable reference library, or an

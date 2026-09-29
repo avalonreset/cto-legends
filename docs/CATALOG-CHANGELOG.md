@@ -5,6 +5,15 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.6 - 2026-09-29
+
+- Expose vault stewardship by name in Empire's startup discovery and ordinary
+  cleanup examples. `legends-vault-stewardship` is an invocation alias for the
+  same Empire installation, not an additional module or skill.
+- Pin Empire 0.2.3 with the installed Markdown invocation recipe. Agents name
+  the selected workflow, check readiness and distinguish selection from results.
+- No manager engine or canonical skill change is needed.
+
 ## 1.0.5 - 2026-09-29
 
 - Pin `legends-empire` 0.2.2, checking filesystem permission support before
