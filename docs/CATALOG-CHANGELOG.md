@@ -5,6 +5,17 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.3 - 2026-09-29
+
+- Pin `legends-empire` 0.2.0 with integrated vault stewardship and its attachable
+  Markdown knowledge pack. No additional module or registered skill.
+- Discover vault cleanup, neglected-project review and session continuity from
+  ordinary outcome phrases. Handoff loads stewardship and attachment recipes.
+- Correct the Empire guide path and verify its stewardship doctor at install.
+- Manager 0.2.1 refreshes existing startup indexes during sync and reports stale
+  installations truthfully. Earlier managers can adopt this catalog, but their
+  startup registrations need explicit refresh or direct capability queries.
+
 ## 1.0.2 - 2026-09-28
 
 - Pin legends-yt-dlp 0.1.1: ordinary doctor, preflight, and downloads no longer require Mullvad or its account file.

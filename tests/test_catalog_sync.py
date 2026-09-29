@@ -52,7 +52,7 @@ def fixture_catalog(**overrides):
 class CatalogValidationTests(unittest.TestCase):
     def test_bundled_catalog_validates(self):
         cat = m.validate_catalog(copy.deepcopy(m.catalog()))
-        self.assertEqual(cat["version"], "1.0.2")
+        self.assertRegex(cat["version"], r"^\d+\.\d+\.\d+$")
         self.assertEqual(len(cat["modules"]), 13)
 
     def test_unsupported_schema_names_manager_update(self):
@@ -138,7 +138,7 @@ class SyncTests(unittest.TestCase):
         holder = tempfile.TemporaryDirectory()
         self.addCleanup(holder.cleanup)
         self.home = Path(holder.name)
-        self.canonical = fixture_catalog(version="1.0.3",
+        self.canonical = fixture_catalog(version="9.9.9",
                                          **{"legends-grant": {"version": "0.1.1"}})
 
     def fetch(self, url, repos):
@@ -150,7 +150,7 @@ class SyncTests(unittest.TestCase):
         with patch.object(m, "fetch", side_effect=self.fetch):
             preview = m.sync(self.home)
         self.assertTrue(preview["preview"])
-        self.assertEqual(preview["catalog_version"], {"old": "1.0.2", "new": "1.0.3"})
+        self.assertEqual(preview["catalog_version"], {"old": m.catalog()["version"], "new": "9.9.9"})
         self.assertEqual(preview["diff"]["added"], ["legends-fixture"])
         self.assertEqual(preview["diff"]["updated"],
                          [{"id": "legends-grant", "old": "0.1.0", "new": "0.1.1"}])
@@ -159,16 +159,16 @@ class SyncTests(unittest.TestCase):
         with patch.object(m, "fetch", side_effect=self.fetch):
             applied = m.sync(self.home, apply=True)
         self.assertFalse(applied["preview"])
-        self.assertEqual(m.active_catalog(self.home)["version"], "1.0.3")
+        self.assertEqual(m.active_catalog(self.home)["version"], "9.9.9")
         with patch.object(m, "fetch", side_effect=self.fetch):
             again = m.sync(self.home, apply=True)
         self.assertIn("already current", again["next"])
         rolled = m.sync(self.home, rollback_catalog=True)
         self.assertTrue(rolled["preview"])
-        self.assertEqual(rolled["rollback_to"], "1.0.2")
+        self.assertEqual(rolled["rollback_to"], m.catalog()["version"])
         m.sync(self.home, apply=True, rollback_catalog=True)
         self.assertFalse((self.home / "catalog.json").exists())
-        self.assertEqual(m.active_catalog(self.home)["version"], "1.0.2")
+        self.assertEqual(m.active_catalog(self.home)["version"], m.catalog()["version"])
 
     def test_invalid_canonical_changes_nothing(self):
         self.canonical["modules"]["legends-grant"]["sha256"] = "bogus"

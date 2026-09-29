@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -430,11 +430,11 @@
       }
     },
     "legends-empire": {
-      "version": "0.1.1",
-      "commit": "60c4fe506bc28bf8c2b991a5246985a2e447863c",
+      "version": "0.2.0",
+      "commit": "79c376eb19171fddfec8c7008b263200c60a22f0",
       "repo": "avalonreset/legends-empire",
-      "sha256": "3df5492881d577735111512960bbd20d384f2d0d18ff84a4c35366a5315e0576",
-      "purpose": "Source-cited Empire memory, research evidence, retrieval and recoverable knowledge transactions.",
+      "sha256": "f8308d25a54052d6f547313dc0e60fce9e920da1fceb38dc97cc68d6d9aa0621",
+      "purpose": "Markdown knowledge foundation, vault stewardship, project and session continuity, source-cited research and recoverable transactions.",
       "keywords": [
         "empire",
         "obsidian",
@@ -443,7 +443,11 @@
         "knowledge",
         "notes",
         "evidence",
-        "wiki"
+        "wiki",
+        "stewardship",
+        "cleanup",
+        "projects",
+        "handoffs"
       ],
       "dependencies": {},
       "scope": "Python 3.11+ standard-library core. Windows supports read-only inspection and previews; canonical vault writes require POSIX/WSL. Obsidian Desktop is optional.",
@@ -458,17 +462,33 @@
           "empire memory",
           "knowledge base",
           "research history",
-          "source cited notes"
+          "source cited notes",
+          "clean and organize",
+          "clean up my vault",
+          "vault stewardship",
+          "vault steward",
+          "stale projects",
+          "neglected projects",
+          "unfinished work",
+          "session handoff",
+          "project management",
+          "tighten up"
         ],
         "examples": [
           "Save this research in my vault",
-          "Find what we already know about this business"
+          "Find what we already know about this business",
+          "Clean and organize my vault",
+          "Review neglected projects and their next actions",
+          "Help me resume unfinished work from session handoffs",
+          "Attach the stewardship knowledge library to my Empire"
         ],
-        "not_for": "Inventing sources or modifying a vault without selecting it.",
-        "setup": "Select a vault. Native Windows supports inspection; transaction writes require POSIX/WSL.",
+        "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it.",
+        "setup": "Select a vault. Scans and previews run on native Windows; supported wiki transactions and knowledge attachment apply require POSIX/WSL.",
         "instructions": [
           "README.md",
-          "docs/install-guide.md"
+          "docs/install-guide.md",
+          "docs/stewardship.md",
+          "docs/knowledge-packs.md"
         ]
       },
       "recipe": {
@@ -497,6 +517,15 @@
               "validate"
             ],
             "cwd": "source"
+          },
+          {
+            "do": "script",
+            "cwd": "source",
+            "args": [
+              "steward",
+              "doctor"
+            ],
+            "path": "scripts/claude-empire.py"
           }
         ],
         "run": {
@@ -504,7 +533,7 @@
           "kind": "script",
           "path": "scripts/claude-empire.py"
         },
-        "guide_file": "skills/legends-empire/SKILL.md"
+        "guide_file": "README.md"
       },
       "readiness": "task-readiness evidence"
     },

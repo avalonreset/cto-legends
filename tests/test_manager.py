@@ -48,9 +48,10 @@ class ManagerTests(unittest.TestCase):
         with patch.object(m, "run") as run:
             m.probe("legends-empire", release, recipe)
         commands = [args.args[0] for args in run.call_args_list]
-        self.assertEqual(len(commands), 2)
+        self.assertEqual(len(commands), 3)
         self.assertEqual(commands[0][-2:], ["contracts", "--check-only"])
         self.assertEqual(commands[1][-2:], ["package", "validate"])
+        self.assertEqual(commands[2][-2:], ["steward", "doctor"])
         self.assertTrue(all("--apply" not in command for command in commands))
 
     def test_catalog_pins_all_public_modules(self):
