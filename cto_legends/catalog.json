@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -430,10 +430,10 @@
       }
     },
     "legends-empire": {
-      "version": "0.2.1",
-      "commit": "17a968aacd71c0c47a67a915657d7414fbd91cf7",
+      "version": "0.2.2",
+      "commit": "0aea9cff728d2b07e6a8b6351464a0e609b6f3ef",
       "repo": "avalonreset/legends-empire",
-      "sha256": "c68559f50635882cdc2e820eb1de28d2e7ce2604092ec818a58573d0724908e7",
+      "sha256": "9f5cf1045db0b3a2822d29da245795571f557b330a7272dde9ea1ad96b0b5590",
       "purpose": "Markdown knowledge foundation, vault stewardship, project and session continuity, source-cited research and recoverable transactions.",
       "keywords": [
         "empire",
@@ -450,7 +450,7 @@
         "handoffs"
       ],
       "dependencies": {},
-      "scope": "Python 3.11+ standard-library core. Windows supports read-only inspection and previews; canonical vault writes require POSIX/WSL. Obsidian Desktop is optional.",
+      "scope": "Python 3.11+ standard-library core. Windows supports inspection and previews; vault writes require POSIX filesystem semantics. WSL DrvFS needs metadata enabled. Obsidian Desktop is optional.",
       "discovery": {
         "signals": [
           "remember this",
@@ -483,7 +483,7 @@
           "Attach the stewardship knowledge library to my Empire"
         ],
         "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it.",
-        "setup": "Select a vault. Scans and previews run on native Windows; supported wiki transactions and knowledge attachment apply require POSIX/WSL.",
+        "setup": "Select a vault. Scans and previews run on native Windows; transactions and knowledge attachment apply require POSIX filesystem semantics, with metadata enabled on WSL DrvFS mounts.",
         "instructions": [
           "README.md",
           "docs/install-guide.md",

@@ -5,6 +5,13 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.5 - 2026-09-29
+
+- Pin `legends-empire` 0.2.2, checking filesystem permission support before
+  transaction notes or journals are written. Clarify the WSL DrvFS metadata
+  requirement in capability discovery and setup.
+- No manager or router skill change. Stewardship knowledge pack remains 0.2.0.
+
 ## 1.0.4 - 2026-09-29
 
 - Pin `legends-empire` 0.2.1, accepting validated historical transaction journals
