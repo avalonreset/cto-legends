@@ -111,12 +111,13 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-captions](https://github.com/avalonreset/legends-captions) | Caption correction, timing, rendering, proof | Pip-installed CLI; stdlib only, speech envs optional |
 
 | [legends-coolify](https://github.com/avalonreset/legends-coolify) | Coolify knowledge, inventory, health, backup schedules and deployment planning | Python CLI and source-cited vault; read-only, live API setup separate |
+| [legends-jev](https://github.com/avalonreset/legends-jev) | Typed application/browser action advice from supplied text evidence | Isolated Python CLI; operator validates, existing tools actuate; no native vision |
 
 Pinned versions live in the catalog, not here: `cto-legends catalog`
 shows the exact verified set your manager carries. Module recipes load
 through the router on demand; no module needs its own skill registration.
 
-Twelve modules have managed CLI installations. The one native module uses
+Thirteen modules have managed CLI installations. The one native module uses
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
 platform information, and published asset checksums. `install` for those modules
 returns that handoff, including with `--apply`; it does not run an app installer,

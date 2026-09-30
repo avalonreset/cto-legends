@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -972,6 +972,76 @@
       ],
       "scope": "Portable standard-library Python CLI and source-cited vault. Read-only inventory, status, environment names, backup schedules and advisory plans. No deployment or configuration mutation.",
       "dependencies": {}
+    },
+    "legends-jev": {
+      "version": "0.1.0",
+      "commit": "868b98410eaafec6467733de18f930c459283907",
+      "repo": "avalonreset/legends-jev",
+      "sha256": "905c0e91f10d60623e77ce01ab582285c74ae8e9f6604db59ec4357ffb0440d9",
+      "purpose": "Typed decision advice for computer use, application control and browser action selection from supplied text evidence and candidates.",
+      "keywords": [
+        "jev",
+        "typesafe",
+        "computer",
+        "application",
+        "browser",
+        "decision",
+        "accessibility"
+      ],
+      "dependencies": {},
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "scope": "Text-only candidate choice, insufficiency and evidence support. Operator validates; existing shell/chrome tools actuate.",
+      "discovery": {
+        "signals": [
+          "computer use",
+          "application control",
+          "browser action",
+          "action selection",
+          "accessibility evidence",
+          "screen evidence",
+          "typed decision",
+          "jev",
+          "typesafe"
+        ],
+        "examples": [
+          "Choose a browser action from supplied accessibility evidence",
+          "Compare candidate application controls",
+          "Evaluate whether screen-description evidence supports a next action"
+        ],
+        "not_for": "Image grounding, screenshot capture, coordinate detection, desktop or browser actuation, autonomous permissions, private data by default.",
+        "setup": "Run offline doctor and input readiness. Explicit API execution needs safely provisioned TYPESAFE_API_KEY and reviewed public/synthetic/nonsecret metadata.",
+        "instructions": [
+          "README.md",
+          "legends_jev/docs/recipe.md"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          10
+        ],
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "module-cli",
+            "module": "legends_jev",
+            "args": [
+              "doctor"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_jev"
+        }
+      }
     }
   },
   "aliases": {

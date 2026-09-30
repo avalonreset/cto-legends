@@ -53,7 +53,7 @@ class CatalogValidationTests(unittest.TestCase):
     def test_bundled_catalog_validates(self):
         cat = m.validate_catalog(copy.deepcopy(m.catalog()))
         self.assertRegex(cat["version"], r"^\d+\.\d+\.\d+$")
-        self.assertEqual(len(cat["modules"]), 13)
+        self.assertEqual(len(cat["modules"]), 14)
 
     def test_unsupported_schema_names_manager_update(self):
         cat = copy.deepcopy(m.catalog())
@@ -201,7 +201,7 @@ class SyncTests(unittest.TestCase):
         self.assertEqual(by_id["legends-grant"]["status"], "upstream_unreachable")
         self.assertIsNone(by_id["legends-grant"]["upstream_tag"])
         self.assertIn("retry later", by_id["legends-grant"]["next"])
-        self.assertEqual(len(result["modules"]), 13)
+        self.assertEqual(len(result["modules"]), 14)
 
     def test_api_token_sent_only_to_api_host(self):
         seen = {}

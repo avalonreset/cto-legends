@@ -59,7 +59,7 @@ class ManagerTests(unittest.TestCase):
             "legends-dataforseo-kit", "legends-geogrid", "legends-github",
             "legends-stable-audio-3", "legends-obs-kit", "legends-hyperyap",
             "legends-empire", "legends-grant", "legends-firecrawl",
-            "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions", "legends-coolify"})
+            "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev"})
 
     def test_setup_revision_rebuilds_same_source(self):
         module = m.catalog()['modules']['legends-github']

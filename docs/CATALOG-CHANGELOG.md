@@ -5,6 +5,16 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.8 - 2026-09-30
+
+- Add `legends-jev` 0.1.0 with verified public source pins and the existing
+  isolated Python install/probe/run contract.
+- Discover typed decision advice for computer use, application control and
+  browser action selection from supplied text evidence and candidates.
+- Operators validate suggestions; existing shell/browser tools retain actuation.
+  No native vision, desktop control or universal speedup is claimed.
+- No manager engine or canonical skill change.
+
 ## 1.0.7 - 2026-09-29
 
 - Scope Empire readiness to the selected workflow. Local vault inspection uses
