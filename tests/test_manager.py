@@ -187,11 +187,14 @@ class ManagerTests(unittest.TestCase):
                     raise subprocess.CalledProcessError(done.returncode, command,
                                                        done.stdout + done.stderr)
             return subprocess.CompletedProcess(command, 0, '', '')
+        # Temp directory names can contain "pip"; only an actual pip command
+        # means dependencies were installed. Keep that collision deterministic.
+        grant_home = self.home / 'pip-name-fixture'
         with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=fake_run):
-            relative = m.prepare('legends-grant', module, self.home)
-        self.assertFalse(any('pip' in part for command in calls for part in command), calls)
+            relative = m.prepare('legends-grant', module, grant_home)
+        self.assertFalse(any(command[1:3] == ['-m', 'pip'] for command in calls), calls)
         for name in lanes:
-            self.assertTrue((self.home / relative / 'source' / name).is_file(), name)
+            self.assertTrue((grant_home / relative / 'source' / name).is_file(), name)
 
     def test_grant_prepare_fails_without_lane_files(self):
         stream = io.BytesIO()
