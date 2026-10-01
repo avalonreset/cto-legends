@@ -5,6 +5,14 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.9 - 2026-10-01
+
+- Pin `legends-firecrawl` 0.2.0 to its released immutable source archive.
+- Describe official Firecrawl-only execution, offline catalog browsing and
+  response provenance. Retire native bypass and credit-efficiency positioning.
+- Name the Node.js Alexandria launcher and explicit paid-query confirmation.
+- No manager engine or canonical skill change.
+
 ## 1.0.8 - 2026-09-30
 
 - Add `legends-jev` 0.1.0 with verified public source pins and the existing

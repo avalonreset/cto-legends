@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -615,11 +615,11 @@
       }
     },
     "legends-firecrawl": {
-      "version": "0.1.0",
-      "commit": "0cd474db3dccbb1f08de2f522fe69e45b0fcc450",
+      "version": "0.2.0",
+      "commit": "93b854bf6040b346a8c084c600185a31fde2b549",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "a01248a0285adc4fdb7e0833111cce8d4c5db4fcf9dc4205c3becc14d25c3691",
-      "purpose": "Live web search, scraping, crawling, and offline provider catalog with credit-efficient routing.",
+      "sha256": "312feaf9ba85183e61e990e006f05790bfccb182b65de688d0cfe7fc4e61cb7c",
+      "purpose": "Official Firecrawl web operations and Alexandria queries with offline catalog browsing and saved response provenance.",
       "keywords": [
         "firecrawl",
         "scrape",
@@ -628,11 +628,10 @@
         "crawling",
         "search",
         "alexandria",
-        "web",
-        "proxy"
+        "web"
       ],
       "dependencies": {},
-      "scope": "Python client plus offline catalog. Vendor CLI and API key need module setup; paid calls need explicit authorization.",
+      "scope": "Official Firecrawl execution only; no native bypasses or credit-saving substitutions. Python web client and Node Alexandria launcher; live calls need module setup and authorization. Alexandria queries default to preview and require --confirm.",
       "discovery": {
         "signals": [
           "web search",
@@ -650,8 +649,8 @@
           "Scrape this page to markdown",
           "Search the web for competitors"
         ],
-        "not_for": "Bypassing authentication, CAPTCHA, robots policy, or access controls; a substitute for vendor billing.",
-        "setup": "Needs firecrawl-cli 1.23.3 and FIRECRAWL_API_KEY for live calls; the offline catalog needs neither.",
+        "not_for": "Direct-source bypasses, credit-saving substitutions, proprietary data or intelligence beyond Firecrawl, authentication or access-control bypass.",
+        "setup": "Live calls require FIRECRAWL_API_KEY. Web workflows require firecrawl-cli 1.23.3; Alexandria requires Node.js. Catalog browsing is offline. Paid Alexandria requests require --confirm.",
         "instructions": [
           "README.md",
           "docs/RECIPES.md"
