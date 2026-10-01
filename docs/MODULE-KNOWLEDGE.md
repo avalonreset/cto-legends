@@ -1,5 +1,9 @@
 # Module knowledge and Empire integration
 
+For provider responses and client research, use the
+[shared research workflow](RESEARCH-WORKFLOW.md). Evidence packages and reusable
+module knowledge packs have different ownership and update rules.
+
 `cto-legends` is the entry point and only registered skill. `legends-empire`
 is the durable Markdown foundation. Vault stewardship is a named maintenance
 capability within Empire. Other modules provide specialized capabilities.

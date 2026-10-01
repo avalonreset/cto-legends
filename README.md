@@ -27,6 +27,11 @@ Host discovery and operational verification are tracked separately.
 
 It can sit alongside AI Marketing Hub workflows and other agent tools. Its focus is discovering and operating Legends modules and connecting their work to your chosen workspace. It is independently developed and maintained by Benjamin; it is not an AI Marketing Hub product or an official integration.
 
+For research, the [shared evidence workflow](docs/RESEARCH-WORKFLOW.md) connects
+provider collection, full saved responses, offline verification and reuse checks
+with reviewed Empire intake. Client evidence belongs in the user's workspace,
+separate from replaceable module installations.
+
 ## Start here
 
 Python 3.10 or newer is required for the manager; use Python 3.11+ to include Empire vault memory. No Git, provider account, background service,

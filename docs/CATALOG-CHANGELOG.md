@@ -5,6 +5,17 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.11 - 2026-10-01
+
+- Pin `legends-dataforseo-kit` 0.1.3, `legends-firecrawl` 0.3.1 and
+  `legends-empire` 0.2.4 for portable research evidence workflows.
+- Expose offline inventory, integrity verification, selected/full inspection and
+  explicit reuse checks in discovery. Add Empire's evidence verification and
+  intake-planning recipe to the installed handoff.
+- Document shared client-workspace ownership and tested source-to-knowledge
+  boundaries. No provider bypass, savings percentage or automatic conclusions.
+- No manager engine or canonical skill change.
+
 ## 1.0.10 - 2026-10-01
 
 - Pin `legends-firecrawl` 0.2.1 with corrected single-argument Alexandria

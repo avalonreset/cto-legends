@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "version": "1.0.10",
+  "version": "1.0.11",
   "modules": {
     "legends-dataforseo-kit": {
-      "version": "0.1.2",
-      "commit": "2c8d817ab41d9085f89a6e0b4583082bf92ebcd0",
+      "version": "0.1.3",
+      "commit": "6e816f4a6cc3f8061f997d240ece2c0619dc61ae",
       "repo": "avalonreset/legends-dataforseo-kit",
-      "sha256": "3782f2ea90bcdd3077c7bec91682fcdd12b575cfd7f818dd6e818107a309b8eb",
-      "purpose": "Search and keyword research through DataForSEO.",
+      "sha256": "5c56b7e1b57a8bf6150f883dab30d9674da18403251cf79b028b1b3d8f743204",
+      "purpose": "Search and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
         "keywords",
@@ -19,7 +19,7 @@
         "research"
       ],
       "dependencies": {},
-      "scope": "Python API, CLI and offline research evidence export, verification and reuse checks. Credentials required only for provider requests.",
+      "scope": "Python API and CLI with full response files and offline evidence export, integrity verification, manifest inventory, focused views and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
       "discovery": {
         "signals": [
           "keyword demand",
@@ -32,7 +32,8 @@
         ],
         "examples": [
           "Research keyword demand",
-          "Collect search results and preserve reusable evidence"
+          "Collect search results and preserve reusable evidence",
+          "Find and inspect saved DataForSEO research without another API call"
         ],
         "not_for": "Automatic marketing conclusions or a substitute for GeoGrid study design.",
         "setup": "Offline inspection needs no credentials; fresh API work requires credentials and explicit execution authorization.",
@@ -430,10 +431,10 @@
       }
     },
     "legends-empire": {
-      "version": "0.2.3",
-      "commit": "4fa773799bef6f5219dfe3cb43cfa75bc30a73ad",
+      "version": "0.2.4",
+      "commit": "a150373fdc4ae91588feb982d2c9be0f6f1d4d92",
       "repo": "avalonreset/legends-empire",
-      "sha256": "cd7ce0711ab67a094c5d0a7fbcc21d63a1682b4a06692d5144f9c62e61040653",
+      "sha256": "48096a7a856f1d9a1f3d9a16a892653129dfd69d364c58b07414d44dce80fa40",
       "purpose": "Markdown knowledge foundation. For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work.",
       "keywords": [
         "empire",
@@ -485,7 +486,8 @@
           "Invoke legends-vault-stewardship",
           "Review neglected projects and their next actions",
           "Help me resume unfinished work from session handoffs",
-          "Attach the stewardship knowledge library to my Empire"
+          "Attach the stewardship knowledge library to my Empire",
+          "Verify saved research evidence and plan its intake into this client vault"
         ],
         "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it.",
         "setup": "Select a vault. For vault stewardship, follow the installed recipe and run cto-legends run legends-vault-stewardship -- steward doctor. Research-export readiness applies only to research-export tasks. Scans and previews run on native Windows; transactions and knowledge attachment apply require POSIX filesystem semantics, with metadata enabled on WSL DrvFS mounts.",
@@ -493,7 +495,8 @@
           "README.md",
           "docs/install-guide.md",
           "docs/stewardship.md",
-          "docs/knowledge-packs.md"
+          "docs/knowledge-packs.md",
+          "docs/RESEARCH-EVIDENCE-HANDOFF.md"
         ]
       },
       "recipe": {
@@ -615,11 +618,11 @@
       }
     },
     "legends-firecrawl": {
-      "version": "0.2.1",
-      "commit": "63a2e285fcd0f07cce37f9c1c449dc2e8c217080",
+      "version": "0.3.1",
+      "commit": "af7035deb9b596d384aca2e29161889f6e388e00",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "1339ccb5358cc872aca812a9b1adc7b2797f38a6fb849f0de7f9d0d277e39511",
-      "purpose": "Official Firecrawl web operations and Alexandria queries with offline catalog browsing and saved response provenance.",
+      "sha256": "616b22c0665f7f6674563ebbcda942c753ff1ab47fde4ee619e54baef23596bc",
+      "purpose": "Official Firecrawl web operations and Alexandria queries with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "firecrawl",
         "scrape",
@@ -631,7 +634,7 @@
         "web"
       ],
       "dependencies": {},
-      "scope": "Official Firecrawl execution only; no native bypasses or credit-saving substitutions. Core JSON responses are archived with provenance by default; no-save and output-root controls are available. Python web client and Node Alexandria launcher; live calls need module setup and authorization. Alexandria queries require --confirm.",
+      "scope": "Official Firecrawl execution only. Full captures live outside installations by default, with portable evidence export, verification, inventory, focused views and reuse checks. No native bypasses or savings claims. Python web client and Node Alexandria launcher; live calls need setup and authorization. Alexandria queries require --confirm.",
       "discovery": {
         "signals": [
           "web search",
@@ -647,13 +650,15 @@
         ],
         "examples": [
           "Scrape this page to markdown",
-          "Search the web for competitors"
+          "Search the web for competitors",
+          "Find and inspect saved Firecrawl evidence without another API call"
         ],
         "not_for": "Direct-source bypasses, credit-saving substitutions, proprietary data or intelligence beyond Firecrawl, authentication or access-control bypass.",
         "setup": "Live calls require FIRECRAWL_API_KEY. Web workflows require firecrawl-cli 1.23.3; Alexandria requires Node.js. Catalog browsing is offline. Paid Alexandria requests require --confirm.",
         "instructions": [
           "README.md",
-          "docs/RECIPES.md"
+          "docs/RECIPES.md",
+          "docs/RESEARCH-MEMORY.md"
         ]
       },
       "recipe": {
