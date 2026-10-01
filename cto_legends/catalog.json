@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.9",
+  "version": "1.0.10",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.2",
@@ -615,10 +615,10 @@
       }
     },
     "legends-firecrawl": {
-      "version": "0.2.0",
-      "commit": "93b854bf6040b346a8c084c600185a31fde2b549",
+      "version": "0.2.1",
+      "commit": "63a2e285fcd0f07cce37f9c1c449dc2e8c217080",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "312feaf9ba85183e61e990e006f05790bfccb182b65de688d0cfe7fc4e61cb7c",
+      "sha256": "1339ccb5358cc872aca812a9b1adc7b2797f38a6fb849f0de7f9d0d277e39511",
       "purpose": "Official Firecrawl web operations and Alexandria queries with offline catalog browsing and saved response provenance.",
       "keywords": [
         "firecrawl",
@@ -631,7 +631,7 @@
         "web"
       ],
       "dependencies": {},
-      "scope": "Official Firecrawl execution only; no native bypasses or credit-saving substitutions. Python web client and Node Alexandria launcher; live calls need module setup and authorization. Alexandria queries default to preview and require --confirm.",
+      "scope": "Official Firecrawl execution only; no native bypasses or credit-saving substitutions. Core JSON responses are archived with provenance by default; no-save and output-root controls are available. Python web client and Node Alexandria launcher; live calls need module setup and authorization. Alexandria queries require --confirm.",
       "discovery": {
         "signals": [
           "web search",

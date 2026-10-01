@@ -5,6 +5,14 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.10 - 2026-10-01
+
+- Pin `legends-firecrawl` 0.2.1 with corrected single-argument Alexandria
+  forwarding, compact catalog output and JSON capture listings.
+- Preserve official-only execution and confirmation semantics; include core
+  response archives with provenance and opt-out controls.
+- No manager engine or canonical skill change.
+
 ## 1.0.9 - 2026-10-01
 
 - Pin `legends-firecrawl` 0.2.0 to its released immutable source archive.
