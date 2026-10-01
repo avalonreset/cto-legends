@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.11",
+  "version": "1.0.12",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.3",
@@ -431,11 +431,11 @@
       }
     },
     "legends-empire": {
-      "version": "0.2.4",
-      "commit": "a150373fdc4ae91588feb982d2c9be0f6f1d4d92",
+      "version": "0.3.0",
+      "commit": "285599718b949721bb510f1bc31f62795bdd7636",
       "repo": "avalonreset/legends-empire",
-      "sha256": "48096a7a856f1d9a1f3d9a16a892653129dfd69d364c58b07414d44dce80fa40",
-      "purpose": "Markdown knowledge foundation. For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work.",
+      "sha256": "be27594ca21137b996da0cbeba78324d75bae3e9f357763a09c93b133b316201",
+      "purpose": "Markdown knowledge foundation. For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work. Optional Home-ready shared-root structure supports standalone Empire projects and an independently authorized AI Marketing Hub Home headless capability layer without duplicate business records.",
       "keywords": [
         "empire",
         "obsidian",
@@ -448,7 +448,9 @@
         "stewardship",
         "cleanup",
         "projects",
-        "handoffs"
+        "handoffs",
+        "adapter",
+        "ontology"
       ],
       "dependencies": {},
       "scope": "Python 3.11+ standard-library core. Windows supports inspection and previews; vault writes require POSIX filesystem semantics. WSL DrvFS needs metadata enabled. Obsidian Desktop is optional.",
@@ -477,7 +479,15 @@
           "organize my vault",
           "organise my vault",
           "organize these notes",
-          "orphaned notes"
+          "orphaned notes",
+          "ai marketing hub home",
+          "home adapter",
+          "home integration",
+          "business ontology integration",
+          "slot home into empire",
+          "home ready empire",
+          "shared root home",
+          "home capability layer"
         ],
         "examples": [
           "Save this research in my vault",
@@ -487,16 +497,21 @@
           "Review neglected projects and their next actions",
           "Help me resume unfinished work from session handoffs",
           "Attach the stewardship knowledge library to my Empire",
-          "Verify saved research evidence and plan its intake into this client vault"
+          "Verify saved research evidence and plan its intake into this client vault",
+          "Slot my authorized AI Marketing Hub Home workspace into Empire",
+          "Check Home adapter compatibility without moving business records",
+          "Prepare a Home-ready Empire without installing Home",
+          "Add my authorized Home capability layer to the shared Empire root"
         ],
-        "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it.",
-        "setup": "Select a vault. For vault stewardship, follow the installed recipe and run cto-legends run legends-vault-stewardship -- steward doctor. Research-export readiness applies only to research-export tasks. Scans and previews run on native Windows; transactions and knowledge attachment apply require POSIX filesystem semantics, with metadata enabled on WSL DrvFS mounts.",
+        "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it. Does not grant private Home repository access, redistribute Home, activate Obsidian plugins, or automatically migrate business records.",
+        "setup": "Select a vault. For vault stewardship, follow the installed recipe and run cto-legends run legends-vault-stewardship -- steward doctor. Research-export readiness applies only to research-export tasks. Scans and previews run on native Windows; transactions and knowledge attachment apply require POSIX filesystem semantics, with metadata enabled on WSL DrvFS mounts. For optional Home-ready shared-root work, read docs/home-adapter.md. Preparation and original scaffolds work without Home. Adding the headless capability layer requires independently authorized pinned local Home source and explicit reviewed install, compose, and shared-root binding plans. Native Home validation has separate interpreter/dependency requirements. Home is not required for ordinary Empire installation, doctor, or vault workflows.",
         "instructions": [
           "README.md",
           "docs/install-guide.md",
           "docs/stewardship.md",
           "docs/knowledge-packs.md",
-          "docs/RESEARCH-EVIDENCE-HANDOFF.md"
+          "docs/RESEARCH-EVIDENCE-HANDOFF.md",
+          "docs/home-adapter.md"
         ]
       },
       "recipe": {

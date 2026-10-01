@@ -32,6 +32,20 @@ provider collection, full saved responses, offline verification and reuse checks
 with reviewed Empire intake. Client evidence belongs in the user's workspace,
 separate from replaceable module installations.
 
+## Optional Home compatibility
+
+`legends-empire` can prepare a Home-ready shared Empire root and original project
+records while remaining useful without AI Marketing Hub Home. An independently
+authorized Home capability layer can later use the same canonical business and
+project directories. Explicit composition preserves Empire's session entry point.
+
+This is a headless capability integration, not a full Home desktop installation
+or automatic Obsidian plugin setup. Home is not required for standalone Empire.
+The public catalog neither grants private repository access nor redistributes
+Home. Follow the [adapter handoff](docs/HOME-ADAPTER.md) for task-specific readiness
+and reviewed prepare, install, compose, and binding plans. No second agent skill
+or whole-ecosystem installation is needed.
+
 ## Start here
 
 Python 3.10 or newer is required for the manager; use Python 3.11+ to include Empire vault memory. No Git, provider account, background service,

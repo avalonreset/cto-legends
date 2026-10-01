@@ -5,6 +5,16 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.12 - 2026-10-01
+
+- Pin `legends-empire` 0.3.0 for an optional Home-ready shared Empire root,
+  original standalone records and independently authorized Home capability layers.
+- Expose reviewed prepare/install/compose/bind readiness and native validation
+  through the existing router; Home is never a global Empire dependency.
+- Public distribution contains no private Home pack or user records. The optional
+  headless integration does not install desktop plugins or migrate old records.
+- No manager engine or canonical skill change.
+
 ## 1.0.11 - 2026-10-01
 
 - Pin `legends-dataforseo-kit` 0.1.3, `legends-firecrawl` 0.3.1 and
