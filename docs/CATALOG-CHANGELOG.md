@@ -5,6 +5,12 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.14 - 2026-10-02
+
+- Pin `legends-grant` 0.2.1 with prominent upstream credits in the README and
+  package metadata, plus repository, documentation, issues and release links.
+- Documentation and packaging patch; no runtime, recipe or manager changes.
+
 ## 1.0.13 - 2026-10-02
 
 - Pin `legends-grant` 0.2.0 as an isolated Python runtime with offline doctor,

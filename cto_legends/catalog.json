@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.13",
+  "version": "1.0.14",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.3",
@@ -560,10 +560,10 @@
       }
     },
     "legends-grant": {
-      "version": "0.2.0",
-      "commit": "b9b1d3633a440244e723e3cdfe9e4cc368eb6a7e",
+      "version": "0.2.1",
+      "commit": "8205f56913d8b3995939e3c38e95d937e37683f1",
       "repo": "avalonreset/legends-grant",
-      "sha256": "69936742a01b7e59af3f45dcf71906ed109637e9223ccd82db5741867989fe71",
+      "sha256": "0741e9111a56bfd380ce93ee350c547308f830dcfc00aeb5e061defb14644db0",
       "purpose": "Discover US grants for businesses, nonprofits, tribes, governments, researchers and individuals; collect evidence and evaluate explicitly reviewed eligibility rules.",
       "keywords": [
         "grant",

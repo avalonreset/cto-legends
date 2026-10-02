@@ -22,7 +22,7 @@ class GrantCatalogTests(unittest.TestCase):
 
     def test_install_probe_run_and_optional_dependencies(self):
         row = manager.catalog()["modules"]["legends-grant"]
-        self.assertEqual(row["version"], "0.2.0")
+        self.assertEqual(row["version"], "0.2.1")
         self.assertEqual(row["dependencies"], {})
         self.assertEqual(row["readiness"], "doctor")
         self.assertEqual(row["recipe"], {
