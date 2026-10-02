@@ -189,11 +189,17 @@ class ManagerTests(unittest.TestCase):
         # Temp directory names can contain "pip"; only an actual pip command
         # means dependencies were installed. Keep that collision deterministic.
         grant_home = self.home / 'pip-name-fixture'
+        if sys.version_info < (3, 11):
+            with patch.object(m, 'fetch') as fetch, self.assertRaisesRegex(
+                    ValueError, 'requires Python 3.11'):
+                m.prepare('legends-grant', module, grant_home)
+            fetch.assert_not_called()
+            return
         with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=fake_run):
             relative = m.prepare('legends-grant', module, grant_home)
         installs = [command for command in calls if command[1:3] == ['-m', 'pip']]
         self.assertEqual(len(installs), 1, calls)
-        self.assertEqual(Path(installs[0][-1]), grant_home / relative / 'source')
+        self.assertEqual(Path(installs[0][-1]).resolve(), (grant_home / relative / 'source').resolve())
         self.assertTrue(any(command[1:] == ['-m', 'grant_engine', 'doctor'] for command in calls), calls)
         for name in lanes:
             self.assertTrue((grant_home / relative / 'source' / name).is_file(), name)
@@ -240,7 +246,9 @@ class ManagerTests(unittest.TestCase):
         args = parser().parse_args(['--home', str(self.home), 'run', 'legends-grant', '--', 'doctor'])
         with patch.object(subprocess, 'run', return_value=subprocess.CompletedProcess([], 0)) as child:
             self.assertEqual(execute(args), 0)
-        self.assertEqual(child.call_args.args[0], [str(m.python_at(self.home / relative)), '-m', 'grant_engine', 'doctor'])
+        command = child.call_args.args[0]
+        self.assertEqual(Path(command[0]).resolve(), m.python_at(self.home / relative).resolve())
+        self.assertEqual(command[1:], ['-m', 'grant_engine', 'doctor'])
 
     def test_firecrawl_prepare_installs_package_source(self):
         stream = io.BytesIO()
