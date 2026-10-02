@@ -165,14 +165,13 @@ class ManagerTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "guided"):
                     execute(args)
 
-    def test_grant_prepare_needs_no_python_requirements(self):
-        lanes = ['README.md', 'docs/GRANT-RECIPE.md', 'find.md', 'match.md',
-                 'qualify.md', 'apply.md', 'sources.md', 'submit-lanes.md',
-                 'vault-map.md']
+    def test_grant_prepare_installs_runtime_and_probes_doctor(self):
+        lanes = ['README.md', 'docs/GRANT-RECIPE.md', 'docs/RUNTIME.md',
+                 'docs/QUALIFICATION.md', 'pyproject.toml', 'grant_engine/__init__.py']
         stream = io.BytesIO()
         with zipfile.ZipFile(stream, 'w') as z:
             for name in lanes:
-                z.writestr('legends-grant-0.1.0/' + name, 'lane')
+                z.writestr('legends-grant-0.2.0/' + name, 'fixture')
         raw = stream.getvalue()
         module = dict(m.catalog()['modules']['legends-grant'],
                       sha256=hashlib.sha256(raw).hexdigest())
@@ -192,17 +191,23 @@ class ManagerTests(unittest.TestCase):
         grant_home = self.home / 'pip-name-fixture'
         with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=fake_run):
             relative = m.prepare('legends-grant', module, grant_home)
-        self.assertFalse(any(command[1:3] == ['-m', 'pip'] for command in calls), calls)
+        installs = [command for command in calls if command[1:3] == ['-m', 'pip']]
+        self.assertEqual(len(installs), 1, calls)
+        self.assertEqual(Path(installs[0][-1]), grant_home / relative / 'source')
+        self.assertTrue(any(command[1:] == ['-m', 'grant_engine', 'doctor'] for command in calls), calls)
         for name in lanes:
             self.assertTrue((grant_home / relative / 'source' / name).is_file(), name)
 
-    def test_grant_prepare_fails_without_lane_files(self):
+    def test_docs_only_prepare_fails_without_instruction_files(self):
         stream = io.BytesIO()
         with zipfile.ZipFile(stream, 'w') as z:
-            z.writestr('legends-grant-0.1.0/SKILL.md', 'lane')
+            z.writestr('docs-fixture-0.1.0/SKILL.md', 'lane')
         raw = stream.getvalue()
         module = dict(m.catalog()['modules']['legends-grant'],
                       sha256=hashlib.sha256(raw).hexdigest())
+        module['recipe'] = {'pip': {'kind': 'none'},
+                            'probe': [{'do': 'files-exist', 'paths': ['README.md']}],
+                            'run': {'runtime': 'none'}}
         def probing(command, cwd, *, log=True):
             command = [str(part) for part in command]
             if len(command) > 2 and command[1] == '-c':
@@ -214,15 +219,28 @@ class ManagerTests(unittest.TestCase):
             return subprocess.CompletedProcess(command, 0, '', '')
         with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=probing):
             with self.assertRaisesRegex(ValueError, 'missing'):
-                m.prepare('legends-grant', module, self.home)
+                m.prepare('docs-fixture', module, self.home)
 
-    def test_grant_run_points_at_docs(self):
-        relative = 'releases/legends-grant/doc'
+    def test_docs_only_run_points_at_docs(self):
+        relative = 'releases/docs-fixture/doc'
+        (self.home / relative).mkdir(parents=True)
+        m.write_state(self.home, {'schema': 1, 'active': {'docs-fixture': relative}, 'previous': {}})
+        args = parser().parse_args(['--home', str(self.home), 'run', 'docs-fixture'])
+        catalog = m.catalog()
+        catalog['modules']['docs-fixture'] = {'recipe': {'run': {'runtime': 'none'}}}
+        with patch.object(m, 'active_catalog', return_value=catalog), patch.object(m, 'read_state', return_value={
+            'schema': 1, 'active': {'docs-fixture': relative}, 'previous': {}
+        }), self.assertRaisesRegex(ValueError, 'docs-only'):
+            execute(args)
+
+    def test_grant_run_forwards_to_installed_module(self):
+        relative = 'releases/legends-grant/runtime'
         (self.home / relative).mkdir(parents=True)
         m.write_state(self.home, {'schema': 1, 'active': {'legends-grant': relative}, 'previous': {}})
-        args = parser().parse_args(['--home', str(self.home), 'run', 'legends-grant'])
-        with self.assertRaisesRegex(ValueError, 'docs-only'):
-            execute(args)
+        args = parser().parse_args(['--home', str(self.home), 'run', 'legends-grant', '--', 'doctor'])
+        with patch.object(subprocess, 'run', return_value=subprocess.CompletedProcess([], 0)) as child:
+            self.assertEqual(execute(args), 0)
+        self.assertEqual(child.call_args.args[0], [str(m.python_at(self.home / relative)), '-m', 'grant_engine', 'doctor'])
 
     def test_firecrawl_prepare_installs_package_source(self):
         stream = io.BytesIO()

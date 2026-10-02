@@ -5,6 +5,19 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.13 - 2026-10-02
+
+- Pin `legends-grant` 0.2.0 as an isolated Python runtime with offline doctor,
+  nationwide source planning, bounded federal and state-feed retrieval, local
+  search, evidence changes, document collection and integrity verification.
+- Discover US funding research across businesses, nonprofits, tribes,
+  governments, researchers and individuals. Source directories remain research
+  routes; they do not imply completed searches or exhaustive grant coverage.
+- Qualification requires manually reviewed evidence and rules plus separate
+  private facts. No automatic eligibility extraction, submissions or paid calls.
+- Core dependencies remain empty; PDF extraction is an optional extra. No
+  manager engine or canonical skill change.
+
 ## 1.0.12 - 2026-10-01
 
 - Pin `legends-empire` 0.3.0 for an optional Home-ready shared Empire root,

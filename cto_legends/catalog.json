@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.12",
+  "version": "1.0.13",
   "modules": {
     "legends-dataforseo-kit": {
       "version": "0.1.3",
@@ -560,11 +560,11 @@
       }
     },
     "legends-grant": {
-      "version": "0.1.0",
-      "commit": "943728934ecd6b8955519c9b5d860d121195f805",
+      "version": "0.2.0",
+      "commit": "b9b1d3633a440244e723e3cdfe9e4cc368eb6a7e",
       "repo": "avalonreset/legends-grant",
-      "sha256": "11dab379d983185f00298805790b9f9a981f34ba57f377653976d8e4594220ae",
-      "purpose": "Find, qualify, and apply for US business grants with agent assistance.",
+      "sha256": "69936742a01b7e59af3f45dcf71906ed109637e9223ccd82db5741867989fe71",
+      "purpose": "Discover US grants for businesses, nonprofits, tribes, governments, researchers and individuals; collect evidence and evaluate explicitly reviewed eligibility rules.",
       "keywords": [
         "grant",
         "grants",
@@ -573,64 +573,80 @@
         "microgrants",
         "sbir",
         "sttr",
-        "application",
-        "fund"
+        "reimbursement",
+        "workforce",
+        "funder"
       ],
       "dependencies": {},
-      "scope": "Markdown lanes plus verified federal API routes. The agent drafts and submits once per authorization; the human owns mailed packages and non-delegable logins.",
+      "scope": "Nationwide source planning, bounded Grants.gov and four third-party state feeds, local evidence search, revision comparison, public notice collection and integrity verification. Qualification requires manually reviewed rules and separate private facts; application checklists remain drafts. Directory routes are not completed searches; no automated submissions.",
       "discovery": {
         "signals": [
-          "business grant",
           "business grants",
+          "nonprofit grants",
+          "tribal grants",
+          "government grants",
+          "research grants",
+          "individual grants",
+          "state grants",
+          "local grants",
+          "private grants",
           "grant funding",
           "small business funding",
           "find grants",
-          "apply for a grant",
           "grant application",
-          "microgrant",
-          "free funding"
+          "workforce reimbursement",
+          "training subsidies",
+          "grant eligibility",
+          "grant evidence",
+          "grant notice",
+          "funding opportunities",
+          "microgrant"
         ],
         "examples": [
-          "Find grants for my business",
-          "Help me apply for a small business grant"
+          "Find US grants for a small business or nonprofit",
+          "Find state and local grants for a tribe or government",
+          "Research funding opportunities for researchers and individuals",
+          "Find employer training subsidies and workforce reimbursement",
+          "Collect grant notices and review eligibility evidence"
         ],
-        "not_for": "Automatic approvals or a substitute for reading the live notice terms.",
-        "setup": "No credentials for federal search lanes; SAM.gov lanes need a free public API key; submissions need explicit per-send authorization.",
+        "not_for": "Guaranteed eligibility or awards, exhaustive nationwide coverage, automatic rule extraction, automatically complete notice inventories, historical awards presented as open grants, automatic submissions or paid database access.",
+        "setup": "Python 3.11+. Run offline doctor, then inspect task-specific source and evidence readiness. Core runtime has no third-party dependencies or API keys; PDF text extraction uses the optional pdf extra. Keep applicant facts and assessments outside public evidence and the managed installation. Source planning covers US jurisdictions; live feeds cover only declared sources.",
         "instructions": [
           "README.md",
           "docs/GRANT-RECIPE.md",
-          "find.md",
-          "match.md",
-          "qualify.md",
-          "apply.md",
-          "submit-lanes.md",
-          "vault-map.md"
+          "docs/RUNTIME.md",
+          "docs/QUALIFICATION.md"
         ]
       },
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "pip": {
-          "kind": "none"
+          "kind": "path"
         },
         "probe": [
           {
-            "do": "files-exist",
-            "paths": [
-              "README.md",
-              "docs/GRANT-RECIPE.md",
-              "find.md",
-              "match.md",
-              "qualify.md",
-              "apply.md",
-              "sources.md",
-              "submit-lanes.md",
-              "vault-map.md"
+            "do": "module-cli",
+            "module": "grant_engine",
+            "args": [
+              "doctor"
             ]
           }
         ],
         "run": {
-          "runtime": "none"
+          "runtime": "python",
+          "kind": "module",
+          "module": "grant_engine"
         }
-      }
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "readiness": "doctor"
     },
     "legends-firecrawl": {
       "version": "0.3.1",

@@ -153,7 +153,7 @@ class SyncTests(unittest.TestCase):
         self.assertEqual(preview["catalog_version"], {"old": m.catalog()["version"], "new": "9.9.9"})
         self.assertEqual(preview["diff"]["added"], ["legends-fixture"])
         self.assertEqual(preview["diff"]["updated"],
-                         [{"id": "legends-grant", "old": "0.1.0", "new": "0.1.1"}])
+                         [{"id": "legends-grant", "old": m.catalog()["modules"]["legends-grant"]["version"], "new": "0.1.1"}])
         self.assertIs(preview["diff"]["changed"], True)
         self.assertFalse((self.home / "catalog.json").exists())
         with patch.object(m, "fetch", side_effect=self.fetch):
