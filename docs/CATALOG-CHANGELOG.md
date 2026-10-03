@@ -5,6 +5,14 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.15 - 2026-10-03
+
+- Pin `legends-grant` 0.3.0 with proposal scaffolding, mechanical checks,
+  private draft rendering and an evidence-linked writing/review workflow.
+- Add proposal-writing discovery signals and the writing recipe to handoff.
+- Narrative and factual support remain agent or human work; mechanical
+  success does not establish submission readiness. No manager code changes.
+
 ## 1.0.14 - 2026-10-02
 
 - Pin `legends-grant` 0.2.1 with prominent upstream credits in the README and
