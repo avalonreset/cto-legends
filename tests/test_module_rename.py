@@ -12,7 +12,7 @@ NEW = 'legends-dataforseo'
 class RenameTests(unittest.TestCase):
     def test_existing_install_resolves_without_writes_and_updates_with_rollback(self):
         with tempfile.TemporaryDirectory() as directory:
-            home = Path(directory)
+            home = Path(directory).resolve()
             relative = 'releases/' + OLD + '/old'
             release = home / relative
             (release / 'source/docs').mkdir(parents=True)
@@ -49,7 +49,7 @@ class RenameTests(unittest.TestCase):
 
     def test_existing_canonical_and_alias_installs_are_both_preserved(self):
         with tempfile.TemporaryDirectory() as directory:
-            home = Path(directory)
+            home = Path(directory).resolve()
             active = {OLD: 'releases/old/one', NEW: 'releases/new/two'}
             m.write_state(home, {'schema': 1, 'active': active, 'previous': {}})
             self.assertEqual(m.read_state(home)['active'], active)
