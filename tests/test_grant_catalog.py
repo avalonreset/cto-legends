@@ -16,13 +16,15 @@ class GrantCatalogTests(unittest.TestCase):
                      "Find research grants for researchers", "Find individual grants",
                      "Find state and local grants", "Find private grants",
                      "Find employer training subsidies", "Review workforce reimbursement",
-                     "Collect grant notices and review grant eligibility"):
+                     "Collect grant notices and review grant eligibility",
+                     "Write my grant proposal", "Review a grant proposal",
+                     "Draft a grant application"):
             with self.subTest(goal=goal):
                 self.assertEqual(discovery.route(goal)["matches"][0]["id"], "legends-grant")
 
     def test_install_probe_run_and_optional_dependencies(self):
         row = manager.catalog()["modules"]["legends-grant"]
-        self.assertEqual(row["version"], "0.2.1")
+        self.assertEqual(row["version"], "0.3.0")
         self.assertEqual(row["dependencies"], {})
         self.assertEqual(row["readiness"], "doctor")
         self.assertEqual(row["recipe"], {
@@ -42,7 +44,8 @@ class GrantCatalogTests(unittest.TestCase):
         self.assertIn("no automated submissions", row["scope"])
         self.assertIn("exhaustive nationwide coverage", row["discovery"]["not_for"])
         self.assertEqual(row["discovery"]["instructions"], [
-            "README.md", "docs/GRANT-RECIPE.md", "docs/RUNTIME.md", "docs/QUALIFICATION.md"])
+            "README.md", "docs/GRANT-RECIPE.md", "docs/RUNTIME.md", "docs/QUALIFICATION.md",
+            "docs/PROPOSAL-WRITING.md"])
 
     def test_missing_install_handoff_is_read_only(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -73,7 +76,7 @@ class GrantCatalogTests(unittest.TestCase):
             ), patch.object(manager, "managed_path", return_value=release):
                 current = discovery.handoff("legends-grant", home)
                 self.assertEqual(current["handoff_status"], "instructions_available")
-                self.assertEqual(len(current["instructions"]), 4)
+                self.assertEqual(len(current["instructions"]), 5)
                 self.assertEqual(current["readiness"], "doctor")
                 old = copy.deepcopy(row)
                 old.update(version="0.1.0", commit="c" * 40, sha256="d" * 64,
