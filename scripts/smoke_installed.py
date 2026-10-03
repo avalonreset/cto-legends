@@ -13,7 +13,7 @@ state = m.read_state(args.home)
 def release(name):
     return m.managed_path(args.home, state['active'][name])
 
-subprocess.run([str(m.python_at(release('legends-dataforseo-kit'))),
+subprocess.run([str(m.python_at(release('legends-dataforseo'))),
                 '-m', 'legends_dataforseo.evidence', '--help'], check=True)
 subprocess.run([str(m.python_at(release('legends-github'))),
                 '-c', 'from PIL import Image; assert Image.new("RGB", (4,4)).size == (4,4)'], check=True)

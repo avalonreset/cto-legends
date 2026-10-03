@@ -19,7 +19,7 @@ class ReadinessTests(unittest.TestCase):
 
     def test_credentials_use_kit_doctor_in_each_actual_environment(self):
         roots = {'releases/kit': Path('/kit'), 'releases/grid': Path('/grid'), 'releases/github': Path('/github')}
-        state = {'active': dict(zip(('legends-dataforseo-kit', 'legends-geogrid', 'legends-github'), roots))}
+        state = {'active': dict(zip(('legends-dataforseo', 'legends-geogrid', 'legends-github'), roots))}
         calls = []
         def check(root, args):
             calls.append((root, args))
@@ -38,7 +38,7 @@ class ReadinessTests(unittest.TestCase):
             (root / 'source' / 'docs').mkdir(parents=True)
             (root / 'source' / 'README.md').write_text('instructions')
             (root / 'source' / 'docs' / 'install-guide.md').write_text('instructions')
-            with patch.object(manager, 'read_state', return_value={'active': {'legends-dataforseo-kit': 'kit', 'legends-empire': 'obs'}}), patch.object(manager, 'managed_path', return_value=root), patch.object(readiness, '_imports', return_value=None):
+            with patch.object(manager, 'read_state', return_value={'active': {'legends-dataforseo': 'kit', 'legends-empire': 'obs'}}), patch.object(manager, 'managed_path', return_value=root), patch.object(readiness, '_imports', return_value=None):
                 result = readiness.task_readiness(root, 'evidence')
             self.assertFalse(result['ok'])
             self.assertEqual(result['checks'][0]['name'], 'evidence_export')

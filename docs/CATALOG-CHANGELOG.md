@@ -5,6 +5,15 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.16 - 2026-10-03
+
+- Rename the DataForSEO module and repository to `legends-dataforseo` and pin
+  release 0.1.4, including the renamed Python distribution.
+- Keep `legends-dataforseo-kit` as a command alias. Manager 0.2.2 also recognizes
+  existing installations under that name without moving their environments.
+- Older managers can install the canonical name after sync; upgrade the manager
+  for automatic recognition of retained installs during update and rollback.
+
 ## 1.0.15 - 2026-10-03
 
 - Pin `legends-grant` 0.3.0 with proposal scaffolding, mechanical checks,

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.2 - 2026-10-03
+
+- Resolve installed catalog aliases to canonical names without moving runtimes.
+  Existing renamed installs support handoff, update, run and rollback.
+- Use `legends-dataforseo` in discovery, readiness and current instructions.
+  The old catalog identifier remains a compatibility alias.
+
+
 ## 0.2.1 - 2026-09-29
 
 - Catalog sync previews and refreshes existing unedited startup registrations,

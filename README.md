@@ -51,10 +51,10 @@ or whole-ecosystem installation is needed.
 Python 3.10 or newer is required for the manager; use Python 3.11+ to include Empire vault memory. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
-Install the 0.2.1 wheel, or from source.
+Install the 0.2.2 wheel, or from source.
 
 ```sh
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.1/cto_legends-0.2.1-py3-none-any.whl
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.2/cto_legends-0.2.2-py3-none-any.whl
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -116,8 +116,8 @@ The agent handles paraphrases and multi-part goals using the capability index.
 
 | Module | Use it for | Managed setup |
 |---|---|---|
-| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) | Google Maps rank grids and local visibility | Research workflow + report libraries + DataForSEO Kit |
-| [legends-dataforseo-kit](https://github.com/avalonreset/legends-dataforseo-kit) | Search, keywords, queued research and reusable evidence | Python library + CLI + evidence exporter |
+| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) | Google Maps rank grids and local visibility | Research workflow + report libraries + DataForSEO |
+| [legends-dataforseo](https://github.com/avalonreset/legends-dataforseo) | Search, keywords, queued research and reusable evidence | Python library + CLI + evidence exporter |
 | [legends-github](https://github.com/avalonreset/legends-github) | Repository audits, README, metadata, release preparation | Headless workflows + live research transport |
 | [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) | Instrumental music, sound effects, continuous mixes | Python planning CLI; model/GPU setup separate |
 | [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
@@ -157,7 +157,7 @@ you only need a standalone kit installation for direct kit use.
 
 ```sh
 cto-legends run legends-geogrid -- --help
-cto-legends run legends-dataforseo-kit -- routes
+cto-legends run legends-dataforseo -- routes
 cto-legends run legends-github -- capabilities
 cto-legends install legends-stable-audio-3 --apply
 cto-legends run legends-stable-audio-3 -- plan --hours 1 --vram-gb 16

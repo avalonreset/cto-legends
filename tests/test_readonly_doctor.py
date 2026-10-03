@@ -15,14 +15,14 @@ class ReadOnlyDoctorTests(unittest.TestCase):
     def test_doctor_survives_readonly_install_log(self):
         with tempfile.TemporaryDirectory() as temp:
             home = Path(temp)
-            release = home / 'releases/legends-dataforseo-kit/example'
+            release = home / 'releases/legends-dataforseo/example'
             release.mkdir(parents=True)
             (release / 'install.log').write_bytes(b'Original installation receipt\n')
             import json
-            module = manager.catalog()["modules"]["legends-dataforseo-kit"]
+            module = manager.catalog()["modules"]["legends-dataforseo"]
             (release / 'receipt.json').write_text(json.dumps(module))
             manager.write_state(home, {'schema': 1, 'active': {
-                'legends-dataforseo-kit': str(release.relative_to(home))}, 'previous': {}})
+                'legends-dataforseo': str(release.relative_to(home))}, 'previous': {}})
             original_open = Path.open
 
             def readonly_open(path, mode='r', *args, **kwargs):
@@ -52,9 +52,9 @@ class ReadOnlyDoctorTests(unittest.TestCase):
             release = Path(temp)
             manager.run([sys.executable, '-c', 'print("installation evidence")'], release)
             self.assertIn('installation evidence', (release / 'install.log').read_text())
-            recipe = manager.catalog()["modules"]["legends-dataforseo-kit"]["recipe"]
+            recipe = manager.catalog()["modules"]["legends-dataforseo"]["recipe"]
             with patch.object(manager, 'run') as run:
-                manager.probe('legends-dataforseo-kit', release, recipe, log=True)
+                manager.probe('legends-dataforseo', release, recipe, log=True)
             self.assertTrue(run.call_args.kwargs['log'])
 
     def test_all_readiness_probes_default_to_no_log(self):

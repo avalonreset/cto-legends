@@ -51,7 +51,7 @@ module instructions are reference material, not a copy of the client's research.
    distinct. Preserve source dates and contradictory evidence.
 
 Use `cto-legends handoff` to load the current installed instructions. The catalog
-identifier for `legends-dataforseo` remains `legends-dataforseo-kit` for compatibility.
+identifier for `legends-dataforseo` remains `legends-dataforseo` for compatibility.
 Offline evidence work needs no provider credentials. New collection still uses
 the official providers and their normal authorization and pricing rules.
 

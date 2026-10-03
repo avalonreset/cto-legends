@@ -16,7 +16,7 @@ class CapabilitiesTests(unittest.TestCase):
             'Give me some reggae dubstep': 'legends-stable-audio-3',
             'Where does my pizza shop appear on Google Maps?': 'legends-geogrid',
             'Improve discovery of my GitHub project': 'legends-github',
-            'Research keyword demand': 'legends-dataforseo-kit',
+            'Research keyword demand': 'legends-dataforseo',
             'Save this research in my vault': 'legends-empire',
             'Clean and organize my vault': 'legends-empire',
             'Review neglected projects': 'legends-empire',

@@ -56,7 +56,7 @@ class ManagerTests(unittest.TestCase):
 
     def test_catalog_pins_all_public_modules(self):
         self.assertEqual(set(m.catalog()["modules"]), {
-            "legends-dataforseo-kit", "legends-geogrid", "legends-github",
+            "legends-dataforseo", "legends-geogrid", "legends-github",
             "legends-stable-audio-3", "legends-obs-kit", "legends-hyperyap",
             "legends-empire", "legends-grant", "legends-firecrawl",
             "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev"})
@@ -312,7 +312,7 @@ class ManagerTests(unittest.TestCase):
         with patch.object(m, "fetch", side_effect=AssertionError("network")):
             plan = m.plan(home, ["legends-geogrid"])
         self.assertFalse(home.exists())
-        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo-kit"], "0.1.0")
+        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo"], "0.1.0")
 
     def test_unknown_module_rejected(self):
         with self.assertRaises(ValueError):
@@ -363,7 +363,7 @@ class ManagerTests(unittest.TestCase):
         m.write_state(self.home, initial)
         with patch.object(m, "prepare", side_effect=["releases/first", RuntimeError("failure")]):
             with self.assertRaises(RuntimeError):
-                m.install(self.home, ["legends-dataforseo-kit", "legends-geogrid"])
+                m.install(self.home, ["legends-dataforseo", "legends-geogrid"])
         self.assertEqual(m.read_state(self.home), initial)
 
     def prepare_fake(self, key, module, home):

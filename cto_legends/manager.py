@@ -400,6 +400,13 @@ def read_state(home):
             except ValueError:
                 raise ValueError(f"Unknown installed module: {key}") from None
             managed_path(home, relative)
+    # Resolve renamed installation keys without moving non-relocatable runtimes.
+    # Read-only commands remain read-only; a later mutation persists this view.
+    aliases = active_catalog(home).get("aliases", {})
+    for group in ("active", "previous"):
+        for alias, target in aliases.items():
+            if alias in data[group] and target not in data[group]:
+                data[group][target] = data[group].pop(alias)
     return data
 
 

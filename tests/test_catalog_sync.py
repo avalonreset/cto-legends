@@ -302,11 +302,11 @@ class UpdateStatusTests(unittest.TestCase):
         return f"releases/{key}/rel"
 
     def test_statuses_cover_every_drift(self):
-        old = self.write_receipt("legends-dataforseo-kit", "0.0.1")
+        old = self.write_receipt("legends-dataforseo", "0.0.1")
         same = self.write_receipt("legends-github", m.catalog()["modules"]["legends-github"]["version"])
         current = self.write_receipt("legends-captions", m.catalog()["modules"]["legends-captions"]["version"])
         m.write_state(self.home, {"schema": 1,
-                                  "active": {"legends-dataforseo-kit": old, "legends-github": same,
+                                  "active": {"legends-dataforseo": old, "legends-github": same,
                                              "legends-captions": current},
                                   "previous": {}})
         tags = {}
@@ -325,8 +325,8 @@ class UpdateStatusTests(unittest.TestCase):
         with patch.object(m, "fetch", side_effect=fetch):
             result = m.updates(self.home)
         by_id = {row["id"]: row for row in result["modules"]}
-        self.assertEqual(by_id["legends-dataforseo-kit"]["status"], "update_ready")
-        self.assertIn("update legends-dataforseo-kit --apply", by_id["legends-dataforseo-kit"]["next"])
+        self.assertEqual(by_id["legends-dataforseo"]["status"], "update_ready")
+        self.assertIn("update legends-dataforseo --apply", by_id["legends-dataforseo"]["next"])
         self.assertEqual(by_id["legends-github"]["status"], "catalog_behind_upstream")
         self.assertIn("sync", by_id["legends-github"]["next"])
         self.assertEqual(by_id["legends-geogrid"]["status"], "not_installed")

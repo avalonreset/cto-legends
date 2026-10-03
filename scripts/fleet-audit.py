@@ -39,7 +39,7 @@ DEFAULT_CATALOG = "/mnt/e/cto-legends-public/cto_legends/catalog.json"
 # locally; tree-dependent checks SKIP unless --checkouts supplies a path.
 REPOS: list[dict] = [
     {"id": "cto-legends", "repo": "cto-legends", "local": "/mnt/e/cto-legends-public", "router": True},
-    {"id": "legends-dataforseo-kit", "repo": "legends-dataforseo-kit", "local": "/mnt/e/legends-dataforseo-kit-public"},
+    {"id": "legends-dataforseo", "repo": "legends-dataforseo", "local": "/mnt/e/legends-dataforseo-public"},
     {"id": "legends-geogrid", "repo": "legends-geogrid", "local": "/mnt/e/legends-geogrid"},
     {"id": "legends-github", "repo": "legends-github", "local": "/mnt/e/legends-github-public"},
     {"id": "legends-stable-audio-3", "repo": "legends-stable-audio-3", "local": "/mnt/e/legends-stable-audio-3-public-rc"},

@@ -56,22 +56,22 @@ def task_readiness(home, task='all', browser_library_directory=None):
             scope='Offline browser launch only; map-network access is not tested.',
             explicit_library_directory=str(browser_library_directory) if browser_library_directory else None)
     if task in ('all', 'research', 'github'):
-        keys = ('legends-github',) if task == 'github' else ('legends-dataforseo-kit', 'legends-geogrid', 'legends-github')
+        keys = ('legends-github',) if task == 'github' else ('legends-dataforseo', 'legends-geogrid', 'legends-github')
         for key in keys:
             root = release(key)
-            if root is None and task == 'all' and key != 'legends-dataforseo-kit':
+            if root is None and task == 'all' and key != 'legends-dataforseo':
                 continue
             result = _check(root, ['-m', 'legends_dataforseo', 'doctor']) if root else None
             creds = result.get('credentials', {}) if isinstance(result, dict) else {}
             add('provider_credentials', key, creds.get('present') is True,
                 'Configure DataForSEO credentials for this execution host and module environment. No credential values are displayed.',
                 authenticated=False,
-                note='Uses the kit credential resolver, including supported OS fallback. A legacy GeoGrid environment-only warning is not authoritative. Presence does not prove account validity.')
+                note='Uses the DataForSEO credential resolver, including supported OS fallback. A legacy GeoGrid environment-only warning is not authoritative. Presence does not prove account validity.')
     if task in ('all', 'evidence'):
-        key = 'legends-dataforseo-kit'
+        key = 'legends-dataforseo'
         root = release(key)
         add('evidence_export', key, root and _imports(root, 'import legends_dataforseo.evidence'),
-            'Install the DataForSEO Kit release containing the evidence module. Obsidian intake instructions alone do not provide the exporter.')
+            'Install the DataForSEO release containing the evidence module. Obsidian intake instructions alone do not provide the exporter.')
         key = 'legends-empire'
         root = release(key)
         add('vault_instructions', key, root and (root / 'source' / 'README.md').is_file() and (root / 'source' / 'docs' / 'install-guide.md').is_file(),

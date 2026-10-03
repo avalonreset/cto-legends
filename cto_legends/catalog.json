@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "version": "1.0.15",
+  "version": "1.0.16",
   "modules": {
-    "legends-dataforseo-kit": {
-      "version": "0.1.3",
-      "commit": "6e816f4a6cc3f8061f997d240ece2c0619dc61ae",
-      "repo": "avalonreset/legends-dataforseo-kit",
-      "sha256": "5c56b7e1b57a8bf6150f883dab30d9674da18403251cf79b028b1b3d8f743204",
+    "legends-dataforseo": {
+      "version": "0.1.4",
+      "commit": "dda341dc6113ef85307578d458ecbe842ea27f48",
+      "repo": "avalonreset/legends-dataforseo",
+      "sha256": "5c54a4aafe6ce721f5fe13e21297c5edfcc04beaed27c798d7761f3443a79d14",
       "purpose": "Search and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
@@ -85,7 +85,7 @@
         "rankings"
       ],
       "dependencies": {
-        "legends-dataforseo-kit": "0.1.0"
+        "legends-dataforseo": "0.1.0"
       },
       "scope": "Research-first studies, reports and enhancement. Report libraries included; browser binaries and provider credentials require readiness checks.",
       "discovery": {
@@ -168,7 +168,7 @@
         "keywords"
       ],
       "dependencies": {
-        "legends-dataforseo-kit": "0.1.0"
+        "legends-dataforseo": "0.1.0"
       },
       "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup.",
       "setup_revision": 1,
@@ -1092,7 +1092,8 @@
   "aliases": {
     "hyperyap": "legends-hyperyap",
     "legends-ultimate-captions": "legends-captions",
-    "legends-vault-stewardship": "legends-empire"
+    "legends-vault-stewardship": "legends-empire",
+    "legends-dataforseo-kit": "legends-dataforseo"
   },
   "retired": {
     "legends-obsidian": "legends-empire"
