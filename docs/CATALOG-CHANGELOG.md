@@ -5,6 +5,14 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.18 - 2026-10-04
+
+- Pin `legends-stable-audio-3` 0.1.2. Hosted full songs default to 380 seconds,
+  with full-length calibration and approximate set durations.
+- Add production planning and per-transition arrangement rendering that
+  preserves complete songs, records trim reasons and retains overlap headroom.
+- No manager or registered router-skill change.
+
 ## 1.0.17 - 2026-10-04
 
 - Pin `legends-stable-audio-3` 0.1.1. Hosted Large result downloads use the
