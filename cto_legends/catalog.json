@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.16",
+  "version": "1.0.17",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.4",
@@ -230,9 +230,9 @@
       "readiness": "task-readiness github"
     },
     "legends-stable-audio-3": {
-      "version": "0.1.0",
+      "version": "0.1.1",
       "repo": "avalonreset/legends-stable-audio-3",
-      "commit": "1236b53fdecb6ff2f7aff1ec3a92839d22aa5385",
+      "commit": "1e0abd3cb703f3447eecec22806a54e528e3041d",
       "purpose": "Create instrumental music, sound effects, and continuous mixes.",
       "keywords": [
         "music",
@@ -252,7 +252,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "f1f7cfe3bd9a565c423c527959f14c151fdbbfba833d6ce21b34d73579ef71f0",
+      "sha256": "80e6ef1afe3d65306219bd34177ddc74fc0a1399036bad8254925cf4b6758b9e",
       "discovery": {
         "signals": [
           "make music",

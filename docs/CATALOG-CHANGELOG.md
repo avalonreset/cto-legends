@@ -5,6 +5,15 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.17 - 2026-10-04
+
+- Pin `legends-stable-audio-3` 0.1.1. Hosted Large result downloads use the
+  service-required `Accept: audio/*` header instead of format-specific values
+  that returned HTTP 400 after a successful generation.
+- Existing pending jobs can be recovered without another paid submission.
+  The release also refreshes the urllib3 development lock after dependency
+  audit findings. No manager, router skill, or recipe changes.
+
 ## 1.0.16 - 2026-10-03
 
 - Rename the DataForSEO module and repository to `legends-dataforseo` and pin
