@@ -5,6 +5,19 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.19 - 2026-10-09
+
+- Add `legends-hetzner` 0.1.0 for portable Hetzner Cloud inspection,
+  reviewed server plans and read-only preflight through the official CLI.
+- Include a source-cited operations library and optional versioned Empire
+  knowledge attachment. Installation makes no cloud or vault changes.
+- Keep `legends-hetzner-kit` as a command alias. Private local guides and
+  predecessor installations are not moved or replaced.
+- Live creation remains experimental without a paid disposable-server
+  canary. Native Windows knowledge preview is supported; attachment apply
+  uses the existing Empire POSIX transaction engine.
+- No manager or registered router-skill change.
+
 ## 1.0.18 - 2026-10-04
 
 - Pin `legends-stable-audio-3` 0.1.2. Hosted full songs default to 380 seconds,

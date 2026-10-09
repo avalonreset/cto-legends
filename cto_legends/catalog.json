@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.18",
+  "version": "1.0.19",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.4",
@@ -1087,13 +1087,85 @@
           "module": "legends_jev"
         }
       }
+    },
+    "legends-hetzner": {
+      "version": "0.1.0",
+      "repo": "avalonreset/legends-hetzner",
+      "commit": "5753f57b05abe1e18be1af6d350449dbd34bc523",
+      "sha256": "d83765e40fb3358a2471ebcd8b59a45528aa5727b0469330da4a3d9b50b507af",
+      "purpose": "Inspect Hetzner Cloud projects, prepare reviewed server plans, and attach a source-cited operations library to a selected Empire vault.",
+      "keywords": [
+        "hetzner",
+        "hcloud",
+        "cloud",
+        "server",
+        "vps",
+        "ssh"
+      ],
+      "dependencies": {},
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "scope": "Python 3.10+ standard-library workflows over the official hcloud CLI. Read-only readiness, inventory, catalog and preflight; reviewed server plans; experimental explicit creation. Optional versioned knowledge attachment uses legends-empire separately.",
+      "discovery": {
+        "signals": [
+          "hetzner",
+          "hcloud",
+          "hetzner server",
+          "hetzner cloud",
+          "cloud server plan",
+          "hetzner ssh",
+          "hetzner inventory"
+        ],
+        "examples": [
+          "Help me manage my Hetzner Cloud servers",
+          "Check my Hetzner project and plan a new server",
+          "Set up Hetzner with my agent",
+          "Attach the Hetzner operations knowledge library to my Empire"
+        ],
+        "not_for": "Hetzner Robot bare metal, automatic app migration, full infrastructure reconciliation, billing management, or guaranteed SSH/application health. Live creation remains experimentally implemented, not live-canary verified.",
+        "setup": "Install the official hcloud CLI separately. Run offline doctor, then use an explicitly selected hcloud context or HCLOUD_TOKEN for live reads. Server creation requires the reviewed plan hash and explicit approval. Empire is optional; native Windows can preview knowledge attachment, while apply needs supported POSIX permissions (Linux, macOS or configured WSL). No vault writes or cloud purchases during module installation.",
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "knowledge/hetzner/vault/index.md"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          10
+        ],
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_hetzner",
+            "present": [
+              "__version__"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_hetzner"
+        }
+      },
+      "license": "MIT",
+      "readiness": "doctor"
     }
   },
   "aliases": {
     "hyperyap": "legends-hyperyap",
     "legends-ultimate-captions": "legends-captions",
     "legends-vault-stewardship": "legends-empire",
-    "legends-dataforseo-kit": "legends-dataforseo"
+    "legends-dataforseo-kit": "legends-dataforseo",
+    "legends-hetzner-kit": "legends-hetzner"
   },
   "retired": {
     "legends-obsidian": "legends-empire"
