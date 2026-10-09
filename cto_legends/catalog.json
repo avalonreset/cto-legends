@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.19",
+  "version": "1.0.20",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.4",
@@ -431,10 +431,10 @@
       }
     },
     "legends-empire": {
-      "version": "0.3.0",
-      "commit": "285599718b949721bb510f1bc31f62795bdd7636",
+      "version": "0.3.1",
+      "commit": "dac252a647cbe8b42285317fe096e20afaf2fbe9",
       "repo": "avalonreset/legends-empire",
-      "sha256": "be27594ca21137b996da0cbeba78324d75bae3e9f357763a09c93b133b316201",
+      "sha256": "bd1b048620ad75b82a768ed135a66594ecddaa2e6ae8c021ca3acfe74e52b02b",
       "purpose": "Markdown knowledge foundation. For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work. Optional Home-ready shared-root structure supports standalone Empire projects and an independently authorized AI Marketing Hub Home headless capability layer without duplicate business records.",
       "keywords": [
         "empire",
@@ -453,7 +453,7 @@
         "ontology"
       ],
       "dependencies": {},
-      "scope": "Python 3.11+ standard-library core. Windows supports inspection and previews; vault writes require POSIX filesystem semantics. WSL DrvFS needs metadata enabled. Obsidian Desktop is optional.",
+      "scope": "Python 3.11+ standard-library core. Reviewed transactions and knowledge attachment support native Windows on local fixed NTFS, plus macOS/Linux/POSIX. Windows fails closed on reparse paths, network shares and non-NTFS volumes. Windows process-crash recovery does not claim POSIX directory-fsync power-loss equivalence. Bash utilities remain POSIX-only; WSL DrvFS needs metadata. Obsidian Desktop is optional.",
       "discovery": {
         "signals": [
           "remember this",
@@ -503,8 +503,8 @@
           "Prepare a Home-ready Empire without installing Home",
           "Add my authorized Home capability layer to the shared Empire root"
         ],
-        "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it. Does not grant private Home repository access, redistribute Home, activate Obsidian plugins, or automatically migrate business records.",
-        "setup": "Select a vault. For vault stewardship, follow the installed recipe and run cto-legends run legends-vault-stewardship -- steward doctor. Research-export readiness applies only to research-export tasks. Scans and previews run on native Windows; transactions and knowledge attachment apply require POSIX filesystem semantics, with metadata enabled on WSL DrvFS mounts. For optional Home-ready shared-root work, read docs/home-adapter.md. Preparation and original scaffolds work without Home. Adding the headless capability layer requires independently authorized pinned local Home source and explicit reviewed install, compose, and shared-root binding plans. Native Home validation has separate interpreter/dependency requirements. Home is not required for ordinary Empire installation, doctor, or vault workflows.",
+        "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it. Native Windows transactions do not support network/UNC shares, reparse paths or non-NTFS volumes, and do not promise POSIX-equivalent power-loss durability. Bash utilities require POSIX. Does not grant private Home repository access, redistribute Home, activate Obsidian plugins, or automatically migrate business records.",
+        "setup": "Select a vault. For vault stewardship, follow the installed recipe and run cto-legends run legends-vault-stewardship -- steward doctor. Research-export readiness applies only to research-export tasks. Native Windows transactions and knowledge attachment require Empire 0.3.1+, Python 3.11+, local fixed NTFS and supported current-user ACL ownership/security state; readiness fails closed for unsupported paths or security conditions. Review and apply in the same environment. macOS/Linux use POSIX filesystem semantics; WSL DrvFS needs metadata. Bash utilities remain POSIX-only. For optional Home-ready shared-root work, read docs/home-adapter.md. Preparation and original scaffolds work without Home. Adding the headless capability layer requires independently authorized pinned local Home source and explicit reviewed install, compose, and shared-root binding plans. Native Home validation has separate interpreter/dependency requirements. Home is not required for ordinary Empire installation, doctor, or vault workflows.",
         "instructions": [
           "README.md",
           "docs/install-guide.md",
@@ -1089,10 +1089,10 @@
       }
     },
     "legends-hetzner": {
-      "version": "0.1.0",
+      "version": "0.1.1",
       "repo": "avalonreset/legends-hetzner",
-      "commit": "5753f57b05abe1e18be1af6d350449dbd34bc523",
-      "sha256": "d83765e40fb3358a2471ebcd8b59a45528aa5727b0469330da4a3d9b50b507af",
+      "commit": "3efd3f6fa519fba93d1778cedd08d345d583a3f8",
+      "sha256": "fba09639236810f14b60e5464fdee2682361de76f004304fb8aa85fe869ee1b5",
       "purpose": "Inspect Hetzner Cloud projects, prepare reviewed server plans, and attach a source-cited operations library to a selected Empire vault.",
       "keywords": [
         "hetzner",
@@ -1108,7 +1108,7 @@
         "linux",
         "macos"
       ],
-      "scope": "Python 3.10+ standard-library workflows over the official hcloud CLI. Read-only readiness, inventory, catalog and preflight; reviewed server plans; experimental explicit creation. Optional versioned knowledge attachment uses legends-empire separately.",
+      "scope": "Python 3.10+ standard-library workflows over the official hcloud CLI. Read-only readiness, inventory, catalog and preflight; reviewed server plans and explicit creation. A bounded Windows-client live canary validated Ubuntu 24.04 server creation/readback, SSH, cloud-init and cleanup. Optional versioned knowledge attachment uses Empire 0.3.1+ separately, including native Windows local fixed NTFS with Python 3.11+.",
       "discovery": {
         "signals": [
           "hetzner",
@@ -1125,8 +1125,8 @@
           "Set up Hetzner with my agent",
           "Attach the Hetzner operations knowledge library to my Empire"
         ],
-        "not_for": "Hetzner Robot bare metal, automatic app migration, full infrastructure reconciliation, billing management, or guaranteed SSH/application health. Live creation remains experimentally implemented, not live-canary verified.",
-        "setup": "Install the official hcloud CLI separately. Run offline doctor, then use an explicitly selected hcloud context or HCLOUD_TOKEN for live reads. Server creation requires the reviewed plan hash and explicit approval. Empire is optional; native Windows can preview knowledge attachment, while apply needs supported POSIX permissions (Linux, macOS or configured WSL). No vault writes or cloud purchases during module installation.",
+        "not_for": "Hetzner Robot bare metal, automatic app migration, full infrastructure reconciliation, billing management, or guaranteed SSH/application health. The live canary does not validate every client OS, image or location, application health, or backup restores. Native Windows knowledge attachment excludes reparse paths, network shares and non-NTFS volumes; Windows process-crash recovery is not POSIX directory-fsync power-loss equivalence.",
+        "setup": "Install the official hcloud CLI separately. Run offline doctor, then use an explicitly selected hcloud context or HCLOUD_TOKEN for live reads. Server creation requires the reviewed plan hash and explicit approval; follow docs/LIVE-CANARY.md for bounded lifecycle validation and identity-checked cleanup. Empire is optional. Native Windows knowledge attachment requires Empire 0.3.1+, Python 3.11+, local fixed NTFS and supported current-user ACL state; unsupported paths or security conditions fail closed. macOS/Linux or configured WSL use POSIX permissions. Preview and apply in the same environment. No vault writes or cloud purchases during module installation.",
         "instructions": [
           "README.md",
           "docs/AGENT-RECIPE.md",

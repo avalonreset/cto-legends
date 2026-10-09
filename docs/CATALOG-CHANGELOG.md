@@ -5,6 +5,22 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.20 - 2026-10-09
+
+- Update `legends-empire` to 0.3.1 with reviewed native Windows
+  transactions and knowledge attachment on local fixed NTFS. Unsupported
+  reparse paths, network shares, non-NTFS volumes and security conditions
+  fail closed. macOS/Linux/POSIX support remains; Bash utilities stay POSIX-only.
+- Windows process-crash recovery is supported without claiming POSIX
+  directory-fsync or equivalent power-loss durability.
+- Update `legends-hetzner` to 0.1.1 with bounded live-canary evidence:
+  Windows-client creation/readback, SSH, cloud-init and cleanup of an
+  Ubuntu 24.04 server. This does not establish every client/image/location
+  combination, application health or restore readiness.
+- Connect the optional Hetzner knowledge pack to Empire 0.3.1+ on native
+  Windows with Python 3.11+, alongside macOS and Linux.
+- No manager engine, registered router-skill or global dependency change.
+
 ## 1.0.19 - 2026-10-09
 
 - Add `legends-hetzner` 0.1.0 for portable Hetzner Cloud inspection,
