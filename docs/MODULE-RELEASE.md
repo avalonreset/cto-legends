@@ -4,6 +4,37 @@ Follow this order for every module release. Most releases use the existing
 manager and skill. When a release exposes an integration gap, fix and version
 the affected component, with its own compatibility evidence.
 
+## Acceptance before tagging
+
+Publishing a repository is only one part of releasing a Legends module.
+Keep an evidence receipt for each applicable item below. Label blocked or
+untested work explicitly; use "not applicable" only with a reason.
+Start from the [release receipt template](RELEASE-RECEIPT-TEMPLATE.md).
+
+| Requirement | Evidence |
+|---|---|
+| Useful capability | Implemented workflow, intended audience, value beyond invoking the upstream tool, explicit exclusions |
+| Generic setup | No founder-specific paths or infrastructure; credential setup, offline readiness and a working first command |
+| Platform support | Exact-commit CI on every claimed OS, supported Python versions, clean installed-artifact checks outside the checkout |
+| Live behavior | Authorized representative read or disposable write canary, readback and cleanup; separate this from mocked tests |
+| Knowledge | Declared shape, dated primary sources, public/private ownership, packaged resources; actual attachment/update/conflict proof when claimed |
+| Distribution | License and attribution, privacy scan, complete artifacts and checksums |
+| GitHub presentation | `legends-github` review, relevant research applied to copy and metadata, usable README and inspected artwork |
+| Social preview | Supported browser upload, saved setting and verification of the image actually served by GitHub |
+| Discovery | Immutable catalog pin, clean install, upgrade, readiness, recipe handoff and ordinary outcome routing |
+| Ecosystem directory | Accurate module link and description on the publisher's profile, verified after publication |
+
+`legends-github` prepares and verifies social images. Actual upload uses the
+agent host's supported browser/file-upload controls; it does not require
+`legends-chrome` or `legends-shell-kit`. A local image alone is not upload proof.
+Resolve the installed GitHub recipe through the router and follow its current
+workflow, including any established research spending authorization.
+
+Test native Windows separately from WSL. A successful offline suite is not
+evidence of live API compatibility or production health. An optional knowledge
+pack must remain usable without Empire, and installation must not write into a
+user vault. See [the knowledge contract](MODULE-KNOWLEDGE.md).
+
 ## 1. Cut the module release
 
 1. Tag the module repo (`vX.Y.Z`, not a pre-release) and publish the
@@ -49,6 +80,12 @@ to the world: users pick it up with `sync`. Discovery is available after the
 host's startup index is refreshed or the agent queries the live capability
 index. It is not an unsolicited push into every already-running conversation.
 Keep generic skill text unchanged when it remains correct.
+
+Update the publisher's ecosystem directory and its generator if present,
+preserving the established layout. Verify public module links, metadata and
+social preview independently of catalog admission. Close the release receipt
+with public URLs, versions, checks and remaining limitations. Do not defer these
+steps merely because the tag is already public.
 
 ## Rules
 

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.21",
+  "version": "1.0.22",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.4",
@@ -950,7 +950,7 @@
       }
     },
     "legends-coolify": {
-      "purpose": "Source-cited Coolify knowledge vault and read-only operational checks for agents.",
+      "purpose": "Read-only Coolify operations and source-cited runbooks, standalone or attached to an Empire vault.",
       "recipe": {
         "probe": [
           {
@@ -972,8 +972,17 @@
             "paths": [
               "wiki/index.md",
               "references/sources.md",
-              "docs/AGENT-RECIPE.md"
+              "docs/AGENT-RECIPE.md",
+              "docs/KNOWLEDGE-PACK.md",
+              "knowledge/coolify/pack.json"
             ]
+          },
+          {
+            "module": "legends_coolify",
+            "args": [
+              "resources"
+            ],
+            "do": "module-cli"
           }
         ],
         "run": {
@@ -985,17 +994,18 @@
           "kind": "path"
         }
       },
-      "commit": "1af1719a0518d0f869c99d801b38b10a31017034",
-      "sha256": "e5393fddee00af38f7aebdffa242ad5d4b590db6bf5e13a3d7322549891b3df9",
+      "commit": "90bf0d4dfd986aa959b467803ae079364cbafb28",
+      "sha256": "9bd8c309988b8c154337d2900cb9db2fabbc34a61d0f6f4689c0501de487cfb8",
       "license": "MIT",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "discovery": {
         "instructions": [
           "README.md",
           "docs/AGENT-RECIPE.md",
+          "docs/KNOWLEDGE-PACK.md",
           "wiki/index.md"
         ],
-        "setup": "Python 3.10+. Offline doctor needs no credentials. Live reads require a trusted HTTPS COOLIFY_BASE_URL and COOLIFY_API_TOKEN with read permission.",
+        "setup": "Python 3.10+. Offline doctor/resources need no credentials. Live reads require trusted HTTPS COOLIFY_BASE_URL and COOLIFY_API_TOKEN. Optional vault attachment uses legends-empire 0.3.1+ and Python 3.11+.",
         "not_for": "Deploying, restarting, restoring, changing DNS, or managing provider servers.",
         "signals": [
           "inspect Coolify",
@@ -1003,11 +1013,16 @@
           "Coolify health",
           "Coolify backups",
           "Coolify deployment plan",
-          "Coolify vault"
+          "Coolify vault",
+          "Coolify knowledge pack",
+          "Coolify Empire library",
+          "self-hosted application inventory",
+          "Coolify deployment history"
         ],
         "examples": [
           "Inspect my Coolify applications",
-          "Review Coolify backup readiness"
+          "Review Coolify backup readiness",
+          "Attach Coolify runbooks to my Empire vault"
         ]
       },
       "repo": "avalonreset/legends-coolify",
@@ -1018,10 +1033,14 @@
       ],
       "keywords": [
         "coolify",
-        "coolify-api"
+        "coolify-api",
+        "self-hosted",
+        "knowledge-pack",
+        "backup-readiness"
       ],
-      "scope": "Portable standard-library Python CLI and source-cited vault. Read-only inventory, status, environment names, backup schedules and advisory plans. No deployment or configuration mutation.",
-      "dependencies": {}
+      "scope": "Portable Python CLI for inventory, deployment history, resource status, environment names, backup schedules and advisory plans. Packaged knowledge library with optional versioned Empire attachment. No deployment or configuration mutation.",
+      "dependencies": {},
+      "readiness": "doctor"
     },
     "legends-jev": {
       "version": "0.1.0",
@@ -1170,7 +1189,8 @@
     "legends-ultimate-captions": "legends-captions",
     "legends-vault-stewardship": "legends-empire",
     "legends-dataforseo-kit": "legends-dataforseo",
-    "legends-hetzner-kit": "legends-hetzner"
+    "legends-hetzner-kit": "legends-hetzner",
+    "legends-coolify-kit": "legends-coolify"
   },
   "retired": {
     "legends-obsidian": "legends-empire"

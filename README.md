@@ -129,7 +129,7 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) | Ambient audio capture, archiving, transcription, distillation | Pip-installed CLI; ffmpeg and faster-whisper/NeMo need module setup |
 | [legends-captions](https://github.com/avalonreset/legends-captions) | Caption correction, timing, rendering, proof | Pip-installed CLI; stdlib only, speech envs optional |
 
-| [legends-coolify](https://github.com/avalonreset/legends-coolify) | Coolify knowledge, inventory, health, backup schedules and deployment planning | Python CLI and source-cited vault; read-only, live API setup separate |
+| [legends-coolify](https://github.com/avalonreset/legends-coolify) | Coolify inventory, deployment history, resource status, backup schedules and planning | Read-only Python CLI; packaged source-cited library with optional Empire attachment |
 | [legends-jev](https://github.com/avalonreset/legends-jev) | Typed application/browser action advice from supplied text evidence | Isolated Python CLI; operator validates, existing tools actuate; no native vision |
 
 Pinned versions live in the catalog, not here: `cto-legends catalog`

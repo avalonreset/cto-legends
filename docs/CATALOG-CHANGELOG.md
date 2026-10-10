@@ -5,6 +5,20 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.22 - 2026-10-10
+
+- Update `legends-coolify` to 0.2.0 with read-only deployment history,
+  stricter collection checks, portable packaged resources and generic setup.
+- Discover its source-cited operations library and optional versioned Empire
+  shelf. Installation does not write to a vault; attachment uses the reviewed
+  `legends-empire` transaction workflow.
+- Add the historical `legends-coolify-kit` name as an alias. Extend readiness
+  probes to verify the installed recipe and knowledge pack.
+- Expand the shared module release contract and receipt template to require
+  platform, artifact, live behavior, knowledge, GitHub presentation, social
+  preview, router upgrade and profile-directory evidence.
+- No manager engine or registered router-skill change.
+
 ## 1.0.21 - 2026-10-10
 
 - Update `legends-github` to 0.1.2 with portable social-preview preparation
