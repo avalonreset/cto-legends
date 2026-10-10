@@ -5,6 +5,17 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.21 - 2026-10-10
+
+- Update `legends-github` to 0.1.2 with portable social-preview preparation
+  and served-image verification, including exact repository and image receipts.
+- Route GitHub social-preview goals to the upload procedure and document
+  recovery from visible-label mismatches using supported file-input controls.
+- Upload uses the agent host's browser capabilities; Legends Chrome Kit and
+  Legends Shell Kit are not required dependencies. The Python helper prepares
+  and verifies the operation but does not upload itself.
+- No manager engine, registered router-skill or other module change.
+
 ## 1.0.20 - 2026-10-09
 
 - Update `legends-empire` to 0.3.1 with reviewed native Windows

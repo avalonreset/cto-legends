@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.20",
+  "version": "1.0.21",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.4",
@@ -151,10 +151,10 @@
       "readiness": "report-readiness"
     },
     "legends-github": {
-      "version": "0.1.1",
-      "commit": "8be077a0d818e6f566fd2c27f7335dc98f6d616b",
+      "version": "0.1.2",
+      "commit": "ea1362a2dcac5b585d93edfd37ce4639d675c3f5",
       "repo": "avalonreset/legends-github",
-      "sha256": "82b3f936d9b0c7e76bc34080e1fa536a7dbcb0388c2a0176eb051a6fc038462f",
+      "sha256": "b654df38d83fdfdaa5850b0d367796315a8041daac0d0adb37728e17ee4d8c6d",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
@@ -165,12 +165,13 @@
         "packaging",
         "seo",
         "optimization",
-        "keywords"
+        "keywords",
+        "social-preview"
       ],
       "dependencies": {
         "legends-dataforseo": "0.1.0"
       },
-      "scope": "Headless Python workflows and optional research transport; gh and native skills have separate setup.",
+      "scope": "Portable Python repository workflows, optional research, and social-preview preparation/served-image verification. Actual upload uses the agent host's supported browser/file-upload tools; no Legends Chrome or Shell dependency.",
       "setup_revision": 1,
       "discovery": {
         "signals": [
@@ -179,17 +180,21 @@
           "repository discovery",
           "repository visibility",
           "repo visibility",
-          "open source project"
+          "open source project",
+          "github social preview",
+          "repository social image"
         ],
         "examples": [
           "Improve discovery of my GitHub project",
-          "Optimize my repository with search evidence"
+          "Optimize my repository with search evidence",
+          "Upload and verify my GitHub social preview image"
         ],
         "not_for": "General website SEO or merely adding unresearched keywords.",
-        "setup": "Requires target repository and appropriate GitHub access; live research needs provider credentials.",
+        "setup": "Requires target repository and appropriate GitHub access; live research needs provider credentials. Social-preview verification needs gh access; upload needs a supported authenticated browser and file-upload control.",
         "instructions": [
           "README.md",
-          "docs/GITHUB-RECIPE.md"
+          "docs/GITHUB-RECIPE.md",
+          "github/references/social-preview-sop.md"
         ]
       },
       "recipe": {
