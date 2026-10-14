@@ -359,6 +359,23 @@ class UpdateStatusTests(unittest.TestCase):
         self.assertEqual(result["modules"], {"legends-firecrawl": "passed"})
         self.assertTrue(run.call_args_list)
 
+    def test_doctor_reports_retired_prerecipe_install_without_failing(self):
+        obs = self.home / "releases" / "legends-obsidian" / "old"
+        obs.mkdir(parents=True)
+        (obs / "receipt.json").write_text(json.dumps({"version": "2.3.0", "commit": "0" * 40}))
+        fc = self.home / "releases" / "legends-firecrawl" / "rel"
+        fc.mkdir(parents=True)
+        (fc / "receipt.json").write_text(json.dumps(m.catalog()["modules"]["legends-firecrawl"]))
+        m.write_state(self.home, {"schema": 1, "active": {
+            "legends-obsidian": "releases/legends-obsidian/old",
+            "legends-firecrawl": "releases/legends-firecrawl/rel",
+        }, "previous": {}})
+        with patch.object(m, "run"):
+            result = execute(parser().parse_args(["--home", str(self.home), "doctor"]))
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["modules"]["legends-obsidian"], "retired (succeeded by legends-empire)")
+        self.assertEqual(result["modules"]["legends-firecrawl"], "passed")
+
 
 if __name__ == "__main__":
     unittest.main()

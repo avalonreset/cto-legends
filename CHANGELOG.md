@@ -11,6 +11,9 @@
   supplied, preserving unmanaged or hand-edited skills in either location.
 - `agent-audit` and `isolate-skills` for `gemini` and `antigravity` inspect both
   `~/.gemini/skills` and `~/.gemini/config/skills` plus `~/.agents/skills`.
+- `doctor` reports retained pre-recipe retired installations (such as
+  `legends-obsidian` succeeded by `legends-empire`) without aborting checks for
+  active catalog modules.
 - Update Windows `task-readiness evidence` note to reflect `legends-empire`
   0.3.1+ native Windows fixed-NTFS transaction support. Canonical router
   `SKILL.md` bytes remain unchanged.

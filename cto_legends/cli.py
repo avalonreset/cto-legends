@@ -186,7 +186,11 @@ def execute(args):
         state = m.read_state(home)
         checks = {}
         for key, relative in state["active"].items():
-            m.probe(key, m.managed_path(home, relative), m.recipe_for(home, key, relative, cat))
+            release = m.managed_path(home, relative)
+            if key in cat.get("retired", {}) and "recipe" not in json.loads((release / "receipt.json").read_text(encoding="utf-8")):
+                checks[key] = f"retired (succeeded by {cat['retired'][key]})"
+                continue
+            m.probe(key, release, m.recipe_for(home, key, relative, cat))
             checks[key] = "passed"
         return {"ok": True, "version": __version__, "catalog_version": cat["version"], "modules": checks,
                 "optional_tools": {x: bool(shutil.which(x)) for x in ("node", "pnpm", "gh")},
