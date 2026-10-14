@@ -76,7 +76,7 @@ def task_readiness(home, task='all', browser_library_directory=None):
         root = release(key)
         add('vault_instructions', key, root and (root / 'source' / 'README.md').is_file() and (root / 'source' / 'docs' / 'install-guide.md').is_file(),
             'Install legends-empire before selecting a vault. This check does not write to a vault.',
-            canonical_writes='requires POSIX/WSL' if os.name == 'nt' else 'requires explicit vault selection and transaction checks')
+            canonical_writes='requires explicit vault selection, local fixed NTFS and transaction checks (Bash utilities require POSIX/WSL)' if os.name == 'nt' else 'requires explicit vault selection and transaction checks')
     if task in ('all', 'github'):
         key = 'legends-github'
         root = release(key)

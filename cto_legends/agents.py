@@ -8,11 +8,22 @@ import platform
 import uuid
 
 ROOTS = {
-    "codex": ".codex/skills", "gemini": ".gemini/skills",
+    "codex": ".codex/skills", "antigravity": ".gemini/config/skills",
+    "gemini": ".gemini/skills",
     "claude": ".claude/skills", "cursor": ".cursor/skills",
     "grok": ".grok/skills", "muse": ".agents/skills",
     "windsurf": ".windsurf/skills", "aider": ".aider/skills",
 }
+ALIASES = {"agy": "antigravity"}
+COMPANION_ROOTS = {"gemini": (".gemini/config/skills",)}
+
+
+def resolve_host(host):
+    host = ALIASES.get(host, host)
+    if host not in ROOTS:
+        raise ValueError('Unsupported agent host')
+    return host
+
 
 # Only suites actually replaced by the four central catalog workflows.
 # Desktop-control and GitHub's gh wrapper are different products.
@@ -25,10 +36,15 @@ REPLACED = frozenset(('cto-legends-library legends-geogrid legends-dataforseo le
 
 
 def audit(host, *, directories=None, user_home=None):
-    if host not in ROOTS:
-        raise ValueError('Unsupported agent host')
+    host = resolve_host(host)
     base = Path(user_home or Path.home())
-    roots = list(directories or [base / ROOTS[host], base / '.agents/skills'])
+    if directories:
+        roots = list(directories)
+    else:
+        roots = [base / ROOTS[host]]
+        if host in ('gemini', 'antigravity'):
+            roots.extend([base / '.gemini/skills', base / '.gemini/config/skills'])
+        roots.append(base / '.agents/skills')
     if not directories and host == 'codex' and os.environ.get('CODEX_HOME'):
         roots.append(Path(os.environ['CODEX_HOME']) / 'skills')
     roots = list(dict.fromkeys(str(Path(x).expanduser().absolute()) for x in roots))
@@ -106,16 +122,29 @@ def restore(manifest, *, apply=False):
     return {'preview': not apply, 'restored' if apply else 'planned': len(moves)}
 
 
-def configure(host, managed_home, *, user_home=None, directory=None, apply=False):
-    if host not in ROOTS:
-        raise ValueError("Unsupported agent host")
-    base = Path(user_home or Path.home())
-    target = Path(directory).expanduser() if directory else base / ROOTS[host]
-    target = target / "cto-legends"
+def _validate_target(target):
     if target.is_symlink():
         raise ValueError("Existing linked skill is user-owned; choose another directory")
     skill = target / "SKILL.md"
     receipt = target / "installation.json"
+    if target.exists():
+        if not receipt.is_file() or not skill.is_file() or skill.is_symlink() or receipt.is_symlink():
+            raise ValueError("Existing skill is unmanaged; preserved")
+        old = json.loads(receipt.read_text(encoding="utf-8"))
+        if hashlib.sha256(skill.read_bytes()).hexdigest() != old.get("sha256"):
+            raise ValueError("Existing skill was edited; preserved")
+    return skill, receipt
+
+
+def configure(host, managed_home, *, user_home=None, directory=None, apply=False):
+    host = resolve_host(host)
+    base = Path(user_home or Path.home())
+    target = Path(directory).expanduser() if directory else base / ROOTS[host]
+    target = target / "cto-legends"
+    companions = [] if directory else [base / rel / "cto-legends" for rel in COMPANION_ROOTS.get(host, ())]
+    targets = [target, *companions]
+    validated = [_validate_target(item) for item in targets]
+    skill, _ = validated[0]
     canonical = (Path(__file__).parent / "SKILL.md").read_text(encoding="utf-8")
     content = canonical + (f"\n## Installed manager\n\nUse Python `{sys.executable}` with "
         f"`-m cto_legends --home \"{Path(managed_home).resolve()}\"`.\n"
@@ -126,20 +155,18 @@ def configure(host, managed_home, *, user_home=None, directory=None, apply=False
     if overlay_text:
         content = content.rstrip("\n") + "\n\n" + overlay_text + "\n"
     digest = hashlib.sha256(content.encode()).hexdigest()
-    if target.exists():
-        if not receipt.is_file() or not skill.is_file() or skill.is_symlink() or receipt.is_symlink():
-            raise ValueError("Existing skill is unmanaged; preserved")
-        old = json.loads(receipt.read_text(encoding="utf-8"))
-        if hashlib.sha256(skill.read_bytes()).hexdigest() != old.get("sha256"):
-            raise ValueError("Existing skill was edited; preserved")
     result = {"host": host, "skill": str(skill), "preview": not apply,
               "discovery": "unverified", "next": "Reload host skills and invoke cto-legends doctor"}
+    if companions:
+        result["companion_skills"] = [str(item / "SKILL.md") for item in companions]
     if apply:
-        target.mkdir(parents=True, exist_ok=True)
-        skill.write_bytes(content.encode())
-        receipt.write_text(json.dumps({"host": host, "sha256": digest,
+        receipt_text = json.dumps({"host": host, "sha256": digest,
             "python": sys.executable, "managed_home": str(Path(managed_home).resolve()),
             "overlay": overlay_path.name if overlay_text else None,
-            "overlay_sha256": hashlib.sha256(overlay_text.encode()).hexdigest() if overlay_text else None}, indent=2), encoding="utf-8")
+            "overlay_sha256": hashlib.sha256(overlay_text.encode()).hexdigest() if overlay_text else None}, indent=2)
+        for item, (item_skill, item_receipt) in zip(targets, validated):
+            item.mkdir(parents=True, exist_ok=True)
+            item_skill.write_bytes(content.encode())
+            item_receipt.write_text(receipt_text, encoding="utf-8")
         result["registration"] = "installed"
     return result

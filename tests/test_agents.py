@@ -72,3 +72,31 @@ class AgentSetupTests(unittest.TestCase):
             p.mkdir(parents=True)
             with self.assertRaises(ValueError):
                 configure("gemini", tmp, user_home=tmp, apply=True)
+
+    def test_gemini_syncs_antigravity_companion_and_agy_alias(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            manager = Path(tmp) / "manager"
+            preview = configure("gemini", manager, user_home=tmp)
+            self.assertEqual(
+                preview["companion_skills"],
+                [str(Path(tmp) / ".gemini/config/skills/cto-legends/SKILL.md")],
+            )
+            self.assertFalse(Path(preview["skill"]).exists())
+            self.assertFalse(Path(preview["companion_skills"][0]).exists())
+            installed = configure("gemini", manager, user_home=tmp, apply=True)
+            self.assertTrue(Path(installed["skill"]).is_file())
+            self.assertTrue(Path(installed["companion_skills"][0]).is_file())
+            agy = configure("agy", manager, user_home=tmp, apply=True)
+            self.assertEqual(agy["host"], "antigravity")
+            self.assertEqual(agy["skill"], installed["companion_skills"][0])
+
+    def test_gemini_preserves_edited_antigravity_companion_without_partial_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            manager = Path(tmp) / "manager"
+            agy = configure("antigravity", manager, user_home=tmp, apply=True)
+            Path(agy["skill"]).write_text("custom antigravity notes", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "edited"):
+                configure("gemini", manager, user_home=tmp, apply=True)
+            self.assertFalse((Path(tmp) / ".gemini/skills/cto-legends/SKILL.md").exists())
+            self.assertEqual(Path(agy["skill"]).read_text(encoding="utf-8"), "custom antigravity notes")
+

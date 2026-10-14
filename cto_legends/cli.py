@@ -39,9 +39,10 @@ def parser():
     r = sub.add_parser("task-readiness", help="Offline checks for task prerequisites, separate from CLI installation")
     r.add_argument("task", nargs="?", choices=readiness.TASKS, default="all")
     r.add_argument("--browser-library-directory", type=Path)
+    host_choices = sorted([*agents.ROOTS, *agents.ALIASES])
     for name in ("agent-audit", "isolate-skills"):
         r = sub.add_parser(name)
-        r.add_argument("host", choices=sorted(agents.ROOTS))
+        r.add_argument("host", choices=host_choices)
         r.add_argument("--directory", type=Path, action="append")
         if name == "isolate-skills":
             r.add_argument("--apply", action="store_true")
@@ -50,7 +51,7 @@ def parser():
     r.add_argument("--apply", action="store_true")
     for name in ("startup-setup", "startup-status"):
         r = sub.add_parser(name, help="Configure or inspect the central startup contract")
-        r.add_argument("host", choices=sorted(agents.ROOTS))
+        r.add_argument("host", choices=host_choices)
         r.add_argument("--instruction-file", type=Path)
         if name == "startup-setup":
             r.add_argument("--apply", action="store_true")
@@ -80,7 +81,7 @@ def parser():
     r.add_argument("--directory", type=Path, required=True)
     r.add_argument("--apply", action="store_true")
     r = sub.add_parser("agent-setup", help="Preview or register the central skill for an agent host")
-    r.add_argument("host", choices=sorted(agents.ROOTS))
+    r.add_argument("host", choices=host_choices)
     r.add_argument("--directory", type=Path)
     r.add_argument("--apply", action="store_true")
     r = sub.add_parser("register-guide", help="Register existing local Markdown instructions; does not install or execute")

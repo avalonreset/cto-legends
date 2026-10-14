@@ -180,6 +180,14 @@ class StartupTests(unittest.TestCase):
         command = startup.invocation(self.home)
         self.assertTrue(command.startswith('& "' if os.name == 'nt' else '"'))
 
+    def test_antigravity_and_agy_alias_startup(self):
+        with patch.object(Path, 'home', return_value=self.base):
+            applied = execute(parser().parse_args(['--home', str(self.home), 'startup-setup', 'agy', '--apply']))
+            self.assertEqual(applied['host'], 'antigravity')
+            self.assertEqual(Path(applied['instruction_file']), self.base / '.gemini/GEMINI.md')
+            status = execute(parser().parse_args(['--home', str(self.home), 'startup-status', 'antigravity']))
+            self.assertTrue(status['configured'])
+
 
 if __name__ == '__main__':
     unittest.main()

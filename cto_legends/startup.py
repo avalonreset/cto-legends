@@ -8,10 +8,10 @@ import sys
 import uuid
 
 from . import discovery, manager
-from .agents import ROOTS
+from .agents import ALIASES, ROOTS, resolve_host
 
 DEFAULTS = {'codex': '.codex/AGENTS.md', 'gemini': '.gemini/GEMINI.md',
-            'claude': '.claude/CLAUDE.md'}
+            'antigravity': '.gemini/GEMINI.md', 'claude': '.claude/CLAUDE.md'}
 BEGIN = b'<!-- cto-legends startup:begin -->'
 END = b'<!-- cto-legends startup:end -->'
 
@@ -36,8 +36,7 @@ def safe_path(value):
 
 
 def destination(host, *, user_home=None, instruction_file=None):
-    if host not in ROOTS:
-        raise ValueError('Unsupported agent host')
+    host = resolve_host(host)
     if instruction_file:
         return safe_path(instruction_file)
     if host not in DEFAULTS:
@@ -107,6 +106,7 @@ def block(index_file, home, newline):
 
 
 def inspect(host, managed_home, *, user_home=None, instruction_file=None):
+    host = resolve_host(host)
     home = safe_path(managed_home)
     target = destination(host, user_home=user_home, instruction_file=instruction_file)
     raw = target.read_bytes() if target.exists() else b''
@@ -114,7 +114,7 @@ def inspect(host, managed_home, *, user_home=None, instruction_file=None):
     warnings = []
     if host == 'codex' and (target.parent / 'AGENTS.override.md').exists():
         warnings.append('AGENTS.override.md is present and may take precedence; this AGENTS.md block may not load.')
-    if host == 'gemini':
+    if host in ('gemini', 'antigravity'):
         warnings.append('Default is Gemini CLI global instructions; Antigravity and other Gemini hosts require separate loading proof.')
     if host == 'windsurf':
         warnings.append('Windsurf natively reads workspace .windsurf/rules; the global skills preset is unverified until a fresh session proves it.')
@@ -154,6 +154,7 @@ def _atomic(path, raw, mode=None):
 
 def configure(host, managed_home, *, user_home=None, instruction_file=None, apply=False,
               _catalog=None, _registered_receipt=None):
+    host = resolve_host(host)
     home = safe_path(managed_home)
     target = destination(host, user_home=user_home, instruction_file=instruction_file)
     raw = target.read_bytes() if target.exists() else b''
@@ -291,10 +292,10 @@ def refresh_registered(managed_home, *, catalog=None, apply=False):
                 raise ValueError('Registered capability index is missing or outside startup directory; preserved')
             if index_file.name != 'capabilities-' + digest(index_file.read_bytes()) + '.md':
                 raise ValueError('Registered capability index was edited; preserved')
-            host = data.get('host', 'codex')
+            host = ALIASES.get(data.get('host', 'codex'), data.get('host', 'codex'))
             if host not in ROOTS:
                 raise ValueError('Invalid registered host; preserved')
-            row['host'] = data.get('host')
+            row['host'] = host if 'host' in data else None
             if 'host' not in data:
                 row['legacy_host'] = 'Shared configure engine; explicit recorded target only. Original host unknown.'
             attempted_write = apply

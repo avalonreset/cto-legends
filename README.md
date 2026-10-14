@@ -17,7 +17,7 @@ This is a curated Legends module manager, not a directory of every third-party
 skill. It manages verified releases and separate tool environments, while your
 agent supplies the reasoning. [How agent skills and modules fit together](docs/AGENT-SKILLS.md).
 
-The central recipe targets **Grok, Codex, Gemini, Claude, Cursor, Windsurf, Aider, and MetaMuse**.
+The central recipe targets **Grok, Codex, Gemini, Google Antigravity, Claude, Cursor, Windsurf, Aider, and MetaMuse**.
 Use the documented host registration or explicitly load the portable skill.
 Host discovery and operational verification are tracked separately.
 
@@ -51,10 +51,10 @@ or whole-ecosystem installation is needed.
 Python 3.10 or newer is required for the manager; use Python 3.11+ to include Empire vault memory. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
-Install the 0.2.2 wheel, or from source.
+Install the 0.2.3 wheel, or from source.
 
 ```sh
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.2/cto_legends-0.2.2-py3-none-any.whl
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.3/cto_legends-0.2.3-py3-none-any.whl
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply

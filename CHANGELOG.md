@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.3 - 2026-10-14
+
+- Add `antigravity` (with `agy` alias) to `agent-setup`, `agent-audit`,
+  `isolate-skills`, `startup-setup` and `startup-status` for Google
+  Antigravity's `~/.gemini/config/skills` discovery root and `~/.gemini/GEMINI.md`
+  global startup instructions.
+- `agent-setup gemini` now also syncs and validates `~/.gemini/config/skills/cto-legends`
+  alongside `~/.gemini/skills/cto-legends` when no custom `--directory` is
+  supplied, preserving unmanaged or hand-edited skills in either location.
+- `agent-audit` and `isolate-skills` for `gemini` and `antigravity` inspect both
+  `~/.gemini/skills` and `~/.gemini/config/skills` plus `~/.agents/skills`.
+- Update Windows `task-readiness evidence` note to reflect `legends-empire`
+  0.3.1+ native Windows fixed-NTFS transaction support. Canonical router
+  `SKILL.md` bytes remain unchanged.
+
 ## 0.2.2 - 2026-10-03
 
 - Resolve installed catalog aliases to canonical names without moving runtimes.

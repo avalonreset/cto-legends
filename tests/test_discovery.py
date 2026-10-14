@@ -70,3 +70,22 @@ class DiscoveryTests(unittest.TestCase):
                 'backup': str(Path(tmp) / '..' / 'escape' / 'wiki'), 'moved': True}]}))
             with self.assertRaisesRegex(ValueError, 'Invalid restoration'):
                 restore(manifest, apply=True)
+
+    def test_gemini_and_antigravity_audit_both_skill_roots(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cli_skill = Path(tmp) / '.gemini/skills/legends-github'
+            agy_skill = Path(tmp) / '.gemini/config/skills/legends-empire'
+            for path in (cli_skill, agy_skill):
+                path.mkdir(parents=True)
+                (path / 'SKILL.md').write_text('legacy standalone', encoding='utf-8')
+            for host in ('gemini', 'antigravity', 'agy'):
+                report = audit(host, user_home=tmp)
+                self.assertEqual(report['standalone_count'], 2)
+            isolated = isolate('agy', user_home=tmp, apply=True)
+            self.assertEqual(isolated['moved'], 2)
+            self.assertFalse(cli_skill.exists())
+            self.assertFalse(agy_skill.exists())
+            self.assertEqual(restore(isolated['manifest'], apply=True)['restored'], 2)
+            self.assertTrue(cli_skill.is_dir())
+            self.assertTrue(agy_skill.is_dir())
+
