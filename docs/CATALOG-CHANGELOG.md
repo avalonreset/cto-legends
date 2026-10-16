@@ -5,6 +5,17 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.24 - 2026-10-16
+
+- Add `legends-cloudflare` 0.1.0 for Cloudflare zone and DNS record
+  inventory, assigned nameserver inspection, preview-first single-record
+  changes, exact-ID deletion, and API readback.
+- Include a source-cited operations vault (`wiki/`) and an optional
+  versioned Empire knowledge pack (`knowledge/cloudflare/pack.json`).
+  Installation makes no provider or vault changes.
+- Add `legends-cloudflare-kit` as a command alias.
+- No manager engine or registered router-skill change.
+
 ## 1.0.23 - 2026-10-10
 
 - Update `legends-empire` to 0.3.2 so validated, already rolled-back

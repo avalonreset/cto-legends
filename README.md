@@ -128,15 +128,16 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) | Repeatable video pulls, transcripts, search, clip-building | Pip-installed CLI; yt-dlp binary and ffmpeg need module setup; Mullvad opt-in |
 | [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) | Ambient audio capture, archiving, transcription, distillation | Pip-installed CLI; ffmpeg and faster-whisper/NeMo need module setup |
 | [legends-captions](https://github.com/avalonreset/legends-captions) | Caption correction, timing, rendering, proof | Pip-installed CLI; stdlib only, speech envs optional |
-
 | [legends-coolify](https://github.com/avalonreset/legends-coolify) | Coolify inventory, deployment history, resource status, backup schedules and planning | Read-only Python CLI; packaged source-cited library with optional Empire attachment |
 | [legends-jev](https://github.com/avalonreset/legends-jev) | Typed application/browser action advice from supplied text evidence | Isolated Python CLI; operator validates, existing tools actuate; no native vision |
+| [legends-hetzner](https://github.com/avalonreset/legends-hetzner) | Hetzner Cloud server inventory, catalog, preflight and reviewed provisioning plans | Portable Python CLI over `hcloud`; attachable Empire knowledge library |
+| [legends-cloudflare](https://github.com/avalonreset/legends-cloudflare) | Cloudflare zone and DNS inventory, nameservers, preview-first DNS record changes and readback | Dependency-free Python CLI; Obsidian knowledge vault and attachable Empire library |
 
 Pinned versions live in the catalog, not here: `cto-legends catalog`
 shows the exact verified set your manager carries. Module recipes load
 through the router on demand; no module needs its own skill registration.
 
-Thirteen modules have managed CLI installations. The one native module uses
+Fifteen modules have managed CLI installations. The one native module uses
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
 platform information, and published asset checksums. `install` for those modules
 returns that handoff, including with `--apply`; it does not run an app installer,

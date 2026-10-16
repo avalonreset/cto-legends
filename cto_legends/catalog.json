@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.23",
+  "version": "1.0.24",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.4",
@@ -1182,6 +1182,86 @@
       },
       "license": "MIT",
       "readiness": "doctor"
+    },
+    "legends-cloudflare": {
+      "purpose": "Cloudflare DNS automation with reviewed change plans, readback checks and a source-cited knowledge vault.",
+      "recipe": {
+        "probe": [
+          {
+            "module": "legends_cloudflare",
+            "do": "import",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "module": "legends_cloudflare",
+            "args": [
+              "doctor"
+            ],
+            "do": "module-cli"
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "wiki/index.md",
+              "references/sources.md",
+              "docs/AGENT-RECIPE.md",
+              "knowledge/cloudflare/pack.json"
+            ]
+          }
+        ],
+        "run": {
+          "kind": "module",
+          "module": "legends_cloudflare",
+          "runtime": "python"
+        },
+        "pip": {
+          "kind": "path"
+        }
+      },
+      "commit": "a90d9f32a8c3919198da573aa2bd042875e6dd8b",
+      "sha256": "e7420cd9af450ae5657cc897cd42aedf59a27606109464a4c2f8390743de0eee",
+      "license": "MIT",
+      "version": "0.1.0",
+      "discovery": {
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "wiki/index.md"
+        ],
+        "setup": "Python 3.10+. Offline doctor needs no credentials. Live operations require CLOUDFLARE_API_TOKEN scoped to the selected zones; writes require explicit zone and preview-hash confirmation.",
+        "not_for": "Registrar transfers, registrar nameserver changes, Workers deployments, tunnels, bulk writes, or an MCP server.",
+        "signals": [
+          "cloudflare",
+          "cloudflare dns",
+          "dns records",
+          "dns automation",
+          "nameservers",
+          "dns change preview",
+          "cloudflare vault"
+        ],
+        "examples": [
+          "Inspect my Cloudflare DNS records",
+          "Preview a DNS change before applying it",
+          "Review assigned nameservers",
+          "Prepare a DNS hosting migration checklist"
+        ]
+      },
+      "repo": "avalonreset/legends-cloudflare",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "keywords": [
+        "cloudflare",
+        "dns",
+        "nameservers",
+        "dns-records"
+      ],
+      "scope": "Portable Python CLI for zones, DNS inventory, nameservers, preview-first single-record upsert and exact-ID deletion. Obsidian-compatible knowledge vault, attachable Empire knowledge pack, and private Empire templates.",
+      "dependencies": {}
     }
   },
   "aliases": {
@@ -1190,7 +1270,8 @@
     "legends-vault-stewardship": "legends-empire",
     "legends-dataforseo-kit": "legends-dataforseo",
     "legends-hetzner-kit": "legends-hetzner",
-    "legends-coolify-kit": "legends-coolify"
+    "legends-coolify-kit": "legends-coolify",
+    "legends-cloudflare-kit": "legends-cloudflare"
   },
   "retired": {
     "legends-obsidian": "legends-empire"
