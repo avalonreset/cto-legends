@@ -25,7 +25,7 @@ jobs:
       - run: python -c "import glob,subprocess,sys; w=glob.glob('dist/*.whl'); assert len(w)==1, w; subprocess.run([sys.executable,'-m','pip','install',w[0]],check=True)"
       - run: cto-legends route "Google Maps ranking grids"
       - run: python scripts/check_startup.py
-      - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo legends-geogrid legends-github legends-stable-audio-3 legends-obs-kit legends-yt-dlp --apply
+      - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo legends-geogrid legends-github legends-stable-audio-3 legends-obs legends-yt-dlp --apply
       - run: cto-legends --home "${{ runner.temp }}/legends" doctor
       - run: cto-legends --home "${{ runner.temp }}/legends" check-updates
         env:
@@ -36,7 +36,7 @@ jobs:
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-dataforseo -- routes
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-github -- capabilities
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-stable-audio-3 -- plan --hours 1 --vram-gb 16
-      - run: cto-legends --home "${{ runner.temp }}/legends" run legends-obs-kit -- manifest
+      - run: cto-legends --home "${{ runner.temp }}/legends" run legends-obs -- manifest
       - run: cto-legends --home "${{ runner.temp }}/legends" run legends-yt-dlp -- --help
       - run: cto-legends guide legends-hyperyap
       - run: cto-legends guide hyperyap

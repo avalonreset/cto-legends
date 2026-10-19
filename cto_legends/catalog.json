@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.24",
+  "version": "1.0.25",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.4",
@@ -315,10 +315,10 @@
         }
       }
     },
-    "legends-obs-kit": {
-      "version": "0.1.1",
-      "repo": "avalonreset/legends-obs-kit",
-      "commit": "74d7161e1e400253f794f53987e2fd14fa19ead3",
+    "legends-obs": {
+      "version": "0.1.2",
+      "repo": "avalonreset/legends-obs",
+      "commit": "39595276ce8f8b5cc3a59a9ddc4dac5b9ad72ca0",
       "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
       "keywords": [
         "obs",
@@ -338,7 +338,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "120d6ee49a2b636df02f1432bd4a275ac352517f286bbbb336a4aad51c5e4cc3",
+      "sha256": "152cdef5bcb086d7ec8403445178862c9c9100a2defbf672c0e18b844ce6aa2b",
       "discovery": {
         "signals": [
           "record my screen",
@@ -362,7 +362,7 @@
           "docs/RECIPES.md"
         ]
       },
-      "artifact_url": "https://github.com/avalonreset/legends-obs-kit/releases/download/v0.1.1/avalonreset-legends-obs-kit-0.1.1.tgz",
+      "artifact_url": "https://github.com/avalonreset/legends-obs/releases/download/v0.1.2/avalonreset-legends-obs-0.1.2.tgz",
       "recipe": {
         "requires_node": 22,
         "env": false,
@@ -1271,7 +1271,8 @@
     "legends-dataforseo-kit": "legends-dataforseo",
     "legends-hetzner-kit": "legends-hetzner",
     "legends-coolify-kit": "legends-coolify",
-    "legends-cloudflare-kit": "legends-cloudflare"
+    "legends-cloudflare-kit": "legends-cloudflare",
+    "legends-obs-kit": "legends-obs"
   },
   "retired": {
     "legends-obsidian": "legends-empire"

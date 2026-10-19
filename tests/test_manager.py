@@ -57,7 +57,7 @@ class ManagerTests(unittest.TestCase):
     def test_catalog_pins_all_public_modules(self):
         self.assertEqual(set(m.catalog()["modules"]), {
             "legends-dataforseo", "legends-geogrid", "legends-github",
-            "legends-stable-audio-3", "legends-obs-kit", "legends-hyperyap",
+            "legends-stable-audio-3", "legends-obs", "legends-hyperyap",
             "legends-empire", "legends-grant", "legends-firecrawl",
             "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev",
             "legends-hetzner", "legends-cloudflare"})
@@ -80,8 +80,8 @@ class ManagerTests(unittest.TestCase):
             m.plan(self.home, ["legends-seo-dungeon"])
 
     def test_new_module_routes(self):
-        for goal, expected in (("voice dictation", "legends-hyperyap"), ("cursor overlay", "legends-obs-kit"),
-                               ("music audio", "legends-stable-audio-3"), ("OBS recording", "legends-obs-kit"),
+        for goal, expected in (("voice dictation", "legends-hyperyap"), ("cursor overlay", "legends-obs"),
+                               ("music audio", "legends-stable-audio-3"), ("OBS recording", "legends-obs"),
                                ("rip this video", "legends-yt-dlp"),
                                ("transcribe my voice memos", "legends-ambient-intelligence"),
                                ("caption this video", "legends-captions"),
@@ -89,9 +89,11 @@ class ManagerTests(unittest.TestCase):
             self.assertEqual(route(goal)["matches"][0]["id"], expected)
 
     def test_obs_kit_plan_advertises_cursor_extra(self):
-        item = m.plan(self.home, ["legends-obs-kit"])[0]
-        self.assertIn("cursor", item["extras"])
-        self.assertIn("extras/cursor/legends-cursor.lua", item["extras"]["cursor"])
+        for name in ("legends-obs", "legends-obs-kit"):
+            item = m.plan(self.home, [name])[0]
+            self.assertEqual(item["id"], "legends-obs")
+            self.assertIn("cursor", item["extras"])
+            self.assertIn("extras/cursor/legends-cursor.lua", item["extras"]["cursor"])
 
     def test_guided_install_does_not_download_or_activate_native_apps(self):
         with patch.object(m, "prepare", side_effect=AssertionError("must not prepare")), patch.object(m, "fetch", side_effect=AssertionError("network")):
@@ -292,7 +294,7 @@ class ManagerTests(unittest.TestCase):
                     m.extract_tgz(raw, target, sha)
 
     def test_node_status_has_no_fictional_python(self):
-        key = "legends-obs-kit"
+        key = "legends-obs"
         relative = self.prepare_fake(key, m.catalog()["modules"][key], self.home)
         m.write_state(self.home, {"schema": 1, "active": {key: relative}, "previous": {}})
         self.assertIsNone(m.status(self.home)[key]["python"])

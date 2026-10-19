@@ -91,13 +91,13 @@ class CatalogValidationTests(unittest.TestCase):
         bad_readiness["modules"]["legends-geogrid"]["readiness"] = "rm -rf /"
         cases.append((bad_readiness, "readiness"))
         bad_artifact = copy.deepcopy(m.catalog())
-        bad_artifact["modules"]["legends-obs-kit"]["artifact_url"] = "https://evil.example/x.tgz"
+        bad_artifact["modules"]["legends-obs"]["artifact_url"] = "https://evil.example/x.tgz"
         cases.append((bad_artifact, "artifact"))
         bad_pip = copy.deepcopy(m.catalog())
         bad_pip["modules"]["legends-geogrid"]["recipe"]["pip"] = {"kind": "requirements"}
         cases.append((bad_pip, "no files"))
         bad_env = copy.deepcopy(m.catalog())
-        bad_env["modules"]["legends-obs-kit"]["recipe"]["probe"] = [
+        bad_env["modules"]["legends-obs"]["recipe"]["probe"] = [
             {"do": "import", "module": "x", "present": ["y"]}]
         cases.append((bad_env, "no Python environment"))
         bad_path = copy.deepcopy(m.catalog())

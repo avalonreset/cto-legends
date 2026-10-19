@@ -22,9 +22,9 @@ class CapabilitiesTests(unittest.TestCase):
             'Review neglected projects': 'legends-empire',
             'Help me resume unfinished work': 'legends-empire',
             'Pull up the vault steward': 'legends-empire',
-            'Record my screen': 'legends-obs-kit',
+            'Record my screen': 'legends-obs',
             'Type with my voice': 'legends-hyperyap',
-            'Highlight my mouse while recording': 'legends-obs-kit',
+            'Highlight my mouse while recording': 'legends-obs',
             'Archive this channel with pacing': 'legends-yt-dlp',
             'Ingest recordings from my KT5000': 'legends-ambient-intelligence',
             'Fix these captions and prove the render': 'legends-captions',
@@ -42,7 +42,7 @@ class CapabilitiesTests(unittest.TestCase):
     def test_compound_request_keeps_both_capabilities(self):
         found = {r['id'] for r in d.route('Generate music and record my screen')['matches']}
         self.assertIn('legends-stable-audio-3', found)
-        self.assertIn('legends-obs-kit', found)
+        self.assertIn('legends-obs', found)
 
     def test_hundred_modules_bounded_and_ambiguity_visible(self):
         catalog = copy.deepcopy(m.catalog())

@@ -43,7 +43,7 @@ REPOS: list[dict] = [
     {"id": "legends-geogrid", "repo": "legends-geogrid", "local": "/mnt/e/legends-geogrid"},
     {"id": "legends-github", "repo": "legends-github", "local": "/mnt/e/legends-github-public"},
     {"id": "legends-stable-audio-3", "repo": "legends-stable-audio-3", "local": "/mnt/e/legends-stable-audio-3-public-rc"},
-    {"id": "legends-obs-kit", "repo": "legends-obs-kit", "local": "/mnt/e/legends-obs-kit"},
+    {"id": "legends-obs", "repo": "legends-obs", "local": "/mnt/e/legends-obs-kit"},
     {"id": "legends-hyperyap", "repo": "legends-hyperyap", "local": "/mnt/e/legends-hyperyap-public"},
     {"id": "legends-empire", "repo": "legends-empire", "local": "/mnt/e/legends-empire-public"},
     {"id": "legends-grant", "repo": "legends-grant", "local": "/mnt/e/legends-grant-public"},

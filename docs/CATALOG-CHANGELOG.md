@@ -5,6 +5,16 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.25 - 2026-10-19
+
+- Rename `legends-obs-kit` to `legends-obs` and update to 0.1.2 with OBS Studio
+  32.1+ profile inspection (`Streaming` `RecEncoder` fallback and
+  `HybridMP4`), expanded NVENC/QSV/AMF/Apple VT AV1/HEVC/H.264 encoder tables,
+  and DataForSEO-backed repository packaging.
+- Preserve `legends-obs-kit` as a catalog and CLI compatibility alias so
+  existing installations and commands resolve without interruption.
+- No manager engine or registered router-skill change.
+
 ## 1.0.24 - 2026-10-16
 
 - Add `legends-cloudflare` 0.1.0 for Cloudflare zone and DNS record

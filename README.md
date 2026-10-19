@@ -120,7 +120,7 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-dataforseo](https://github.com/avalonreset/legends-dataforseo) | Search, keywords, queued research and reusable evidence | Python library + CLI + evidence exporter |
 | [legends-github](https://github.com/avalonreset/legends-github) | Repository audits, README, metadata, release preparation | Headless workflows + live research transport |
 | [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) | Instrumental music, sound effects, continuous mixes | Python planning CLI; model/GPU setup separate |
-| [legends-obs-kit](https://github.com/avalonreset/legends-obs-kit) | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
+| [legends-obs](https://github.com/avalonreset/legends-obs) | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
 | [legends-empire](https://github.com/avalonreset/legends-empire) | Source-cited Empire memory and research evidence | Python 3.11+; POSIX/WSL required for vault writes |
 | [legends-hyperyap](https://github.com/avalonreset/legends-hyperyap) | Local voice typing and dictation | Guided desktop installation for Windows, macOS, or Linux |
 | [legends-grant](https://github.com/avalonreset/legends-grant) | Business grant finding, matching, and application | Markdown lanes + verified federal API routes; agent submits once per authorization |
@@ -150,9 +150,9 @@ the manager's doctor verifies its managed Python capabilities, not every optiona
 feature or provider credential.
 
 Python modules get separate environments, so their dependency versions
-can differ safely. OBS Kit uses a verified prebuilt Node package and your Node
+can differ safely. `legends-obs` uses a verified prebuilt Node package and your Node
 runtime. Installing GeoGrid supplies its provider dependency automatically;
-you only need a standalone kit installation for direct kit use.
+you only need a standalone module installation for direct module use.
 
 ## Use an installed module
 
@@ -162,8 +162,8 @@ cto-legends run legends-dataforseo -- routes
 cto-legends run legends-github -- capabilities
 cto-legends install legends-stable-audio-3 --apply
 cto-legends run legends-stable-audio-3 -- plan --hours 1 --vram-gb 16
-cto-legends install legends-obs-kit --apply
-cto-legends run legends-obs-kit -- manifest
+cto-legends install legends-obs --apply
+cto-legends run legends-obs -- manifest
 cto-legends guide legends-hyperyap
 cto-legends status
 ```
