@@ -76,9 +76,9 @@
     },
     "legends-geogrid": {
       "version": "0.2.1",
-      "commit": "b7f2eb2970b6aab29aa5c893c8947fe007fa8b0a",
+      "commit": "5f4c99deefd833917b48b4da0a83e83764aa443a",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "554e42454e563f3519dc6377bd477c64026b9bdd4e635eea17b44f1ec655b662",
+      "sha256": "13bf5f85692d84e528a7684ca44be83835d07c0a6e1995fe1e7b609a8f3b8e93",
       "purpose": "Google Maps ranking grids, circular-lattice competitive studies, multi-query strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
