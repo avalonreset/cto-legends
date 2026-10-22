@@ -238,7 +238,7 @@
           {
             "do": "version-floor",
             "package": "legends-dataforseo",
-            "min": "0.1.5"
+            "min": "0.1.0"
           }
         ],
         "run": {
