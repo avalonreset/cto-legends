@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.26",
+  "version": "1.0.27",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.5",
@@ -76,9 +76,9 @@
     },
     "legends-geogrid": {
       "version": "0.2.1",
-      "commit": "5f4c99deefd833917b48b4da0a83e83764aa443a",
+      "commit": "41d84f2f9328bdce37ec5aa3e28b0beb85ef40e5",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "13bf5f85692d84e528a7684ca44be83835d07c0a6e1995fe1e7b609a8f3b8e93",
+      "sha256": "dc754d6fee440ff2a021ce69bbf6608dca33852ec71f2dd509cd8181466b389a",
       "purpose": "Google Maps ranking grids, circular-lattice competitive studies, multi-query strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
@@ -166,10 +166,10 @@
       "setup_revision": 2
     },
     "legends-github": {
-      "version": "0.1.2",
-      "commit": "ea1362a2dcac5b585d93edfd37ce4639d675c3f5",
+      "version": "0.2.0",
+      "commit": "97fd03295e93d0c13f277705cb3ddb74caadf3a5",
       "repo": "avalonreset/legends-github",
-      "sha256": "b654df38d83fdfdaa5850b0d367796315a8041daac0d0adb37728e17ee4d8c6d",
+      "sha256": "22660ef02f7f848c20396d959328f918289117dd5b8c73befe009971f694b937",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
@@ -184,10 +184,10 @@
         "social-preview"
       ],
       "dependencies": {
-        "legends-dataforseo": "0.1.0"
+        "legends-dataforseo": "0.1.5"
       },
       "scope": "Portable Python repository workflows, optional research, and social-preview preparation/served-image verification. Actual upload uses the agent host's supported browser/file-upload tools; no legends-chrome-kit or legends-shell-kit dependency.",
-      "setup_revision": 1,
+      "setup_revision": 2,
       "discovery": {
         "signals": [
           "github",
@@ -237,8 +237,8 @@
           },
           {
             "do": "version-floor",
-            "package": "legends-dataforseo-kit",
-            "min": "0.1.0"
+            "package": "legends-dataforseo",
+            "min": "0.1.5"
           }
         ],
         "run": {
