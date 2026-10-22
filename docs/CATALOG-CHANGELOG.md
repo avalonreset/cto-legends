@@ -5,6 +5,23 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.26 - 2026-10-22
+
+- Update `legends-jev` to 0.2.0 with general-purpose optical recognition (`ocr`),
+  storefront signage and logo verification (`signage`), multimodal `decide`,
+  automatic `280..1568` px image normalization, `0..1000` + `pixel_box`
+  bounding coordinates across `1..6` images, and pure-Python Windows DPAPI
+  credential resolution.
+- Update `legends-dataforseo` to 0.1.5 with the `business()` helper,
+  `legends-dataforseo business` CLI subcommand, and `business-task-post` /
+  `business-task-get` Google Business Profile queue routes.
+- Update `legends-geogrid` to 0.2.1 with the full-bleed competitive map
+  companion, bundled 10-mile Austin starter study (`1,249` origins x `4`
+  queries), multi-vantage Street View Search Quest (`v0`, `v1`, `v2`),
+  `business_name_review.py photos --jev` optical signage verification, in-app
+  photo Lightbox modal, and `legends-dataforseo` 0.1.5 dependency pin.
+- No manager engine or registered router-skill change.
+
 ## 1.0.25 - 2026-10-19
 
 - Rename `legends-obs-kit` to `legends-obs` and update to 0.1.2 with OBS Studio

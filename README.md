@@ -129,7 +129,7 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) | Ambient audio capture, archiving, transcription, distillation | Pip-installed CLI; ffmpeg and faster-whisper/NeMo need module setup |
 | [legends-captions](https://github.com/avalonreset/legends-captions) | Caption correction, timing, rendering, proof | Pip-installed CLI; stdlib only, speech envs optional |
 | [legends-coolify](https://github.com/avalonreset/legends-coolify) | Coolify inventory, deployment history, resource status, backup schedules and planning | Read-only Python CLI; packaged source-cited library with optional Empire attachment |
-| [legends-jev](https://github.com/avalonreset/legends-jev) | Typed application/browser action advice from supplied text evidence | Isolated Python CLI; operator validates, existing tools actuate; no native vision |
+| [legends-jev](https://github.com/avalonreset/legends-jev) | Typed optical recognition (OCR), storefront signage verification, and action advice from supplied text and image evidence | Isolated Python CLI; operator validates, existing tools actuate; Jev 1.14 optical grounding |
 | [legends-hetzner](https://github.com/avalonreset/legends-hetzner) | Hetzner Cloud server inventory, catalog, preflight and reviewed provisioning plans | Portable Python CLI over `hcloud`; attachable Empire knowledge library |
 | [legends-cloudflare](https://github.com/avalonreset/legends-cloudflare) | Cloudflare zone and DNS inventory, nameservers, preview-first DNS record changes and readback | Dependency-free Python CLI; Obsidian knowledge vault and attachable Empire library |
 

@@ -6,7 +6,8 @@ from cto_legends import discovery, manager
 class JevCatalogTests(unittest.TestCase):
     def test_outcome_routing(self):
         for goal in ("computer use action selection", "application control",
-                     "choose a browser action from accessibility evidence", "legends-jev"):
+                     "choose a browser action from accessibility evidence",
+                     "optical character recognition", "storefront signage verification", "legends-jev"):
             with self.subTest(goal=goal):
                 self.assertEqual(discovery.route(goal)["matches"][0]["id"], "legends-jev")
 

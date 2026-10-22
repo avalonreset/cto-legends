@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "version": "1.0.25",
+  "version": "1.0.26",
   "modules": {
     "legends-dataforseo": {
-      "version": "0.1.4",
-      "commit": "dda341dc6113ef85307578d458ecbe842ea27f48",
+      "version": "0.1.5",
+      "commit": "5aa7ea9c5004eefa98737a4b1fc2255689137143",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "5c54a4aafe6ce721f5fe13e21297c5edfcc04beaed27c798d7761f3443a79d14",
-      "purpose": "Search and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
+      "sha256": "41e6eabc6439142da25872fdc641bd8f7856948f1a0889cffa4669e5e98a2566",
+      "purpose": "Search, Google Maps, Google Business Profile, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
         "keywords",
@@ -16,7 +16,10 @@
         "serp",
         "dataforseo",
         "backlinks",
-        "research"
+        "research",
+        "maps",
+        "gbp",
+        "business-profile"
       ],
       "dependencies": {},
       "scope": "Python API and CLI with full response files and offline evidence export, integrity verification, manifest inventory, focused views and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
@@ -28,7 +31,10 @@
           "serp",
           "backlinks",
           "keyword research",
-          "search results"
+          "search results",
+          "google business profile",
+          "my business info",
+          "gbp lookup"
         ],
         "examples": [
           "Research keyword demand",
@@ -69,11 +75,11 @@
       "readiness": "task-readiness research"
     },
     "legends-geogrid": {
-      "version": "0.1.0",
-      "commit": "5dec8e33538cf54aab9cfe2e2e07c0db0e51458d",
+      "version": "0.2.1",
+      "commit": "a203f968629c6acb358e3bc67a5beef449a5469a",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "0a55964f770e56a78bcea9d850ecc434049508031f5ed36327f8ef27308a0959",
-      "purpose": "Google Maps ranking grids and local visibility research.",
+      "sha256": "976cc57a587124b54c17801b9672c880ba633200cc4da4163380b364a1db022c",
+      "purpose": "Google Maps ranking grids, circular-lattice competitive studies, multi-query strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
         "grid",
@@ -82,12 +88,16 @@
         "local",
         "rank",
         "ranking",
-        "rankings"
+        "rankings",
+        "local-seo",
+        "name-review",
+        "keyword-stuffing",
+        "street-view"
       ],
       "dependencies": {
-        "legends-dataforseo": "0.1.0"
+        "legends-dataforseo": "0.1.5"
       },
-      "scope": "Research-first studies, reports and enhancement. Report libraries included; browser binaries and provider credentials require readiness checks.",
+      "scope": "Full-bleed competitive map companion, circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, and multi-query Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
       "discovery": {
         "signals": [
           "local visibility",
@@ -96,7 +106,11 @@
           "nearby customers",
           "local rankings",
           "rank grid",
-          "rank grids"
+          "rank grids",
+          "keyword stuffing",
+          "business name review",
+          "local falcon alternative",
+          "open the example map"
         ],
         "examples": [
           "Where does my pizza shop appear on Google Maps?",
@@ -138,8 +152,8 @@
           },
           {
             "do": "version-floor",
-            "package": "legends-dataforseo-kit",
-            "min": "0.1.0"
+            "package": "legends-dataforseo",
+            "min": "0.1.5"
           }
         ],
         "run": {
@@ -1043,11 +1057,11 @@
       "readiness": "doctor"
     },
     "legends-jev": {
-      "version": "0.1.0",
-      "commit": "868b98410eaafec6467733de18f930c459283907",
+      "version": "0.2.0",
+      "commit": "18b4b2867f226e175f10dc042b389f6c38602fb2",
       "repo": "avalonreset/legends-jev",
-      "sha256": "905c0e91f10d60623e77ce01ab582285c74ae8e9f6604db59ec4357ffb0440d9",
-      "purpose": "Typed decision advice for computer use, application control and browser action selection from supplied text evidence and candidates.",
+      "sha256": "a1940eb767194b3bb310660d5f89ff06f70de424393414fb2668254f1dc4f9e5",
+      "purpose": "Typed optical recognition (OCR), storefront signage verification, and decision advice for computer use, application control and browser action selection from supplied text evidence, local images, and candidates.",
       "keywords": [
         "jev",
         "typesafe",
@@ -1055,7 +1069,14 @@
         "application",
         "browser",
         "decision",
-        "accessibility"
+        "accessibility",
+        "ocr",
+        "optical",
+        "signage",
+        "streetview",
+        "grounding",
+        "vision",
+        "bounding-box"
       ],
       "dependencies": {},
       "platforms": [
@@ -1063,7 +1084,7 @@
         "linux",
         "macos"
       ],
-      "scope": "Text-only candidate choice, insufficiency and evidence support. Operator validates; existing shell/chrome tools actuate.",
+      "scope": "Structured optical text extraction (ocr), storefront signage vs GBP title verification (signage) with normalized 0..1000 and pixel bounding boxes across 1..6 local images, and candidate decision selection (decide). Operator validates; existing shell/chrome tools actuate.",
       "discovery": {
         "signals": [
           "computer use",
@@ -1074,14 +1095,24 @@
           "screen evidence",
           "typed decision",
           "jev",
-          "typesafe"
+          "typesafe",
+          "optical character recognition",
+          "ocr",
+          "read text from image",
+          "storefront signage",
+          "signage verification",
+          "verify storefront signage",
+          "optical grounding",
+          "bounding box"
         ],
         "examples": [
           "Choose a browser action from supplied accessibility evidence",
           "Compare candidate application controls",
-          "Evaluate whether screen-description evidence supports a next action"
+          "Evaluate whether screen-description evidence supports a next action",
+          "Extract visible text and bounding boxes from a screenshot or photo",
+          "Verify whether storefront and Street View photos support a published business name"
         ],
-        "not_for": "Image grounding, screenshot capture, coordinate detection, desktop or browser actuation, autonomous permissions, private data by default.",
+        "not_for": "Desktop or browser actuation, live screenshot capture, autonomous permissions, or private data by default.",
         "setup": "Run offline doctor and input readiness. Explicit API execution needs safely provisioned TYPESAFE_API_KEY and reviewed public/synthetic/nonsecret metadata.",
         "instructions": [
           "README.md",
