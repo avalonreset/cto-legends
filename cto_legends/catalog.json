@@ -4,9 +4,9 @@
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.5",
-      "commit": "5aa7ea9c5004eefa98737a4b1fc2255689137143",
+      "commit": "1e602c00f6cd654329d696e2731548948776479b",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "41e6eabc6439142da25872fdc641bd8f7856948f1a0889cffa4669e5e98a2566",
+      "sha256": "520acf781f51ccb01009e51126513767c8494b976804a07014bd30118c89a242",
       "purpose": "Search, Google Maps, Google Business Profile, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
@@ -76,9 +76,9 @@
     },
     "legends-geogrid": {
       "version": "0.2.1",
-      "commit": "74f20cbd95a2e6b317a5fd585facf4cb73aaf6a8",
+      "commit": "b7f2eb2970b6aab29aa5c893c8947fe007fa8b0a",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "7f0b93eb8ac18cb4492aadc36e27a63dbe57eb6b11120f8839fd42695587132c",
+      "sha256": "554e42454e563f3519dc6377bd477c64026b9bdd4e635eea17b44f1ec655b662",
       "purpose": "Google Maps ranking grids, circular-lattice competitive studies, multi-query strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
@@ -186,7 +186,7 @@
       "dependencies": {
         "legends-dataforseo": "0.1.0"
       },
-      "scope": "Portable Python repository workflows, optional research, and social-preview preparation/served-image verification. Actual upload uses the agent host's supported browser/file-upload tools; no Legends Chrome or Shell dependency.",
+      "scope": "Portable Python repository workflows, optional research, and social-preview preparation/served-image verification. Actual upload uses the agent host's supported browser/file-upload tools; no legends-chrome-kit or legends-shell-kit dependency.",
       "setup_revision": 1,
       "discovery": {
         "signals": [

@@ -30,7 +30,7 @@ logs or public runs. "Tests passed" alone is not enough to identify what ran.
 | Knowledge index and dated primary sources | UNTESTED | |
 | Knowledge attachment/repeat/update/conflict | UNTESTED | |
 | Private user notes preserved | UNTESTED | |
-| Legends GitHub audit/research/application | UNTESTED | |
+| legends-github audit/research/application | UNTESTED | |
 | README, artwork, description and topics | UNTESTED | |
 | Saved social setting and served-image match | UNTESTED | |
 | Public release artifacts and checksums | UNTESTED | |

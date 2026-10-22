@@ -6,7 +6,7 @@ the affected component, with its own compatibility evidence.
 
 ## Acceptance before tagging
 
-Publishing a repository is only one part of releasing a Legends module.
+Publishing a repository is only one part of releasing a cto-legends module.
 Keep an evidence receipt for each applicable item below. Label blocked or
 untested work explicitly; use "not applicable" only with a reason.
 Start from the [release receipt template](RELEASE-RECEIPT-TEMPLATE.md).

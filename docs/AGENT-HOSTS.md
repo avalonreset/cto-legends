@@ -1,6 +1,6 @@
 # One recipe, several host discovery paths
 
-CTO Legends keeps one canonical `SKILL.md`. Host registration copies this small
+cto-legends keeps one canonical `SKILL.md`. Host registration copies this small
 router, not every module skill. The selected module instructions load only when
 needed; Python tools run in independent environments.
 
@@ -43,7 +43,7 @@ remain independently useful; module recipes are still loaded on demand.
 A successful `doctor` checks managed command surfaces. GeoGrid's
 `report-readiness` additionally checks PDF libraries, the map browser and
 transport availability. Provider calls have their own credentials and cost gates.
-Legends Obsidian requires Python 3.11+; native Windows reads/previews work,
+legends-obsidian requires Python 3.11+; native Windows reads/previews work,
 while its vault mutations require POSIX or WSL. A Windows registration does not
 silently route commands to another machine or copy credentials there.
 

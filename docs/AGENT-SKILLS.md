@@ -1,7 +1,7 @@
 # Agent skills and tool management
 
 An agent skill is a set of instructions an agent can read to perform a task.
-A Legends module can also contain executable tools and dependencies. Registering
+A cto-legends module can also contain executable tools and dependencies. Registering
 instructions does not install a browser, a model, or provider credentials.
 
 ## One registered skill, specialized tools on demand
@@ -21,9 +21,9 @@ package dependencies instead of merging every tool into one Python environment.
 | Need | Appropriate path |
 | --- | --- |
 | Read a standalone skill | Use the host's skill loader or load its Markdown explicitly. |
-| Operate a Legends workflow with tools | Use cto-legends to install its cataloged module and inspect its guide. |
+| Operate a cto-legends workflow with tools | Use cto-legends to install its cataloged module and inspect its guide. |
 | Use an unrelated third-party skill | Follow that project's installation instructions. |
-| Store research in a vault | Install Legends Obsidian and explicitly select the vault. |
+| Store research in a vault | Install legends-obsidian and explicitly select the vault. |
 
 The central recipe is shared, but native skill discovery differs by application.
 Grok, Codex, Gemini, Claude, Cursor and MetaMuse still need file and command

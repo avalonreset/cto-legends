@@ -18,7 +18,7 @@ cto-legends handoff legends-empire
 ```
 
 Read the installed `docs/home-adapter.md` before changes. Only legends-empire is
-selected; no private pack, credentials, desktop plugins or other Legends modules
+selected; no private pack, credentials, desktop plugins or other cto-legends modules
 are acquired. The sole registered skill remains cto-legends.
 
 ## Prepare first; add Home only when selected
@@ -48,7 +48,7 @@ installed recipe's binding `plan` and `apply`, using `--home /srv/Empire`,
 `--vault /srv/Empire`, and `--shared-root`. Merely copying files does not establish
 an enabled binding or completed native validation.
 
-Installation includes the qualified local aimh entry files for supported Home hosts and text license notices. These belong to the optional private Home layer; the public Legends ecosystem still registers only its cto-legends router. Installation is inventory-selected UTF-8 headless capabilities, not the full Home
+Installation includes the qualified local aimh entry files for supported Home hosts and text license notices. These belong to the optional private Home layer; the public cto-legends ecosystem still registers only its cto-legends router. Installation is inventory-selected UTF-8 headless capabilities, not the full Home
 desktop package. It includes qualified official text examples and exact native support documents. Existing conflicting root support files refuse changes. It excludes Obsidian plugins/settings, untracked user examples and source,
 and non-text assets. Conflicting files refuse. Composition explicitly preserves
 source contracts and changes only the reviewed root instruction entry. Licensed

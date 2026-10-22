@@ -73,8 +73,8 @@ manager refuses a catalog with a newer schema and asks for a manager update.
   and served-image verification, including exact repository and image receipts.
 - Route GitHub social-preview goals to the upload procedure and document
   recovery from visible-label mismatches using supported file-input controls.
-- Upload uses the agent host's browser capabilities; Legends Chrome Kit and
-  Legends Shell Kit are not required dependencies. The Python helper prepares
+- Upload uses the agent host's browser capabilities; legends-chrome-kit and
+  legends-shell-kit are not required dependencies. The Python helper prepares
   and verifies the operation but does not upload itself.
 - No manager engine, registered router-skill or other module change.
 

@@ -20,7 +20,7 @@ unsupported Python versions are rejected before installation.
 
 A fresh MetaMuse R3401.1 run received an ordinary request for music, local
 visibility, research storage and GitHub improvement. The request named no
-Legends products. Its first tool action read the startup capability index,
+cto-legends products. Its first tool action read the startup capability index,
 followed by the central recipe and the selected module instructions.
 
 That verifies discovery in this tested configuration, using MetaMuse's default

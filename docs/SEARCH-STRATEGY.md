@@ -1,13 +1,13 @@
 # Search positioning evidence
 
-Collected 2026-09-23 through Legends GitHub and DataForSEO v0.1.0.
+Collected 2026-09-23 through legends-github and DataForSEO v0.1.0.
 United States (2840), English, desktop organic SERPs, depth 10.
 22 keyword candidates across two batches; six exact search-result queries.
 Provider-reported total cost: $0.03756. No measured ranking or traffic uplift.
 
 ## Positioning decision
 
-Lead with agent skills and tool management for the Legends ecosystem. This
+Lead with agent skills and tool management for the cto-legends ecosystem. This
 matches the central instruction router, curated installer and isolated runtimes.
 The product is not an unrestricted third-party skills marketplace or an AI model.
 

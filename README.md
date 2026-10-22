@@ -2,7 +2,7 @@
 
 # ![cto-legends: agent skills and tool management for the legends ecosystem](assets/banner.webp)
 
-**An open-source agent skills and tool manager for the Legends ecosystem.**
+**An open-source agent skills and tool manager for the cto-legends ecosystem.**
 
 [![checks](https://github.com/avalonreset/cto-legends/actions/workflows/checks.yml/badge.svg)](https://github.com/avalonreset/cto-legends/actions/workflows/checks.yml)
 [![release](https://img.shields.io/github/v/release/avalonreset/cto-legends)](https://github.com/avalonreset/cto-legends/releases)
@@ -13,7 +13,7 @@ install a verified version, and maintain the components you actually use.
 Each module remains its own open-source project. Register one central skill, then
 load specialized instructions only when a task needs them. This is the single-skill router: install one skill; every module loads on demand.
 
-This is a curated Legends module manager, not a directory of every third-party
+This is a curated cto-legends module manager, not a directory of every third-party
 skill. It manages verified releases and separate tool environments, while your
 agent supplies the reasoning. [How agent skills and modules fit together](docs/AGENT-SKILLS.md).
 
@@ -25,7 +25,7 @@ Host discovery and operational verification are tracked separately.
 
 `cto-legends` is the tool coordinator for Empire Craft: building and maintaining your own working environment, with independent modules for research, recording, audio, development, and knowledge capture. [legends-empire](https://github.com/avalonreset/legends-empire) supplies the workspace and memory direction.
 
-It can sit alongside AI Marketing Hub workflows and other agent tools. Its focus is discovering and operating Legends modules and connecting their work to your chosen workspace. It is independently developed and maintained by Benjamin; it is not an AI Marketing Hub product or an official integration.
+It can sit alongside AI Marketing Hub workflows and other agent tools. Its focus is discovering and operating cto-legends modules and connecting their work to your chosen workspace. It is independently developed and maintained by Benjamin; it is not an AI Marketing Hub product or an official integration.
 
 For research, the [shared evidence workflow](docs/RESEARCH-WORKFLOW.md) connects
 provider collection, full saved responses, offline verification and reuse checks
@@ -144,14 +144,13 @@ returns that handoff, including with `--apply`; it does not run an app installer
 modify OBS scenes, or claim that a native application is installed. Their native
 updates remain guided and are not part of managed `update` or `rollback`.
 
-GeoGrid report libraries are installed; browser binaries and Linux system libraries need module setup. Legends
-GitHub may need `gh` authentication for remote work. Follow each module's README;
+legends-geogrid report libraries are installed; browser binaries and Linux system libraries need module setup. legends-github may need `gh` authentication for remote work. Follow each module's README;
 the manager's doctor verifies its managed Python capabilities, not every optional
 feature or provider credential.
 
 Python modules get separate environments, so their dependency versions
 can differ safely. `legends-obs` uses a verified prebuilt Node package and your Node
-runtime. Installing GeoGrid supplies its provider dependency automatically;
+runtime. Installing legends-geogrid supplies its provider dependency automatically;
 you only need a standalone module installation for direct module use.
 
 ## Use an installed module
