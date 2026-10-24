@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.28",
+  "version": "1.0.29",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.5",
@@ -1333,8 +1333,8 @@
           "kind": "path"
         }
       },
-      "commit": "a3fb75617c1e6261be22f3d89d1eb8bc6112a5d6",
-      "sha256": "cb26c6fe32b789de774853d55dad5ae16574fc627a8e7d63835c04a80dc46fbe",
+      "commit": "9b900dafcce35fee004ea5e6d28e74e94ba66978",
+      "sha256": "7407f8383fd2db10f1843321e7a97605185701c138b92560af6a3ba81d60df85",
       "license": "MIT",
       "version": "0.2.0",
       "discovery": {
