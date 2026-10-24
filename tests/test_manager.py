@@ -60,7 +60,7 @@ class ManagerTests(unittest.TestCase):
             "legends-stable-audio-3", "legends-obs", "legends-hyperyap",
             "legends-empire", "legends-grant", "legends-firecrawl",
             "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev",
-            "legends-hetzner", "legends-cloudflare"})
+            "legends-hetzner", "legends-cloudflare", "legends-astro"})
 
     def test_setup_revision_rebuilds_same_source(self):
         module = m.catalog()['modules']['legends-github']

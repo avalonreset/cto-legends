@@ -132,12 +132,13 @@ The agent handles paraphrases and multi-part goals using the capability index.
 | [legends-jev](https://github.com/avalonreset/legends-jev) | Typed optical recognition (OCR), storefront signage verification, and action advice from supplied text and image evidence | Isolated Python CLI; operator validates, existing tools actuate; Jev 1.14 optical grounding |
 | [legends-hetzner](https://github.com/avalonreset/legends-hetzner) | Hetzner Cloud server inventory, catalog, preflight and reviewed provisioning plans | Portable Python CLI over `hcloud`; attachable Empire knowledge library |
 | [legends-cloudflare](https://github.com/avalonreset/legends-cloudflare) | Cloudflare zone and DNS inventory, nameservers, preview-first DNS record changes and readback | Dependency-free Python CLI; Obsidian knowledge vault and attachable Empire library |
+| [legends-astro](https://github.com/avalonreset/legends-astro) | Astro v7 readiness, WordPress and HTML migration contract extraction, Content Layer scaffolding, and `dist/` build parity checks | Dependency-free Python and Node CLI; vendored `withastro/docs` snapshot and attachable Empire library |
 
 Pinned versions live in the catalog, not here: `cto-legends catalog`
 shows the exact verified set your manager carries. Module recipes load
 through the router on demand; no module needs its own skill registration.
 
-Fifteen modules have managed CLI installations. The one native module uses
+Sixteen modules have managed CLI installations. The one native module uses
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
 platform information, and published asset checksums. `install` for those modules
 returns that handoff, including with `--apply`; it does not run an app installer,

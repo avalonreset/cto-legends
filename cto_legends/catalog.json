@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.27",
+  "version": "1.0.28",
   "modules": {
     "legends-dataforseo": {
       "version": "0.1.5",
@@ -1294,6 +1294,92 @@
       ],
       "scope": "Portable Python CLI for zones, DNS inventory, nameservers, preview-first single-record upsert and exact-ID deletion. Obsidian-compatible knowledge vault, attachable Empire knowledge pack, and private Empire templates.",
       "dependencies": {}
+    },
+    "legends-astro": {
+      "purpose": "Astro v7 site migrations, source contract extraction, build parity checks, and a source-cited knowledge vault.",
+      "recipe": {
+        "probe": [
+          {
+            "module": "legends_astro",
+            "do": "import",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "module": "legends_astro",
+            "args": [
+              "doctor"
+            ],
+            "do": "module-cli"
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "wiki/index.md",
+              "references/sources.md",
+              "docs/AGENT-RECIPE.md",
+              "knowledge/astro/pack.json",
+              "vendor/astro-docs/manifest.json"
+            ]
+          }
+        ],
+        "run": {
+          "kind": "module",
+          "module": "legends_astro",
+          "runtime": "python"
+        },
+        "pip": {
+          "kind": "path"
+        }
+      },
+      "commit": "a3fb75617c1e6261be22f3d89d1eb8bc6112a5d6",
+      "sha256": "cb26c6fe32b789de774853d55dad5ae16574fc627a8e7d63835c04a80dc46fbe",
+      "license": "MIT",
+      "version": "0.2.0",
+      "discovery": {
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "wiki/index.md"
+        ],
+        "setup": "Python 3.10+ and Node.js 22.12+ (LTS 24.15.0 recommended). Offline doctor, source-audit, ingest preview, verify-build, and docs-lookup require no credentials.",
+        "not_for": "Provisioning cloud servers, reverse proxies, or DNS records; executing untrusted astro.config.mjs files during read-only inspection.",
+        "signals": [
+          "astro",
+          "astro v7",
+          "astrojs",
+          "wordpress to astro",
+          "html to astro",
+          "convert to astro",
+          "astro migration",
+          "astro content collections",
+          "astro build parity"
+        ],
+        "examples": [
+          "Convert my WordPress export or static HTML pages to an Astro v7 site and verify parity",
+          "Check why my Astro v7 build broke client scripts, styles, trailing slashes, or content collections",
+          "Audit an existing site before migrating to Astro and verify the built dist folder afterward",
+          "Attach the Astro v7 knowledge pack to my Empire vault"
+        ]
+      },
+      "repo": "avalonreset/legends-astro",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "keywords": [
+        "astro",
+        "astrojs",
+        "wordpress",
+        "migration",
+        "static-site",
+        "content-collections"
+      ],
+      "scope": "Portable Python and Node CLI for Astro v7 readiness, HTML/WordPress/Firecrawl migration contract extraction, Content Layer scaffolding, post-build dist/ parity verification, pinned withastro/docs lookup, and attachable Empire knowledge pack.",
+      "dependencies": {},
+      "readiness": "doctor"
     }
   },
   "aliases": {
@@ -1304,7 +1390,8 @@
     "legends-hetzner-kit": "legends-hetzner",
     "legends-coolify-kit": "legends-coolify",
     "legends-cloudflare-kit": "legends-cloudflare",
-    "legends-obs-kit": "legends-obs"
+    "legends-obs-kit": "legends-obs",
+    "legends-astro-kit": "legends-astro"
   },
   "retired": {
     "legends-obsidian": "legends-empire"
