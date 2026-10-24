@@ -66,8 +66,10 @@ def parser():
     r.add_argument("--markdown", action="store_true")
     r = sub.add_parser("handoff", help="Resolve selected module instructions without registering another skill")
     r.add_argument("module")
-    r = sub.add_parser("route", help="Find modules for a goal, offline")
+    r.add_argument("--no-remote-peek", action="store_true", help="Disable remote catalog peek on unknown module or update check")
+    r = sub.add_parser("route", help="Find modules for a goal, with remote catalog peek on local no_match")
     r.add_argument("goal")
+    r.add_argument("--no-remote-peek", action="store_true", help="Disable remote catalog peek when no local module matches")
     r = sub.add_parser("guide", help="Show pinned setup instructions, platform requirements, and release downloads")
     r.add_argument("module")
     for name in ("install", "update"):
@@ -137,9 +139,9 @@ def execute(args):
             return 0
         return discovery.index(home)
     if cmd == "handoff":
-        return discovery.handoff(args.module, home)
+        return discovery.handoff(args.module, home, peek_remote=not getattr(args, "no_remote_peek", False))
     if cmd == "route":
-        return route(args.goal, home)
+        return route(args.goal, home, peek_remote=not getattr(args, "no_remote_peek", False))
     if cmd == "guide":
         cat = m.active_catalog(home)
         key = m.resolve_module(args.module, cat)

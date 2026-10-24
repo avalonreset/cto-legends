@@ -377,5 +377,59 @@ class UpdateStatusTests(unittest.TestCase):
         self.assertEqual(result["modules"]["legends-firecrawl"], "passed")
 
 
+class RemoteCatalogPeekTests(unittest.TestCase):
+    """Just-in-time remote catalog peek on no_match route and handoff."""
+
+    def setUp(self):
+        holder = tempfile.TemporaryDirectory()
+        self.addCleanup(holder.cleanup)
+        self.home = Path(holder.name)
+        self.remote_cat = fixture_catalog(
+            version="9.9.9",
+            **{"legends-grant": {"version": "0.9.9", "commit": "a" * 40}},
+        )
+
+    def fake_fetch(self, url, repos):
+        if url == m.CANONICAL_CATALOG_URL:
+            return json.dumps(self.remote_cat).encode("utf-8")
+        raise AssertionError(f"unexpected fetch {url}")
+
+    def test_route_no_match_peeks_remote_catalog_and_suggests_sync(self):
+        with patch.object(m, "fetch", side_effect=self.fake_fetch) as fetched:
+            res = execute(parser().parse_args(["--home", str(self.home), "route", "Do the fixture goal"]))
+        self.assertEqual(fetched.call_count, 1)
+        self.assertEqual(res["decision"], "no_match")
+        self.assertEqual(res["matches"], [])
+        self.assertEqual(res["remote_matches"][0]["id"], "legends-fixture")
+        self.assertEqual(res["catalog_update_available"]["remote_catalog_version"], "9.9.9")
+        self.assertEqual(res["catalog_update_available"]["next"], "cto-legends sync")
+
+    def test_route_local_match_does_not_hit_network(self):
+        with patch.object(m, "fetch", side_effect=AssertionError("must not fetch")):
+            res = execute(parser().parse_args(["--home", str(self.home), "route", "improve github readme"]))
+        self.assertEqual(res["matches"][0]["id"], "legends-github")
+        self.assertNotIn("remote_matches", res)
+
+    def test_route_offline_fallback_is_clean(self):
+        with patch.object(m, "fetch", side_effect=OSError("offline")):
+            res = d.route("Do the fixture goal", self.home, peek_remote=True)
+        self.assertEqual(res["decision"], "no_match")
+        self.assertNotIn("remote_matches", res)
+
+    def test_handoff_unknown_module_found_in_remote_catalog_explains_sync(self):
+        with patch.object(m, "fetch", side_effect=self.fake_fetch):
+            with self.assertRaisesRegex(ValueError, "available in newer remote catalog 9.9.9.*cto-legends sync"):
+                execute(parser().parse_args(["--home", str(self.home), "handoff", "legends-fixture"]))
+
+    def test_handoff_known_module_attaches_contextual_remote_update_hint(self):
+        with patch.object(m, "fetch", side_effect=self.fake_fetch):
+            res = execute(parser().parse_args(["--home", str(self.home), "handoff", "legends-grant"]))
+        self.assertEqual(res["module"], "legends-grant")
+        self.assertIn("remote_update_available", res)
+        self.assertEqual(res["remote_update_available"]["remote_catalog_version"], "0.9.9")
+        self.assertIn("cto-legends sync", res["remote_update_available"]["next"])
+
+
 if __name__ == "__main__":
     unittest.main()
+

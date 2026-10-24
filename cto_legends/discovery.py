@@ -62,10 +62,7 @@ def markdown(home=None):
     return '\n'.join(lines)
 
 
-def route(goal, home=None, limit=5):
-    cat = _catalog(home)
-    text = normalize(goal)
-    words = set(text.split())
+def _score_catalog_modules(cat, text, words):
     matches = []
     for key, row in cat['modules'].items():
         found = sorted({normalize(term) for term in row['discovery']['signals']
@@ -80,6 +77,25 @@ def route(goal, home=None, limit=5):
             matches.append({'id': key, 'score': score, 'purpose': row['purpose'],
                             'scope': row['scope'], 'matched_signals': found,
                             'handoff': 'cto-legends handoff ' + key})
+    return matches
+
+
+def peek_remote_catalog():
+    """Best-effort read-only peek at the canonical remote catalog. Never raises or mutates state."""
+    if m.os.environ.get('CTO_LEGENDS_OFFLINE') == '1':
+        return None
+    try:
+        raw = m.fetch(m.CANONICAL_CATALOG_URL, set())
+        return m.validate_catalog(json.loads(raw))
+    except Exception:
+        return None
+
+
+def route(goal, home=None, limit=5, *, peek_remote=False):
+    cat = _catalog(home)
+    text = normalize(goal)
+    words = set(text.split())
+    matches = _score_catalog_modules(cat, text, words)
     if home is not None:
         for row in _guide_rows(home, set(cat['modules'])):
             if row['catalog_module']:
@@ -90,12 +106,52 @@ def route(goal, home=None, limit=5):
                                 'handoff': 'cto-legends handoff ' + row['id']})
     matches.sort(key=lambda row: (-row['score'], row['id']))
     ambiguous = len(matches) > 1 and matches[0]['score'] == matches[1]['score']
-    return {'matches': matches[:limit], 'total_matches': len(matches),
-            'decision': 'no_match' if not matches else 'review_alternatives' if ambiguous else 'candidate',
-            'hint': 'Lexical hints only. Check capability scope against intent; use capabilities for paraphrases or multiple goals. Never install all matches. Read the selected handoff; ask only when the intended outcome is unclear.'}
+    result = {'matches': matches[:limit], 'total_matches': len(matches),
+              'decision': 'no_match' if not matches else 'review_alternatives' if ambiguous else 'candidate',
+              'hint': 'Lexical hints only. Check capability scope against intent; use capabilities for paraphrases or multiple goals. Never install all matches. Read the selected handoff; ask only when the intended outcome is unclear.'}
+    if not matches and text and peek_remote:
+        remote_cat = peek_remote_catalog()
+        if remote_cat is not None:
+            remote_matches = _score_catalog_modules(remote_cat, text, words)
+            remote_matches.sort(key=lambda row: (-row['score'], row['id']))
+            if remote_matches:
+                top_remote = remote_matches[:limit]
+                result['remote_matches'] = top_remote
+                result['catalog_update_available'] = {
+                    'local_catalog_version': cat['version'],
+                    'remote_catalog_version': remote_cat['version'],
+                    'matched_remote_modules': [r['id'] for r in top_remote],
+                    'next': 'cto-legends sync',
+                    'apply_when_authorized': 'cto-legends sync --apply',
+                }
+                result['hint'] = (
+                    f"No local module matched, but newer remote catalog {remote_cat['version']} "
+                    f"(local {cat['version']}) has matching capability: "
+                    f"{', '.join(r['id'] for r in top_remote)}. "
+                    "Preview with cto-legends sync, apply when authorized, then repeat handoff."
+                )
+    return result
 
 
-def handoff(key, home):
+def _attach_remote_update_hint(result, key, row, cat):
+    remote_cat = peek_remote_catalog()
+    if remote_cat is None or key not in remote_cat.get('modules', {}):
+        return result
+    remote_row = remote_cat['modules'][key]
+    if (remote_row.get('version'), remote_row.get('commit'), remote_row.get('sha256')) != (
+        row.get('version'), row.get('commit'), row.get('sha256')
+    ):
+        result['remote_update_available'] = {
+            'module': key,
+            'local_catalog_version': row['version'],
+            'remote_catalog_version': remote_row['version'],
+            'remote_catalog': remote_cat['version'],
+            'next': f"cto-legends sync (then cto-legends update {key} --apply when authorized)",
+        }
+    return result
+
+
+def handoff(key, home, *, peek_remote=False):
     cat = m.active_catalog(home)
     if key in cat.get('retired', {}):
         successor = cat['retired'][key]
@@ -105,6 +161,23 @@ def handoff(key, home):
         guides = m.read_guides(home)
         if key in guides and key not in cat['modules']:
             return _guide_handoff(key, guides[key])
+        if peek_remote:
+            remote_cat = peek_remote_catalog()
+            if remote_cat is not None:
+                if key in remote_cat.get('retired', {}):
+                    successor = remote_cat['retired'][key]
+                    raise ValueError(
+                        f"{key} was renamed to {successor} in remote catalog {remote_cat['version']}; "
+                        f"run cto-legends sync to preview and cto-legends sync --apply when authorized, "
+                        f"then run cto-legends handoff {successor}"
+                    )
+                resolved_remote = m.resolve_module(key, remote_cat)
+                if resolved_remote in remote_cat.get('modules', {}):
+                    raise ValueError(
+                        f"{resolved_remote} is available in newer remote catalog {remote_cat['version']} "
+                        f"(local catalog is {cat['version']}); run cto-legends sync to preview and "
+                        f"cto-legends sync --apply when authorized, then repeat handoff"
+                    )
         raise ValueError(f"Unknown module or local guide: {key}")
     row = cat['modules'][key]
     recipe = row['recipe']
@@ -114,12 +187,14 @@ def handoff(key, home):
               'register_module_skill': False,
               'instructions': [], 'missing_instructions': []}
     if recipe.get('mode', 'managed') == 'guided':
-        return {**result, 'installation': 'guided_native', 'guide': m.guide(key, cat)}
+        out = {**result, 'installation': 'guided_native', 'guide': m.guide(key, cat)}
+        return _attach_remote_update_hint(out, key, row, cat) if peek_remote else out
     state = m.read_state(home)
     if key not in state['active']:
-        return {**result, 'installation': 'not_installed',
-                'next': 'cto-legends install ' + key,
-                'policy': 'Preview setup; apply when authorized. Then repeat handoff.'}
+        out = {**result, 'installation': 'not_installed',
+               'next': 'cto-legends install ' + key,
+               'policy': 'Preview setup; apply when authorized. Then repeat handoff.'}
+        return _attach_remote_update_hint(out, key, row, cat) if peek_remote else out
     release = m.managed_path(home, state['active'][key])
     source = (release / 'source').resolve()
     receipt_path = release / 'receipt.json'
@@ -136,10 +211,11 @@ def handoff(key, home):
     # install. Resolve that install from its own receipt until it is updated.
     installed = row if current else receipt
     if installed is None or not installed.get('discovery', {}).get('instructions'):
-        return {**result, 'installation': 'installed', 'source': str(source),
-                'handoff_status': 'receipt_unverified',
-                'readiness': None,
-                'next': 'Inspect the missing or legacy install receipt with status and doctor; do not assume catalog capabilities are installed.'}
+        out = {**result, 'installation': 'installed', 'source': str(source),
+               'handoff_status': 'receipt_unverified',
+               'readiness': None,
+               'next': 'Inspect the missing or legacy install receipt with status and doctor; do not assume catalog capabilities are installed.'}
+        return _attach_remote_update_hint(out, key, row, cat) if peek_remote else out
     if not current:
         result.update({field: installed.get(field) for field in ('purpose', 'scope', 'readiness')})
         result.update({field: installed['discovery'].get(field) for field in ('setup', 'not_for')})
@@ -158,10 +234,11 @@ def handoff(key, home):
                  'Run doctor and inspect the incomplete install; missing recipe files prevent a complete handoff.'
                  if result['missing_instructions'] else
                  'Read these files in order, follow their task-specific setup checks, then use the isolated module runtime from status. Do not substitute global skills.')
-    return {**result, 'installation': 'installed', 'source': str(source),
-            'handoff_status': status,
-            'version_scope': 'Instructions from the active installed version, not an assumed catalog upgrade.',
-            'next': next_step}
+    out = {**result, 'installation': 'installed', 'source': str(source),
+           'handoff_status': status,
+           'version_scope': 'Instructions from the active installed version, not an assumed catalog upgrade.',
+           'next': next_step}
+    return _attach_remote_update_hint(out, key, row, cat) if peek_remote else out
 
 
 def _guide_handoff(name, row):
