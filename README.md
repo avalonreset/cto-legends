@@ -46,6 +46,8 @@ Home. Follow the [adapter handoff](docs/HOME-ADAPTER.md) for task-specific readi
 and reviewed prepare, install, compose, and binding plans. No second agent skill
 or whole-ecosystem installation is needed.
 
+For access to the AI Marketing Hub Home system, join [AI Marketing Hub Pro](https://www.skool.com/ai-marketing-hub-pro/about).
+
 ## Start here
 
 Python 3.10 or newer is required for the manager; use Python 3.11+ to include Empire vault memory. No Git, provider account, background service,

@@ -8,6 +8,8 @@ native locations without creating duplicate business or task directories.
 Empire stays the session entry point. The adapter also retains a reference-only
 binding for users who explicitly choose an existing separate Home workspace.
 
+For access to the AI Marketing Hub Home system, join [AI Marketing Hub Pro](https://www.skool.com/ai-marketing-hub-pro/about).
+
 ## Select the public module
 
 ```sh
