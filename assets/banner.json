@@ -1,0 +1,24 @@
+{
+  "renderer": "legends-type-v1",
+  "text": "cto-legends",
+  "font": "E:\\benterm\\assets\\fonts\\Legends-Regular.ttf",
+  "master": {
+    "path": "assets/banner.png",
+    "width": 4096,
+    "height": 1024,
+    "sha256": "42aa681268b9d2fd65644c4acbe06ac19f9b7f05ac94b03559d37690a7f78002"
+  },
+  "readme_asset": {
+    "path": "assets/banner.webp",
+    "width": 4096,
+    "height": 1024,
+    "lossless": true,
+    "sha256": "699439c42a15893db2287e57e453f4f0ebf73519059e9d5f3044ee2e582ce8d4"
+  },
+  "preview": {
+    "path": "assets/preview.png",
+    "width": 1024,
+    "height": 256,
+    "sha256": "07060322510367412a190b9c8e2794414840f62b654d775fc4fe49f78abf6019"
+  }
+}

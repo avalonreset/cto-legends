@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use cto-legends in your work, please cite it using the metadata below."
+title: "cto-legends"
+abstract: "Open-source single-skill router and ecosystem manager for agent skills and isolated tool environments."
+authors:
+  - family-names: "Samar"
+    given-names: "Benjamin"
+version: 0.2.4
+date-released: "2026-10-24"
+license: MIT
+repository-code: "https://github.com/avalonreset/cto-legends"
+url: "https://www.skool.com/ai-marketing-hub-pro/about"

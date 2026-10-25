@@ -1,0 +1,15 @@
+name: Bug report
+description: Report a reproducible problem in cto-legends without credentials or private paths.
+body:
+  - type: textarea
+    attributes:
+      label: What happened?
+      description: Include the cto-legends version, catalog version, OS, Python version, agent host, and sanitized command output.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected result and reproduction
+      description: Provide exact steps to reproduce and state whether --apply was used.
+    validations:
+      required: true

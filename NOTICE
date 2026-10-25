@@ -1,0 +1,8 @@
+cto-legends
+Copyright (c) 2026 Benjamin Samar
+
+Open-source agent skills router and module manager for the cto-legends ecosystem.
+Released under the MIT License (see LICENSE).
+
+Each cataloged module remains an independent open-source repository with its own
+license and attribution notices. See THIRD_PARTY_NOTICES.md for details.

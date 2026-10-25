@@ -1,0 +1,15 @@
+name: Feature request
+description: Propose a router, catalog, or host-registration improvement.
+body:
+  - type: textarea
+    attributes:
+      label: Problem or workflow gap
+      description: Describe the agent routing, catalog discovery, or environment management problem to solve.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed behavior and boundaries
+      description: Explain how the change preserves preview-first safety and the single-skill router contract.
+    validations:
+      required: true

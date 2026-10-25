@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.2.4 - 2026-10-24
+
+- Add Just-In-Time Remote Catalog Peek (`peek_remote_catalog`) to `route` and
+  `handoff`: when a local route misses (or hits fewer than 2 keyword signals)
+  or when `handoff` targets an unknown or outdated module, the manager checks
+  the live GitHub `catalog.json` with a 1.5-second timeout and 24-hour local
+  cache (`~/.cto-legends/state/remote-catalog-cache.json`) and attaches an
+  actionable `cto-legends sync` hint (`remote_catalog_match`,
+  `remote_catalog_newer`, or `remote_update_available`) without mutating local
+  state.
+- Ship catalog `1.0.30` onboarding `legends-astro` 0.2.0 (`legends-astro-kit`
+  compatibility alias) and unified 17-module ecosystem ordering across the
+  foundation, cloud/web, search/research/decision, and media/voice/studio
+  capability layers.
+- Add the Optional Home compatibility section and AI Marketing Hub Pro call to
+  action, repository community health standards (`CODE_OF_CONDUCT.md`,
+  `SUPPORT.md`, `CITATION.cff`, `NOTICE`, `THIRD_PARTY_NOTICES.md`,
+  `.github/ISSUE_TEMPLATE/*`, `.github/pull_request_template.md`,
+  `.github/dependabot.yml`, `.github/release.yml`), and `legends-social-v1`
+  social preview assets.
+
 ## 0.2.3 - 2026-10-14
 
 - Add `antigravity` (with `agy` alias) to `agent-setup`, `agent-audit`,

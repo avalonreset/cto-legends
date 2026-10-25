@@ -1,5 +1,5 @@
-include LICENSE README.md AGENTS.md CHANGELOG.md CONTRIBUTING.md SECURITY.md
+include LICENSE NOTICE THIRD_PARTY_NOTICES.md README.md AGENTS.md CHANGELOG.md CONTRIBUTING.md CODE_OF_CONDUCT.md SUPPORT.md SECURITY.md CITATION.cff
 recursive-include docs *.md
 recursive-include tests *.py
 
-recursive-include assets *.png *.webp
+recursive-include assets *.png *.webp *.json

@@ -5,6 +5,17 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.30 - 2026-10-24
+
+- Add `legends-astro` 0.2.0 for Astro v7 site migrations, HTML/WordPress/Firecrawl
+  source contract extraction, Content Layer scaffolding, post-build `dist/`
+  parity verification, pinned `withastro/docs` lookup, and an optional
+  versioned `legends-empire` knowledge pack (`knowledge/astro/pack.json`).
+- Add `legends-astro-kit` as a catalog and CLI compatibility alias.
+- Pin `legends-github` 0.2.0 and unify the 17-module catalog sequence across
+  the four capability layers (`legends-empire` foundation, cloud/web stack,
+  search/research/decision stack, and media/voice/studio production stack).
+
 ## 1.0.26 - 2026-10-22
 
 - Update `legends-jev` to 0.2.0 with general-purpose optical recognition (`ocr`),
