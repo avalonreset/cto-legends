@@ -133,9 +133,18 @@ def route(goal, home=None, limit=5, *, peek_remote=False):
     return result
 
 
+def _version_tuple(version_str):
+    try:
+        return tuple(int(p) for p in str(version_str).split('.'))
+    except Exception:
+        return (0, 0, 0)
+
+
 def _attach_remote_update_hint(result, key, row, cat):
     remote_cat = peek_remote_catalog()
     if remote_cat is None or key not in remote_cat.get('modules', {}):
+        return result
+    if _version_tuple(remote_cat.get('version')) <= _version_tuple(cat.get('version')):
         return result
     remote_row = remote_cat['modules'][key]
     if (remote_row.get('version'), remote_row.get('commit'), remote_row.get('sha256')) != (
