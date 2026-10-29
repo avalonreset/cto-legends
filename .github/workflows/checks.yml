@@ -8,20 +8,20 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python: ['3.10', '3.13']
+        python: ['3.11', '3.13']
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: ${{ matrix.python }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22'
       - run: python -m unittest discover -s tests -v
-      - run: python -m pip install build twine
+      - run: python -m pip install --upgrade "pip>=26.2.2" build twine
       - run: python -m build
       - run: python -m twine check dist/*
       - run: python -c "import glob,subprocess,sys; w=glob.glob('dist/*.whl'); assert len(w)==1, w; subprocess.run([sys.executable,'-m','pip','install',w[0]],check=True)"

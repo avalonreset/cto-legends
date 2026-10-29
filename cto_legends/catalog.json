@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.30",
+  "version": "1.0.31",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -132,10 +132,10 @@
       }
     },
     "legends-hetzner": {
-      "version": "0.1.1",
+      "version": "0.1.2",
       "repo": "avalonreset/legends-hetzner",
-      "commit": "3efd3f6fa519fba93d1778cedd08d345d583a3f8",
-      "sha256": "fba09639236810f14b60e5464fdee2682361de76f004304fb8aa85fe869ee1b5",
+      "commit": "f878fbc994bb29e1a432f4672a69c956eaaa8ee8",
+      "sha256": "538f56be386e1428757a6d2897e52b8d9d7123b835b5381390b67f3b3b3163c9",
       "purpose": "Inspect Hetzner Cloud projects, prepare reviewed server plans, and attach a source-cited operations library to a selected Empire vault.",
       "keywords": [
         "hetzner",
@@ -151,7 +151,7 @@
         "linux",
         "macos"
       ],
-      "scope": "Python 3.10+ standard-library workflows over the official hcloud CLI. Read-only readiness, inventory, catalog and preflight; reviewed server plans and explicit creation. A bounded Windows-client live canary validated Ubuntu 24.04 server creation/readback, SSH, cloud-init and cleanup. Optional versioned knowledge attachment uses Empire 0.3.1+ separately, including native Windows local fixed NTFS with Python 3.11+.",
+      "scope": "Python 3.11+ standard-library workflows over the official hcloud CLI. Read-only readiness, inventory, catalog and preflight; reviewed server plans and explicit creation. A bounded Windows-client live canary validated Ubuntu 24.04 server creation/readback, SSH, cloud-init and cleanup. Optional versioned knowledge attachment uses Empire 0.3.1+ separately, including native Windows local fixed NTFS with Python 3.11+.",
       "discovery": {
         "signals": [
           "hetzner",
@@ -179,7 +179,7 @@
       "recipe": {
         "requires_python": [
           3,
-          10
+          11
         ],
         "pip": {
           "kind": "path"
@@ -205,6 +205,10 @@
     "legends-coolify": {
       "purpose": "Read-only Coolify operations and source-cited runbooks, standalone or attached to an Empire vault.",
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "probe": [
           {
             "module": "legends_coolify",
@@ -247,10 +251,10 @@
           "kind": "path"
         }
       },
-      "commit": "90bf0d4dfd986aa959b467803ae079364cbafb28",
-      "sha256": "9bd8c309988b8c154337d2900cb9db2fabbc34a61d0f6f4689c0501de487cfb8",
+      "commit": "f64f1f2380095eae115cd89765ca04000d333617",
+      "sha256": "812c162d9b1e9a238efcb42b2f93abd593fb755738b6d3fa7d9c2d6d66f8763a",
       "license": "MIT",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "discovery": {
         "instructions": [
           "README.md",
@@ -258,7 +262,7 @@
           "docs/KNOWLEDGE-PACK.md",
           "wiki/index.md"
         ],
-        "setup": "Python 3.10+. Offline doctor/resources need no credentials. Live reads require trusted HTTPS COOLIFY_BASE_URL and COOLIFY_API_TOKEN. Optional vault attachment uses legends-empire 0.3.1+ and Python 3.11+.",
+        "setup": "Python 3.11+. Offline doctor/resources need no credentials. Live reads require trusted HTTPS COOLIFY_BASE_URL and COOLIFY_API_TOKEN. Optional vault attachment uses legends-empire 0.3.1+ and Python 3.11+.",
         "not_for": "Deploying, restarting, restoring, changing DNS, or managing provider servers.",
         "signals": [
           "inspect Coolify",
@@ -298,6 +302,10 @@
     "legends-cloudflare": {
       "purpose": "Cloudflare DNS automation with reviewed change plans, readback checks and a source-cited knowledge vault.",
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "probe": [
           {
             "module": "legends_cloudflare",
@@ -332,17 +340,17 @@
           "kind": "path"
         }
       },
-      "commit": "a90d9f32a8c3919198da573aa2bd042875e6dd8b",
-      "sha256": "e7420cd9af450ae5657cc897cd42aedf59a27606109464a4c2f8390743de0eee",
+      "commit": "7e76dd69f8a31a48c77b6ed9e55c8896627a979f",
+      "sha256": "38195bd16971e91dc69a231ef990ee1383c2da1cd386d73ec291b770ea41790e",
       "license": "MIT",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "discovery": {
         "instructions": [
           "README.md",
           "docs/AGENT-RECIPE.md",
           "wiki/index.md"
         ],
-        "setup": "Python 3.10+. Offline doctor needs no credentials. Live operations require CLOUDFLARE_API_TOKEN scoped to the selected zones; writes require explicit zone and preview-hash confirmation.",
+        "setup": "Python 3.11+. Offline doctor needs no credentials. Live operations require CLOUDFLARE_API_TOKEN scoped to the selected zones; writes require explicit zone and preview-hash confirmation.",
         "not_for": "Registrar transfers, registrar nameserver changes, Workers deployments, tunnels, bulk writes, or an MCP server.",
         "signals": [
           "cloudflare",
@@ -378,6 +386,10 @@
     "legends-astro": {
       "purpose": "Astro v7 site migrations, source contract extraction, build parity checks, and a source-cited knowledge vault.",
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "probe": [
           {
             "module": "legends_astro",
@@ -413,17 +425,17 @@
           "kind": "path"
         }
       },
-      "commit": "53171dbdaac8f8901837adcac3be254aeb8b6544",
-      "sha256": "a024d275f3f39c1f38b14e14578a222b5149a3ea1195e918ab03f977029eb5b0",
+      "commit": "fadf92ac9c8346aeef979091f3a77c4b75694f44",
+      "sha256": "43ff4be1fd86bdd582bcf53f0a36f8c9c03350354fa2653fbe8eb7d4552b2efb",
       "license": "MIT",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "discovery": {
         "instructions": [
           "README.md",
           "docs/AGENT-RECIPE.md",
           "wiki/index.md"
         ],
-        "setup": "Python 3.10+ and Node.js 22.12+ (LTS 24.15.0 recommended). Offline doctor, source-audit, ingest preview, verify-build, and docs-lookup require no credentials.",
+        "setup": "Python 3.11+ and Node.js 22.12+ (LTS 24.15.0 recommended). Offline doctor, source-audit, ingest preview, verify-build, and docs-lookup require no credentials.",
         "not_for": "Provisioning cloud servers, reverse proxies, or DNS records; executing untrusted astro.config.mjs files during read-only inspection.",
         "signals": [
           "astro",
@@ -462,10 +474,10 @@
       "readiness": "doctor"
     },
     "legends-geogrid": {
-      "version": "0.2.1",
-      "commit": "41d84f2f9328bdce37ec5aa3e28b0beb85ef40e5",
+      "version": "0.2.2",
+      "commit": "712eeffb48cf97f808cc8a85129a0870c9e49928",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "dc754d6fee440ff2a021ce69bbf6608dca33852ec71f2dd509cd8181466b389a",
+      "sha256": "779bb1a5107e48834eb4bb3d101e77e5627feb85bb625d67645d6b59f31a288e",
       "purpose": "Google Maps ranking grids, circular-lattice competitive studies, multi-query strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
@@ -482,7 +494,7 @@
         "street-view"
       ],
       "dependencies": {
-        "legends-dataforseo": "0.1.5"
+        "legends-dataforseo": "0.1.6"
       },
       "scope": "Full-bleed competitive map companion, circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, and multi-query Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
       "discovery": {
@@ -511,6 +523,10 @@
         ]
       },
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "pip": {
           "kind": "requirements",
           "files": [
@@ -540,7 +556,7 @@
           {
             "do": "version-floor",
             "package": "legends-dataforseo",
-            "min": "0.1.5"
+            "min": "0.1.6"
           }
         ],
         "run": {
@@ -553,10 +569,10 @@
       "setup_revision": 2
     },
     "legends-dataforseo": {
-      "version": "0.1.5",
-      "commit": "1e602c00f6cd654329d696e2731548948776479b",
+      "version": "0.1.6",
+      "commit": "58c3409253beaa5614f3f9af0a5b71903d322b55",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "520acf781f51ccb01009e51126513767c8494b976804a07014bd30118c89a242",
+      "sha256": "f3fe229113ef8968573589859f39f8d2bc897b80047bc8ce4a3dc6b942f6691f",
       "purpose": "Search, Google Maps, Google Business Profile, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
@@ -599,6 +615,10 @@
         ]
       },
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "pip": {
           "kind": "path"
         },
@@ -625,10 +645,10 @@
       "readiness": "task-readiness research"
     },
     "legends-firecrawl": {
-      "version": "0.3.1",
-      "commit": "af7035deb9b596d384aca2e29161889f6e388e00",
+      "version": "0.3.2",
+      "commit": "753ffd70466fb14d62c78c8ffd0f6a201851add7",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "616b22c0665f7f6674563ebbcda942c753ff1ab47fde4ee619e54baef23596bc",
+      "sha256": "fd29638f8ab18786a2eebda8664d59e1138d6e1541c066360c58f7fd7b80fb09",
       "purpose": "Official Firecrawl web operations and Alexandria queries with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "firecrawl",
@@ -669,6 +689,10 @@
         ]
       },
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "pip": {
           "kind": "path"
         },
@@ -690,10 +714,10 @@
       }
     },
     "legends-github": {
-      "version": "0.2.0",
-      "commit": "97fd03295e93d0c13f277705cb3ddb74caadf3a5",
+      "version": "0.2.1",
+      "commit": "5810aa4a7912ba73a3a56e943d4b8737b12dce90",
       "repo": "avalonreset/legends-github",
-      "sha256": "22660ef02f7f848c20396d959328f918289117dd5b8c73befe009971f694b937",
+      "sha256": "f6e7f7311dfa5457aa36930b3cdd95b84b2fbd7751854b3c9d7877f79b9651cd",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
@@ -708,7 +732,7 @@
         "social-preview"
       ],
       "dependencies": {
-        "legends-dataforseo": "0.1.5"
+        "legends-dataforseo": "0.1.6"
       },
       "scope": "Portable Python repository workflows, optional research, and social-preview preparation/served-image verification. Actual upload uses the agent host's supported browser/file-upload tools; no legends-chrome-kit or legends-shell-kit dependency.",
       "setup_revision": 2,
@@ -737,6 +761,10 @@
         ]
       },
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "pip": {
           "kind": "requirements",
           "files": [
@@ -873,10 +901,10 @@
       "readiness": "doctor"
     },
     "legends-jev": {
-      "version": "0.2.0",
-      "commit": "18b4b2867f226e175f10dc042b389f6c38602fb2",
+      "version": "0.2.1",
+      "commit": "c6f9506d047764fd7a2487c5aae4470c563d6606",
       "repo": "avalonreset/legends-jev",
-      "sha256": "a1940eb767194b3bb310660d5f89ff06f70de424393414fb2668254f1dc4f9e5",
+      "sha256": "e3ac528780ad0a76e451f3d24634e204fae1f120777f6a0ebbacd63c56a3dd0e",
       "purpose": "Typed optical recognition (OCR), storefront signage verification, and decision advice for computer use, application control and browser action selection from supplied text evidence, local images, and candidates.",
       "keywords": [
         "jev",
@@ -938,7 +966,7 @@
       "recipe": {
         "requires_python": [
           3,
-          10
+          11
         ],
         "pip": {
           "kind": "path"
@@ -1034,10 +1062,10 @@
       }
     },
     "legends-captions": {
-      "version": "0.1.0",
-      "commit": "c21364236477325bae1a5a295adc9a4d07d8df83",
+      "version": "0.1.1",
+      "commit": "f9f22fd12b364b212ced810145817f871582e119",
       "repo": "avalonreset/legends-captions",
-      "sha256": "ec4ce94a83b427c43ebd81183cac734e2b6d2639544f3cad2c15db8529bd7a7a",
+      "sha256": "ee9fa5264d7d90b86b8ed4747adc8a82ae6313ddc09a66d2fc179c0812abebfc",
       "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
       "keywords": [
         "caption",
@@ -1078,6 +1106,10 @@
         ]
       },
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "pip": {
           "kind": "path"
         },
@@ -1105,10 +1137,10 @@
       }
     },
     "legends-yt-dlp": {
-      "version": "0.1.1",
-      "commit": "c2bd7adcc9104cbf7ab1a945f9b3f7591fec8a56",
+      "version": "0.1.2",
+      "commit": "61ebc6e2672ed3862ab44a5f6abd20d37be6398c",
       "repo": "avalonreset/legends-yt-dlp",
-      "sha256": "750ab47bde2ad3d8f9b82e91def3abdec9a159238749d129fa212b75fb10a77a",
+      "sha256": "9eb7a901e02322ae6fc3518e8fb4f096efcfb823077ba2f9118d8a37b66674bc",
       "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
       "keywords": [
         "youtube",
@@ -1153,6 +1185,10 @@
         ]
       },
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "pip": {
           "kind": "path"
         },
@@ -1180,9 +1216,9 @@
       }
     },
     "legends-stable-audio-3": {
-      "version": "0.1.2",
+      "version": "0.1.3",
       "repo": "avalonreset/legends-stable-audio-3",
-      "commit": "09ee0644240ff29c42cbbedd6162f1d0a519cec9",
+      "commit": "269361f27988a17866a6200e36b9ad2a66160eed",
       "purpose": "Create instrumental music, sound effects, and continuous mixes.",
       "keywords": [
         "music",
@@ -1202,7 +1238,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "15a95fd2691b5762bfab9cff22ce23ae2f430db99fdd5447132ac5bcdc7147b3",
+      "sha256": "ced8560e5ba8b477b6b100f73904863a4a98e7e06b9c7526ed426c1af3713f4c",
       "discovery": {
         "signals": [
           "make music",
@@ -1229,6 +1265,10 @@
         ]
       },
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "pip": {
           "kind": "path"
         },
@@ -1307,10 +1347,10 @@
       }
     },
     "legends-ambient-intelligence": {
-      "version": "0.1.0",
-      "commit": "711207aa8783d46a50d7d5d815e1a2ce16c444f9",
+      "version": "0.1.1",
+      "commit": "17ef3e6bfd10b2d4a745a61924a18b0f68a5a5e7",
       "repo": "avalonreset/legends-ambient-intelligence",
-      "sha256": "d09667852d3551edc3557d9c9a783450773d29bacf32403779b751adb5f5dea3",
+      "sha256": "729ad2b3d356be146fae7a708e121c64b6eb5e9fd529843bf38227c580e0dcf9",
       "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
       "keywords": [
         "ambient",
@@ -1355,6 +1395,10 @@
         ]
       },
       "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
         "pip": {
           "kind": "path"
         },

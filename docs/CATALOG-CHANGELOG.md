@@ -5,6 +5,20 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.31 - 2026-10-29
+
+- Standardize all 15 Python catalog modules on **Python 3.11+**
+  (`requires_python: [3, 11]`).
+- Update 13 Python catalog modules with `+0.0.1` Python 3.11+ and CI
+  supply-chain hardening releases: `legends-dataforseo` 0.1.6,
+  `legends-hetzner` 0.1.2, `legends-coolify` 0.2.1,
+  `legends-cloudflare` 0.1.1, `legends-astro` 0.2.1,
+  `legends-geogrid` 0.2.2, `legends-firecrawl` 0.3.2,
+  `legends-github` 0.2.1, `legends-jev` 0.2.1,
+  `legends-captions` 0.1.1, `legends-yt-dlp` 0.1.2,
+  `legends-stable-audio-3` 0.1.3, and
+  `legends-ambient-intelligence` 0.1.1.
+
 ## 1.0.30 - 2026-10-24
 
 - Add `legends-astro` 0.2.0 for Astro v7 site migrations, HTML/WordPress/Firecrawl

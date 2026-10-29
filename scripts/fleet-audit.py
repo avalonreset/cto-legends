@@ -14,7 +14,7 @@ Checks all 13 repos in org ``avalonreset`` for:
       engine, its changelog head matches, and the canonical live copy on
       the router main branch validates too.
 
-Python 3.10+, stdlib only. Network access goes through the ``gh`` CLI.
+Python 3.11+, stdlib only. Network access goes through the ``gh`` CLI.
 
 Exit status: 0 only if every audited repo passes; nonzero otherwise.
 """

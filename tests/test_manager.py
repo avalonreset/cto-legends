@@ -202,8 +202,9 @@ class ManagerTests(unittest.TestCase):
         with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=fake_run):
             relative = m.prepare('legends-grant', module, grant_home)
         installs = [command for command in calls if command[1:3] == ['-m', 'pip']]
-        self.assertEqual(len(installs), 1, calls)
-        self.assertEqual(Path(installs[0][-1]).resolve(), (grant_home / relative / 'source').resolve())
+        self.assertEqual(len(installs), 2, calls)
+        self.assertEqual(installs[0][-2:], ['--upgrade', 'pip>=26.2.2'])
+        self.assertEqual(Path(installs[1][-1]).resolve(), (grant_home / relative / 'source').resolve())
         self.assertTrue(any(command[1:] == ['-m', 'grant_engine', 'doctor'] for command in calls), calls)
         for name in lanes:
             self.assertTrue((grant_home / relative / 'source' / name).is_file(), name)
@@ -268,8 +269,9 @@ class ManagerTests(unittest.TestCase):
         with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=fake_run):
             m.prepare('legends-firecrawl', module, self.home)
         installs = [command for command in calls if 'pip' in command and 'install' in command]
-        self.assertEqual(len(installs), 1, calls)
-        self.assertNotIn('requirements-dataforseo.txt', ' '.join(installs[0]))
+        self.assertEqual(len(installs), 2, calls)
+        self.assertEqual(installs[0][-2:], ['--upgrade', 'pip>=26.2.2'])
+        self.assertNotIn('requirements-dataforseo.txt', ' '.join(installs[1]))
         self.assertTrue(any(command[1:2] == ['-c'] for command in calls), calls)
 
     def test_tgz_extract_and_unsafe_entries(self):
@@ -316,7 +318,7 @@ class ManagerTests(unittest.TestCase):
         with patch.object(m, "fetch", side_effect=AssertionError("network")):
             plan = m.plan(home, ["legends-geogrid"])
         self.assertFalse(home.exists())
-        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo"], "0.1.5")
+        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo"], "0.1.6")
 
     def test_unknown_module_rejected(self):
         with self.assertRaises(ValueError):

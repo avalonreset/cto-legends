@@ -616,7 +616,7 @@ def prepare(key, module, home):
     recipe = module["recipe"]
     if recipe.get("mode", "managed") == "guided":
         raise ValueError("This module uses guided native setup")
-    python_floor = recipe.get("requires_python")
+    python_floor = recipe.get("requires_python", [3, 11] if recipe.get("env", True) else None)
     if python_floor is not None and tuple(sys.version_info[:2]) < tuple(python_floor):
         raise ValueError(f"{key} requires Python {python_floor[0]}.{python_floor[1]} or newer; "
                          "run cto-legends with a supported Python")
@@ -638,6 +638,8 @@ def prepare(key, module, home):
         run([sys.executable, "-m", "venv", release / "env"], release)
         python = python_at(release)
         pip = recipe.get("pip", {"kind": "none"})
+        if pip["kind"] != "none":
+            run([python, "-m", "pip", "install", "--disable-pip-version-check", "--upgrade", "pip>=26.2.2"], release)
         if pip["kind"] == "path":
             run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
         elif pip["kind"] == "requirements":

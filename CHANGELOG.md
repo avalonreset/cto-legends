@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.5 - 2026-10-29
+
+- Standardize the `cto-legends` manager and all 15 Python catalog modules on
+  **Python 3.11+** (`requires-python = ">=3.11"`, `requires_python: [3, 11]`),
+  retiring EOL Python 3.10 support across the ecosystem.
+- Harden managed environment preparation (`prepare`) to enforce a Python 3.11
+  floor by default and automatically upgrade `pip>=26.2.2` inside newly
+  created virtual environments before installing package sources or
+  requirements.
+- Harden GitHub Actions CI workflows (`checks.yml`, `contract.yml`) with
+  40-character commit SHA action pins and Python 3.11 / 3.13 test matrices.
+- Ship catalog `1.0.31` with `+0.0.1` security and Python 3.11+ patch
+  releases across 13 public Python modules.
+
 ## 0.2.4 - 2026-10-24
 
 - Add Just-In-Time Remote Catalog Peek (`peek_remote_catalog`) to `route` and

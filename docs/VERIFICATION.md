@@ -11,7 +11,7 @@ existing-file preservation, edited blocks, stale indexes, restoration, path
 aliases, and concurrent operations. The installed-wheel CLI rehearsal applies
 and restores a temporary instruction file without changing user configuration.
 
-CI builds and installs the package on Windows, Linux and macOS with Python 3.10
+CI builds and installs the package on Windows, Linux and macOS with Python 3.11
 and 3.13. It installs managed modules, checks their actual recipe handoffs and
 exercises report browser readiness. Obsidian is installed on Python 3.13;
 unsupported Python versions are rejected before installation.
