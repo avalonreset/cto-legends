@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.31",
+  "version": "1.0.32",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -132,18 +132,23 @@
       }
     },
     "legends-hetzner": {
-      "version": "0.1.2",
+      "version": "0.1.3",
       "repo": "avalonreset/legends-hetzner",
-      "commit": "f878fbc994bb29e1a432f4672a69c956eaaa8ee8",
-      "sha256": "538f56be386e1428757a6d2897e52b8d9d7123b835b5381390b67f3b3b3163c9",
-      "purpose": "Inspect Hetzner Cloud projects, prepare reviewed server plans, and attach a source-cited operations library to a selected Empire vault.",
+      "commit": "8325bf2564ac3c2543d065220a840f439fd6d899",
+      "sha256": "d2ed6e7814d6e4468ba1e07c1bbb1cbfdc38fbfffb16c694963ab2f7226b605f",
+      "purpose": "Inspect Hetzner Cloud projects, scan Cost-Optimized CX/CAX stock with Fractional CTO sizing, prepare reviewed server plans, snipe scarce capacity safely, and attach a source-cited operations library to a selected Empire vault.",
       "keywords": [
         "hetzner",
         "hcloud",
         "cloud",
         "server",
         "vps",
-        "ssh"
+        "ssh",
+        "cx43",
+        "cx33",
+        "cx23",
+        "radar",
+        "snipe"
       ],
       "dependencies": {},
       "platforms": [
@@ -151,7 +156,7 @@
         "linux",
         "macos"
       ],
-      "scope": "Python 3.11+ standard-library workflows over the official hcloud CLI. Read-only readiness, inventory, catalog and preflight; reviewed server plans and explicit creation. A bounded Windows-client live canary validated Ubuntu 24.04 server creation/readback, SSH, cloud-init and cleanup. Optional versioned knowledge attachment uses Empire 0.3.1+ separately, including native Windows local fixed NTFS with Python 3.11+.",
+      "scope": "Python 3.11+ standard-library workflows over the official hcloud CLI. Read-only readiness, inventory, catalog, Cost-Optimized CX/CAX stock radar (fsn1/nbg1/hel1), Fractional CTO sizing doctrine, and 10-check preflight (including --allow-unavailable direct placement checks); reviewed server plans, explicit creation, and rate-limit-safe server sniping. A bounded Windows-client live canary validated Ubuntu 24.04 server creation/readback, SSH, cloud-init and cleanup. Optional versioned knowledge attachment uses Empire 0.3.1+ separately, including native Windows local fixed NTFS with Python 3.11+.",
       "discovery": {
         "signals": [
           "hetzner",
@@ -160,11 +165,19 @@
           "hetzner cloud",
           "cloud server plan",
           "hetzner ssh",
-          "hetzner inventory"
+          "hetzner inventory",
+          "hetzner stock",
+          "hetzner radar",
+          "hetzner snipe",
+          "cx43",
+          "cx33",
+          "cx23"
         ],
         "examples": [
           "Help me manage my Hetzner Cloud servers",
           "Check my Hetzner project and plan a new server",
+          "Scan Hetzner Cost-Optimized CX43, CX33, and CX23 stock in Germany and Finland",
+          "Watch for or snipe an open Hetzner CX43 or CX33 server with a hash-locked plan",
           "Set up Hetzner with my agent",
           "Attach the Hetzner operations knowledge library to my Empire"
         ],
@@ -173,6 +186,7 @@
         "instructions": [
           "README.md",
           "docs/AGENT-RECIPE.md",
+          "docs/CTO-SIZING-AND-SNIPING.md",
           "knowledge/hetzner/vault/index.md"
         ]
       },

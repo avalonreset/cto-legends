@@ -5,6 +5,16 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.32 - 2026-10-31
+
+- Update legends-hetzner to 0.1.3 with live Cost-Optimized CX/CAX stock
+  radar (sn1, 
+bg1, hel1), Fractional CTO sizing priority (CX43 ->
+  CX33 -> CX23 -> CX53 -> CAX31 -> CAX21 -> CAX11 -> CAX41),
+  direct API placement verification (--allow-unavailable), rate-limit-safe
+  guarded server sniping (server snipe), and REST server_types enrichment
+  for hcloud 1.61.0+.
+
 ## 1.0.31 - 2026-10-29
 
 - Standardize all 15 Python catalog modules on **Python 3.11+**
