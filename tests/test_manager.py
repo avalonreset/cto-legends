@@ -60,7 +60,7 @@ class ManagerTests(unittest.TestCase):
             "legends-stable-audio-3", "legends-obs", "legends-hyperyap",
             "legends-empire", "legends-grant", "legends-firecrawl",
             "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev",
-            "legends-hetzner", "legends-cloudflare", "legends-astro"})
+            "legends-hetzner", "legends-cloudflare", "legends-astro", "legends-gohighlevel"})
 
     def test_setup_revision_rebuilds_same_source(self):
         module = m.catalog()['modules']['legends-github']
@@ -85,7 +85,8 @@ class ManagerTests(unittest.TestCase):
                                ("rip this video", "legends-yt-dlp"),
                                ("transcribe my voice memos", "legends-ambient-intelligence"),
                                ("caption this video", "legends-captions"),
-                               ("Inspect my Cloudflare DNS records", "legends-cloudflare")):
+                               ("Inspect my Cloudflare DNS records", "legends-cloudflare"),
+                               ("Audit my GoHighLevel sub-account pipelines and rebilling", "legends-gohighlevel")):
             self.assertEqual(route(goal)["matches"][0]["id"], expected)
 
     def test_obs_kit_plan_advertises_cursor_extra(self):

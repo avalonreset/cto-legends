@@ -5,15 +5,24 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.33 - 2026-10-31
+
+- Add `legends-gohighlevel` 0.3.0 for GoHighLevel API v2 and Workflows v3
+  sub-account inspection, preview-first CRM mutations with API readback,
+  Voice/Conversation AI and Custom Objects inspection, live internal backend
+  5-layer agency governance (`location-unnerf`, `user-unnerf`,
+  `unlock-dashboards`, `smtp-unlock`, `rebilling-sync`), and an optional
+  versioned `legends-empire` knowledge pack (`knowledge/gohighlevel/pack.json`).
+- Add `legends-gohighlevel-kit` as a catalog and CLI compatibility alias.
+
 ## 1.0.32 - 2026-10-31
 
-- Update legends-hetzner to 0.1.3 with live Cost-Optimized CX/CAX stock
-  radar (sn1, 
-bg1, hel1), Fractional CTO sizing priority (CX43 ->
-  CX33 -> CX23 -> CX53 -> CAX31 -> CAX21 -> CAX11 -> CAX41),
-  direct API placement verification (--allow-unavailable), rate-limit-safe
-  guarded server sniping (server snipe), and REST server_types enrichment
-  for hcloud 1.61.0+.
+- Update `legends-hetzner` to 0.1.3 with live Cost-Optimized CX/CAX stock
+  radar (`fsn1`, `nbg1`, `hel1`), Fractional CTO sizing priority (`CX43` ->
+  `CX33` -> `CX23` -> `CX53` -> `CAX31` -> `CAX21` -> `CAX11` -> `CAX41`),
+  direct API placement verification (`--allow-unavailable`), rate-limit-safe
+  guarded server sniping (`server snipe`), and REST `server_types` enrichment
+  for `hcloud` 1.61.0+.
 
 ## 1.0.31 - 2026-10-29
 

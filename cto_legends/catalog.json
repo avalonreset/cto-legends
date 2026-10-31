@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.32",
+  "version": "1.0.33",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -484,6 +484,108 @@
         "content-collections"
       ],
       "scope": "Portable Python and Node CLI for Astro v7 readiness, HTML/WordPress/Firecrawl migration contract extraction, Content Layer scaffolding, post-build dist/ parity verification, pinned withastro/docs lookup, and attachable Empire knowledge pack.",
+      "dependencies": {},
+      "readiness": "doctor"
+    },
+    "legends-gohighlevel": {
+      "purpose": "GoHighLevel CRM, Workflows v3, Voice/Conversation AI, Custom Objects, and 5-layer agency backend governance CLI with preview-first mutations, API readback, and a source-cited knowledge vault.",
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "probe": [
+          {
+            "module": "legends_gohighlevel",
+            "do": "import",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "module": "legends_gohighlevel",
+            "args": [
+              "doctor"
+            ],
+            "do": "module-cli"
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "wiki/index.md",
+              "references/sources.md",
+              "docs/AGENT-RECIPE.md",
+              "knowledge/gohighlevel/pack.json"
+            ]
+          }
+        ],
+        "run": {
+          "kind": "module",
+          "module": "legends_gohighlevel",
+          "runtime": "python"
+        },
+        "pip": {
+          "kind": "path"
+        }
+      },
+      "commit": "a2c917645d628def17266a0241dbfd54fb5b8c79",
+      "sha256": "5bc732ee66c3203b4f2b117932a62604018b3c75aedc4f5723250e80db8fa973",
+      "license": "MIT",
+      "version": "0.3.0",
+      "discovery": {
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "wiki/index.md"
+        ],
+        "setup": "Python 3.11+. Offline doctor and governance audits (rebilling-audit, scope-audit, smtp-audit, dashboard-audit) need no credentials. Live 5-layer agency audits and remediation (live-audit, agency-locations, location-unnerf, agency-users, user-inspect, user-unnerf, user-sync-locations, dashboard-permissions, unlock-dashboards, smtp-status, smtp-unlock, rebilling-status, rebilling-sync, pit-list, email-domains) use GHL_TOKEN_ID, local browser IndexedDB, or SSH worker IndexedDB extraction via ~/.config/legends-gohighlevel/agency.json. Live sub-account CRM, Workflows v3, Voice/Conversation AI, and Custom Objects operations require GHL_PIT (or GHL_ACCESS_TOKEN) and GHL_LOCATION_ID, or named profiles in ~/.config/legends-gohighlevel/config.json.",
+        "not_for": "Ambient HighLevel/LeadConnector MCP servers, unconfirmed bulk CRM mutations, or storing tokens on command-line arguments.",
+        "signals": [
+          "gohighlevel",
+          "highlevel",
+          "ghl",
+          "leadconnector",
+          "gohighlevel api",
+          "gohighlevel cli",
+          "gohighlevel mcp",
+          "ghl crm",
+          "highlevel pipelines",
+          "highlevel custom values",
+          "ghl rebilling",
+          "highlevel smtp",
+          "ghl scopes",
+          "highlevel dashboard permissions",
+          "ghl sub-account permissions",
+          "highlevel workflows v3",
+          "ghl voice ai",
+          "ghl conversation ai",
+          "highlevel custom objects",
+          "gohighlevel sub account"
+        ],
+        "examples": [
+          "Run a live 5-layer permission, dashboard RBAC, SMTP, and rebilling audit across my GoHighLevel agency",
+          "Audit my GoHighLevel sub-account health, business profile, pipelines, and published workflows",
+          "Un-nerf location feature flags, user V2 scopes, Default Dashboards, and 1.05x rebilling across all HighLevel sub-accounts",
+          "Inspect a HighLevel user's V1 permissions, V2 scopes, Only Assigned Data flags, and +hubpro alias locations",
+          "Inspect my GoHighLevel pipelines, calendars, Workflows v3 definitions, Voice AI agents, and Custom Objects",
+          "Preview and update a GoHighLevel contact, tag, opportunity, custom value, or workflow status with readback verification",
+          "Audit HighLevel sub-account rebilling markups across all 14 metered SaaS Billing v2 products"
+        ]
+      },
+      "repo": "avalonreset/legends-gohighlevel",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "keywords": [
+        "gohighlevel",
+        "highlevel",
+        "crm",
+        "leadconnector",
+        "automation"
+      ],
+      "scope": "Portable Python 3.11+ CLI for HighLevel API v2 and Workflows v3 sub-account inspection and preview-first CRM mutations (contacts, tags, notes, opportunities, custom values, workflows, Voice AI, Conversation AI, Custom Objects, Funnels), live internal backend 5-layer agency governance (location flags, user V1/V2 scopes, Default Dashboard RBAC, Custom SMTP locks, 4-store + 14-product 1.05x rebilling sync), and an attachable legends-empire knowledge pack.",
       "dependencies": {},
       "readiness": "doctor"
     },
@@ -1449,7 +1551,8 @@
     "legends-coolify-kit": "legends-coolify",
     "legends-cloudflare-kit": "legends-cloudflare",
     "legends-obs-kit": "legends-obs",
-    "legends-astro-kit": "legends-astro"
+    "legends-astro-kit": "legends-astro",
+    "legends-gohighlevel-kit": "legends-gohighlevel"
   },
   "retired": {
     "legends-obsidian": "legends-empire"
