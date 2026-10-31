@@ -141,7 +141,7 @@ Modules are organized across four capability layers (matching the [ ecosystem di
 | Module | Use it for | Managed setup |
 |---|---|---|
 | [legends-empire](https://github.com/avalonreset/legends-empire) | Digital ontology, source-cited vault memory, `vault stewardship` (`legends-vault-stewardship`), and optional AI Marketing Hub Home adapter | Python 3.11+; POSIX/WSL and native Windows local NTFS transaction support |
-| [legends-hetzner](https://github.com/avalonreset/legends-hetzner) | Hetzner Cloud server inventory, catalog, preflight and reviewed provisioning plans | Portable Python CLI over `hcloud`; attachable Empire knowledge library |
+| [legends-hetzner](https://github.com/avalonreset/legends-hetzner) | Hetzner Cloud inventory, Cost-Optimized CX/CAX stock radar, Fractional CTO sizing, 10-check preflight, and guarded VPS sniping | Portable Python CLI over `hcloud`; attachable Empire knowledge library |
 | [legends-coolify](https://github.com/avalonreset/legends-coolify) | Coolify inventory, deployment history, resource status, backup schedules and planning | Read-only Python CLI; packaged source-cited library with optional Empire attachment |
 | [legends-cloudflare](https://github.com/avalonreset/legends-cloudflare) | Cloudflare zone and DNS inventory, nameservers, preview-first DNS record changes and readback | Dependency-free Python CLI; Obsidian knowledge vault and attachable Empire library |
 | [legends-astro](https://github.com/avalonreset/legends-astro) | Astro v7 readiness, WordPress and HTML migration contract extraction, Content Layer scaffolding, and `dist/` build parity checks | Dependency-free Python and Node CLI; vendored `withastro/docs` snapshot and attachable Empire library |
