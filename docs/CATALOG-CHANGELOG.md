@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.37 - 2026-11-04
+
+- Update `legends-gohighlevel` to 0.3.1 (`9ca21f178288b62787ae078efac2438e1749f216`) removing local desktop browser `IndexedDB` directory scraping (`extract_local_token_from_indexeddb` and `local_indexeddb_path`) and adding explicit Endpoint Security (EDR) agent guardrails against reading local browser profile folders.
+
 ## 1.0.36 - 2026-11-04
 
 - Update `legends-geogrid` to 0.2.4 (`4f7c418b65cecc072d8c7ef1b176b40b075cd33d`) with multi-schema zero-daemon static Companion support (`geogrid-companion/v1`, `geogrid-battlefield/v1`, and `parsed-grid.json`), `file://` basemap selector guardrails, and zero-daemon documentation alignment across all agent handoff guides.

@@ -43,8 +43,8 @@ remain independently useful; module recipes are still loaded on demand.
 A successful `doctor` checks managed command surfaces. GeoGrid's
 `report-readiness` additionally checks PDF libraries, the map browser and
 transport availability. Provider calls have their own credentials and cost gates.
-legends-obsidian requires Python 3.11+; native Windows reads/previews work,
-while its vault mutations require POSIX or WSL. A Windows registration does not
+`legends-empire` requires Python 3.11+ and supports native Windows, macOS,
+and Linux transactions on local fixed filesystems. A Windows registration does not
 silently route commands to another machine or copy credentials there.
 
 Updates refresh only unedited registrations owned by this installer. Existing

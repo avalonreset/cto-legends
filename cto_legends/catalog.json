@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.36",
+  "version": "1.0.37",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -528,17 +528,17 @@
           "kind": "path"
         }
       },
-      "commit": "a2c917645d628def17266a0241dbfd54fb5b8c79",
-      "sha256": "5bc732ee66c3203b4f2b117932a62604018b3c75aedc4f5723250e80db8fa973",
+      "commit": "9ca21f178288b62787ae078efac2438e1749f216",
+      "sha256": "14010a45c0c2cd53932243392d02cbdfab84a58cc71e85e4293165c88bfe3fd4",
       "license": "MIT",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "discovery": {
         "instructions": [
           "README.md",
           "docs/AGENT-RECIPE.md",
           "wiki/index.md"
         ],
-        "setup": "Python 3.11+. Offline doctor and governance audits (rebilling-audit, scope-audit, smtp-audit, dashboard-audit) need no credentials. Live 5-layer agency audits and remediation (live-audit, agency-locations, location-unnerf, agency-users, user-inspect, user-unnerf, user-sync-locations, dashboard-permissions, unlock-dashboards, smtp-status, smtp-unlock, rebilling-status, rebilling-sync, pit-list, email-domains) use GHL_TOKEN_ID, local browser IndexedDB, or SSH worker IndexedDB extraction via ~/.config/legends-gohighlevel/agency.json. Live sub-account CRM, Workflows v3, Voice/Conversation AI, and Custom Objects operations require GHL_PIT (or GHL_ACCESS_TOKEN) and GHL_LOCATION_ID, or named profiles in ~/.config/legends-gohighlevel/config.json.",
+        "setup": "Python 3.11+. Offline doctor and governance audits (rebilling-audit, scope-audit, smtp-audit, dashboard-audit) need no credentials. Live 5-layer agency audits and remediation (live-audit, agency-locations, location-unnerf, agency-users, user-inspect, user-unnerf, user-sync-locations, dashboard-permissions, unlock-dashboards, smtp-status, smtp-unlock, rebilling-status, rebilling-sync, pit-list, email-domains) use GHL_TOKEN_ID or remote worker_ssh via ~/.config/legends-gohighlevel/agency.json. Live sub-account CRM, Workflows v3, Voice/Conversation AI, and Custom Objects operations require GHL_PIT (or GHL_ACCESS_TOKEN) and GHL_LOCATION_ID, or named profiles in ~/.config/legends-gohighlevel/config.json.",
         "not_for": "Ambient HighLevel/LeadConnector MCP servers, unconfirmed bulk CRM mutations, or storing tokens on command-line arguments.",
         "signals": [
           "gohighlevel",

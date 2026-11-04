@@ -23,7 +23,7 @@ package dependencies instead of merging every tool into one Python environment.
 | Read a standalone skill | Use the host's skill loader or load its Markdown explicitly. |
 | Operate a cto-legends workflow with tools | Use cto-legends to install its cataloged module and inspect its guide. |
 | Use an unrelated third-party skill | Follow that project's installation instructions. |
-| Store research in a vault | Install legends-obsidian and explicitly select the vault. |
+| Store research in a vault | Install `legends-empire` and explicitly select the vault. |
 
 The central recipe is shared, but native skill discovery differs by application.
 Grok, Codex, Gemini, Claude, Cursor and MetaMuse still need file and command
