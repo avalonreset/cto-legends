@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.44 - 2026-11-04
+
+- Update `legends-empire` to 0.3.3 (`49ea828ce5211cb987f690cd040b6a2b48836a98`) lowering `BATCH_SIZE` in `claude_empire/home_install.py` from `400` to `150` files per transaction batch, removing `scripts/compact-skill-descriptions.ps1`, and clarifying `scripts/wiki-mode.py templates` guidance.
+
 ## 1.0.43 - 2026-11-04
 
 - Update `legends-firecrawl` to 0.3.3 (`35c6963457005100f788522ecf46099facb32e0f`) adding Python `[project.scripts]` entrypoints (`lfc`, `lax`, `legends-firecrawl`), native `lfc alexandria` routing in `python/legends_firecrawl/cli.py`, direct Python invocation in `bin/lfc.cmd` without `-ExecutionPolicy Bypass`, Python `getpass` in `bin/setup-auth.ps1` without `SecureStringToBSTR`, and removal of third-party `%APPDATA%\firecrawl-cli\credentials.json` reading in `alexandria-src/router.js`.
