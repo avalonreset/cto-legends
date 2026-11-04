@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.44",
+  "version": "1.0.45",
   "modules": {
     "legends-empire": {
       "version": "0.3.3",
@@ -830,10 +830,10 @@
       }
     },
     "legends-github": {
-      "version": "0.2.1",
-      "commit": "5810aa4a7912ba73a3a56e943d4b8737b12dce90",
+      "version": "0.2.2",
+      "commit": "720e96eaf72cab653876b5762bcefb597b66e896",
       "repo": "avalonreset/legends-github",
-      "sha256": "f6e7f7311dfa5457aa36930b3cdd95b84b2fbd7751854b3c9d7877f79b9651cd",
+      "sha256": "70e78e5a89684f7a53acef23bac1c95984b0f65b46b1822237d539e24390888d",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
