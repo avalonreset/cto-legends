@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.41 - 2026-11-04
+
+- Update `legends-obs` to 0.1.3 (`c08de7dfe50a8234b8fca6cedb6e6e2f2fd960be`) tracking prebuilt `dist/` artifacts in the repository, removing the `corepack pnpm dev` fallback in `bin/doctor.ps1`, removing `-ExecutionPolicy Bypass` from `runPowerShellJson()`, and gating `GetAsyncKeyState` mouse-button polling in `legends_cursor_filter.lua`.
+
 ## 1.0.40 - 2026-11-04
 
 - Update legends-yt-dlp to 0.1.3 ($commit) adding yt-dlp>=2026.10.01 as a standard package dependency, preferring the active Python environment / PATH yt-dlp executable in ind_ytdlp(), enforcing fail-closed SHA-256 verification in install_ytdlp(), and replacing powershell -ExecutionPolicy Bypass across onboarding prompts and operator documentation with legends-yt-dlp.
