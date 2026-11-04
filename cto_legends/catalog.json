@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.39",
+  "version": "1.0.40",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -1253,10 +1253,10 @@
       }
     },
     "legends-yt-dlp": {
-      "version": "0.1.2",
-      "commit": "61ebc6e2672ed3862ab44a5f6abd20d37be6398c",
+      "version": "0.1.3",
+      "commit": "9ec53586ebfaf26911b2e7e0b22f5969de264f46",
       "repo": "avalonreset/legends-yt-dlp",
-      "sha256": "9eb7a901e02322ae6fc3518e8fb4f096efcfb823077ba2f9118d8a37b66674bc",
+      "sha256": "9c5c988ad21301283c3bc8e52fa03b5a4ac9e7e650e2fa66da3bd6e0bcb6676c",
       "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
       "keywords": [
         "youtube",

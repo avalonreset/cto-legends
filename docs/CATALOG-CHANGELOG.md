@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.40 - 2026-11-04
+
+- Update legends-yt-dlp to 0.1.3 ($commit) adding yt-dlp>=2026.10.01 as a standard package dependency, preferring the active Python environment / PATH yt-dlp executable in ind_ytdlp(), enforcing fail-closed SHA-256 verification in install_ytdlp(), and replacing powershell -ExecutionPolicy Bypass across onboarding prompts and operator documentation with legends-yt-dlp.
+
 ## 1.0.39 - 2026-11-04
 
 - Update legends-ambient-intelligence to 0.1.2 ($commit) replacing Windows PowerShell and WMI Win32_Volume subprocess calls with direct Win32 kernel32 APIs (GetLogicalDrives, GetVolumeInformationW, and DeviceIoControl) via ctypes.
