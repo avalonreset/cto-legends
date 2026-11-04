@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.37",
+  "version": "1.0.38",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -1017,10 +1017,10 @@
       "readiness": "doctor"
     },
     "legends-jev": {
-      "version": "0.2.1",
-      "commit": "c6f9506d047764fd7a2487c5aae4470c563d6606",
+      "version": "0.2.2",
+      "commit": "a49f4fea54fca0ba18150f21aa385a4a03e68bdc",
       "repo": "avalonreset/legends-jev",
-      "sha256": "e3ac528780ad0a76e451f3d24634e204fae1f120777f6a0ebbacd63c56a3dd0e",
+      "sha256": "3c1d06f08ed634f49aa7fe0d3cfc689156d5b6a7dbccd2f67aec455cedc62596",
       "purpose": "Typed optical recognition (OCR), storefront signage verification, and decision advice for computer use, application control and browser action selection from supplied text evidence, local images, and candidates.",
       "keywords": [
         "jev",

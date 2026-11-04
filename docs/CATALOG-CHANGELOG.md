@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.38 - 2026-11-04
+
+- Update `legends-jev` to 0.2.2 (`a49f4fea54fca0ba18150f21aa385a4a03e68bdc`) with native `Pillow` image normalization, removal of the Windows PowerShell `System.Drawing` subprocess fallback, and direct `credential_present` reporting in `doctor` and `readiness`.
+
 ## 1.0.37 - 2026-11-04
 
 - Update `legends-gohighlevel` to 0.3.1 (`9ca21f178288b62787ae078efac2438e1749f216`) removing local desktop browser `IndexedDB` directory scraping (`extract_local_token_from_indexeddb` and `local_indexeddb_path`) and adding explicit Endpoint Security (EDR) agent guardrails against reading local browser profile folders.
