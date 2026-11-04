@@ -94,7 +94,7 @@ class ManagerTests(unittest.TestCase):
             item = m.plan(self.home, [name])[0]
             self.assertEqual(item["id"], "legends-obs")
             self.assertIn("cursor", item["extras"])
-            self.assertIn("extras/cursor/legends-cursor.lua", item["extras"]["cursor"])
+            self.assertIn("extras/cursor/legends_cursor_filter.lua", item["extras"]["cursor"])
 
     def test_guided_install_does_not_download_or_activate_native_apps(self):
         with patch.object(m, "prepare", side_effect=AssertionError("must not prepare")), patch.object(m, "fetch", side_effect=AssertionError("network")):
