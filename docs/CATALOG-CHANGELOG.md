@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.35 - 2026-11-03
+
+- Update `legends-geogrid` 0.2.3 archive SHA-256 digest in `cto_legends/catalog.json` to match the canonical GitHub `codeload` zip archive.
+
 ## 1.0.34 - 2026-11-03
 
 - Update `legends-geogrid` to 0.2.3 with a zero-daemon static Companion launcher (`python tools/study.py --open` / `python tools/study.py open`), explicit Endpoint Security (EDR) agent guardrails against hidden PowerShell background server wrappers, multi-resolution lattice partitioning (`partitionUniformLattices`) and extended distance rings, and `vite` 8.3.5 security hardening.
