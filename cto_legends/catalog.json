@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.45",
+  "version": "1.0.46",
   "modules": {
     "legends-empire": {
       "version": "0.3.3",
@@ -1178,10 +1178,10 @@
       }
     },
     "legends-captions": {
-      "version": "0.1.1",
-      "commit": "f9f22fd12b364b212ced810145817f871582e119",
+      "version": "0.1.2",
+      "commit": "d5a703d36d57fa6df2b6edb1c8fa180a27436e9d",
       "repo": "avalonreset/legends-captions",
-      "sha256": "ee9fa5264d7d90b86b8ed4747adc8a82ae6313ddc09a66d2fc179c0812abebfc",
+      "sha256": "5842d2ea01a6549ef7c749f040692a159363540bbaeda3b3397ef6d249c1ddd1",
       "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
       "keywords": [
         "caption",
