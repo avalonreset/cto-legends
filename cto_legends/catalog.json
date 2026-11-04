@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.40",
+  "version": "1.0.41",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -1104,9 +1104,9 @@
       }
     },
     "legends-obs": {
-      "version": "0.1.2",
+      "version": "0.1.3",
       "repo": "avalonreset/legends-obs",
-      "commit": "39595276ce8f8b5cc3a59a9ddc4dac5b9ad72ca0",
+      "commit": "c08de7dfe50a8234b8fca6cedb6e6e2f2fd960be",
       "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
       "keywords": [
         "obs",
@@ -1126,7 +1126,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "152cdef5bcb086d7ec8403445178862c9c9100a2defbf672c0e18b844ce6aa2b",
+      "sha256": "1495d05de93a248e97ffbe3909ccc0f7f6fff869efe205ded9ce4af003d3e9fc",
       "discovery": {
         "signals": [
           "record my screen",
@@ -1150,7 +1150,7 @@
           "docs/RECIPES.md"
         ]
       },
-      "artifact_url": "https://github.com/avalonreset/legends-obs/releases/download/v0.1.2/avalonreset-legends-obs-0.1.2.tgz",
+      "artifact_url": "https://github.com/avalonreset/legends-obs/releases/download/v0.1.3/avalonreset-legends-obs-0.1.3.tgz",
       "recipe": {
         "requires_node": 22,
         "env": false,
@@ -1173,7 +1173,7 @@
           "path": "dist/index.js"
         },
         "extras": {
-          "cursor": "Optional animated cursor overlay plus click effects (GPL Lua filter, not installed by default). After install, copy extras/cursor/legends-cursor.lua into the OBS scripts folder and enable it under Tools > Scripts."
+          "cursor": "Optional animated cursor overlay plus click effects (GPL Lua filter, not installed by default). After install, copy extras/cursor/legends_cursor_filter.lua into the OBS scripts folder and enable it under Tools > Scripts."
         }
       }
     },
