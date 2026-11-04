@@ -321,3 +321,18 @@ They remain separate projects and keep their own licensing and model terms.
 
 - **Community & Home system access:** [AI Marketing Hub Pro](https://www.skool.com/ai-marketing-hub-pro/about)
 - **Website:** [cto-legends.com](https://cto-legends.com)
+
+## Live specifications and engineering dispatches
+
+- **Router specification & comparison matrix:** [cto-legends.com/modules/cto-legends](https://cto-legends.com/modules/cto-legends)
+- **Full 18-module catalog & ecosystem hub:** [cto-legends.com/home](https://cto-legends.com/home)
+
+**Engineering dispatches & benchmarks:**
+- [Codex vs Claude Code: CLI and Cursor Agent Benchmarks](https://cto-legends.com/blog?post=codex-vs-claude-code-benchmarks)
+- [How to Build AI Agents: Production CLI & MCP Routing](https://cto-legends.com/blog?post=how-to-build-ai-agents-cli-mcp-routing)
+- [Obsidian Second Brain: Markdown Knowledge Base Guide](https://cto-legends.com/blog?post=obsidian-second-brain-markdown-knowledge-base)
+- [Claude Code Skills: MCP vs CLI Workflow Architecture](https://cto-legends.com/blog?post=claude-code-skills-mcp-vs-cli-workflow)
+- [Railway vs Render: Fly.io vs Self-Hosted Coolify PaaS](https://cto-legends.com/blog?post=railway-vs-render-fly-io-coolify-paas)
+- [Browser Automation AI: Computer Use Agent Benchmarks](https://cto-legends.com/blog?post=browser-automation-ai-computer-use-benchmarks)
+- [Fractional CTO Advisory: Technical Due Diligence Guide](https://cto-legends.com/blog?post=fractional-cto-technical-due-diligence-guide)
+- [Hetzner vs AWS & DigitalOcean: Cloud Server Planning](https://cto-legends.com/blog?post=hetzner-vs-aws-digitalocean-cloud-server-planning)
