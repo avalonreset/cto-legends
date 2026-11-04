@@ -831,9 +831,9 @@
     },
     "legends-github": {
       "version": "0.2.2",
-      "commit": "720e96eaf72cab653876b5762bcefb597b66e896",
+      "commit": "fd2365bdb24005394935b92fde0f68044d05b0ea",
       "repo": "avalonreset/legends-github",
-      "sha256": "70e78e5a89684f7a53acef23bac1c95984b0f65b46b1822237d539e24390888d",
+      "sha256": "a7b159ef7fabb0a8c48837346afff9b2cceaf915f7dbda5829322427233c580d",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
