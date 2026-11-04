@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.42",
+  "version": "1.0.43",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -761,10 +761,10 @@
       "readiness": "task-readiness research"
     },
     "legends-firecrawl": {
-      "version": "0.3.2",
-      "commit": "753ffd70466fb14d62c78c8ffd0f6a201851add7",
+      "version": "0.3.3",
+      "commit": "35c6963457005100f788522ecf46099facb32e0f",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "fd29638f8ab18786a2eebda8664d59e1138d6e1541c066360c58f7fd7b80fb09",
+      "sha256": "94a9f9bbb223efd9798996ceb18346ec4af87d44b180f22ecbcb4b9c206283cb",
       "purpose": "Official Firecrawl web operations and Alexandria queries with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "firecrawl",

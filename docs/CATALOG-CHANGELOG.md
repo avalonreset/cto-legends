@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.43 - 2026-11-04
+
+- Update `legends-firecrawl` to 0.3.3 (`35c6963457005100f788522ecf46099facb32e0f`) adding Python `[project.scripts]` entrypoints (`lfc`, `lax`, `legends-firecrawl`), native `lfc alexandria` routing in `python/legends_firecrawl/cli.py`, direct Python invocation in `bin/lfc.cmd` without `-ExecutionPolicy Bypass`, Python `getpass` in `bin/setup-auth.ps1` without `SecureStringToBSTR`, and removal of third-party `%APPDATA%\firecrawl-cli\credentials.json` reading in `alexandria-src/router.js`.
+
 ## 1.0.42 - 2026-11-04
 
 - Update `legends-hyperyap` to 0.1.2 (`df48cb7fdef5d58eed5b9f771aee521069552e0c`) removing AutoHotkey (`presets/scripts/hyperyap-hotkeys.ahk`, `presets/scripts/clipboard-image-paste.ps1`, and `ahk-v2.exe` installer logic), replacing hidden PowerShell clipboard fallback calls in `hotkeys/src/main.rs` with native Win32 `CF_DIB` retry loops, and setting `"persist_history": false` in `presets/settings.json`.
