@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.35",
+  "version": "1.0.36",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -590,10 +590,10 @@
       "readiness": "doctor"
     },
     "legends-geogrid": {
-      "version": "0.2.3",
-      "commit": "d01164d0d30d608f4bc3b2a40cc53e27a2921c77",
+      "version": "0.2.4",
+      "commit": "4f7c418b65cecc072d8c7ef1b176b40b075cd33d",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "0b3a7c43654d6b5fffab62a450b10c2bb6e83864b8d63c1a4b7274241e1fcd81",
+      "sha256": "9265b04fce4cad5fcf3be661334cb50cf8fe2584c9104854ee0f3e2fff5453b0",
       "purpose": "Google Maps ranking grids, circular-lattice competitive studies, multi-query strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
