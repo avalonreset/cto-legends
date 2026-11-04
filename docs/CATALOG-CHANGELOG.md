@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.39 - 2026-11-04
+
+- Update legends-ambient-intelligence to 0.1.2 ($commit) replacing Windows PowerShell and WMI Win32_Volume subprocess calls with direct Win32 kernel32 APIs (GetLogicalDrives, GetVolumeInformationW, and DeviceIoControl) via ctypes.
+
 ## 1.0.38 - 2026-11-04
 
 - Update `legends-jev` to 0.2.2 (`a49f4fea54fca0ba18150f21aa385a4a03e68bdc`) with native `Pillow` image normalization, removal of the Windows PowerShell `System.Drawing` subprocess fallback, and direct `credential_present` reporting in `doctor` and `readiness`.

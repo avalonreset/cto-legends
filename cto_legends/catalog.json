@@ -1463,10 +1463,10 @@
       }
     },
     "legends-ambient-intelligence": {
-      "version": "0.1.1",
-      "commit": "17ef3e6bfd10b2d4a745a61924a18b0f68a5a5e7",
+      "version": "0.1.2",
+      "commit": "785b7551a4d601b2121edeb64aaef3f94f3715f8",
       "repo": "avalonreset/legends-ambient-intelligence",
-      "sha256": "729ad2b3d356be146fae7a708e121c64b6eb5e9fd529843bf38227c580e0dcf9",
+      "sha256": "e8e4de3f78f2a63f106db72f87c3c9d8ada0396e1a1764942ab66062ebc0f752",
       "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
       "keywords": [
         "ambient",
@@ -1556,5 +1556,6 @@
   },
   "retired": {
     "legends-obsidian": "legends-empire"
-  }
+  },
+  "catalog_version": "1.0.39"
 }
