@@ -5,17 +5,21 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.42 - 2026-11-04
+
+- Update `legends-hyperyap` to 0.1.2 (`df48cb7fdef5d58eed5b9f771aee521069552e0c`) removing AutoHotkey (`presets/scripts/hyperyap-hotkeys.ahk`, `presets/scripts/clipboard-image-paste.ps1`, and `ahk-v2.exe` installer logic), replacing hidden PowerShell clipboard fallback calls in `hotkeys/src/main.rs` with native Win32 `CF_DIB` retry loops, and setting `"persist_history": false` in `presets/settings.json`.
+
 ## 1.0.41 - 2026-11-04
 
 - Update `legends-obs` to 0.1.3 (`c08de7dfe50a8234b8fca6cedb6e6e2f2fd960be`) tracking prebuilt `dist/` artifacts in the repository, removing the `corepack pnpm dev` fallback in `bin/doctor.ps1`, removing `-ExecutionPolicy Bypass` from `runPowerShellJson()`, and gating `GetAsyncKeyState` mouse-button polling in `legends_cursor_filter.lua`.
 
 ## 1.0.40 - 2026-11-04
 
-- Update legends-yt-dlp to 0.1.3 ($commit) adding yt-dlp>=2026.10.01 as a standard package dependency, preferring the active Python environment / PATH yt-dlp executable in ind_ytdlp(), enforcing fail-closed SHA-256 verification in install_ytdlp(), and replacing powershell -ExecutionPolicy Bypass across onboarding prompts and operator documentation with legends-yt-dlp.
+- Update `legends-yt-dlp` to 0.1.3 (`9ec53586ebfaf26911b2e7e0b22f5969de264f46`) adding `yt-dlp>=2026.10.01` as a standard package dependency, preferring the active Python environment / PATH `yt-dlp` executable in `find_ytdlp()`, enforcing fail-closed SHA-256 verification in `install_ytdlp()`, and replacing `powershell -ExecutionPolicy Bypass` across onboarding prompts and operator documentation with `legends-yt-dlp`.
 
 ## 1.0.39 - 2026-11-04
 
-- Update legends-ambient-intelligence to 0.1.2 ($commit) replacing Windows PowerShell and WMI Win32_Volume subprocess calls with direct Win32 kernel32 APIs (GetLogicalDrives, GetVolumeInformationW, and DeviceIoControl) via ctypes.
+- Update `legends-ambient-intelligence` to 0.1.2 (`785b7551a4d601b2121edeb64aaef3f94f3715f8`) replacing Windows PowerShell and WMI `Win32_Volume` subprocess calls with direct Win32 `kernel32` APIs (`GetLogicalDrives`, `GetVolumeInformationW`, and `DeviceIoControl`) via `ctypes`.
 
 ## 1.0.38 - 2026-11-04
 

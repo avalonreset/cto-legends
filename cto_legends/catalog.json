@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.41",
+  "version": "1.0.42",
   "modules": {
     "legends-empire": {
       "version": "0.3.2",
@@ -1417,9 +1417,9 @@
       }
     },
     "legends-hyperyap": {
-      "version": "0.1.1",
+      "version": "0.1.2",
       "repo": "avalonreset/legends-hyperyap",
-      "commit": "3aff10e8df84b37b37e90445472c8ff097be9674",
+      "commit": "df48cb7fdef5d58eed5b9f771aee521069552e0c",
       "purpose": "Local voice typing, dictation, and app-focused paste.",
       "keywords": [
         "voice",
@@ -1431,15 +1431,15 @@
         "legends-hyperyap"
       ],
       "license": "AGPL-3.0",
-      "scope": "Guided native desktop installation. v0.1.0 is source-only; platform installer binaries are pending. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
+      "scope": "Guided native desktop installation. v0.1.2 is source-only; platform installer binaries are pending. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
       "dependencies": {},
       "platforms": [
         "windows",
         "macos",
         "linux"
       ],
-      "sha256": "db6e314af087457cec0f40bce993a56ea601ca75a4933c2e8b9982732d2beced",
-      "next": "v0.1.0 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
+      "sha256": "514d86977f2b4bd42ea619d70898f48bca9805a03e67c7d8f150b77191394d19",
+      "next": "v0.1.2 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
       "discovery": {
         "signals": [
           "voice typing",
