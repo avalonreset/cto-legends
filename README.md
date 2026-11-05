@@ -73,10 +73,10 @@ For access to the AI Marketing Hub Home system, join [AI Marketing Hub Pro](http
 Python 3.11 or newer is required across the manager and all Python ecosystem modules. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
-Install the 0.2.7 wheel, or from source:
+Install the 0.2.8 wheel, or from source:
 
 ```sh
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.7/cto_legends-0.2.7-py3-none-any.whl
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.8/cto_legends-0.2.8-py3-none-any.whl
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply

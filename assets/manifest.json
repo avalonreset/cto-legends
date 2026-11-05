@@ -1,0 +1,26 @@
+{
+  "module": "cto-legends",
+  "style_family": "legends-social-v1",
+  "assets": {
+    "banner_webp": {
+      "path": "assets/banner.webp",
+      "width": 1280,
+      "height": 320
+    },
+    "banner_png": {
+      "path": "assets/banner.png",
+      "width": 1280,
+      "height": 320
+    },
+    "preview_png": {
+      "path": "assets/preview.png",
+      "width": 1024,
+      "height": 256
+    },
+    "social_preview_png": {
+      "path": "assets/social-preview.png",
+      "width": 1280,
+      "height": 640
+    }
+  }
+}

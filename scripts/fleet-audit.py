@@ -32,25 +32,33 @@ from pathlib import Path
 ORG = "avalonreset"
 ROUTER_REPO = "cto-legends"
 CANONICAL_SKILL_PATH = "cto_legends/SKILL.md"
-DEFAULT_CATALOG = "/mnt/e/cto-legends-public/cto_legends/catalog.json"
+_DRIVE_ROOT = Path("E:/") if Path("E:/cto-legends-public").is_dir() else Path("/mnt/e")
+DEFAULT_CATALOG = str(_DRIVE_ROOT / "cto-legends-public" / "cto_legends" / "catalog.json")
 
 # Hardcoded fleet matrix. Local paths are the public-checkout sources of truth
 # per projects/Legends-Ecosystem-Reset. None means no public checkout exists
 # locally; tree-dependent checks SKIP unless --checkouts supplies a path.
 REPOS: list[dict] = [
-    {"id": "cto-legends", "repo": "cto-legends", "local": "/mnt/e/cto-legends-public", "router": True},
-    {"id": "legends-dataforseo", "repo": "legends-dataforseo", "local": "/mnt/e/legends-dataforseo-public"},
-    {"id": "legends-geogrid", "repo": "legends-geogrid", "local": "/mnt/e/legends-geogrid"},
-    {"id": "legends-github", "repo": "legends-github", "local": "/mnt/e/legends-github-public"},
-    {"id": "legends-stable-audio-3", "repo": "legends-stable-audio-3", "local": "/mnt/e/legends-stable-audio-3-public-rc"},
-    {"id": "legends-obs", "repo": "legends-obs", "local": "/mnt/e/legends-obs-kit"},
-    {"id": "legends-hyperyap", "repo": "legends-hyperyap", "local": "/mnt/e/legends-hyperyap-public"},
-    {"id": "legends-empire", "repo": "legends-empire", "local": "/mnt/e/legends-empire-public"},
-    {"id": "legends-grant", "repo": "legends-grant", "local": "/mnt/e/legends-grant-public"},
-    {"id": "legends-firecrawl", "repo": "legends-firecrawl", "local": "/mnt/e/legends-firecrawl"},
-    {"id": "legends-yt-dlp", "repo": "legends-yt-dlp", "local": "/mnt/e/legends-yt-dlp-public"},
-    {"id": "legends-ambient-intelligence", "repo": "legends-ambient-intelligence", "local": "/mnt/e/legends-ambient-intelligence"},
-    {"id": "legends-captions", "repo": "legends-captions", "local": "/mnt/e/legends-captions"},
+    {"id": "cto-legends", "repo": "cto-legends", "local": str(_DRIVE_ROOT / "cto-legends-public"), "router": True},
+    {"id": "legends-empire", "repo": "legends-empire", "local": str(_DRIVE_ROOT / "legends-empire-public")},
+    {"id": "legends-hetzner", "repo": "legends-hetzner", "local": str(_DRIVE_ROOT / "legends-hetzner")},
+    {"id": "legends-coolify", "repo": "legends-coolify", "local": str(_DRIVE_ROOT / "legends-coolify")},
+    {"id": "legends-cloudflare", "repo": "legends-cloudflare", "local": str(_DRIVE_ROOT / "legends-cloudflare")},
+    {"id": "legends-astro", "repo": "legends-astro", "local": str(_DRIVE_ROOT / "legends-astro")},
+    {"id": "legends-stripe", "repo": "legends-stripe", "local": str(_DRIVE_ROOT / "legends-stripe")},
+    {"id": "legends-gohighlevel", "repo": "legends-gohighlevel", "local": str(_DRIVE_ROOT / "legends-gohighlevel")},
+    {"id": "legends-geogrid", "repo": "legends-geogrid", "local": str(_DRIVE_ROOT / "legends-geogrid")},
+    {"id": "legends-dataforseo", "repo": "legends-dataforseo", "local": str(_DRIVE_ROOT / "legends-dataforseo-public")},
+    {"id": "legends-firecrawl", "repo": "legends-firecrawl", "local": str(_DRIVE_ROOT / "legends-firecrawl")},
+    {"id": "legends-github", "repo": "legends-github", "local": str(_DRIVE_ROOT / "legends-github-public")},
+    {"id": "legends-grant", "repo": "legends-grant", "local": str(_DRIVE_ROOT / "legends-grant-public")},
+    {"id": "legends-jev", "repo": "legends-jev", "local": str(_DRIVE_ROOT / "legends-jev")},
+    {"id": "legends-obs", "repo": "legends-obs", "local": str(_DRIVE_ROOT / "legends-obs-kit")},
+    {"id": "legends-captions", "repo": "legends-captions", "local": str(_DRIVE_ROOT / "legends-captions")},
+    {"id": "legends-yt-dlp", "repo": "legends-yt-dlp", "local": str(_DRIVE_ROOT / "legends-yt-dlp-public")},
+    {"id": "legends-stable-audio-3", "repo": "legends-stable-audio-3", "local": str(_DRIVE_ROOT / "legends-stable-audio-3-public-rc")},
+    {"id": "legends-hyperyap", "repo": "legends-hyperyap", "local": str(_DRIVE_ROOT / "legends-hyperyap-public")},
+    {"id": "legends-ambient-intelligence", "repo": "legends-ambient-intelligence", "local": str(_DRIVE_ROOT / "legends-ambient-intelligence")},
 ]
 
 AGENT_BLOCK_MARKER = "Agent setup (via `cto-legends`)"
@@ -110,12 +118,12 @@ def tree_version(root: Path) -> tuple[str | None, str]:
         first = verfile.read_text(encoding="utf-8", errors="replace").strip().splitlines()
         if first and VERSION_RE.match(first[0].strip()):
             found["VERSION"] = VERSION_RE.match(first[0].strip()).group(1)
-    if len(found) == 1:
-        (which, ver), = found.items()
-        return ver, which
+    if len(set(found.values())) == 1 and found:
+        ver = next(iter(found.values()))
+        return ver, ", ".join(sorted(found.keys()))
     if not found:
         return None, "none (no pyproject.toml version, package.json version, or VERSION file)"
-    return None, "ambiguous (multiple version files: %s)" % ", ".join(
+    return None, "ambiguous (conflicting version files: %s)" % ", ".join(
         f"{k}={v}" for k, v in sorted(found.items())
     )
 
