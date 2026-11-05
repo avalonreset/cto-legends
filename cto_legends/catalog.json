@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.46",
+  "version": "1.0.47",
   "modules": {
     "legends-empire": {
       "version": "0.3.3",
@@ -918,10 +918,10 @@
       "readiness": "task-readiness github"
     },
     "legends-grant": {
-      "version": "0.3.0",
-      "commit": "209d1cec246f1205449b7c8aa1ad7bcf59da263a",
+      "version": "0.3.1",
+      "commit": "661614e692c958ec8aa7673b71bc36809fa94f1a",
       "repo": "avalonreset/legends-grant",
-      "sha256": "55ddc934298948442ad97df1f4d835784a65962158cd465f77feff39f4712d12",
+      "sha256": "10f576d037e6b628d5fa98cd556db12ef182b48da3ddc9307266b7dc34c6c394",
       "purpose": "Discover US grants, collect evidence, review eligibility and draft evidence-linked grant proposals for businesses, nonprofits, tribes, governments, researchers and individuals.",
       "keywords": [
         "grant",
