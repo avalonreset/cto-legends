@@ -319,7 +319,7 @@ class ManagerTests(unittest.TestCase):
         with patch.object(m, "fetch", side_effect=AssertionError("network")):
             plan = m.plan(home, ["legends-geogrid"])
         self.assertFalse(home.exists())
-        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo"], "0.1.6")
+        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo"], "0.1.7")
 
     def test_unknown_module_rejected(self):
         with self.assertRaises(ValueError):
