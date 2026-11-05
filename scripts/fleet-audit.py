@@ -48,7 +48,7 @@ REPOS: list[dict] = [
     {"id": "legends-stripe", "repo": "legends-stripe", "local": str(_DRIVE_ROOT / "legends-stripe")},
     {"id": "legends-gohighlevel", "repo": "legends-gohighlevel", "local": str(_DRIVE_ROOT / "legends-gohighlevel")},
     {"id": "legends-geogrid", "repo": "legends-geogrid", "local": str(_DRIVE_ROOT / "legends-geogrid")},
-    {"id": "legends-dataforseo", "repo": "legends-dataforseo", "local": str(_DRIVE_ROOT / "legends-dataforseo-public")},
+    {"id": "legends-dataforseo", "repo": "legends-dataforseo", "local": str(_DRIVE_ROOT / "legends-dataforseo")},
     {"id": "legends-firecrawl", "repo": "legends-firecrawl", "local": str(_DRIVE_ROOT / "legends-firecrawl")},
     {"id": "legends-github", "repo": "legends-github", "local": str(_DRIVE_ROOT / "legends-github-public")},
     {"id": "legends-grant", "repo": "legends-grant", "local": str(_DRIVE_ROOT / "legends-grant-public")},

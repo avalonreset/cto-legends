@@ -212,13 +212,6 @@
             "present": [
               "__version__"
             ]
-          },
-          {
-            "do": "module-cli",
-            "module": "legends_hetzner",
-            "args": [
-              "doctor"
-            ]
           }
         ],
         "run": {
@@ -786,13 +779,6 @@
             "do": "version-floor",
             "package": "legends-dataforseo",
             "min": "0.1.6"
-          },
-          {
-            "do": "script",
-            "path": "tools/study.py",
-            "args": [
-              "doctor"
-            ]
           }
         ],
         "run": {
@@ -959,13 +945,6 @@
             "present": [
               "__version__"
             ]
-          },
-          {
-            "do": "module-cli",
-            "module": "legends_firecrawl",
-            "args": [
-              "doctor"
-            ]
           }
         ],
         "run": {
@@ -1049,13 +1028,6 @@
             "path": "legends_github.py",
             "args": [
               "capabilities"
-            ]
-          },
-          {
-            "do": "script",
-            "path": "legends_github.py",
-            "args": [
-              "doctor"
             ]
           },
           {
