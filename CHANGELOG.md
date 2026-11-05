@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.6 - 2026-11-04
+
+- Ship bundled catalog `1.0.49` with Endpoint Security (EDR), anti-malware
+  heuristic, and documentation-to-CLI alignment releases across 13 public
+  ecosystem modules (`legends-empire` 0.3.3, `legends-astro` 0.2.2,
+  `legends-gohighlevel` 0.3.1, `legends-geogrid` 0.2.4,
+  `legends-dataforseo` 0.1.7, `legends-firecrawl` 0.3.3,
+  `legends-github` 0.2.2, `legends-grant` 0.3.1, `legends-jev` 0.2.2,
+  `legends-obs` 0.1.3, `legends-captions` 0.1.2, `legends-yt-dlp` 0.1.3,
+  `legends-hyperyap` 0.1.2, and `legends-ambient-intelligence` 0.1.2).
+- Align all module archive SHA-256 digests in `cto_legends/catalog.json` with
+  canonical GitHub `codeload` commit archives and release tarballs.
+- Update `tests/test_grant_catalog.py` for `legends-grant` 0.3.1.
+
 ## 0.2.5 - 2026-10-29
 
 - Standardize the `cto-legends` manager and all 15 Python catalog modules on

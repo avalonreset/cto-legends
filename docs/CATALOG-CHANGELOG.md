@@ -5,6 +5,27 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.49 - 2026-11-04
+
+- Update `legends-astro` to 0.2.2 (`89cb9e0f25cadbfff44c8c0b20ef14717112ae7f`) adding explicit agent guardrails in `AGENTS.md`, `docs/AGENT-RECIPE.md`, `wiki/inspect-setup.md`, and `knowledge/astro/pack.json` forbidding detached background `astro dev` / `astro preview` daemons and `--open` browser launches during automated agent runs.
+- Align archive SHA-256 digests in `cto_legends/catalog.json` with canonical GitHub `codeload` commit archives across all updated 2026-11-04 module releases.
+
+## 1.0.48 - 2026-11-04
+
+- Update `legends-dataforseo` to 0.1.7 (`40ee24d22095942bfbb018031f722dc15f27a119`) aligning `business()` in `src/legends_dataforseo/client.py` and `docs/API.md` so callers can pass either `keyword` or `target` along with optional `location_code`, `location_name`, `location_coordinate`, and `tag`.
+
+## 1.0.47 - 2026-11-04
+
+- Update `legends-grant` to 0.3.1 (`661614e692c958ec8aa7673b71bc36809fa94f1a`) replacing inline `python -c` and hidden-window `CREATE_NO_WINDOW` / `stderr=DEVNULL` subprocess flags in `grant_engine/documents.py` PDF extraction with `python -m grant_engine.documents` and `stderr=PIPE`.
+
+## 1.0.46 - 2026-11-04
+
+- Update `legends-captions` to 0.1.2 (`d5a703d36d57fa6df2b6edb1c8fa180a27436e9d`) adding the native `legends-captions render-ass` CLI subcommand in `src/legends_captions/cli.py`, removing `scripts/run-tests.ps1`, and standardizing operator and agent guides on direct cross-platform Python CLI invocations.
+
+## 1.0.45 - 2026-11-04
+
+- Update `legends-github` to 0.2.2 (`fd2365bdb24005394935b92fde0f68044d05b0ea`) aligning `<GITHUB_HOME>` runner paths in `docs/GITHUB-RECIPE.md` and `github/references/portable-workflows.md` to `<GITHUB_HOME>/github/scripts/run_headless.py`, adding compatibility wrappers at `scripts/run_headless.py` and `scripts/render_banner.py`, and updating `legends-dataforseo` dependency metadata to `0.1.7`.
+
 ## 1.0.44 - 2026-11-04
 
 - Update `legends-empire` to 0.3.3 (`49ea828ce5211cb987f690cd040b6a2b48836a98`) lowering `BATCH_SIZE` in `claude_empire/home_install.py` from `400` to `150` files per transaction batch, removing `scripts/compact-skill-descriptions.ps1`, and clarifying `scripts/wiki-mode.py templates` guidance.

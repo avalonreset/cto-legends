@@ -6,7 +6,7 @@
       "version": "0.3.3",
       "commit": "49ea828ce5211cb987f690cd040b6a2b48836a98",
       "repo": "avalonreset/legends-empire",
-      "sha256": "c0dd3da46fbe8c5f6bb61d5f9d07f4a1063071baa207e37ac5ef6650bb0c44b9",
+      "sha256": "7c34e06ea9a7b83755141f505fc6317e4bfe9c027c1d55bb9a5c1345c5f3425a",
       "purpose": "Markdown knowledge foundation. For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work. Optional Home-ready shared-root structure supports standalone Empire projects and an independently authorized AI Marketing Hub Home headless capability layer without duplicate business records.",
       "keywords": [
         "empire",
@@ -440,7 +440,7 @@
         }
       },
       "commit": "89cb9e0f25cadbfff44c8c0b20ef14717112ae7f",
-      "sha256": "8890baaca33f92b150199f274cd2f42212d4a4263081544e683866d956f11eb0",
+      "sha256": "3f17be13ca65d0aa276353eec06342e3556585ad3d07c440051e6025866a95f2",
       "license": "MIT",
       "version": "0.2.2",
       "discovery": {
@@ -688,7 +688,7 @@
       "version": "0.1.7",
       "commit": "40ee24d22095942bfbb018031f722dc15f27a119",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "4dde3a72050e0726e850474ea9c1696218851f52083dfd538345251e838b4a94",
+      "sha256": "0cbc30046aa6318663a81987b8fa5aeb6b7033b62e50b924812ee47ea579865b",
       "purpose": "Search, Google Maps, Google Business Profile, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
@@ -764,7 +764,7 @@
       "version": "0.3.3",
       "commit": "35c6963457005100f788522ecf46099facb32e0f",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "94a9f9bbb223efd9798996ceb18346ec4af87d44b180f22ecbcb4b9c206283cb",
+      "sha256": "1146b2fd11626cfbef01488e5aa685c63ea31ac9c1468291e71591464b3857c6",
       "purpose": "Official Firecrawl web operations and Alexandria queries with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "firecrawl",
@@ -833,7 +833,7 @@
       "version": "0.2.2",
       "commit": "fd2365bdb24005394935b92fde0f68044d05b0ea",
       "repo": "avalonreset/legends-github",
-      "sha256": "a7b159ef7fabb0a8c48837346afff9b2cceaf915f7dbda5829322427233c580d",
+      "sha256": "1d67228f5b0acc6875c67b0824a5aa4d2cb6824788fe31f11c48e9ff87ef16ab",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
@@ -921,7 +921,7 @@
       "version": "0.3.1",
       "commit": "661614e692c958ec8aa7673b71bc36809fa94f1a",
       "repo": "avalonreset/legends-grant",
-      "sha256": "10f576d037e6b628d5fa98cd556db12ef182b48da3ddc9307266b7dc34c6c394",
+      "sha256": "2c96d5fe7b729560a346771038a4ba132bc83ef12618867cc8ba0a200606395f",
       "purpose": "Discover US grants, collect evidence, review eligibility and draft evidence-linked grant proposals for businesses, nonprofits, tribes, governments, researchers and individuals.",
       "keywords": [
         "grant",
@@ -1181,7 +1181,7 @@
       "version": "0.1.2",
       "commit": "d5a703d36d57fa6df2b6edb1c8fa180a27436e9d",
       "repo": "avalonreset/legends-captions",
-      "sha256": "5842d2ea01a6549ef7c749f040692a159363540bbaeda3b3397ef6d249c1ddd1",
+      "sha256": "54905ee4ecf62d64673bc7cffc6eb1a72d7ac74180811e2e4d0fcf5115e3a98d",
       "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
       "keywords": [
         "caption",
@@ -1438,7 +1438,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "514d86977f2b4bd42ea619d70898f48bca9805a03e67c7d8f150b77191394d19",
+      "sha256": "b521fc927f00a1551938c682161c4f394185b5ea1a1356d05597727a40151fd0",
       "next": "v0.1.2 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
       "discovery": {
         "signals": [
