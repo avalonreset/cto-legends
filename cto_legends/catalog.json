@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.48",
+  "version": "1.0.49",
   "modules": {
     "legends-empire": {
       "version": "0.3.3",
@@ -439,10 +439,10 @@
           "kind": "path"
         }
       },
-      "commit": "fadf92ac9c8346aeef979091f3a77c4b75694f44",
-      "sha256": "43ff4be1fd86bdd582bcf53f0a36f8c9c03350354fa2653fbe8eb7d4552b2efb",
+      "commit": "89cb9e0f25cadbfff44c8c0b20ef14717112ae7f",
+      "sha256": "8890baaca33f92b150199f274cd2f42212d4a4263081544e683866d956f11eb0",
       "license": "MIT",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "discovery": {
         "instructions": [
           "README.md",
