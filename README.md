@@ -73,10 +73,10 @@ For access to the AI Marketing Hub Home system, join [AI Marketing Hub Pro](http
 Python 3.11 or newer is required across the manager and all Python ecosystem modules. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
-Install the 0.2.6 wheel, or from source:
+Install the 0.2.7 wheel, or from source:
 
 ```sh
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.6/cto_legends-0.2.6-py3-none-any.whl
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.7/cto_legends-0.2.7-py3-none-any.whl
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -145,6 +145,7 @@ Modules are organized across four capability layers (matching the [ ecosystem di
 | [legends-coolify](https://github.com/avalonreset/legends-coolify) | Coolify inventory, deployment history, resource status, backup schedules and planning | Read-only Python CLI; packaged source-cited library with optional Empire attachment |
 | [legends-cloudflare](https://github.com/avalonreset/legends-cloudflare) | Cloudflare zone and DNS inventory, nameservers, preview-first DNS record changes and readback | Dependency-free Python CLI; Obsidian knowledge vault and attachable Empire library |
 | [legends-astro](https://github.com/avalonreset/legends-astro) | Astro v7 readiness, WordPress and HTML migration contract extraction, Content Layer scaffolding, and `dist/` build parity checks | Dependency-free Python and Node CLI; vendored `withastro/docs` snapshot and attachable Empire library |
+| [legends-stripe](https://github.com/avalonreset/legends-stripe) | Stripe payments, `.env` price-ID governance, product catalog lint, declarative test/live price ladder sync, Stripe Drag fee telemetry, subscription dunning and double-billing radar, and webhook HMAC fortification | Dependency-free Python CLI; preview-first SHA-256 mutations, Astro/Python blueprints, and attachable Empire library |
 | [legends-gohighlevel](https://github.com/avalonreset/legends-gohighlevel) | GoHighLevel CRM, Workflows v3, Voice/Conversation AI, Custom Objects, and 5-layer agency governance (`location-unnerf`, `user-unnerf`, `unlock-dashboards`, `smtp-unlock`, `rebilling-sync`) | Dependency-free Python CLI; preview-first mutations, API readback, and attachable Empire library |
 | [legends-geogrid](https://github.com/avalonreset/legends-geogrid) | Google Maps rank grids, local visibility matrices, street maps, and client reports | Research workflow + report libraries + DataForSEO + optional Jev 1.14 signage check |
 | [legends-dataforseo](https://github.com/avalonreset/legends-dataforseo) | Search, keywords, Google Business Profile, queued research and reusable evidence | Python library + CLI + evidence exporter |
@@ -163,7 +164,7 @@ Pinned versions live in the catalog, not here: `cto-legends catalog`
 shows the exact verified set your manager carries. Module recipes load
 through the router on demand; no module needs its own skill registration.
 
-Seventeen modules have managed CLI installations. The one native module uses
+Eighteen modules have managed CLI installations. The one native module uses
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
 platform information, and published asset checksums. `install` for those modules
 returns that handoff, including with `--apply`; it does not run an app installer,

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.7 - 2026-11-05
+
+- Ship bundled catalog `1.0.50` onboarding `legends-stripe` 0.1.0
+  (`avalonreset/legends-stripe` at `1b5ef5825110aac4285acd5ff3dca66858546702`)
+  for Stripe payment infrastructure, `.env` price-ID governance, product
+  catalog lint, declarative test/live price ladder sync, cent-exact Stripe Drag
+  treasury telemetry, subscription dunning and duplicate-billing radar,
+  raw-body webhook HMAC verification, Astro/Python server blueprints, and
+  optional `legends-empire` knowledge pack attachment.
+
 ## 0.2.6 - 2026-11-04
 
 - Ship bundled catalog `1.0.49` with Endpoint Security (EDR), anti-malware

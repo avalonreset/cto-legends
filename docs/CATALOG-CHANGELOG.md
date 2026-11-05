@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.50 - 2026-11-05
+
+- Add `legends-stripe` 0.1.0 (`1b5ef5825110aac4285acd5ff3dca66858546702`, SHA-256 `37ea12c5ece8d6448ddd61dd6eca2a71686db101d1504bfa49581f1ba0f53085`) for Stripe payment infrastructure governance: `.env` test/live price-ID cross-checking (`env-audit`, `price-map`), cent-exact treasury reconciliation and Stripe Drag fee telemetry (`telemetry`), product catalog lint and declarative price ladder sync (`catalog-audit`, `ladder-plan`, `catalog-diff`, `catalog-sync`), subscription MRR/dunning/double-billing radar (`subscription-audit`, `checkout-smoke`), constant-time `Stripe-Signature` HMAC verification and Soft-Land lifecycle audits (`verify-webhook`, `sign-webhook`, `webhook-audit`, `webhook-probe`, `webhook-bootstrap`, `custom-domain-check`), Astro/Python server blueprints (`blueprint`), and an attachable `legends-empire` knowledge pack (`knowledge/stripe/pack.json`).
+
 ## 1.0.49 - 2026-11-04
 
 - Update `legends-astro` to 0.2.2 (`89cb9e0f25cadbfff44c8c0b20ef14717112ae7f`) adding explicit agent guardrails in `AGENTS.md`, `docs/AGENT-RECIPE.md`, `wiki/inspect-setup.md`, and `knowledge/astro/pack.json` forbidding detached background `astro dev` / `astro preview` daemons and `--open` browser launches during automated agent runs.

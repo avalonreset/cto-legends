@@ -60,7 +60,7 @@ class ManagerTests(unittest.TestCase):
             "legends-stable-audio-3", "legends-obs", "legends-hyperyap",
             "legends-empire", "legends-grant", "legends-firecrawl",
             "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev",
-            "legends-hetzner", "legends-cloudflare", "legends-astro", "legends-gohighlevel"})
+            "legends-hetzner", "legends-cloudflare", "legends-astro", "legends-stripe", "legends-gohighlevel"})
 
     def test_setup_revision_rebuilds_same_source(self):
         module = m.catalog()['modules']['legends-github']
@@ -86,6 +86,7 @@ class ManagerTests(unittest.TestCase):
                                ("transcribe my voice memos", "legends-ambient-intelligence"),
                                ("caption this video", "legends-captions"),
                                ("Inspect my Cloudflare DNS records", "legends-cloudflare"),
+                               ("Audit my Stripe .env price IDs and webhook signature verification", "legends-stripe"),
                                ("Audit my GoHighLevel sub-account pipelines and rebilling", "legends-gohighlevel")):
             self.assertEqual(route(goal)["matches"][0]["id"], expected)
 
