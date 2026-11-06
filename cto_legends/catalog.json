@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.51",
+  "version": "1.0.52",
   "modules": {
     "legends-empire": {
       "version": "0.3.4",
@@ -633,17 +633,17 @@
           "kind": "path"
         }
       },
-      "commit": "06aa7f2b2857432320337fbc06c9e7eb227f98c1",
-      "sha256": "41fb1e9646267988227062cf6d18fffe681be08f5c57eab4ffb67010a60ee092",
+      "commit": "d6cbe391148e782cbe147cad5027d36f36c605ee",
+      "sha256": "8463135cb832ebbca2bd1f06f56e60c0ca543db8e426c39acd4ea0af6ef067c8",
       "license": "MIT",
-      "version": "0.3.2",
+      "version": "0.3.4",
       "discovery": {
         "instructions": [
           "README.md",
           "docs/AGENT-RECIPE.md",
           "wiki/index.md"
         ],
-        "setup": "Python 3.11+. Offline doctor and governance audits (rebilling-audit, scope-audit, smtp-audit, dashboard-audit) need no credentials. Live 5-layer agency audits and remediation (live-audit, agency-locations, location-unnerf, agency-users, user-inspect, user-unnerf, user-sync-locations, dashboard-permissions, unlock-dashboards, smtp-status, smtp-unlock, rebilling-status, rebilling-sync, pit-list, email-domains) use GHL_TOKEN_ID or remote worker_ssh via ~/.config/legends-gohighlevel/agency.json. Live sub-account CRM, Workflows v3, Voice/Conversation AI, and Custom Objects operations require GHL_PIT (or GHL_ACCESS_TOKEN) and GHL_LOCATION_ID, or named profiles in ~/.config/legends-gohighlevel/config.json.",
+        "setup": "Python 3.11+. Offline doctor and governance audits (rebilling-audit, scope-audit, smtp-audit, dashboard-audit) need no credentials. Live 5-layer agency audits, Snapshots V2, 1-command batch cloning, PIT creation, workflow step X-ray/rebrand, bulk workflow status, and remediation (live-audit, agency-locations, location-create, location-batch-clone, location-rebrand, location-unnerf, location-full-unnerf, location-clone-audit, snapshots-list, snapshot-inspect, snapshot-create, snapshot-refresh, snapshot-push, snapshot-share-link, agency-workflows, agency-workflow-xray, workflow-steps-rebrand, workflow-bulk-status, agency-users, user-inspect, user-unnerf, user-sync-locations, dashboard-permissions, unlock-dashboards, smtp-status, smtp-unlock, rebilling-status, rebilling-sync, pit-list, pit-create, pit-delete, email-domains) use GHL_TOKEN_ID or remote worker_ssh via ~/.config/legends-gohighlevel/agency.json. Live sub-account CRM, Workflows v3, Voice/Conversation AI, Email Builder templates, Trigger Links, Atomic Rebranding, Multi-Profile Management, Commerce/Payments, and Custom Objects operations require GHL_PIT (or GHL_ACCESS_TOKEN) and GHL_LOCATION_ID, or named profiles in ~/.config/legends-gohighlevel/config.json.",
         "not_for": "Ambient HighLevel/LeadConnector MCP servers, unconfirmed bulk CRM mutations, or storing tokens on command-line arguments.",
         "signals": [
           "gohighlevel",
@@ -665,10 +665,16 @@
           "ghl voice ai",
           "ghl conversation ai",
           "highlevel custom objects",
-          "gohighlevel sub account"
+          "gohighlevel sub account",
+          "gohighlevel snapshot",
+          "ghl snapshot",
+          "gohighlevel clone",
+          "gohighlevel private integration"
         ],
         "examples": [
           "Run a live 5-layer permission, dashboard RBAC, SMTP, and rebilling audit across my GoHighLevel agency",
+          "Batch-clone 4 GoHighLevel sub-accounts from a master snapshot, draft all workflows, un-nerf all 5 governance layers, and mint Private Integration Tokens",
+          "X-ray internal GoHighLevel workflow steps for hardcoded sender emails, Meta Pixel IDs, and brand leaks, then rebrand all custom values and workflow steps",
           "Audit my GoHighLevel sub-account health, business profile, pipelines, and published workflows",
           "Un-nerf location feature flags, user V2 scopes, Default Dashboards, and 1.05x rebilling across all HighLevel sub-accounts",
           "Inspect a HighLevel user's V1 permissions, V2 scopes, Only Assigned Data flags, and +hubpro alias locations",
