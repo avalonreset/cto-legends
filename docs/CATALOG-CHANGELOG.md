@@ -5,6 +5,15 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.53 - 2026-11-07
+
+- Update `legends-dataforseo` to 0.1.9 (`d15e151520ea23d5fe6cc127133053d147d181ea`, SHA-256 `d6340dd8c7161614d4ce20e1924d069cb630002d8734ebc7834cbad40bf577b7`) adding automatic Google `/goto` organic SERP redirect unmasking via `breadcrumb` and `website_name`, `serp_integrity` SearchGuard degradation diagnostics and coordinate retry fallback, first-class DataForSEO Labs helpers (`competitors`, `ranked-keywords`, `relevant-pages`), and Windows UTF-8 console stream protection.
+- Update `legends-firecrawl` to 0.3.5 (`d2762260ab9819eea201492603d2599bd4bfe222`, SHA-256 `fd23ca7ed6dede1c7cdc82626b6eb97b2bfb23c60b133ca63c1b9dea718370aa`) adding `lfc resolve` (`FirecrawlClient.resolve_url`) to resolve truncated SERP breadcrumbs or path hints into full inner URLs via `/v2/map` and `/v2/search` with optional `--scrape`, plus opaque Google redirect wrapper validation (`google.com/goto`, `google.com/url`) in `validate_public_url()`.
+
+## 1.0.52 - 2026-11-06
+
+- Update `legends-gohighlevel` to 0.3.4 (`d6cbe391148e782cbe147cad5027d36f36c605ee`, SHA-256 `8463135cb832ebbca2bd1f06f56e60c0ca543db8e426c39acd4ea0af6ef067c8`) adding Snapshots V2 batch cloning, headless Private Integration Token minting, workflow step X-ray, and atomic rebranding.
+
 ## 1.0.51 - 2026-11-05
 
 - Update all 19 public ecosystem modules to their Gold-Standard `+0.0.1` releases (`legends-empire` 0.3.4, `legends-hetzner` 0.1.4, `legends-coolify` 0.2.2, `legends-cloudflare` 0.1.2, `legends-astro` 0.2.3, `legends-stripe` 0.1.1, `legends-gohighlevel` 0.3.2, `legends-geogrid` 0.2.5, `legends-dataforseo` 0.1.8, `legends-firecrawl` 0.3.4, `legends-github` 0.2.3, `legends-grant` 0.3.2, `legends-jev` 0.2.3, `legends-obs` 0.1.4, `legends-captions` 0.1.3, `legends-yt-dlp` 0.1.4, `legends-stable-audio-3` 0.1.4, `legends-hyperyap` 0.1.3, and `legends-ambient-intelligence` 0.1.3) with complete `license`, `platforms`, `readiness`, `docs/AGENT-RECIPE.md` discovery instructions, and offline `doctor` readiness probes.

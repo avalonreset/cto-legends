@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.52",
+  "version": "1.0.53",
   "modules": {
     "legends-empire": {
       "version": "0.3.4",
@@ -803,11 +803,11 @@
       ]
     },
     "legends-dataforseo": {
-      "version": "0.1.8",
-      "commit": "2a8bff788d091485d8e240ac722d4efd2358cac6",
+      "version": "0.1.9",
+      "commit": "d15e151520ea23d5fe6cc127133053d147d181ea",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "7b85cf7e44ed4b2ae0b4bea6481108f8bebcba93de75f227093939464f0c1ca7",
-      "purpose": "Search, Google Maps, Google Business Profile, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
+      "sha256": "d6340dd8c7161614d4ce20e1924d069cb630002d8734ebc7834cbad40bf577b7",
+      "purpose": "Search, Google Maps, Google Business Profile, SERP redirect unmasking, DataForSEO Labs intelligence, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
         "keywords",
@@ -822,7 +822,7 @@
         "business-profile"
       ],
       "dependencies": {},
-      "scope": "Python API and CLI with full response files and offline evidence export, integrity verification, manifest inventory, focused views and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
+      "scope": "Python API and CLI with full response files, organic /goto redirect unmasking, SERP integrity diagnostics, DataForSEO Labs helpers, offline evidence export, integrity verification, manifest inventory, focused views and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
       "discovery": {
         "signals": [
           "keyword demand",
@@ -834,7 +834,10 @@
           "search results",
           "google business profile",
           "my business info",
-          "gbp lookup"
+          "gbp lookup",
+          "competitor keywords",
+          "ranked keywords",
+          "relevant pages"
         ],
         "examples": [
           "Research keyword demand",
@@ -892,11 +895,11 @@
       ]
     },
     "legends-firecrawl": {
-      "version": "0.3.4",
-      "commit": "15710769725d10227a109194ef083db8689ac90f",
+      "version": "0.3.5",
+      "commit": "d2762260ab9819eea201492603d2599bd4bfe222",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "d6ca3a950320ec9006ddd0d9183de456a7583be32c5cfe6014575bf83747f3a5",
-      "purpose": "Official Firecrawl web operations and Alexandria queries with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
+      "sha256": "fd23ca7ed6dede1c7cdc82626b6eb97b2bfb23c60b133ca63c1b9dea718370aa",
+      "purpose": "Official Firecrawl web operations, SERP breadcrumb inner-URL resolution, and Alexandria queries with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "firecrawl",
         "scrape",
@@ -904,11 +907,12 @@
         "crawl",
         "crawling",
         "search",
+        "resolve",
         "alexandria",
         "web"
       ],
       "dependencies": {},
-      "scope": "Official Firecrawl execution only. Full captures live outside installations by default, with portable evidence export, verification, inventory, focused views and reuse checks. No native bypasses or savings claims. Python web client and Node Alexandria launcher; live calls need setup and authorization. Alexandria queries require --confirm.",
+      "scope": "Official Firecrawl execution only. Full captures live outside installations by default, with inner-URL resolution (resolve), portable evidence export, verification, inventory, focused views and reuse checks. No native bypasses or savings claims. Python web client and Node Alexandria launcher; live calls need setup and authorization. Alexandria queries require --confirm.",
       "discovery": {
         "signals": [
           "web search",
@@ -917,6 +921,7 @@
           "scrape this page",
           "crawl a site",
           "discover urls",
+          "resolve url",
           "firecrawl",
           "alexandria",
           "provider catalog",
