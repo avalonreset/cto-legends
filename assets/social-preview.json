@@ -13,8 +13,28 @@
     "agent skills and tool management",
     "for the legends ecosystem"
   ],
+  "text_bounds": [
+    [
+      80,
+      176,
+      520,
+      238
+    ],
+    [
+      80,
+      324,
+      784,
+      362
+    ],
+    [
+      80,
+      372,
+      630,
+      410
+    ]
+  ],
   "font_sha256": "3769f0f76477a7d9e2e6cb40422dedacb56c9ab1a6f7beee89b2b9ba6b8091ee",
-  "image_sha256": "f3677d3ab020e815bd6154a26d9987fe38eaadb20eee2053d465aad997c3b0f4",
-  "bytes": 20187,
+  "image_sha256": "4a2cba73d7479d90b4b74645429effcf05d595097f99307a7092b55722f5bcef",
+  "bytes": 20180,
   "upload_status": "not_attempted"
 }
