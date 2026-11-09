@@ -326,7 +326,7 @@ They remain separate projects and keep their own licensing and model terms.
 ## Live specifications and engineering dispatches
 
 - **Router specification & comparison matrix:** [cto-legends.com/modules/cto-legends](https://cto-legends.com/modules/cto-legends)
-- **Full 18-module catalog & ecosystem hub:** [cto-legends.com/home](https://cto-legends.com/home)
+- **Full 19-module catalog & ecosystem hub:** [cto-legends.com/home](https://cto-legends.com/home)
 
 **Engineering dispatches & benchmarks:**
 - [Codex vs Claude Code: CLI and Cursor Agent Benchmarks](https://cto-legends.com/blog?post=codex-vs-claude-code-benchmarks)
