@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.54 - 2026-11-10
+
+- Add `legends-buzz` 0.1.0 (`405a92182f2c45020b8ff1a7b08a5af965b9621f`, SHA-256 `2c8ced313b8e66d0743b6b6b32384b6eda3d90e61afbb56c237956c939e2032b`) for self-hosted Block Buzz Nostr relay operations, 26-domain / 108-subcommand MCP-to-CLI routing (`--format agent`), SSRF-guarded 6-surface relay readiness probes (`/_readiness`, `/health`, NIP-11, Tauri CORS, `/invite/*` CSP edge, `/pair` RFC 6455 WebSocket `101`), residual HTTP `403` vs `NIP-FI` membership diagnostics, Bech32 `npub1...`/hex channel owner governance audits, connected-component `kind:9` reply thread reconstruction, 5-gate zero-trust attachment inspection, Windows NTFS `Buzz.exe`/`buzz.exe` PE subsystem collision detection, preview-first SHA-256 disposable message canaries, 8-gate relay upgrade planning, 9 server/ACP blueprints, and attachable `legends-empire` knowledge pack (`knowledge/buzz/pack.json`).
+
 ## 1.0.53 - 2026-11-07
 
 - Update `legends-dataforseo` to 0.1.9 (`d15e151520ea23d5fe6cc127133053d147d181ea`, SHA-256 `d6340dd8c7161614d4ce20e1924d069cb630002d8734ebc7834cbad40bf577b7`) adding automatic Google `/goto` organic SERP redirect unmasking via `breadcrumb` and `website_name`, `serp_integrity` SearchGuard degradation diagnostics and coordinate retry fallback, first-class DataForSEO Labs helpers (`competitors`, `ranked-keywords`, `relevant-pages`), and Windows UTF-8 console stream protection.

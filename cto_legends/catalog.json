@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.53",
+  "version": "1.0.54",
   "modules": {
     "legends-empire": {
       "version": "0.3.4",
@@ -1743,6 +1743,110 @@
         "macos"
       ],
       "readiness": "doctor"
+    },
+    "legends-buzz": {
+      "version": "0.1.0",
+      "commit": "405a92182f2c45020b8ff1a7b08a5af965b9621f",
+      "repo": "avalonreset/legends-buzz",
+      "sha256": "2c8ced313b8e66d0743b6b6b32384b6eda3d90e61afbb56c237956c939e2032b",
+      "purpose": "Self-hosted Block Buzz Nostr relay operations, 26-domain MCP-to-CLI agent routing, NIP-29/NIP-OA/NIP-FI membership diagnostics, connected-component reply thread reconstruction, 5-gate attachment inspection, and desktop PE/asset verification.",
+      "keywords": [
+        "buzz",
+        "nostr",
+        "nostr-relay",
+        "nostr-cli",
+        "nip-29",
+        "mcp",
+        "mcp-vs-cli",
+        "acp",
+        "chatops",
+        "relay",
+        "self-hosted"
+      ],
+      "dependencies": {},
+      "scope": "Dependency-free Python 3.11+ CLI for 26-domain / 108-subcommand Block Buzz MCP-to-CLI routing (--format agent), SSRF-guarded 6-surface relay readiness probes (/_readiness, /health, NIP-11, Tauri CORS, /invite/* CSP edge, /pair WebSocket 101), residual HTTP 403 vs NIP-FI membership diagnostics, Bech32 npub/hex channel owner governance audits, connected-component kind:9 reply thread context, 5-gate zero-trust attachment inspection, Windows NTFS Buzz.exe/buzz.exe PE subsystem collision audits, preview-first SHA-256 disposable message canaries, 8-gate zero-downtime relay upgrade planning, 9 server/ACP blueprints, and attachable Empire knowledge pack.",
+      "discovery": {
+        "signals": [
+          "buzz",
+          "block buzz",
+          "buzz relay",
+          "nostr relay",
+          "self hosted nostr relay",
+          "nostr cli",
+          "nip 29",
+          "nip-29",
+          "buzz desktop",
+          "buzz cli",
+          "buzz agent",
+          "acp agent",
+          "buzz channel",
+          "buzz membership",
+          "relay_membership_required"
+        ],
+        "examples": [
+          "Check why my Buzz agent is getting HTTP 403 on channels list even though the relay is healthy",
+          "Probe our self-hosted Buzz relay across readiness, NIP-11, Tauri CORS, invite edge, and /pair WebSocket",
+          "Map the Buzz CLI commands for managing multi-repo NIP-MP projects, channel canvases, and NIP-AE agent memory",
+          "Audit our Windows Buzz Desktop install to make sure Buzz 1.0 did not overwrite the console buzz.exe CLI",
+          "Reconstruct the isolated reply thread for a Buzz channel event and verify a /media/<sha256> attachment",
+          "Generate a production Docker Compose stack and zero-downtime migration rehearsal plan for our Buzz relay"
+        ],
+        "not_for": "Passing Nostr private keys (nsec1... or hex64) on command-line arguments, deploying floating ghcr.io/block/buzz:latest container tags without migration preflight, or running unconfirmed live channel mutations.",
+        "setup": "Python 3.11+. Offline doctor, resources, mcp-map, cli-inventory, desktop-audit, relay-upgrade-plan, and blueprint require no credentials. Live relay probes, membership-check, owner-access-audit, channel-snapshot, thread-context, media-inspect, and message-canary use BUZZ_RELAY_URL and BUZZ_PRIVATE_KEY in env or --env-file; live message-canary mutations require --apply --confirm-plan <sha256>.",
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "wiki/index.md"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_buzz",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_buzz",
+            "args": [
+              "doctor",
+              "--json"
+            ]
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "README.md",
+              "docs/AGENT-RECIPE.md",
+              "wiki/index.md",
+              "references/sources.md",
+              "knowledge/buzz/pack.json"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_buzz"
+        }
+      },
+      "license": "MIT",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "readiness": "doctor"
     }
   },
   "aliases": {
@@ -1755,7 +1859,8 @@
     "legends-cloudflare-kit": "legends-cloudflare",
     "legends-obs-kit": "legends-obs",
     "legends-astro-kit": "legends-astro",
-    "legends-gohighlevel-kit": "legends-gohighlevel"
+    "legends-gohighlevel-kit": "legends-gohighlevel",
+    "legends-buzz-kit": "legends-buzz"
   },
   "retired": {
     "legends-obsidian": "legends-empire"
