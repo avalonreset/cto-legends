@@ -146,6 +146,7 @@ Modules are organized across four capability layers (matching the [ ecosystem di
 | [legends-cloudflare](https://github.com/avalonreset/legends-cloudflare) | Cloudflare zone and DNS inventory, nameservers, preview-first DNS record changes and readback | Dependency-free Python CLI; Obsidian knowledge vault and attachable Empire library |
 | [legends-astro](https://github.com/avalonreset/legends-astro) | Astro v7 readiness, WordPress and HTML migration contract extraction, Content Layer scaffolding, and `dist/` build parity checks | Dependency-free Python and Node CLI; vendored `withastro/docs` snapshot and attachable Empire library |
 | [legends-stripe](https://github.com/avalonreset/legends-stripe) | Stripe payments, `.env` price-ID governance, product catalog lint, declarative test/live price ladder sync, Stripe Drag fee telemetry, subscription dunning and double-billing radar, and webhook HMAC fortification | Dependency-free Python CLI; preview-first SHA-256 mutations, Astro/Python blueprints, and attachable Empire library |
+| [legends-buzz](https://github.com/avalonreset/legends-buzz) | Self-hosted Block Buzz Nostr relay operations, 26-domain MCP-to-CLI agent routing (`--format agent`), 6-surface relay readiness probes, NIP-29/NIP-OA/NIP-FI membership diagnostics, reply thread isolation, 5-gate attachment inspection, and Windows PE collision audits | Dependency-free Python CLI; preview-first SHA-256 canaries, 9 server/ACP blueprints, and attachable Empire library |
 | [legends-gohighlevel](https://github.com/avalonreset/legends-gohighlevel) | GoHighLevel CRM, Workflows v3, Voice/Conversation AI, Custom Objects, Snapshots V2 batch cloning, headless PIT minting, workflow step X-ray, atomic rebranding, and 5-layer agency governance (`location-batch-clone`, `location-full-unnerf`, `live-audit`) | Dependency-free Python CLI; preview-first mutations, API readback, and attachable Empire library |
 | [legends-geogrid](https://github.com/avalonreset/legends-geogrid) | Google Maps rank grids, local visibility matrices, street maps, and client reports | Research workflow + report libraries + DataForSEO + optional Jev 1.14 signage check |
 | [legends-dataforseo](https://github.com/avalonreset/legends-dataforseo) | Search, keywords, Google Business Profile, `/goto` SERP redirect unmasking, DataForSEO Labs, queued research and reusable evidence | Python library + CLI + evidence exporter |
@@ -164,7 +165,7 @@ Pinned versions live in the catalog, not here: `cto-legends catalog`
 shows the exact verified set your manager carries. Module recipes load
 through the router on demand; no module needs its own skill registration.
 
-Eighteen modules have managed CLI installations. The one native module uses
+Nineteen modules have managed CLI installations. The one native module uses
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
 platform information, and published asset checksums. `install` for those modules
 returns that handoff, including with `--apply`; it does not run an app installer,
@@ -326,7 +327,7 @@ They remain separate projects and keep their own licensing and model terms.
 ## Live specifications and engineering dispatches
 
 - **Router specification & comparison matrix:** [cto-legends.com/modules/cto-legends](https://cto-legends.com/modules/cto-legends)
-- **Full 19-module catalog & ecosystem hub:** [cto-legends.com/home](https://cto-legends.com/home)
+- **Full 20-module catalog & ecosystem hub:** [cto-legends.com/home](https://cto-legends.com/home)
 
 **Engineering dispatches & benchmarks:**
 - [Codex vs Claude Code: CLI and Cursor Agent Benchmarks](https://cto-legends.com/blog?post=codex-vs-claude-code-benchmarks)
