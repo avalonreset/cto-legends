@@ -496,7 +496,7 @@
       "readiness": "doctor"
     },
     "legends-stripe": {
-      "purpose": "Stripe payment infrastructure governance, .env price-ID auditing, product catalog lint, declarative test/live price ladder sync, cent-exact Stripe Drag treasury telemetry, subscription dunning and duplicate-billing radar, raw-body webhook HMAC verification, and Astro/Python server blueprints.",
+      "purpose": "Stripe payment infrastructure governance, .env price-ID auditing, product catalog lint, declarative test/live price ladder sync, B2B Hosted Invoicing (send_invoice) and receivables radar, cent-exact Stripe Drag treasury telemetry, subscription dunning and duplicate-billing radar, raw-body webhook HMAC verification, and Astro/Python server blueprints.",
       "recipe": {
         "requires_python": [
           3,
@@ -538,10 +538,10 @@
           "kind": "path"
         }
       },
-      "commit": "032e1e9d99b424ae9e4410853bd4281a4be28124",
-      "sha256": "be91bcd8ff9d5e5d46b3956158453ad63488631b25481394a7507f33a5e0d117",
+      "commit": "380937681d9e7a67ffbc8ee585cb5fa3aa04a7a2",
+      "sha256": "727f195c976a3e5dcec0b203cff484de4b69193a61198eb84e252cde71ed4cc5",
       "license": "MIT",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "discovery": {
         "instructions": [
           "README.md",
@@ -549,12 +549,15 @@
           "wiki/index.md"
         ],
         "setup": "Python 3.11+. Offline doctor, resources, ladder-plan, verify-webhook, sign-webhook, and blueprint require no credentials. Live read/audit commands require STRIPE_SECRET_KEY in env or --env-file; live mutations require explicit preview plan-hash confirmation.",
-        "not_for": "Raw credit card PAN handling, PCI-DSS cardholder data storage, or unreviewed live-mode catalog or webhook mutations.",
+        "not_for": "Raw credit card PAN handling, PCI-DSS cardholder data storage, or unreviewed live-mode catalog, invoice, or webhook mutations.",
         "signals": [
           "stripe",
           "stripe cli",
           "stripe checkout",
           "stripe billing",
+          "stripe invoice",
+          "stripe b2b invoice",
+          "stripe scheduled invoice payments",
           "stripe webhook",
           "stripe webhook signature verification",
           "stripe price id",
@@ -569,6 +572,7 @@
           "Audit my .env file against Stripe and check if any price IDs or keys are mismatched",
           "Reconcile our Stripe balance, gross revenue, and Stripe fee drag to the cent",
           "Check our Stripe products and prices for orphaned prices or statement descriptor issues",
+          "Issue a B2B Hosted Invoice or scan open B2B receivables and overdue aging",
           "Verify our Stripe webhook endpoint and test Stripe-Signature HMAC verification",
           "Scan Stripe subscriptions for MRR, past-due dunning, and double-billed customers"
         ]
@@ -584,11 +588,12 @@
         "stripe-cli",
         "stripe-checkout",
         "stripe-billing",
+        "stripe-invoicing",
         "stripe-webhook",
         "payments",
         "treasury"
       ],
-      "scope": "Dependency-free Python 3.11+ CLI for Stripe .env price-ID governance, product catalog lint, preview-first price ladder sync, cent-exact Stripe Drag treasury reconciliation, subscription dunning and double-billing radar, constant-time webhook HMAC verification, Astro/Python server blueprints, and attachable Empire knowledge pack.",
+      "scope": "Dependency-free Python 3.11+ CLI for Stripe .env price-ID governance, product catalog lint, preview-first price ladder sync, orphan-free B2B Hosted Invoicing, cent-exact Stripe Drag treasury reconciliation, subscription dunning and double-billing radar, constant-time webhook HMAC verification, Astro/Python server blueprints, and attachable Empire knowledge pack.",
       "dependencies": {},
       "readiness": "doctor"
     },
