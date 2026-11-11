@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.55 - 2026-11-11
+
+- Add `legends-youtube` 0.1.0 (`62abf439582067672a68d1d870a0e0dc7c14bd23`, SHA-256 `5a0ef3961ecf963553a5de538d703511170721e5bc0d9f543f00c783dc4c7625`) for YouTube Data API v3 and Analytics API v2 channel inventory (2 quota units per 50 videos via `relatedPlaylists.uploads`), multi-day quota wave planning against the 10,000-unit daily pool and 2026-06-01 granular per-method caps, ETag-guarded (`If-Match`) lossless `snippet` metadata updates with SHA-256 plan locks and post-write readback, 0-quota public watch-page/oEmbed readback and RSS outlier velocity scouting, sourced CTR/APV/mid-roll scorecards, Perfect Video Score pre-recording idea radar, transcript-to-chapter/Shorts gem-cut compilation, retention-to-transcript cliff X-ray, Studio video quiz (`ytve-posts-modal`) and description chapter linting, SHA-256 frozen private-draft resumable uploads, and an attachable `legends-empire` knowledge pack (`knowledge/youtube/pack.json`).
+
 ## 1.0.54 - 2026-11-10
 
 - Add `legends-buzz` 0.1.0 (`405a92182f2c45020b8ff1a7b08a5af965b9621f`, SHA-256 `2c8ced313b8e66d0743b6b6b32384b6eda3d90e61afbb56c237956c939e2032b`) for self-hosted Block Buzz Nostr relay operations, 26-domain / 108-subcommand MCP-to-CLI routing (`--format agent`), SSRF-guarded 6-surface relay readiness probes (`/_readiness`, `/health`, NIP-11, Tauri CORS, `/invite/*` CSP edge, `/pair` RFC 6455 WebSocket `101`), residual HTTP `403` vs `NIP-FI` membership diagnostics, Bech32 `npub1...`/hex channel owner governance audits, connected-component `kind:9` reply thread reconstruction, 5-gate zero-trust attachment inspection, Windows NTFS `Buzz.exe`/`buzz.exe` PE subsystem collision detection, preview-first SHA-256 disposable message canaries, 8-gate relay upgrade planning, 9 server/ACP blueprints, and attachable `legends-empire` knowledge pack (`knowledge/buzz/pack.json`).

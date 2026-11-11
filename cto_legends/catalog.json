@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.54",
+  "version": "1.0.55",
   "modules": {
     "legends-empire": {
       "version": "0.3.4",
@@ -1847,6 +1847,113 @@
         "macos"
       ],
       "readiness": "doctor"
+    },
+    "legends-youtube": {
+      "version": "0.1.0",
+      "commit": "62abf439582067672a68d1d870a0e0dc7c14bd23",
+      "repo": "avalonreset/legends-youtube",
+      "sha256": "5a0ef3961ecf963553a5de538d703511170721e5bc0d9f543f00c783dc4c7625",
+      "purpose": "Operate YouTube channels over Data API v3 and Analytics API v2 with ETag-guarded lossless metadata updates, quota-cost wave planning, 0-quota public readback and outlier scouting, sourced CTR/retention A/B scorecards, Studio quiz and chapter validators, SHA-256 frozen private-draft uploads, and an attachable Empire knowledge pack.",
+      "keywords": [
+        "youtube",
+        "youtube-api",
+        "youtube-data-api",
+        "youtube-analytics",
+        "youtube-studio",
+        "youtube-channel",
+        "youtube-shorts",
+        "thumbnails",
+        "chapters",
+        "quizzes",
+        "ctr",
+        "retention"
+      ],
+      "dependencies": {},
+      "scope": "Dependency-free Python 3.11+ CLI for YouTube Data API v3 and Analytics API v2 channel inventory (2 quota units per 50 videos via relatedPlaylists.uploads), multi-day quota wave planning, ETag-guarded (If-Match) lossless snippet metadata updates with SHA-256 plan locks and post-write readback, 0-quota public watch-page/oEmbed readback and RSS outlier velocity scouting, sourced CTR/APV/mid-roll scorecards, Perfect Video Score idea radar, transcript-to-chapter/Shorts gem-cut compilation, retention-to-transcript cliff X-ray, Studio video quiz (ytve-posts-modal) and description chapter linting, SHA-256 frozen private-draft resumable uploads, and an attachable Empire knowledge pack.",
+      "discovery": {
+        "signals": [
+          "youtube channel",
+          "youtube data api",
+          "youtube analytics",
+          "youtube studio",
+          "youtube metadata",
+          "youtube description",
+          "youtube tags",
+          "youtube chapters",
+          "youtube quizzes",
+          "youtube thumbnail",
+          "youtube ctr",
+          "youtube retention",
+          "youtube draft upload",
+          "youtube shorts funnel",
+          "youtube quota",
+          "youtube outliers",
+          "legends-youtube"
+        ],
+        "examples": [
+          "Inventory my YouTube channel and generate a lossless metadata plan to migrate legacy description links without wiping video tags",
+          "Calculate the YouTube Data API v3 quota cost and daily waves needed to update 250 video descriptions",
+          "Run a YouTube channel health scorecard and rank below-median-CTR long-form videos for Title and Thumbnail Test & Compare A/B runs",
+          "Validate my YouTube description chapters, Studio video quizzes JSON, and custom thumbnail before freezing a private draft upload",
+          "Compile a transcript into validated YouTube chapters, Shorts gem-cut candidates, and a retention cliff X-ray",
+          "Scout breakout outlier videos on a public YouTube channel for zero API quota units"
+        ],
+        "not_for": "Downloading or ripping third-party media files (use legends-yt-dlp), calling videos.update without merging existing live snippet fields, or reading browser profile databases/cookie stores.",
+        "setup": "Python 3.11+. Offline doctor, resources, quota-plan, metadata-plan, links-audit, links-migrate, analytics-audit (--export), packaging-audit, chapters-lint, quiz-lint, thumbnail-check, draft-freeze, house-style-lint, score-idea, related-guard, transcript-package, and retention-xray require no credentials. 0-quota public-readback and channel-outliers (RSS mode) require no API keys. Live Data API v3 and Analytics API v2 operations use YOUTUBE_API_KEY or OAuth 2.0 env vars (YOUTUBE_ACCESS_TOKEN or YOUTUBE_REFRESH_TOKEN + YOUTUBE_CLIENT_ID + YOUTUBE_CLIENT_SECRET); live mutations require --confirm / --apply and SHA-256 plan locks.",
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "wiki/index.md"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_youtube",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_youtube",
+            "args": [
+              "doctor",
+              "--json"
+            ]
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "README.md",
+              "docs/AGENT-RECIPE.md",
+              "wiki/index.md",
+              "references/sources.md",
+              "knowledge/youtube/pack.json"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_youtube"
+        }
+      },
+      "license": "MIT",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "readiness": "doctor"
     }
   },
   "aliases": {
@@ -1860,7 +1967,8 @@
     "legends-obs-kit": "legends-obs",
     "legends-astro-kit": "legends-astro",
     "legends-gohighlevel-kit": "legends-gohighlevel",
-    "legends-buzz-kit": "legends-buzz"
+    "legends-buzz-kit": "legends-buzz",
+    "legends-youtube-kit": "legends-youtube"
   },
   "retired": {
     "legends-obsidian": "legends-empire"
