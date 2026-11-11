@@ -23,10 +23,11 @@ jobs:
         with:
           node-version: '22'
       - run: python -m unittest discover -s tests -v
+      - run: python scripts/check_release.py
       - run: python -m pip install --upgrade "pip>=26.2.2" build twine
       - run: python -m build
       - run: python -m twine check dist/*
-      - run: python -c "import glob,subprocess,sys; w=glob.glob('dist/*.whl'); assert len(w)==1, w; subprocess.run([sys.executable,'-m','pip','install',w[0]],check=True)"
+      - run: python cto_legends/_child_exec.py install-wheel dist
       - run: cto-legends route "Google Maps ranking grids"
       - run: python scripts/check_startup.py
       - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo legends-geogrid legends-github legends-stable-audio-3 legends-obs legends-yt-dlp --apply

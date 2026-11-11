@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.10 - 2026-11-11
+
+- Ship bundled catalog `1.0.56` across all 21 public ecosystem modules (`legends-empire` 0.3.5, `legends-hetzner` 0.1.5, `legends-coolify` 0.2.3, `legends-cloudflare` 0.1.3, `legends-astro` 0.2.4, `legends-stripe` 0.1.2, `legends-buzz` 0.1.1, `legends-gohighlevel` 0.3.5, `legends-geogrid` 0.2.6, `legends-dataforseo` 0.1.10, `legends-firecrawl` 0.3.6, `legends-github` 0.2.4, `legends-grant` 0.3.3, `legends-jev` 0.2.4, `legends-obs` 0.1.5, `legends-captions` 0.1.4, `legends-youtube` 0.1.0, `legends-yt-dlp` 0.1.5, `legends-stable-audio-3` 0.1.5, `legends-hyperyap` 0.1.4, and `legends-ambient-intelligence` 0.1.4).
+- Harden router transport and subprocess execution: add pre-redirect `_SafeRedirectHandler`, Windows TLS CA bundle augmentation (`_ssl_context()`), and `avalonreset/` org/repo path confinement in `fetch()`; replace all inline `python -c` child-interpreter probes with file-backed `cto_legends/_child_exec.py`; bound decompressed gzip/zip streams to `400 MB`; enforce symlink/reparse refusal and `1 MB` bounded state reads with macOS `/tmp`, `/var`, and `/etc` parent-symlink allowance; and upgrade `scripts/check_release.py` and `scripts/fleet-audit.py` for the 22-repository fleet.
+
 ## 0.2.9 - 2026-11-11
 
 - Ship bundled catalog `1.0.55` across all 21 public ecosystem modules (`legends-buzz` 0.1.0, `legends-youtube` 0.1.0, `legends-dataforseo` 0.1.9, `legends-firecrawl` 0.3.5, `legends-gohighlevel` 0.3.4, `legends-empire` 0.3.4, `legends-hetzner` 0.1.4, `legends-coolify` 0.2.2, `legends-cloudflare` 0.1.2, `legends-astro` 0.2.3, `legends-stripe` 0.1.1, `legends-geogrid` 0.2.5, `legends-github` 0.2.3, `legends-grant` 0.3.2, `legends-jev` 0.2.3, `legends-obs` 0.1.4, `legends-captions` 0.1.3, `legends-yt-dlp` 0.1.4, `legends-stable-audio-3` 0.1.4, `legends-hyperyap` 0.1.3, and `legends-ambient-intelligence` 0.1.3).

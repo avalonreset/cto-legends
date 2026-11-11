@@ -25,14 +25,38 @@ def invocation(home):
     return f'{prefix}"{sys.executable}" -m cto_legends --home "{home}"'
 
 
+_MACOS_SYSTEM_SYMLINKS = {Path('/var'), Path('/tmp'), Path('/etc')}
+
+
 def safe_path(value):
     path = Path(value).expanduser().absolute()
     for part in (path, *path.parents):
-        attributes = getattr(part.lstat(), 'st_file_attributes', 0) if part.exists() else 0
-        if (part.is_symlink() or attributes & getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0)
+        if sys.platform == 'darwin' and part != path and part in _MACOS_SYSTEM_SYMLINKS:
+            continue
+        try:
+            st = part.lstat()
+        except OSError:
+            continue
+        attributes = getattr(st, 'st_file_attributes', 0)
+        if (stat.S_ISLNK(st.st_mode)
+                or attributes & getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0)
                 or getattr(part, 'is_junction', lambda: False)()):
             raise ValueError('Linked startup paths are unsupported; preserved')
     return path
+
+
+def _read_bounded_bytes(path, limit=manager.MAX_STATE_BYTES):
+    target = safe_path(path)
+    st = target.stat()
+    if not stat.S_ISREG(st.st_mode):
+        raise ValueError(f'Not a regular file: {target}')
+    if st.st_size > limit:
+        raise ValueError(f'File exceeds {limit} byte limit: {target}')
+    with target.open('rb') as handle:
+        raw = handle.read(limit + 1)
+    if len(raw) > limit:
+        raise ValueError(f'File exceeds {limit} byte limit: {target}')
+    return raw
 
 
 def destination(host, *, user_home=None, instruction_file=None):
@@ -109,7 +133,7 @@ def inspect(host, managed_home, *, user_home=None, instruction_file=None):
     host = resolve_host(host)
     home = safe_path(managed_home)
     target = destination(host, user_home=user_home, instruction_file=instruction_file)
-    raw = target.read_bytes() if target.exists() else b''
+    raw = _read_bounded_bytes(target) if target.exists() else b''
     span = bounds(raw)
     warnings = []
     if host == 'codex' and (target.parent / 'AGENTS.override.md').exists():
@@ -126,14 +150,14 @@ def inspect(host, managed_home, *, user_home=None, instruction_file=None):
         if not record.is_file():
             issues.append('Managed startup receipt is missing.')
         else:
-            data = json.loads(record.read_text(encoding='utf-8'))
+            data = json.loads(_read_bounded_bytes(record).decode('utf-8'))
             if digest(raw[span[0]:span[1]]) != data.get('block_sha256'):
                 issues.append('Managed startup block differs from its receipt.')
             expected = compact_index(home)
             index = safe_path(home / 'startup' / ('capabilities-' + digest(expected) + '.md'))
             if data.get('index_file') != str(index):
                 issues.append('Capability index is stale or missing from receipt; refresh startup setup.')
-            elif not index.is_file() or index.read_bytes() != expected:
+            elif not index.is_file() or _read_bounded_bytes(index) != expected:
                 issues.append('Capability index is missing or changed.')
     return {'host': host, 'instruction_file': str(target), 'configured': bool(span) and not issues,
             'block_present': bool(span), 'issues': issues, 'warnings': warnings,
@@ -142,11 +166,13 @@ def inspect(host, managed_home, *, user_home=None, instruction_file=None):
 
 
 def _atomic(path, raw, mode=None):
+    safe_path(path)
     temporary = path.with_name(path.name + '.' + uuid.uuid4().hex + '.tmp')
+    target_mode = 0o600 if mode is None else mode
     try:
         temporary.write_bytes(raw)
-        if mode is not None:
-            temporary.chmod(mode)
+        if os.name != 'nt' or mode is not None:
+            temporary.chmod(target_mode)
         os.replace(temporary, path)
     finally:
         temporary.unlink(missing_ok=True)
@@ -157,24 +183,24 @@ def configure(host, managed_home, *, user_home=None, instruction_file=None, appl
     host = resolve_host(host)
     home = safe_path(managed_home)
     target = destination(host, user_home=user_home, instruction_file=instruction_file)
-    raw = target.read_bytes() if target.exists() else b''
+    raw = _read_bounded_bytes(target) if target.exists() else b''
     raw.decode('utf-8-sig')  # refuse binary/non-UTF8 instruction files
     span = bounds(raw)
     index = compact_index(home) if _catalog is None else compact_index(home, catalog=_catalog)
     index_file = safe_path(home / 'startup' / ('capabilities-' + digest(index) + '.md'))
-    if index_file.exists() and index_file.read_bytes() != index:
+    if index_file.exists() and _read_bounded_bytes(index_file) != index:
         raise ValueError('Existing index differs from its content hash; preserved')
     newline = b'\r\n' if b'\r\n' in raw else b'\n'
     new_block = block(index_file, home, newline)
     key = digest(str(target).encode())
     record = safe_path(home / 'startup' / ('active-' + key + '.json'))
     if _registered_receipt is not None:
-        if not span or not record.is_file() or record.read_bytes() != _registered_receipt:
+        if not span or not record.is_file() or _read_bounded_bytes(record) != _registered_receipt:
             raise ValueError('Registered startup changed during refresh; preserved')
     if span:
         if not record.is_file():
             raise ValueError('Existing startup block is unmanaged; preserved')
-        previous = json.loads(record.read_text(encoding='utf-8'))
+        previous = json.loads(_read_bounded_bytes(record).decode('utf-8'))
         if digest(raw[span[0]:span[1]]) != previous.get('block_sha256'):
             raise ValueError('Existing startup block was edited; preserved')
         updated = raw[:span[0]] + new_block + raw[span[1]:]
@@ -188,9 +214,9 @@ def configure(host, managed_home, *, user_home=None, instruction_file=None, appl
     if not apply:
         return result
     with manager.lock(home):
-        if _registered_receipt is not None and (not record.is_file() or record.read_bytes() != _registered_receipt):
+        if _registered_receipt is not None and (not record.is_file() or _read_bounded_bytes(record) != _registered_receipt):
             raise ValueError('Registered startup receipt changed during refresh; preserved')
-        if (target.read_bytes() if target.exists() else b'') != raw:
+        if (_read_bounded_bytes(target) if target.exists() else b'') != raw:
             raise ValueError('Startup instructions changed during preview; preserved')
         index_file.parent.mkdir(parents=True, exist_ok=True)
         if not index_file.exists():
@@ -200,10 +226,10 @@ def configure(host, managed_home, *, user_home=None, instruction_file=None, appl
         backup_dir = safe_path(home / 'startup' / 'backups' / uuid.uuid4().hex)
         backup_dir.mkdir(parents=True)
         backup = backup_dir / 'before.bin'
-        backup.write_bytes(raw)
-        old_receipt = record.read_bytes() if record.exists() else None
+        _atomic(backup, raw)
+        old_receipt = _read_bounded_bytes(record) if record.exists() else None
         if old_receipt is not None:
-            (backup_dir / 'before-receipt.bin').write_bytes(old_receipt)
+            _atomic(backup_dir / 'before-receipt.bin', old_receipt)
         manifest = backup_dir / 'manifest.json'
         mode = stat.S_IMODE(target.stat().st_mode) if target.exists() else None
         data = {'schema': 1, 'host': host, 'instruction_file': str(target), 'existed': target.exists(),
@@ -215,7 +241,7 @@ def configure(host, managed_home, *, user_home=None, instruction_file=None, appl
         if _registered_receipt is not None and 'host' not in previous:
             # A legacy receipt proves the path, not which host originally used it.
             data.pop('host')
-        manifest.write_text(json.dumps(data, indent=2), encoding='utf-8')
+        _atomic(manifest, json.dumps(data, indent=2).encode('utf-8'))
         target.parent.mkdir(parents=True, exist_ok=True)
         new_receipt = json.dumps(data, indent=2).encode()
         try:
@@ -227,8 +253,8 @@ def configure(host, managed_home, *, user_home=None, instruction_file=None, appl
             # never describes a newly written block as a human edit on retry.
             # Check both files first: the lock does not exclude human editors.
             try:
-                current_target = target.read_bytes() if target.exists() else None
-                current_receipt = record.read_bytes() if record.exists() else None
+                current_target = _read_bounded_bytes(target) if target.exists() else None
+                current_receipt = _read_bounded_bytes(record) if record.exists() else None
                 before_target = raw if data['existed'] else None
                 if current_target not in (before_target, updated):
                     raise ValueError('Instructions changed during failed setup; preserved')
@@ -266,7 +292,7 @@ def refresh_registered(managed_home, *, catalog=None, apply=False):
         attempted_write = False
         try:
             record = safe_path(record)
-            receipt = record.read_bytes()
+            receipt = _read_bounded_bytes(record)
             data = json.loads(receipt)
             if not isinstance(data, dict) or data.get('schema') != 1:
                 raise ValueError('Invalid startup receipt schema')
@@ -280,7 +306,7 @@ def refresh_registered(managed_home, *, catalog=None, apply=False):
                 raise ValueError('Startup receipt target does not match its registration')
             if not target.is_file():
                 raise ValueError('Registered instruction file is missing; preserved')
-            raw = target.read_bytes()
+            raw = _read_bounded_bytes(target)
             span = bounds(raw)
             if not span or digest(raw[span[0]:span[1]]) != data.get('block_sha256'):
                 raise ValueError('Registered startup block was edited or removed; preserved')
@@ -290,7 +316,7 @@ def refresh_registered(managed_home, *, catalog=None, apply=False):
             index_file = safe_path(index_text)
             if index_file.parent != directory or not index_file.is_file():
                 raise ValueError('Registered capability index is missing or outside startup directory; preserved')
-            if index_file.name != 'capabilities-' + digest(index_file.read_bytes()) + '.md':
+            if index_file.name != 'capabilities-' + digest(_read_bounded_bytes(index_file)) + '.md':
                 raise ValueError('Registered capability index was edited; preserved')
             host = ALIASES.get(data.get('host', 'codex'), data.get('host', 'codex'))
             if host not in ROOTS:
@@ -319,27 +345,27 @@ def refresh_registered(managed_home, *, catalog=None, apply=False):
 
 def restore(manifest, *, apply=False):
     manifest = safe_path(manifest)
-    data = json.loads(manifest.read_text(encoding='utf-8'))
+    data = json.loads(_read_bounded_bytes(manifest).decode('utf-8'))
     if data.get('schema') != 1:
         raise ValueError('Unsupported startup manifest')
     target = safe_path(data['instruction_file'])
     record = safe_path(data['active_record'])
     backup = safe_path(manifest.parent / 'before.bin')
-    before = backup.read_bytes()
+    before = _read_bounded_bytes(backup)
     if digest(before) != data['before_sha256']:
         raise ValueError('Startup backup changed; preserved')
-    if not target.is_file() or digest(target.read_bytes()) != data['after_sha256']:
+    if not target.is_file() or digest(_read_bounded_bytes(target)) != data['after_sha256']:
         raise ValueError('Startup instructions changed after setup; rollback refused')
-    if not record.is_file() or json.loads(record.read_text()).get('manifest') != str(manifest):
+    if not record.is_file() or json.loads(_read_bounded_bytes(record).decode('utf-8')).get('manifest') != str(manifest):
         raise ValueError('Not the active startup transaction; rollback refused')
     previous_receipt = None
     if data.get('previous_receipt_sha256'):
-        previous_receipt = safe_path(manifest.parent / 'before-receipt.bin').read_bytes()
+        previous_receipt = _read_bounded_bytes(safe_path(manifest.parent / 'before-receipt.bin'))
         if digest(previous_receipt) != data['previous_receipt_sha256']:
             raise ValueError('Startup receipt backup changed; preserved')
     if apply:
         with manager.lock(record.parent.parent):
-            if digest(target.read_bytes()) != data['after_sha256']:
+            if digest(_read_bounded_bytes(target)) != data['after_sha256']:
                 raise ValueError('Startup instructions changed during rollback; preserved')
             if data['existed']:
                 _atomic(target, before, data.get('mode'))

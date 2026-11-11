@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fleet audit for the Legends ecosystem reset.
 
-Checks all 13 repos in org ``avalonreset`` for:
+Checks all 22 repos in org ``avalonreset`` for:
   (a) Version match: modules need a 4-way match (authoritative version
       string in the local tree vs latest gh release tag vs CHANGELOG head
       vs catalog pinned version); the router needs a 3-way match
@@ -59,6 +59,8 @@ REPOS: list[dict] = [
     {"id": "legends-stable-audio-3", "repo": "legends-stable-audio-3", "local": str(_DRIVE_ROOT / "legends-stable-audio-3-public-rc")},
     {"id": "legends-hyperyap", "repo": "legends-hyperyap", "local": str(_DRIVE_ROOT / "legends-hyperyap-public")},
     {"id": "legends-ambient-intelligence", "repo": "legends-ambient-intelligence", "local": str(_DRIVE_ROOT / "legends-ambient-intelligence")},
+    {"id": "legends-buzz", "repo": "legends-buzz", "local": str(_DRIVE_ROOT / "legends-buzz")},
+    {"id": "legends-youtube", "repo": "legends-youtube", "local": str(_DRIVE_ROOT / "legends-youtube")},
 ]
 
 AGENT_BLOCK_MARKER = "Agent setup (via `cto-legends`)"
@@ -493,7 +495,7 @@ def audit_repo(entry: dict, catalog: dict) -> tuple[str, list[Check]]:
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     ap = argparse.ArgumentParser(
-        description="Audit the 13 Legends ecosystem repos: 4-way version match, "
+        description="Audit the 22 Legends ecosystem repos: 4-way version match, "
                     "module contract shape, byte-exact router vendor check.",
     )
     ap.add_argument("--repo", metavar="MODULE",
@@ -523,6 +525,10 @@ def main(argv: list[str] | None = None) -> int:
             return 2
 
     entries = [dict(e) for e in REPOS]
+    known_ids = {e["id"] for e in entries}
+    for mod_id in sorted(catalog.get("modules", {})):
+        if mod_id not in known_ids:
+            entries.append({"id": mod_id, "repo": mod_id, "local": str(_DRIVE_ROOT / mod_id)})
     for e in entries:
         if e["id"] in overrides:
             e["local"] = overrides[e["id"]]

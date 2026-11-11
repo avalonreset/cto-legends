@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "version": "1.0.55",
+  "version": "1.0.56",
   "modules": {
     "legends-empire": {
-      "version": "0.3.4",
-      "commit": "1ede96ad670b60b215b66457369691da6c61d017",
+      "version": "0.3.5",
+      "commit": "c24f2fc13fc04c276c2cf017a04d4d0abff22f69",
       "repo": "avalonreset/legends-empire",
-      "sha256": "e0a5fdcde4baedfae7fc904ea1fb6aa4ebc95ae92c2cb95cb1a83773f4a8d542",
+      "sha256": "e924741bf5bd780ada24dfc270593cc95b1600e1add5ce2c2ea2c25e23be620c",
       "purpose": "Markdown knowledge foundation. For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work. Optional Home-ready shared-root structure supports standalone Empire projects and an independently authorized AI Marketing Hub Home headless capability layer without duplicate business records.",
       "keywords": [
         "empire",
@@ -139,10 +139,10 @@
       ]
     },
     "legends-hetzner": {
-      "version": "0.1.4",
+      "version": "0.1.5",
       "repo": "avalonreset/legends-hetzner",
-      "commit": "74c614d9349529ceaeaa08c5c11efa79b31181ca",
-      "sha256": "ef9f79c48edef07fb4ab523244c5fec8c6e8c2f575f6830a61fa79bf2e098f71",
+      "commit": "3f15715bded67587f1cfa77cd6f5e04b75be254a",
+      "sha256": "5f7ecf74797e61e93d3fb688fd9ea12ce991d6e749269f0747ad01bf3f4fc0b5",
       "purpose": "Inspect Hetzner Cloud projects, scan Cost-Optimized CX/CAX stock with Fractional CTO sizing, prepare reviewed server plans, snipe scarce capacity safely, and attach a source-cited operations library to a selected Empire vault.",
       "keywords": [
         "hetzner",
@@ -272,10 +272,10 @@
           "kind": "path"
         }
       },
-      "commit": "b64867c06c283cfa8af663909cf1b2a1483196d1",
-      "sha256": "1555a0972fa8d246ef5cf3b76da758584bb3e7bd15f9aed70f170fcc6e4e62b3",
+      "commit": "932f0387a238a6a2a4b0d87515e3d8090590ba16",
+      "sha256": "2d3b7702aff5e1c2ec623596b8e6bcfae213e7f37c75b3002600dae8ab61f173",
       "license": "MIT",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "discovery": {
         "instructions": [
           "README.md",
@@ -361,10 +361,10 @@
           "kind": "path"
         }
       },
-      "commit": "72ec8a29790e1b6aeb929041a92bd5ac6e8c66dd",
-      "sha256": "bd7436413b33a8ed1df58d5b132ccc29c77b0a728e424ca82398f83aa602eb96",
+      "commit": "d02d8129097e6ed5ba67a912b0e7f17f951d1e16",
+      "sha256": "e71f2fbfbce1bf20168846ca9000330b37fc5b5f90a78801566064755df44bcc",
       "license": "MIT",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "discovery": {
         "instructions": [
           "README.md",
@@ -447,10 +447,10 @@
           "kind": "path"
         }
       },
-      "commit": "5d21d123bf78fa9d8612cdaef4c361587998f644",
-      "sha256": "455f250642b4a9c71e8a39063f8557ad24489bc567eaa249ee923d5003d3d050",
+      "commit": "e2d9cc82ca1ace1cf319cf676ae9c73bac5ebbec",
+      "sha256": "a41c9462ae0df7fd86c655c13f0856bfa8d8939d8a6269abb665de4b07990523",
       "license": "MIT",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "discovery": {
         "instructions": [
           "README.md",
@@ -538,10 +538,10 @@
           "kind": "path"
         }
       },
-      "commit": "e2bd6f0b5a225087036a67e9d0800ea7427b06fc",
-      "sha256": "b622576ff9cebe943e9f1aa281d9f70dc46319b1710dc04a0cc3c3654f577070",
+      "commit": "032e1e9d99b424ae9e4410853bd4281a4be28124",
+      "sha256": "be91bcd8ff9d5e5d46b3956158453ad63488631b25481394a7507f33a5e0d117",
       "license": "MIT",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "discovery": {
         "instructions": [
           "README.md",
@@ -633,10 +633,10 @@
           "kind": "path"
         }
       },
-      "commit": "d6cbe391148e782cbe147cad5027d36f36c605ee",
-      "sha256": "8463135cb832ebbca2bd1f06f56e60c0ca543db8e426c39acd4ea0af6ef067c8",
+      "commit": "c80b3b533023f2555fdb0e839f4c9372879a7662",
+      "sha256": "42c921a8a1690b39579d3c1093e4b5a3c13b4215a6cad931e510ac531b4a1189",
       "license": "MIT",
-      "version": "0.3.4",
+      "version": "0.3.5",
       "discovery": {
         "instructions": [
           "README.md",
@@ -701,10 +701,10 @@
       "readiness": "doctor"
     },
     "legends-geogrid": {
-      "version": "0.2.5",
-      "commit": "7ffb9cfdfad1c4ecb013403cf05577b885835d91",
+      "version": "0.2.6",
+      "commit": "700058bb07b0df8b00995547bd9b1347265df91d",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "469f9e67254edd573a86e841c2298f349d675aedf24bea2976c1ccc6c211f4d3",
+      "sha256": "35cfe9be5c8861745335b6743d7a2bbc264baa0bfee7146f9793a2748c01f8e2",
       "purpose": "Google Maps ranking grids, circular-lattice competitive studies, multi-query strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
@@ -721,7 +721,7 @@
         "street-view"
       ],
       "dependencies": {
-        "legends-dataforseo": "0.1.8"
+        "legends-dataforseo": "0.1.10"
       },
       "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, and multi-query Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
       "discovery": {
@@ -803,10 +803,10 @@
       ]
     },
     "legends-dataforseo": {
-      "version": "0.1.9",
-      "commit": "d15e151520ea23d5fe6cc127133053d147d181ea",
+      "version": "0.1.10",
+      "commit": "cc706b4cd42a2dd14a75905ef138a61369e04317",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "d6340dd8c7161614d4ce20e1924d069cb630002d8734ebc7834cbad40bf577b7",
+      "sha256": "e7e2b4e5900dba33515123ae154ad1bd8d2ccb4fce9d57e1f51d0d5f6c621393",
       "purpose": "Search, Google Maps, Google Business Profile, SERP redirect unmasking, DataForSEO Labs intelligence, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
@@ -895,10 +895,10 @@
       ]
     },
     "legends-firecrawl": {
-      "version": "0.3.5",
-      "commit": "d2762260ab9819eea201492603d2599bd4bfe222",
+      "version": "0.3.6",
+      "commit": "21adc337d7ba7fbd32e87210fb80dd090b822da4",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "fd23ca7ed6dede1c7cdc82626b6eb97b2bfb23c60b133ca63c1b9dea718370aa",
+      "sha256": "48607e7527c2f6ec56fc96d986307a3a2514196d801e2037c5a0a50563b2a64c",
       "purpose": "Official Firecrawl web operations, SERP breadcrumb inner-URL resolution, and Alexandria queries with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "firecrawl",
@@ -974,10 +974,10 @@
       "readiness": "doctor"
     },
     "legends-github": {
-      "version": "0.2.3",
-      "commit": "24f01839d8ee6cae244c8d3e7056c30d2de110d8",
+      "version": "0.2.4",
+      "commit": "0a09e1aa670c88007f34e74debf8b1cc56b3f9c8",
       "repo": "avalonreset/legends-github",
-      "sha256": "64df3814240d7bc7479ca1720f6ec39fa66a847345de6f7f3c5c5709fe410f76",
+      "sha256": "4da3956d8756b0660cf93a1448e4a0d394e2a6eddc6d5eb03a9bab60eee9652a",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
@@ -992,7 +992,7 @@
         "social-preview"
       ],
       "dependencies": {
-        "legends-dataforseo": "0.1.8"
+        "legends-dataforseo": "0.1.10"
       },
       "scope": "Portable Python repository workflows, optional research, and social-preview preparation/served-image verification. Actual upload uses the agent host's supported browser/file-upload tools; no legends-chrome-kit or legends-shell-kit dependency.",
       "setup_revision": 2,
@@ -1069,10 +1069,10 @@
       ]
     },
     "legends-grant": {
-      "version": "0.3.2",
-      "commit": "05377a6c68467ea04866ac3eb19233e4ef88f60d",
+      "version": "0.3.3",
+      "commit": "432f2a4e8223865bcee4d085a1ce5a2d474deb5a",
       "repo": "avalonreset/legends-grant",
-      "sha256": "e588d866649c7714932c55b8aed191e6d04c2012479941a32f6dc3c9bfea1c68",
+      "sha256": "2fa4cd31a9d805e8dadc03871bcc41babd66b8b10f1207ea674d686892652649",
       "purpose": "Discover US grants, collect evidence, review eligibility and draft evidence-linked grant proposals for businesses, nonprofits, tribes, governments, researchers and individuals.",
       "keywords": [
         "grant",
@@ -1169,10 +1169,10 @@
       "license": "MIT"
     },
     "legends-jev": {
-      "version": "0.2.3",
-      "commit": "6b7d25301a5708302abed420071176231026962d",
+      "version": "0.2.4",
+      "commit": "f41e217d4acf9ba3f0c1ce695ae60a7e06713135",
       "repo": "avalonreset/legends-jev",
-      "sha256": "7a1411783779ed4f29c50d5fa480cb477243852823781137123959304113cdb7",
+      "sha256": "c652c266690b9f43a056060f65b2f80b275abe1797d8dd54c4468dc395b5d0dd",
       "purpose": "Typed optical recognition (OCR), storefront signage verification, and decision advice for computer use, application control and browser action selection from supplied text evidence, local images, and candidates.",
       "keywords": [
         "jev",
@@ -1259,9 +1259,9 @@
       "readiness": "doctor"
     },
     "legends-obs": {
-      "version": "0.1.4",
+      "version": "0.1.5",
       "repo": "avalonreset/legends-obs",
-      "commit": "bfb884948e92747521ec9e181135f77a212e711f",
+      "commit": "ea4cccd250db780b4b5ac8ae4efaccf94a5008ee",
       "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
       "keywords": [
         "obs",
@@ -1281,7 +1281,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "6000257df3cc486d50ab08bb0810090ff741ea5056a2e946901ae29c88115d71",
+      "sha256": "56d75ab0175b86077c1455e732b45695d19bbea628beae8fc9a82b31e272f69f",
       "discovery": {
         "signals": [
           "record my screen",
@@ -1306,7 +1306,7 @@
           "docs/RECIPES.md"
         ]
       },
-      "artifact_url": "https://github.com/avalonreset/legends-obs/releases/download/v0.1.4/avalonreset-legends-obs-0.1.4.tgz",
+      "artifact_url": "https://github.com/avalonreset/legends-obs/releases/download/v0.1.5/avalonreset-legends-obs-0.1.5.tgz",
       "recipe": {
         "requires_node": 22,
         "env": false,
@@ -1335,10 +1335,10 @@
       "readiness": "doctor"
     },
     "legends-captions": {
-      "version": "0.1.3",
-      "commit": "6d967987ea1ad18857ed6aa5a5cd15449bd185a3",
+      "version": "0.1.4",
+      "commit": "70ee868df3f877af8c2b5f826ad8c87ffff6211c",
       "repo": "avalonreset/legends-captions",
-      "sha256": "e32eaba277835e6378ff2ab17bedfe10a54c6ba44b1f9bef428b5d8c4578c55e",
+      "sha256": "ef27cadf0f7782433e109336a9f4dae141d5503509933511b12c4a240ef0b46a",
       "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
       "keywords": [
         "caption",
@@ -1425,10 +1425,10 @@
       "readiness": "doctor"
     },
     "legends-yt-dlp": {
-      "version": "0.1.4",
-      "commit": "202d309d97aaeee8ea5a9ca6b2870cbe54899392",
+      "version": "0.1.5",
+      "commit": "582fba9a26cdbfc41f0082eaa7046c1321162ef1",
       "repo": "avalonreset/legends-yt-dlp",
-      "sha256": "d0fcdbdca3bfc97b1b2de6f348c5bd524f325dfd6e9d645d385eb2145a24fd04",
+      "sha256": "083903469a5216e019a73771d57fb3a472f4ed944442314dd47fa035ba5d3c3d",
       "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
       "keywords": [
         "youtube",
@@ -1519,9 +1519,9 @@
       "readiness": "doctor"
     },
     "legends-stable-audio-3": {
-      "version": "0.1.4",
+      "version": "0.1.5",
       "repo": "avalonreset/legends-stable-audio-3",
-      "commit": "ee7823e23f756929c91b2e1731b18cc80e45f2b6",
+      "commit": "8cc42360d12c4054c269fdce937e597f634c3096",
       "purpose": "Create instrumental music, sound effects, and continuous mixes.",
       "keywords": [
         "music",
@@ -1541,7 +1541,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "7b86866f41d9841758e71ba9a2bbd8384105bc785b16155daa43ba567d760b2c",
+      "sha256": "b7a28c7f021bca55937a16ebc2fd0780d81419fa3305263a8e5e0f613417b6e5",
       "discovery": {
         "signals": [
           "make music",
@@ -1564,7 +1564,7 @@
         "setup": "Lightweight planner install does not install models. Read the audio recipe for model access, hardware and hosted options.",
         "instructions": [
           "README.md",
-          "docs/first-run.md"
+          "docs/AGENT-RECIPE.md"
         ]
       },
       "recipe": {
@@ -1604,9 +1604,9 @@
       }
     },
     "legends-hyperyap": {
-      "version": "0.1.3",
+      "version": "0.1.4",
       "repo": "avalonreset/legends-hyperyap",
-      "commit": "28f40765865b0fdba00115e25d9be54afa954607",
+      "commit": "31b3fcbd8eb369301dced1d9a17cd869009527cc",
       "purpose": "Local voice typing, dictation, and app-focused paste.",
       "keywords": [
         "voice",
@@ -1618,15 +1618,15 @@
         "legends-hyperyap"
       ],
       "license": "AGPL-3.0",
-      "scope": "Guided native desktop installation. v0.1.3 is source-only; platform installer binaries are pending. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
+      "scope": "Guided native desktop installation. v0.1.4 is source-only; platform installer binaries are pending. Speech model download and microphone/shortcut setup are separate; the manager does not install or track the native app.",
       "dependencies": {},
       "platforms": [
         "windows",
         "macos",
         "linux"
       ],
-      "sha256": "5799c706b0dc801c70a2aaaad23c6b54dcdf7de4453b1062125e9053985e8f4a",
-      "next": "v0.1.3 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
+      "sha256": "685cf87786e91cbe1a24cb9f98d407c913a5d7158dc24fd7b05c28d490354cb4",
+      "next": "v0.1.4 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
       "discovery": {
         "signals": [
           "voice typing",
@@ -1651,10 +1651,10 @@
       }
     },
     "legends-ambient-intelligence": {
-      "version": "0.1.3",
-      "commit": "2a2ace56c118604ad1c729cacdf1171adff9c08c",
+      "version": "0.1.4",
+      "commit": "a85e373a20d3d95b5283a4e1a7b5b3684bb49e9b",
       "repo": "avalonreset/legends-ambient-intelligence",
-      "sha256": "52fd10ffe8775b39323db2b9345380fe8d850eb73d9692d26e8e87f7bbd1a904",
+      "sha256": "53f7c1c34dc9d04157b2210970472b2a450c3b160becc5bc632efcd3bf0e63d9",
       "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
       "keywords": [
         "ambient",
@@ -1745,10 +1745,10 @@
       "readiness": "doctor"
     },
     "legends-buzz": {
-      "version": "0.1.0",
-      "commit": "405a92182f2c45020b8ff1a7b08a5af965b9621f",
+      "version": "0.1.1",
+      "commit": "14b592856ebce0937539eb0031ffaecb1da3ee1f",
       "repo": "avalonreset/legends-buzz",
-      "sha256": "2c8ced313b8e66d0743b6b6b32384b6eda3d90e61afbb56c237956c939e2032b",
+      "sha256": "c0a0f3dda1545e220c6d47747c14232aec60154fc470a7ca2d849c3fcb7d6f45",
       "purpose": "Self-hosted Block Buzz Nostr relay operations, 26-domain MCP-to-CLI agent routing, NIP-29/NIP-OA/NIP-FI membership diagnostics, connected-component reply thread reconstruction, 5-gate attachment inspection, and desktop PE/asset verification.",
       "keywords": [
         "buzz",

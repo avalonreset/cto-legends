@@ -20,8 +20,8 @@ def _check(release, arguments, *, env=None):
         return None
 
 
-def _imports(release, code):
-    return _check(release, ['-c', code + "; import json; print(json.dumps({'ready': True}))"])
+def _imports(release, *modules):
+    return _check(release, [str(m.CHILD_EXEC), 'imports-json', *modules])
 
 
 def task_readiness(home, task='all', browser_library_directory=None):
@@ -48,10 +48,9 @@ def task_readiness(home, task='all', browser_library_directory=None):
     if task in ('all', 'reports'):
         key = 'legends-geogrid'
         root = release(key)
-        add('report_libraries', key, root and _imports(root, 'import reportlab, PIL, pypdf'),
+        add('report_libraries', key, root and _imports(root, 'reportlab', 'PIL', 'pypdf'),
             'Install GeoGrid and its requirements-report.txt in its managed environment.')
-        code = "from playwright.sync_api import sync_playwright\nwith sync_playwright() as pw:\n b=pw.chromium.launch(headless=True, args=['--enable-unsafe-swiftshader']); b.close()\nimport json; print(json.dumps({'ready': True}))"
-        add('map_browser_launch', key, root and _check(root, ['-c', code], env=env),
+        add('map_browser_launch', key, root and _check(root, [str(m.CHILD_EXEC), 'playwright-chromium-check'], env=env),
             'Install requirements-basemaps.txt and run python -m playwright install --with-deps chromium in the GeoGrid environment. Missing Linux libraries can block launch even when Chromium is installed.',
             scope='Offline browser launch only; map-network access is not tested.',
             explicit_library_directory=str(browser_library_directory) if browser_library_directory else None)
@@ -70,7 +69,7 @@ def task_readiness(home, task='all', browser_library_directory=None):
     if task in ('all', 'evidence'):
         key = 'legends-dataforseo'
         root = release(key)
-        add('evidence_export', key, root and _imports(root, 'import legends_dataforseo.evidence'),
+        add('evidence_export', key, root and _imports(root, 'legends_dataforseo.evidence'),
             'Install the DataForSEO release containing the evidence module. Obsidian intake instructions alone do not provide the exporter.')
         key = 'legends-empire'
         root = release(key)
@@ -80,7 +79,7 @@ def task_readiness(home, task='all', browser_library_directory=None):
     if task in ('all', 'github'):
         key = 'legends-github'
         root = release(key)
-        add('banner_images', key, root and _imports(root, 'from PIL import Image'),
+        add('banner_images', key, root and _imports(root, 'PIL.Image'),
             'Install github/requirements.txt in the managed GitHub environment.', optional=True)
     return {'task': task, 'ok': all(c['status'] == 'ready' for c in checks if not c.get('optional')),
             'checks': checks, 'paid_calls': False,

@@ -73,7 +73,7 @@ class CapabilitiesTests(unittest.TestCase):
             with patch.object(m, 'read_state', return_value={'active': {'legends-stable-audio-3': 'releases/audio'}}):
                 result = d.handoff('legends-stable-audio-3', home)
             self.assertEqual(result['instructions'], [str(source.resolve() / 'README.md')])
-            self.assertEqual(result['missing_instructions'], ['docs/first-run.md'])
+            self.assertEqual(result['missing_instructions'], ['docs/AGENT-RECIPE.md'])
             self.assertIsNone(result['readiness'])
             self.assertEqual(result['handoff_status'], 'instructions_missing')
             self.assertFalse(result['update_required'])

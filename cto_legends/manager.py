@@ -12,22 +12,35 @@ CLI change, justifies one.
 from contextlib import contextmanager
 from functools import partial
 from pathlib import Path, PurePosixPath
+import gzip
 import hashlib
 import json
 import os
 import re
 import shutil
+import ssl
 import stat
 import subprocess
 import sys
 import tarfile
+import urllib.parse
 import urllib.request
 import uuid
 import zipfile
 from . import __version__ as MANAGER_VERSION
 
 ROOT = Path(__file__).resolve().parent
+CHILD_EXEC = ROOT / "_child_exec.py"
 LIMIT = 100 * 1024 * 1024
+MAX_EXTRACTED_BYTES = 400 * 1024 * 1024
+MAX_STATE_BYTES = 1_048_576
+MAX_CATALOG_BYTES = 4 * 1_048_576
+_MACOS_SYSTEM_SYMLINKS = {Path("/var"), Path("/tmp"), Path("/etc")}
+_STDLIB_URLOPEN = urllib.request.urlopen
+_RELEASE_ASSET_CDNS = (
+    "https://objects.githubusercontent.com/",
+    "https://release-assets.githubusercontent.com/",
+)
 SUPPORTED_CATALOG_SCHEMA = 1
 CATALOG_ORG = "avalonreset/"
 CATALOG_REPO = "avalonreset/cto-legends"
@@ -41,6 +54,68 @@ PATTERN_RE = r"[A-Za-z0-9_.*?\[\]!\-]+"
 PACKAGE_RE = r"[A-Za-z0-9_.\-]+"
 DEFAULT_GUIDE_FILE = "AGENTS.md"
 GUIDE_SOURCE = "user-selected-local-guide"
+
+
+def ensure_not_linked(path):
+    """Reject symlinks and Windows junctions/reparse points along a target path."""
+    target = Path(path)
+    current = Path(target.anchor) if target.is_absolute() else Path(".")
+    parts = target.parts[1:] if target.is_absolute() else target.parts
+    for idx, piece in enumerate(parts):
+        current = current / piece
+        is_final = idx == len(parts) - 1
+        if sys.platform == "darwin" and not is_final and current in _MACOS_SYSTEM_SYMLINKS:
+            continue
+        try:
+            st = current.lstat()
+        except OSError:
+            continue
+        if stat.S_ISLNK(st.st_mode):
+            raise ValueError(f"Refusing symlink or junction path: {target}")
+        if getattr(st, "st_file_attributes", 0) & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400):
+            raise ValueError(f"Refusing symlink or junction path: {target}")
+    return target
+
+
+def read_bounded_text(path, *, limit=MAX_STATE_BYTES):
+    """Read UTF-8 text from a regular non-symlink file bounded to limit bytes."""
+    target = ensure_not_linked(path)
+    st = target.stat()
+    if not stat.S_ISREG(st.st_mode):
+        raise ValueError(f"Not a regular file: {target}")
+    if st.st_size > limit:
+        raise ValueError(f"File exceeds {limit} byte limit: {target}")
+    with target.open("rb") as handle:
+        raw = handle.read(limit + 1)
+    if len(raw) > limit:
+        raise ValueError(f"File exceeds {limit} byte limit: {target}")
+    return raw.decode("utf-8")
+
+
+def atomic_write_text(path, content, *, mode=0o600):
+    """Atomically write UTF-8 text via a sibling temporary file after symlink checks."""
+    target = ensure_not_linked(path)
+    if target.exists() and not target.is_file():
+        raise ValueError(f"Destination is not a regular file: {target}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    ensure_not_linked(target.parent)
+    tmp = target.with_name(f".{target.name}.{os.getpid()}.{uuid.uuid4().hex[:8]}.tmp")
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
+    fd = os.open(tmp, flags, mode)
+    try:
+        with os.fdopen(fd, "wb") as handle:
+            handle.write(content.encode("utf-8"))
+            handle.flush()
+            os.fsync(handle.fileno())
+        if os.name != "nt":
+            os.chmod(tmp, mode)
+        os.replace(tmp, target)
+    except Exception:
+        try:
+            tmp.unlink(missing_ok=True)
+        except OSError:
+            pass
+        raise
 
 
 def _check_id(value, what="module id"):
@@ -232,6 +307,27 @@ def _validate_recipe(key, recipe, *, artifact_url):
     return recipe
 
 
+def _check_clean_url(url, what="URL"):
+    if not isinstance(url, str) or not url or len(url) > 2000:
+        raise ValueError(f"Invalid {what}")
+    if any(ord(c) <= 32 or ord(c) == 127 for c in url):
+        raise ValueError(f"Invalid {what}")
+    lower = url.lower()
+    if "\\" in url or "?" in url or "#" in url or "%2f" in lower or "%5c" in lower:
+        raise ValueError(f"Invalid {what}")
+    parsed = urllib.parse.urlsplit(url)
+    unquoted_path = urllib.parse.unquote(parsed.path)
+    if "\\" in unquoted_path or "\x00" in unquoted_path:
+        raise ValueError(f"Invalid {what}")
+    raw_segments = parsed.path.split("/")
+    unquoted_segments = unquoted_path.split("/")
+    if any(seg in (".", "..") for seg in raw_segments + unquoted_segments):
+        raise ValueError(f"Invalid {what}")
+    if ".." in PurePosixPath(unquoted_path).parts:
+        raise ValueError(f"Invalid {what}")
+    return url
+
+
 def _validate_module(key, module):
     _check_module_key(key)
     if not isinstance(module, dict):
@@ -287,7 +383,8 @@ def _validate_module(key, module):
     artifact_url = module.get("artifact_url")
     if artifact_url is not None:
         want = f"https://github.com/{CATALOG_ORG}{key}/releases/download/"
-        if not isinstance(artifact_url, str) or not artifact_url.startswith(want) or " " in artifact_url:
+        _check_clean_url(artifact_url, f"artifact URL for {key}")
+        if not artifact_url.startswith(want):
             raise ValueError(f"Invalid artifact URL for {key}")
     if "readiness" in module:
         readiness = module["readiness"]
@@ -342,10 +439,10 @@ def catalog():
 def synced_catalog(home):
     """Home catalog installed by sync, or None when the home never synced."""
     path = home / "catalog.json"
-    if not path.exists():
+    if not path.exists() and not path.is_symlink():
         return None
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(read_bounded_text(path, limit=MAX_CATALOG_BYTES))
     except (OSError, ValueError) as exc:
         raise ValueError(f"Synced catalog is unreadable ({exc}); run cto-legends sync to refresh or roll back") from None
     try:
@@ -367,10 +464,10 @@ def resolve_module(key, cat):
 def read_guides(home):
     """User-selected local guides. Never shadows catalog modules at read time."""
     path = home / "local-guides.json"
-    if not path.exists():
+    if not path.exists() and not path.is_symlink():
         return {}
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(read_bounded_text(path))
     except (OSError, ValueError) as exc:
         raise ValueError(f"Local guide registry is malformed: {exc}") from None
     if not isinstance(data, dict):
@@ -388,9 +485,9 @@ def known_module_error(key, cat):
 
 def read_state(home):
     path = home / "state.json"
-    if not path.exists():
+    if not path.exists() and not path.is_symlink():
         return {"schema": 1, "active": {}, "previous": {}}
-    data = json.loads(path.read_text(encoding="utf-8"))
+    data = json.loads(read_bounded_text(path))
     if data.get("schema") != 1:
         raise ValueError("Unsupported installation state")
     for group in ("active", "previous"):
@@ -446,33 +543,118 @@ def lock(home):
 
 
 def write_state(home, data):
-    path = home / "state.new.json"
-    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-    os.replace(path, home / "state.json")
+    atomic_write_text(home / "state.json", json.dumps(data, indent=2) + "\n")
+
+
+class _SafeRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def __init__(self, *, allow_release_redirect=False):
+        super().__init__()
+        self._allow_release_redirect = allow_release_redirect
+        self._hops = 0
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        self._hops += 1
+        if not self._allow_release_redirect or self._hops > 1:
+            raise ValueError("Unexpected redirect origin")
+        if not isinstance(newurl, str) or not newurl.startswith(_RELEASE_ASSET_CDNS):
+            raise ValueError("Unexpected redirect origin")
+        redirected = super().redirect_request(req, fp, code, msg, headers, newurl)
+        if redirected is not None:
+            for header in ("Authorization", "Cookie"):
+                redirected.headers.pop(header, None)
+                redirected.unredirected_hdrs.pop(header, None)
+        return redirected
+
+
+def _ssl_context():
+    ctx = ssl.create_default_context()
+    for mod_name in ("certifi", "pip._vendor.certifi"):
+        try:
+            mod = __import__(mod_name, fromlist=["where"])
+            cafile = mod.where()
+            if cafile and Path(cafile).is_file():
+                ctx.load_verify_locations(cafile=str(cafile))
+                break
+        except Exception:
+            continue
+    return ctx
 
 
 def fetch(url, repos):
-    allowed = tuple(prefix + repo + "/" for repo in {CATALOG_REPO, *repos}
+    try:
+        _check_clean_url(url, "download origin")
+    except ValueError:
+        raise ValueError("Unexpected download origin") from None
+    allowed_repos = {CATALOG_REPO, *repos}
+    for repo in allowed_repos:
+        if not isinstance(repo, str) or not repo.startswith(CATALOG_ORG):
+            raise ValueError(f"Unexpected repository scope: {repo!r}")
+    allowed = tuple(prefix + repo + "/" for repo in allowed_repos
                     for prefix in ("https://codeload.github.com/", "https://api.github.com/repos/"))
-    releases = tuple("https://github.com/" + repo + "/releases/download/" for repo in {CATALOG_REPO, *repos})
+    releases = tuple("https://github.com/" + repo + "/releases/download/" for repo in allowed_repos)
     raw = ("https://raw.githubusercontent.com/" + CATALOG_REPO + "/",)
-    if not url.startswith(allowed + releases + raw):
+    if not isinstance(url, str) or not url.startswith(allowed + releases + raw):
         raise ValueError("Unexpected download origin")
+    is_release = url.startswith(releases)
     headers = {"User-Agent": "cto-legends/" + MANAGER_VERSION}
     if url.startswith("https://api.github.com/"):
         token = (os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN") or "").strip()
         if token:
             headers["Authorization"] = "Bearer " + token
     request = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(request, timeout=90) as response:
-        if not response.url.startswith(("https://codeload.github.com/", "https://api.github.com/",
-                                        "https://release-assets.githubusercontent.com/",
-                                        "https://raw.githubusercontent.com/")):
+    if urllib.request.urlopen is not _STDLIB_URLOPEN:
+        context = urllib.request.urlopen(request, timeout=90)
+    else:
+        opener = urllib.request.build_opener(
+            urllib.request.ProxyHandler({}),
+            urllib.request.HTTPSHandler(context=_ssl_context()),
+            _SafeRedirectHandler(allow_release_redirect=is_release),
+        )
+        context = opener.open(request, timeout=90)
+    with context as response:
+        final_url = getattr(response, "url", url) or url
+        allowed_final = (releases + _RELEASE_ASSET_CDNS) if is_release else (allowed + raw)
+        if not final_url.startswith(allowed_final):
             raise ValueError("Unexpected redirect origin")
         body = response.read(LIMIT + 1)
     if len(body) > LIMIT:
         raise ValueError("Download exceeds size limit")
     return body
+
+
+class _BoundedGzipStream:
+    def __init__(self, gz_stream, limit):
+        self._gz = gz_stream
+        self._limit = limit
+        self._bytes_read = 0
+
+    def read(self, size=-1):
+        read_len = self._limit + 1 if (size is None or size < 0) else min(size, self._limit + 1)
+        chunk = self._gz.read(read_len)
+        self._bytes_read += len(chunk)
+        if self._gz.tell() > self._limit or self._bytes_read > self._limit * 4:
+            raise ValueError("Archive expansion exceeds limit")
+        return chunk
+
+    def tell(self):
+        pos = self._gz.tell()
+        if pos > self._limit:
+            raise ValueError("Archive expansion exceeds limit")
+        return pos
+
+    def seek(self, offset, whence=0):
+        if whence == 0:
+            target = offset
+        elif whence == 1:
+            target = self._gz.tell() + offset
+        else:
+            raise ValueError("Archive expansion exceeds limit")
+        if target < 0 or target > self._limit:
+            raise ValueError("Archive expansion exceeds limit")
+        pos = self._gz.seek(offset, whence)
+        if pos > self._limit:
+            raise ValueError("Archive expansion exceeds limit")
+        return pos
 
 
 def extract_tgz(raw, destination, expected):
@@ -481,18 +663,28 @@ def extract_tgz(raw, destination, expected):
     if hashlib.sha256(raw).hexdigest() != expected:
         raise ValueError("Archive checksum mismatch; no module code was executed")
     buffer = io.BytesIO()
-    with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as archive:
-        members = archive.getmembers()
-        if len(members) > 20000 or sum(x.size for x in members) > 400 * 1024 * 1024:
-            raise ValueError("Archive expansion exceeds limit")
-        with zipfile.ZipFile(buffer, "w") as converted:
-            for member in members:
-                if not member.isfile() and not member.isdir():
-                    raise ValueError("Archive links and special files are not supported")
-                if '\\' in member.name or '\x00' in member.name:
-                    raise ValueError("Unsafe original archive path")
-                if member.isfile():
-                    converted.writestr(member.name, archive.extractfile(member).read())
+    total_extracted = 0
+    with gzip.GzipFile(fileobj=io.BytesIO(raw), mode="rb") as gz_stream:
+        bounded = _BoundedGzipStream(gz_stream, MAX_EXTRACTED_BYTES)
+        with tarfile.open(fileobj=bounded, mode="r:") as archive:
+            members = archive.getmembers()
+            if len(members) > 20000 or sum(x.size for x in members) > MAX_EXTRACTED_BYTES:
+                raise ValueError("Archive expansion exceeds limit")
+            with zipfile.ZipFile(buffer, "w") as converted:
+                for member in members:
+                    if not member.isfile() and not member.isdir():
+                        raise ValueError("Archive links and special files are not supported")
+                    if '\\' in member.name or '\x00' in member.name:
+                        raise ValueError("Unsafe original archive path")
+                    if member.isfile():
+                        handle = archive.extractfile(member)
+                        if handle is None:
+                            raise ValueError("Archive links and special files are not supported")
+                        data = handle.read(MAX_EXTRACTED_BYTES + 1 - total_extracted)
+                        total_extracted += len(data)
+                        if total_extracted > MAX_EXTRACTED_BYTES:
+                            raise ValueError("Archive expansion exceeds limit")
+                        converted.writestr(member.name, data)
     zipped = buffer.getvalue()
     extract(zipped, destination, hashlib.sha256(zipped).hexdigest())
 
@@ -525,9 +717,10 @@ def extract(raw, destination, expected):
     import io
     if hashlib.sha256(raw).hexdigest() != expected:
         raise ValueError("Archive checksum mismatch; no module code was executed")
+    ensure_not_linked(destination)
     with zipfile.ZipFile(io.BytesIO(raw)) as archive:
         members = archive.infolist()
-        if sum(x.file_size for x in members) > 400 * 1024 * 1024 or len(members) > 20000:
+        if sum(x.file_size for x in members) > MAX_EXTRACTED_BYTES or len(members) > 20000:
             raise ValueError("Archive expansion exceeds limit")
         roots = set()
         for item in members:
@@ -545,17 +738,27 @@ def extract(raw, destination, expected):
             roots.add(parts[0])
         if len(roots) != 1:
             raise ValueError("Expected one source directory")
+        total_written = 0
         for item in members:
             parts = PurePosixPath(item.filename).parts[1:]
             if not parts:
                 continue
             target = destination.joinpath(*parts)
+            ensure_not_linked(target)
             if item.is_dir():
                 target.mkdir(parents=True, exist_ok=True)
             else:
                 target.parent.mkdir(parents=True, exist_ok=True)
+                ensure_not_linked(target.parent)
                 with archive.open(item) as source, target.open("xb") as output:
-                    shutil.copyfileobj(source, output)
+                    while True:
+                        chunk = source.read(65536)
+                        if not chunk:
+                            break
+                        total_written += len(chunk)
+                        if total_written > MAX_EXTRACTED_BYTES:
+                            raise ValueError("Archive expansion exceeds limit")
+                        output.write(chunk)
 
 
 def python_at(release):
@@ -583,11 +786,12 @@ def probe(key, release, recipe, *, log=False):
     for step in recipe["probe"]:
         do = step["do"]
         if do == "import":
-            names = [*step.get("callable", []), *step.get("present", [])]
-            code = [f"from {step['module']} import {', '.join(names)}"]
-            code += [f"assert callable({name})" for name in step.get("callable", [])]
-            code += [f"assert {name} is not None" for name in step.get("present", [])]
-            check([python, "-c", "; ".join(code)], release)
+            args = [python, CHILD_EXEC, "import-probe", step["module"]]
+            for name in step.get("callable", []):
+                args.extend(["--callable", name])
+            for name in step.get("present", []):
+                args.extend(["--present", name])
+            check(args, release)
         elif do == "module-cli":
             check([python, "-m", step["module"], *step.get("args", [])], release)
         elif do == "script":
@@ -604,10 +808,7 @@ def probe(key, release, recipe, *, log=False):
             floor = recipe.get("requires_node", 22)
             check([node_binary(floor, key), confine(source, step["path"]), *step.get("args", [])], release)
         elif do == "version-floor":
-            want = tuple(int(x) for x in step["min"].split("."))
-            code = ("import importlib.metadata as m; v = tuple(int(x) for x in "
-                    f"m.version({step['package']!r}).split('.')[:3]); assert v >= {want}, v")
-            check([python, "-c", code], release)
+            check([python, CHILD_EXEC, "version-floor", step["package"], step["min"]], release)
         else:
             raise ValueError(f"Unknown probe step for {key}: {do!r}")
 
@@ -647,14 +848,14 @@ def prepare(key, module, home):
                 run([python, "-m", "pip", "install", "--disable-pip-version-check",
                      "-r", confine(source, name)], release)
     probe(key, release, recipe, log=True)
-    (release / "receipt.json").write_text(json.dumps(module, indent=2), encoding="utf-8")
+    atomic_write_text(release / "receipt.json", json.dumps(module, indent=2) + "\n")
     return relative
 
 
 def recipe_for(home, key, relative, cat):
     """Install receipt recipe first (installed version's own checks), else the active catalog."""
     release = managed_path(home, relative)
-    receipt = json.loads((release / "receipt.json").read_text(encoding="utf-8"))
+    receipt = json.loads(read_bounded_text(release / "receipt.json"))
     recipe = receipt.get("recipe")
     if recipe is None:
         recipe = cat["modules"].get(key, {}).get("recipe")
@@ -684,7 +885,7 @@ def plan(home, keys):
         current = state["active"].get(key)
         same = False
         if current:
-            receipt = json.loads((managed_path(home, current) / "receipt.json").read_text(encoding="utf-8"))
+            receipt = json.loads(read_bounded_text(managed_path(home, current) / "receipt.json"))
             same = (receipt["commit"] == module["commit"] and receipt["sha256"] == module["sha256"]
                     and receipt.get("setup_revision", 0) == module.get("setup_revision", 0))
         result.append({"id": key, "version": module["version"], "action": "keep" if same else "install",
@@ -735,7 +936,7 @@ def status(home):
     result = {}
     for key, relative in state["active"].items():
         release = managed_path(home, relative)
-        receipt = json.loads((release / "receipt.json").read_text(encoding="utf-8"))
+        receipt = json.loads(read_bounded_text(release / "receipt.json"))
         recipe = receipt.get("recipe") or cat["modules"].get(key, {}).get("recipe", {})
         node_floor = recipe.get("requires_node")
         if node_floor is not None:
@@ -780,9 +981,9 @@ def sync(home, *, apply=False, rollback_catalog=False):
 
     if rollback_catalog:
         previous_path = home / "catalog.previous.json"
-        if not previous_path.exists():
+        if not previous_path.exists() and not previous_path.is_symlink():
             raise ValueError("No previous catalog to roll back to")
-        previous = json.loads(previous_path.read_text(encoding="utf-8"))
+        previous = json.loads(read_bounded_text(previous_path, limit=MAX_CATALOG_BYTES))
         try:
             restored = validate_catalog(json.loads(previous["text"])) if previous.get("was_synced") else catalog()
         except (ValueError, KeyError, TypeError) as exc:
@@ -796,10 +997,10 @@ def sync(home, *, apply=False, rollback_catalog=False):
         with lock(home):
             active_path = home / "catalog.json"
             rotation = {"was_synced": active_path.exists(),
-                        "text": active_path.read_text(encoding="utf-8") if active_path.exists() else None}
-            previous_path.write_text(json.dumps(rotation, indent=2) + "\n", encoding="utf-8")
+                        "text": read_bounded_text(active_path, limit=MAX_CATALOG_BYTES) if active_path.exists() else None}
+            atomic_write_text(previous_path, json.dumps(rotation, indent=2) + "\n")
             if previous.get("was_synced"):
-                active_path.write_text(json.dumps(restored, indent=2) + "\n", encoding="utf-8")
+                atomic_write_text(active_path, json.dumps(restored, indent=2) + "\n")
             else:
                 active_path.unlink(missing_ok=True)
         return {**detail, "startup_refresh": refresh(restored)}
@@ -818,10 +1019,10 @@ def sync(home, *, apply=False, rollback_catalog=False):
         with lock(home):
             active_path = home / "catalog.json"
             rotation = {"was_synced": active_path.exists(),
-                        "text": active_path.read_text(encoding="utf-8") if active_path.exists()
+                        "text": read_bounded_text(active_path, limit=MAX_CATALOG_BYTES) if active_path.exists()
                         else (ROOT / "catalog.json").read_text(encoding="utf-8")}
-            (home / "catalog.previous.json").write_text(json.dumps(rotation, indent=2) + "\n", encoding="utf-8")
-            active_path.write_text(json.dumps(candidate, indent=2) + "\n", encoding="utf-8")
+            atomic_write_text(home / "catalog.previous.json", json.dumps(rotation, indent=2) + "\n")
+            atomic_write_text(active_path, json.dumps(candidate, indent=2) + "\n")
     refreshed = refresh(candidate)
     return {**detail, "preview": False, "startup_refresh": refreshed,
             "next": ("synced" if diff["changed"] else "catalog already current") +
@@ -840,7 +1041,7 @@ def updates(home):
         installed = None
         current = state["active"].get(key)
         if current:
-            receipt = json.loads((managed_path(home, current) / "receipt.json").read_text(encoding="utf-8"))
+            receipt = json.loads(read_bounded_text(managed_path(home, current) / "receipt.json"))
             installed = receipt.get("version")
         try:
             release = json.loads(fetch(f"https://api.github.com/repos/{module['repo']}/releases/latest", {module["repo"]}))

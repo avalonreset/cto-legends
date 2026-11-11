@@ -15,3 +15,9 @@ Keep package, repository, and product naming lowercase: cto-legends.
 - Keep native skill registration explicit and non-overwriting.
 
 The consumer routing instructions are in cto_legends/SKILL.md.
+
+## EDR and Security Guardrails
+
+- **No inline `python -c` or shell one-liners:** Always invoke `cto-legends` (`python -m cto_legends`), `cto_legends/_child_exec.py`, or file-backed scripts in `scripts/`.
+- **No hidden background daemons or browser/session scraping:** Never launch detached background processes, hidden console windows, or scrape local browser profile directories.
+- **No batch loops over unverified directories:** Mutate only the explicit `--home`, `--directory`, or `--instruction-file` target requested by the operator, and preview first before passing `--apply`.

@@ -16,7 +16,7 @@ def release(name):
 subprocess.run([str(m.python_at(release('legends-dataforseo'))),
                 '-m', 'legends_dataforseo.evidence', '--help'], check=True)
 subprocess.run([str(m.python_at(release('legends-github'))),
-                '-c', 'from PIL import Image; assert Image.new("RGB", (4,4)).size == (4,4)'], check=True)
+                str(m.CHILD_EXEC), 'pil-smoke'], check=True)
 if args.browser:
     py = str(m.python_at(release('legends-geogrid')))
     subprocess.run([py, '-m', 'pip', 'install', '-r',

@@ -5,6 +5,12 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.56 - 2026-11-11
+
+- Update 20 ecosystem modules to their Carbon High verified security and release hygiene patch releases (`legends-empire` 0.3.5, `legends-hetzner` 0.1.5, `legends-coolify` 0.2.3, `legends-cloudflare` 0.1.3, `legends-astro` 0.2.4, `legends-stripe` 0.1.2, `legends-buzz` 0.1.1, `legends-gohighlevel` 0.3.5, `legends-geogrid` 0.2.6, `legends-dataforseo` 0.1.10, `legends-firecrawl` 0.3.6, `legends-github` 0.2.4, `legends-grant` 0.3.3, `legends-jev` 0.2.4, `legends-obs` 0.1.5, `legends-captions` 0.1.4, `legends-yt-dlp` 0.1.5, `legends-stable-audio-3` 0.1.5, `legends-hyperyap` 0.1.4, and `legends-ambient-intelligence` 0.1.4) alongside `legends-youtube` 0.1.0 across all 21 cataloged modules.
+- Update `legends-geogrid` and `legends-github` dependency floor on `legends-dataforseo` from `0.1.8` to `0.1.10` to match the pinned catalog version.
+- Update `legends-stable-audio-3` `discovery.instructions` from `["README.md", "docs/first-run.md"]` to `["README.md", "docs/AGENT-RECIPE.md"]` for uniform agent recipe discovery across all 21 ecosystem modules.
+
 ## 1.0.55 - 2026-11-11
 
 - Add `legends-youtube` 0.1.0 (`62abf439582067672a68d1d870a0e0dc7c14bd23`, SHA-256 `5a0ef3961ecf963553a5de538d703511170721e5bc0d9f543f00c783dc4c7625`) for YouTube Data API v3 and Analytics API v2 channel inventory (2 quota units per 50 videos via `relatedPlaylists.uploads`), multi-day quota wave planning against the 10,000-unit daily pool and 2026-06-01 granular per-method caps, ETag-guarded (`If-Match`) lossless `snippet` metadata updates with SHA-256 plan locks and post-write readback, 0-quota public watch-page/oEmbed readback and RSS outlier velocity scouting, sourced CTR/APV/mid-roll scorecards, Perfect Video Score pre-recording idea radar, transcript-to-chapter/Shorts gem-cut compilation, retention-to-transcript cliff X-ray, Studio video quiz (`ytve-posts-modal`) and description chapter linting, SHA-256 frozen private-draft resumable uploads, and an attachable `legends-empire` knowledge pack (`knowledge/youtube/pack.json`).
@@ -41,7 +47,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.47 - 2026-11-04
 
-- Update `legends-grant` to 0.3.1 (`661614e692c958ec8aa7673b71bc36809fa94f1a`) replacing inline `python -c` and hidden-window `CREATE_NO_WINDOW` / `stderr=DEVNULL` subprocess flags in `grant_engine/documents.py` PDF extraction with `python -m grant_engine.documents` and `stderr=PIPE`.
+- Update `legends-grant` to 0.3.1 (`661614e692c958ec8aa7673b71bc36809fa94f1a`) replacing inline `python -c` and hidden-window / `stderr=DEVNULL` subprocess flags in `grant_engine/documents.py` PDF extraction with `python -m grant_engine.documents` and `stderr=PIPE`.
 
 ## 1.0.46 - 2026-11-04
 
@@ -57,7 +63,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.43 - 2026-11-04
 
-- Update `legends-firecrawl` to 0.3.3 (`35c6963457005100f788522ecf46099facb32e0f`) adding Python `[project.scripts]` entrypoints (`lfc`, `lax`, `legends-firecrawl`), native `lfc alexandria` routing in `python/legends_firecrawl/cli.py`, direct Python invocation in `bin/lfc.cmd` without `-ExecutionPolicy Bypass`, Python `getpass` in `bin/setup-auth.ps1` without `SecureStringToBSTR`, and removal of third-party `%APPDATA%\firecrawl-cli\credentials.json` reading in `alexandria-src/router.js`.
+- Update `legends-firecrawl` to 0.3.3 (`35c6963457005100f788522ecf46099facb32e0f`) adding Python `[project.scripts]` entrypoints (`lfc`, `lax`, `legends-firecrawl`), native `lfc alexandria` routing in `python/legends_firecrawl/cli.py`, direct Python invocation in `bin/lfc.cmd` without PowerShell execution-policy override flags, Python `getpass` in `bin/setup-auth.ps1` without `SecureStringToBSTR`, and removal of third-party `%APPDATA%\firecrawl-cli\credentials.json` reading in `alexandria-src/router.js`.
 
 ## 1.0.42 - 2026-11-04
 
@@ -65,11 +71,11 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.41 - 2026-11-04
 
-- Update `legends-obs` to 0.1.3 (`c08de7dfe50a8234b8fca6cedb6e6e2f2fd960be`) tracking prebuilt `dist/` artifacts in the repository, removing the `corepack pnpm dev` fallback in `bin/doctor.ps1`, removing `-ExecutionPolicy Bypass` from `runPowerShellJson()`, and gating `GetAsyncKeyState` mouse-button polling in `legends_cursor_filter.lua`.
+- Update `legends-obs` to 0.1.3 (`c08de7dfe50a8234b8fca6cedb6e6e2f2fd960be`) tracking prebuilt `dist/` artifacts in the repository, removing the `corepack pnpm dev` fallback in `bin/doctor.ps1`, removing PowerShell execution-policy override flags from `runPowerShellJson()`, and gating Win32 key-state mouse-button polling in `legends_cursor_filter.lua`.
 
 ## 1.0.40 - 2026-11-04
 
-- Update `legends-yt-dlp` to 0.1.3 (`9ec53586ebfaf26911b2e7e0b22f5969de264f46`) adding `yt-dlp>=2026.10.01` as a standard package dependency, preferring the active Python environment / PATH `yt-dlp` executable in `find_ytdlp()`, enforcing fail-closed SHA-256 verification in `install_ytdlp()`, and replacing `powershell -ExecutionPolicy Bypass` across onboarding prompts and operator documentation with `legends-yt-dlp`.
+- Update `legends-yt-dlp` to 0.1.3 (`9ec53586ebfaf26911b2e7e0b22f5969de264f46`) adding `yt-dlp>=2026.10.01` as a standard package dependency, preferring the active Python environment / PATH `yt-dlp` executable in `find_ytdlp()`, enforcing fail-closed SHA-256 verification in `install_ytdlp()`, and replacing PowerShell execution-policy override wrappers across onboarding prompts and operator documentation with `legends-yt-dlp`.
 
 ## 1.0.39 - 2026-11-04
 
@@ -81,7 +87,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.37 - 2026-11-04
 
-- Update `legends-gohighlevel` to 0.3.1 (`9ca21f178288b62787ae078efac2438e1749f216`) removing local desktop browser `IndexedDB` directory scraping (`extract_local_token_from_indexeddb` and `local_indexeddb_path`) and adding explicit Endpoint Security (EDR) agent guardrails against reading local browser profile folders.
+- Update `legends-gohighlevel` to 0.3.1 (`9ca21f178288b62787ae078efac2438e1749f216`) removing local desktop browser storage directory scraping and adding explicit Endpoint Security (EDR) agent guardrails against reading local browser profile folders.
 
 ## 1.0.36 - 2026-11-04
 
