@@ -188,12 +188,6 @@ class ManagerTests(unittest.TestCase):
         def fake_run(command, cwd, *, log=True):
             command = [str(part) for part in command]
             calls.append(command)
-            if len(command) > 2 and command[1] == '-c':
-                done = subprocess.run([sys.executable, '-c', command[2]], cwd=cwd,
-                                      capture_output=True, text=True)
-                if done.returncode:
-                    raise subprocess.CalledProcessError(done.returncode, command,
-                                                       done.stdout + done.stderr)
             return subprocess.CompletedProcess(command, 0, '', '')
         # Temp directory names can contain "pip"; only an actual pip command
         # means dependencies were installed. Keep that collision deterministic.
@@ -226,12 +220,6 @@ class ManagerTests(unittest.TestCase):
                             'run': {'runtime': 'none'}}
         def probing(command, cwd, *, log=True):
             command = [str(part) for part in command]
-            if len(command) > 2 and command[1] == '-c':
-                done = subprocess.run([sys.executable, '-c', command[2]], cwd=cwd,
-                                      capture_output=True, text=True)
-                if done.returncode:
-                    raise subprocess.CalledProcessError(done.returncode, command,
-                                                       done.stdout + done.stderr)
             return subprocess.CompletedProcess(command, 0, '', '')
         with patch.object(m, 'fetch', return_value=raw), patch.object(m, 'run', side_effect=probing):
             with self.assertRaisesRegex(ValueError, 'missing'):
@@ -277,7 +265,8 @@ class ManagerTests(unittest.TestCase):
         self.assertEqual(len(installs), 2, calls)
         self.assertEqual(installs[0][-2:], ['--upgrade', 'pip>=26.2.2'])
         self.assertNotIn('requirements-dataforseo.txt', ' '.join(installs[1]))
-        self.assertTrue(any(command[1:2] == ['-c'] for command in calls), calls)
+        self.assertFalse(any(command[1:2] == ['-c'] for command in calls), calls)
+        self.assertTrue(any('import-probe' in command for command in calls), calls)
 
     def test_tgz_extract_and_unsafe_entries(self):
         for name, kind in (("package/file.txt", tarfile.REGTYPE), ("package/../escape", tarfile.REGTYPE),
@@ -323,7 +312,7 @@ class ManagerTests(unittest.TestCase):
         with patch.object(m, "fetch", side_effect=AssertionError("network")):
             plan = m.plan(home, ["legends-geogrid"])
         self.assertFalse(home.exists())
-        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo"], "0.1.8")
+        self.assertEqual(plan[0]["dependencies"]["legends-dataforseo"], "0.1.10")
 
     def test_unknown_module_rejected(self):
         with self.assertRaises(ValueError):
@@ -483,6 +472,94 @@ class ManagerTests(unittest.TestCase):
             m.fetch("https://codeload.github.com/evil-fork/legends-geogrid/zip/" + "0" * 40,
                     {"avalonreset/legends-geogrid"})
 
+    def test_safe_redirect_handler_blocks_non_release_and_strips_auth(self):
+        handler = m._SafeRedirectHandler(allow_release_redirect=False)
+        req = m.urllib.request.Request("https://api.github.com/repos/avalonreset/cto-legends/releases/latest",
+                                       headers={"Authorization": "Bearer secret", "Cookie": "sid=1"})
+        with self.assertRaisesRegex(ValueError, "Unexpected redirect origin"):
+            handler.redirect_request(req, None, 302, "Found", {}, "https://objects.githubusercontent.com/asset")
+
+        rel_handler = m._SafeRedirectHandler(allow_release_redirect=True)
+        rel_req = m.urllib.request.Request(
+            "https://github.com/avalonreset/legends-obs/releases/download/v0.1.4/pkg.tgz",
+            headers={"Authorization": "Bearer secret", "Cookie": "sid=1"},
+        )
+        redirected = rel_handler.redirect_request(
+            rel_req, None, 302, "Found", {}, "https://objects.githubusercontent.com/github-production-release-asset/1"
+        )
+        self.assertNotIn("Authorization", redirected.headers)
+        self.assertNotIn("Authorization", redirected.unredirected_hdrs)
+        self.assertNotIn("Cookie", redirected.headers)
+        with self.assertRaisesRegex(ValueError, "Unexpected redirect origin"):
+            rel_handler.redirect_request(
+                redirected, None, 302, "Found", {}, "https://release-assets.githubusercontent.com/second-hop"
+            )
+
+    def test_fetch_rejects_cross_org_post_response_url(self):
+        class FakeResp:
+            url = "https://codeload.github.com/attacker/evil/zip/" + "0" * 40
+            def __enter__(self): return self
+            def __exit__(self, *a): pass
+            def read(self, n=-1): return b"data"
+
+        with patch.object(m.urllib.request, "urlopen", return_value=FakeResp()):
+            with self.assertRaisesRegex(ValueError, "Unexpected redirect origin"):
+                m.fetch("https://codeload.github.com/avalonreset/legends-geogrid/zip/" + "0" * 40,
+                        {"avalonreset/legends-geogrid"})
+
+    def test_bounded_state_read_and_macos_system_symlinks(self):
+        from cto_legends import startup
+        big = self.home / "oversized.json"
+        big.write_bytes(b"x" * (m.MAX_STATE_BYTES + 10))
+        with self.assertRaisesRegex(ValueError, "byte limit"):
+            m.read_bounded_text(big)
+        with patch.object(sys, "platform", "darwin"):
+            p = startup.safe_path(self.home / "AGENTS.md")
+            self.assertTrue(p.is_absolute())
+
+    def test_bounded_gzip_multifile_and_seek_guards(self):
+        import gzip
+        cap = 100 * 1024
+        buf = io.BytesIO()
+        with tarfile.open(fileobj=buf, mode="w:gz") as tar:
+            for idx in range(50):
+                payload = f"file-{idx}-".encode() + (b"a" * 1000)
+                info = tarfile.TarInfo(f"pkg/f{idx}.txt")
+                info.size = len(payload)
+                tar.addfile(info, io.BytesIO(payload))
+        raw = buf.getvalue()
+        sha = hashlib.sha256(raw).hexdigest()
+        dest = self.home / "multifile_tgz"
+        with patch.object(m, "MAX_EXTRACTED_BYTES", cap):
+            m.extract_tgz(raw, dest, sha)
+        self.assertTrue((dest / "f0.txt").is_file())
+        self.assertTrue((dest / "f49.txt").is_file())
+
+        gz_raw = gzip.compress(b"x" * 2048)
+        with gzip.GzipFile(fileobj=io.BytesIO(gz_raw), mode="rb") as gz:
+            bounded = m._BoundedGzipStream(gz, 512)
+            with self.assertRaisesRegex(ValueError, "Archive expansion exceeds limit"):
+                bounded.seek(0, io.SEEK_END)
+            with self.assertRaisesRegex(ValueError, "Archive expansion exceeds limit"):
+                bounded.seek(600, io.SEEK_CUR)
+
+    def test_url_dot_segments_and_encoding_rejected(self):
+        bad_urls = (
+            "https://github.com/avalonreset/legends-obs/releases/download/../../../../attacker/evil/releases/download/v1.0.0/evil.tgz",
+            "https://github.com/avalonreset/legends-obs/releases/download/%2e%2e/%2e%2e/attacker/evil.tgz",
+            "https://github.com/avalonreset/legends-obs/releases/download/v1.0.0%2f..%2fevil.tgz",
+            "https://codeload.github.com/avalonreset/legends-obs/zip/0123456789abcdef0123456789abcdef01234567?foo=1",
+            "https://codeload.github.com/avalonreset/legends-obs/zip/0123456789abcdef0123456789abcdef01234567#frag",
+        )
+        for bad in bad_urls:
+            with self.subTest(url=bad):
+                with self.assertRaisesRegex(ValueError, "Unexpected download origin"):
+                    m.fetch(bad, {"avalonreset/legends-obs"})
+        mod = dict(m.catalog()["modules"]["legends-obs"])
+        mod["artifact_url"] = bad_urls[0]
+        with self.assertRaisesRegex(ValueError, "Invalid artifact URL"):
+            m._validate_module("legends-obs", mod)
+
     def test_ctolegends_alias_package_matches_version_and_cli(self):
         import cto_legends
         import ctolegends
@@ -494,6 +571,24 @@ class ManagerTests(unittest.TestCase):
             check=True,
         )
         self.assertEqual(proc.stdout.strip(), cto_legends.__version__)
+
+    def test_ssl_context_loads_certifi_bundle_when_available(self):
+        import ssl
+        ca_file = self.home / "custom-ca.pem"
+        ca_file.write_text("dummy", encoding="utf-8")
+        fake_mod = unittest.mock.MagicMock()
+        fake_mod.where.return_value = str(ca_file)
+        with patch("ssl.create_default_context") as create_ctx, patch("builtins.__import__") as mock_import:
+            ctx_instance = unittest.mock.MagicMock(spec=ssl.SSLContext)
+            create_ctx.return_value = ctx_instance
+            def side_effect(name, *args, **kwargs):
+                if name == "certifi":
+                    return fake_mod
+                return __import__(name, *args, **kwargs)
+            mock_import.side_effect = side_effect
+            res = m._ssl_context()
+            self.assertIs(res, ctx_instance)
+            ctx_instance.load_verify_locations.assert_called_once_with(cafile=str(ca_file))
 
 
 if __name__ == "__main__":

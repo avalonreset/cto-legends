@@ -65,6 +65,9 @@ def audit(host, *, directories=None, user_home=None):
         'limit': 'Filesystem inventory only. Host plugins, cached snapshots and tool-provided skill catalogs may inject other instructions. Inspect a fresh session before claiming isolation.'}
 
 
+from . import manager as m
+
+
 def isolate(host, *, directories=None, user_home=None, apply=False):
     inventory = audit(host, directories=directories, user_home=user_home)
     sources = [Path(x['path']) for x in inventory['entries'] if x['standalone']]
@@ -75,6 +78,7 @@ def isolate(host, *, directories=None, user_home=None, apply=False):
     backup_root = Path(user_home or Path.home()) / '.cto-legends-skill-backups'
     if backup_root.is_symlink():
         raise ValueError('Backup directory is linked; preserved')
+    m.ensure_not_linked(backup_root)
     backup = backup_root / uuid.uuid4().hex
     backup.mkdir(parents=True)
     manifest = backup / 'manifest.json'
@@ -85,17 +89,17 @@ def isolate(host, *, directories=None, user_home=None, apply=False):
         destination.parent.mkdir()
         row = {'source': str(source), 'backup': str(destination), 'moved': False}
         rows.append(row)
-        manifest.write_text(json.dumps({'schema': 1, 'entries': rows}, indent=2), encoding='utf-8')
+        m.atomic_write_text(manifest, json.dumps({'schema': 1, 'entries': rows}, indent=2) + '\n')
         source.rename(destination)
         row['moved'] = True
-        manifest.write_text(json.dumps({'schema': 1, 'entries': rows}, indent=2), encoding='utf-8')
+        m.atomic_write_text(manifest, json.dumps({'schema': 1, 'entries': rows}, indent=2) + '\n')
     return {**result, 'manifest': str(manifest), 'moved': len(rows),
         'next': 'Reload the host. Verify its advertised skills; external injected catalogs are unchanged.'}
 
 
 def restore(manifest, *, apply=False):
-    manifest = Path(manifest).expanduser().absolute()
-    data = json.loads(manifest.read_text(encoding='utf-8'))
+    manifest = m.ensure_not_linked(Path(manifest).expanduser().absolute())
+    data = json.loads(m.read_bounded_text(manifest))
     if data.get('schema') != 1:
         raise ValueError('Unsupported restoration manifest')
     moves = []
@@ -125,13 +129,15 @@ def restore(manifest, *, apply=False):
 def _validate_target(target):
     if target.is_symlink():
         raise ValueError("Existing linked skill is user-owned; choose another directory")
+    m.ensure_not_linked(target)
     skill = target / "SKILL.md"
     receipt = target / "installation.json"
     if target.exists():
         if not receipt.is_file() or not skill.is_file() or skill.is_symlink() or receipt.is_symlink():
             raise ValueError("Existing skill is unmanaged; preserved")
-        old = json.loads(receipt.read_text(encoding="utf-8"))
-        if hashlib.sha256(skill.read_bytes()).hexdigest() != old.get("sha256"):
+        old = json.loads(m.read_bounded_text(receipt))
+        skill_bytes = m.read_bounded_text(skill).encode("utf-8")
+        if hashlib.sha256(skill_bytes).hexdigest() != old.get("sha256"):
             raise ValueError("Existing skill was edited; preserved")
     return skill, receipt
 
@@ -151,7 +157,7 @@ def configure(host, managed_home, *, user_home=None, directory=None, apply=False
         "Read only the chosen module's instructions returned by status. "
         "Registration does not prove live discovery or task readiness.\n")
     overlay_path = Path(managed_home).resolve() / "skill-local.md"
-    overlay_text = overlay_path.read_text(encoding="utf-8").strip() if overlay_path.is_file() else ""
+    overlay_text = m.read_bounded_text(overlay_path).strip() if overlay_path.is_file() and not overlay_path.is_symlink() else ""
     if overlay_text:
         content = content.rstrip("\n") + "\n\n" + overlay_text + "\n"
     digest = hashlib.sha256(content.encode()).hexdigest()
@@ -166,7 +172,7 @@ def configure(host, managed_home, *, user_home=None, directory=None, apply=False
             "overlay_sha256": hashlib.sha256(overlay_text.encode()).hexdigest() if overlay_text else None}, indent=2)
         for item, (item_skill, item_receipt) in zip(targets, validated):
             item.mkdir(parents=True, exist_ok=True)
-            item_skill.write_bytes(content.encode())
-            item_receipt.write_text(receipt_text, encoding="utf-8")
+            m.atomic_write_text(item_skill, content)
+            m.atomic_write_text(item_receipt, receipt_text + "\n")
         result["registration"] = "installed"
     return result

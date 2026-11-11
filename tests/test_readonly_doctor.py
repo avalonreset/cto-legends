@@ -40,18 +40,29 @@ class ReadOnlyDoctorTests(unittest.TestCase):
     def test_actual_probe_process_captures_output_without_log(self):
         with tempfile.TemporaryDirectory() as temp:
             release = Path(temp)
-            result = manager.run([sys.executable, '-c', 'print("readiness passed")'], release, log=False)
-            self.assertIn(b'readiness passed', result.stdout)
+            result = manager.run(
+                [sys.executable, str(manager.CHILD_EXEC), 'import-probe', 'json', '--callable', 'loads'],
+                release,
+                log=False,
+            )
+            self.assertIn(b'"module": "json"', result.stdout)
             self.assertEqual(list(release.iterdir()), [])
             with self.assertRaises(subprocess.CalledProcessError):
-                manager.run([sys.executable, '-c', 'raise SystemExit(9)'], release, log=False)
+                manager.run(
+                    [sys.executable, str(manager.CHILD_EXEC), 'import-probe', 'json', '--callable', '_missing_attr'],
+                    release,
+                    log=False,
+                )
             self.assertEqual(list(release.iterdir()), [])
 
     def test_mutation_execution_retains_installation_log(self):
         with tempfile.TemporaryDirectory() as temp:
             release = Path(temp)
-            manager.run([sys.executable, '-c', 'print("installation evidence")'], release)
-            self.assertIn('installation evidence', (release / 'install.log').read_text())
+            manager.run(
+                [sys.executable, str(manager.CHILD_EXEC), 'import-probe', 'json', '--callable', 'loads'],
+                release,
+            )
+            self.assertIn('"module": "json"', (release / 'install.log').read_text())
             recipe = manager.catalog()["modules"]["legends-dataforseo"]["recipe"]
             with patch.object(manager, 'run') as run:
                 manager.probe('legends-dataforseo', release, recipe, log=True)

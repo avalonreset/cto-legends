@@ -15,15 +15,16 @@ from .discovery import route
 
 
 def install_skill(directory, home):
-    directory = directory.expanduser().resolve()
+    directory = m.ensure_not_linked(directory.expanduser()).resolve()
     target = directory / "cto-legends"
+    m.ensure_not_linked(target)
     if target.exists():
         raise ValueError("Skill destination exists; review it before replacing. No files changed.")
     directory.mkdir(parents=True, exist_ok=True)
     target.mkdir()
     text = (m.ROOT / "SKILL.md").read_text(encoding="utf-8")
     text += f"\n## This installation\n\nPython executable: `{sys.executable}`\n\nManaged home: `{home}`\n\nUse that Python with `-m cto_legends --home <managed-home>` if the command is not on PATH.\n"
-    (target / "SKILL.md").write_text(text, encoding="utf-8")
+    m.atomic_write_text(target / "SKILL.md", text)
     return {"skill": str(target / "SKILL.md"), "next": "Reload your agent's skills and ask it to list cto-legends modules."}
 
 
@@ -120,7 +121,7 @@ def execute(args):
     if cmd == "register-guide":
         if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", args.name):
             raise ValueError("Use a lowercase dash-separated guide name")
-        path = args.path.expanduser().resolve()
+        path = m.ensure_not_linked(args.path.expanduser()).resolve()
         if not path.is_file() or path.suffix.lower() != ".md":
             raise ValueError("Guide must be an existing Markdown file")
         result = {"name": args.name, "path": str(path), "readiness": "unverified", "source": "user-selected-local-guide"}
@@ -130,7 +131,7 @@ def execute(args):
                 if args.name in guides and guides[args.name] != result:
                     raise ValueError("Existing guide differs; preserved")
                 guides[args.name] = result
-                (home / "local-guides.json").write_text(json.dumps(guides, indent=2), encoding="utf-8")
+                m.atomic_write_text(home / "local-guides.json", json.dumps(guides, indent=2) + "\n")
         return {"preview": not args.apply, "guide": result,
                 "next": "cto-legends handoff " + args.name}
     if cmd == "capabilities":
@@ -189,7 +190,7 @@ def execute(args):
         checks = {}
         for key, relative in state["active"].items():
             release = m.managed_path(home, relative)
-            if key in cat.get("retired", {}) and "recipe" not in json.loads((release / "receipt.json").read_text(encoding="utf-8")):
+            if key in cat.get("retired", {}) and "recipe" not in json.loads(m.read_bounded_text(release / "receipt.json")):
                 checks[key] = f"retired (succeeded by {cat['retired'][key]})"
                 continue
             m.probe(key, release, m.recipe_for(home, key, relative, cat))
@@ -232,9 +233,7 @@ def execute(args):
             elif run_spec["kind"] == "script":
                 entry = [str(m.confine(source, run_spec["path"]))]
             else:
-                code = "import sys; from %s import %s; raise SystemExit(%s())" % (
-                    run_spec["module"], run_spec["func"], run_spec["func"])
-                entry = ["-c", code]
+                entry = [str(m.CHILD_EXEC), "callable", run_spec["module"], run_spec["func"], "--"]
         result = subprocess.run([binary, *entry, *remaining])
         return result.returncode
     raise ValueError("Unknown command")

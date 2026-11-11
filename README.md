@@ -73,12 +73,12 @@ For access to the AI Marketing Hub Home system, join [AI Marketing Hub Pro](http
 Python 3.11 or newer is required across the manager and all Python ecosystem modules. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
-Install from PyPI (`cto-legends` or `ctolegends`), the 0.2.9 release wheel, or from source:
+Install from PyPI (`cto-legends` or `ctolegends`), the 0.2.10 release wheel, or from source:
 
 ```sh
 python -m pip install cto-legends
 # or directly from GitHub Releases:
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.9/cto_legends-0.2.9-py3-none-any.whl
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.10/cto_legends-0.2.10-py3-none-any.whl
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -138,7 +138,7 @@ The agent handles paraphrases and multi-part goals using the capability index.
 
 ## The module ecosystem
 
-Modules are organized across four capability layers (matching the [ ecosystem directory](https://github.com/avalonreset/avalonreset)):
+Modules are organized across four capability layers (matching the [ecosystem directory](https://github.com/avalonreset/avalonreset)):
 
 | Module | Use it for | Managed setup |
 |---|---|---|
@@ -305,7 +305,7 @@ Use `agent-audit HOST` to inspect discovery roots, and `isolate-skills HOST` to 
 ### Do I need to upgrade `cto-legends` or reinstall my agent skill when a new module comes out?
 No. The registered router skill (`cto_legends/SKILL.md`) is generic and names no modules. When a new module is released into the catalog, `cto-legends route` and `cto-legends handoff` automatically detect it via the read-only remote catalog peek and prompt you to run `cto-legends sync` (`--apply` when authorized).
 
-### Does installing `cto-legends` install all 17 modules on my machine?
+### Does installing `cto-legends` install all 21 modules on my machine?
 No. Installing `cto-legends` installs only the lightweight Python router and catalog manager. You preview and install individual modules (`cto-legends install <module> --apply`) only when a task actually needs them.
 
 ### How do I connect `cto-legends` and `legends-empire` to AI Marketing Hub Home?

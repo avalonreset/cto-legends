@@ -207,7 +207,7 @@ def handoff(key, home, *, peek_remote=False):
     release = m.managed_path(home, state['active'][key])
     source = (release / 'source').resolve()
     receipt_path = release / 'receipt.json'
-    receipt = json.loads(receipt_path.read_text(encoding='utf-8')) if receipt_path.is_file() else None
+    receipt = json.loads(m.read_bounded_text(receipt_path)) if receipt_path.is_file() and not receipt_path.is_symlink() else None
     # Match manager.plan's immutable install identity. A version-label-only
     # catalog correction does not reinstall identical source bytes.
     current = bool(receipt and all(receipt.get(field) == row.get(field)
