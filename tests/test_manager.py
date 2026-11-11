@@ -61,7 +61,7 @@ class ManagerTests(unittest.TestCase):
             "legends-empire", "legends-grant", "legends-firecrawl",
             "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev",
             "legends-hetzner", "legends-cloudflare", "legends-astro", "legends-stripe", "legends-gohighlevel",
-            "legends-buzz"})
+            "legends-buzz", "legends-youtube"})
 
     def test_setup_revision_rebuilds_same_source(self):
         module = m.catalog()['modules']['legends-github']
@@ -89,7 +89,8 @@ class ManagerTests(unittest.TestCase):
                                ("Inspect my Cloudflare DNS records", "legends-cloudflare"),
                                ("Audit my Stripe .env price IDs and webhook signature verification", "legends-stripe"),
                                ("Audit my GoHighLevel sub-account pipelines and rebilling", "legends-gohighlevel"),
-                               ("Check why my Buzz agent is getting HTTP 403 on our self-hosted Nostr relay", "legends-buzz")):
+                               ("Check why my Buzz agent is getting HTTP 403 on our self-hosted Nostr relay", "legends-buzz"),
+                               ("Audit my YouTube channel metadata, CTR scorecard, and Studio video quizzes", "legends-youtube")):
             self.assertEqual(route(goal)["matches"][0]["id"], expected)
 
     def test_obs_kit_plan_advertises_cursor_extra(self):

@@ -156,6 +156,7 @@ Modules are organized across four capability layers (matching the [ ecosystem di
 | [legends-jev](https://github.com/avalonreset/legends-jev) | Typed optical recognition (OCR), storefront signage verification, and action advice from supplied text and image evidence | Isolated Python CLI; operator validates, existing tools actuate; Jev 1.14 optical grounding |
 | [legends-obs](https://github.com/avalonreset/legends-obs) | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
 | [legends-captions](https://github.com/avalonreset/legends-captions) | Caption correction, forced-alignment timing, active-word rendering, and proof frames | Pip-installed CLI; stdlib only, speech envs optional |
+| [legends-youtube](https://github.com/avalonreset/legends-youtube) | YouTube Data API v3 & Analytics API v2 channel inventory, ETag-guarded lossless metadata updates, quota wave planner, 0-quota public readback & outlier scout, sourced CTR/APV scorecards, Studio quiz/chapter lint, and SHA-256 frozen private-draft uploads | Dependency-free Python CLI; preview-first SHA-256 plan locks and attachable Empire library |
 | [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) | Repeatable video pulls, transcripts, search, and clip-building with pacing and guardrails | Pip-installed CLI; yt-dlp binary and ffmpeg need module setup; Mullvad opt-in |
 | [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) | Instrumental music, sound effects, continuous mixes, and batch planning | Python planning CLI; model/GPU setup separate |
 | [legends-hyperyap](https://github.com/avalonreset/legends-hyperyap) | Local voice typing and desktop dictation powered by NVIDIA Parakeet | Guided desktop installation for Windows, macOS, or Linux |
@@ -165,7 +166,7 @@ Pinned versions live in the catalog, not here: `cto-legends catalog`
 shows the exact verified set your manager carries. Module recipes load
 through the router on demand; no module needs its own skill registration.
 
-Nineteen modules have managed CLI installations. The one native module uses
+Twenty modules have managed CLI installations. The one native module uses
 `cto-legends guide <module>`: pinned setup instructions, release downloads,
 platform information, and published asset checksums. `install` for those modules
 returns that handoff, including with `--apply`; it does not run an app installer,
@@ -327,7 +328,7 @@ They remain separate projects and keep their own licensing and model terms.
 ## Live specifications and engineering dispatches
 
 - **Router specification & comparison matrix:** [cto-legends.com/modules/cto-legends](https://cto-legends.com/modules/cto-legends)
-- **Full 20-module catalog & ecosystem hub:** [cto-legends.com/home](https://cto-legends.com/home)
+- **Full 21-module catalog & ecosystem hub:** [cto-legends.com/home](https://cto-legends.com/home)
 
 **Engineering dispatches & benchmarks:**
 - [Codex vs Claude Code: CLI and Cursor Agent Benchmarks](https://cto-legends.com/blog?post=codex-vs-claude-code-benchmarks)
