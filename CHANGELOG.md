@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.9 - 2026-11-11
+
+- Ship bundled catalog `1.0.55` across all 21 public ecosystem modules (`legends-buzz` 0.1.0, `legends-youtube` 0.1.0, `legends-dataforseo` 0.1.9, `legends-firecrawl` 0.3.5, `legends-gohighlevel` 0.3.4, `legends-empire` 0.3.4, `legends-hetzner` 0.1.4, `legends-coolify` 0.2.2, `legends-cloudflare` 0.1.2, `legends-astro` 0.2.3, `legends-stripe` 0.1.1, `legends-geogrid` 0.2.5, `legends-github` 0.2.3, `legends-grant` 0.3.2, `legends-jev` 0.2.3, `legends-obs` 0.1.4, `legends-captions` 0.1.3, `legends-yt-dlp` 0.1.4, `legends-stable-audio-3` 0.1.4, `legends-hyperyap` 0.1.3, and `legends-ambient-intelligence` 0.1.3).
+- Add dual CLI and Python module entry points (`cto-legends` and `ctolegends`; `python -m cto_legends` and `python -m ctolegends`) plus PyPI distribution packaging (`cto-legends` and `ctolegends`).
+
 ## 0.2.8 - 2026-11-05
 
 - Ship bundled catalog `1.0.51` with Gold-Standard release hygiene, `docs/AGENT-RECIPE.md` handoff alignment, offline `doctor` probes, and `license` / `platforms` / `readiness` parity across all 19 public ecosystem modules (`legends-empire` 0.3.4, `legends-hetzner` 0.1.4, `legends-coolify` 0.2.2, `legends-cloudflare` 0.1.2, `legends-astro` 0.2.3, `legends-stripe` 0.1.1, `legends-gohighlevel` 0.3.2, `legends-geogrid` 0.2.5, `legends-dataforseo` 0.1.8, `legends-firecrawl` 0.3.4, `legends-github` 0.2.3, `legends-grant` 0.3.2, `legends-jev` 0.2.3, `legends-obs` 0.1.4, `legends-captions` 0.1.3, `legends-yt-dlp` 0.1.4, `legends-stable-audio-3` 0.1.4, `legends-hyperyap` 0.1.3, and `legends-ambient-intelligence` 0.1.3).

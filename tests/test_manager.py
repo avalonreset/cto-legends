@@ -483,6 +483,18 @@ class ManagerTests(unittest.TestCase):
             m.fetch("https://codeload.github.com/evil-fork/legends-geogrid/zip/" + "0" * 40,
                     {"avalonreset/legends-geogrid"})
 
+    def test_ctolegends_alias_package_matches_version_and_cli(self):
+        import cto_legends
+        import ctolegends
+        self.assertEqual(ctolegends.__version__, cto_legends.__version__)
+        proc = subprocess.run(
+            [sys.executable, "-m", "ctolegends", "--version"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertEqual(proc.stdout.strip(), cto_legends.__version__)
+
 
 if __name__ == "__main__":
     unittest.main()
