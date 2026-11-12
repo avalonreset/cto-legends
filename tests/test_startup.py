@@ -40,13 +40,24 @@ class StartupTests(unittest.TestCase):
             self.assertIn('handoff <module>', index)
 
     def test_explicit_only_hosts(self):
-        for host in ('cursor', 'grok', 'muse', 'windsurf', 'aider'):
+        for host in ('muse', 'deepseek', 'glm', 'cursor', 'windsurf', 'aider'):
             with self.assertRaisesRegex(ValueError, 'explicit'):
                 self.configure(host)
             target = self.base / host / 'AGENTS.md'
             result = self.configure(host, instruction_file=target, apply=True)
             self.assertEqual(result['mechanism'], 'explicit_file')
             self.assertEqual(result['discovery'], 'unverified')
+
+    def test_qwen_grok_and_opencode_global_defaults(self):
+        qwen = self.configure('qwen-code', apply=True)
+        self.assertTrue(qwen['instruction_file'].endswith(str(Path('.qwen/QWEN.md'))))
+        self.assertTrue(Path(qwen['instruction_file']).is_file())
+        grok = self.configure('grok', apply=True)
+        self.assertTrue(grok['instruction_file'].endswith(str(Path('.grok/AGENTS.md'))))
+        self.assertTrue(Path(grok['instruction_file']).is_file())
+        oc = self.configure('opencode', apply=True)
+        self.assertTrue(oc['instruction_file'].endswith(str(Path('.config/opencode/AGENTS.md'))))
+        self.assertTrue(Path(oc['instruction_file']).is_file())
 
     def test_preserves_bom_crlf_and_rollback_exact_bytes(self):
         target = self.base / '.codex/AGENTS.md'

@@ -100,3 +100,25 @@ class AgentSetupTests(unittest.TestCase):
             self.assertFalse((Path(tmp) / ".gemini/skills/cto-legends/SKILL.md").exists())
             self.assertEqual(Path(agy["skill"]).read_text(encoding="utf-8"), "custom antigravity notes")
 
+    def test_eight_frontier_providers_and_aliases_out_of_the_box(self):
+        frontier = ("claude", "codex", "gemini", "grok", "muse", "deepseek", "qwen", "glm")
+        for host in frontier:
+            with tempfile.TemporaryDirectory() as tmp:
+                manager = Path(tmp) / "manager"
+                installed = configure(host, manager, user_home=tmp, apply=True)
+                self.assertEqual(installed["registration"], "installed")
+                self.assertTrue(Path(installed["skill"]).is_file())
+                for companion in installed.get("companion_skills", ()):
+                    self.assertTrue(Path(companion).is_file())
+        with tempfile.TemporaryDirectory() as tmp:
+            manager = Path(tmp) / "manager"
+            self.assertEqual(configure("qwen-code", manager, user_home=tmp)["host"], "qwen")
+            self.assertEqual(configure("zai", manager, user_home=tmp)["host"], "glm")
+            self.assertEqual(configure("zcode", manager, user_home=tmp)["host"], "glm")
+            self.assertEqual(configure("metamuse", manager, user_home=tmp)["host"], "muse")
+            glm = configure("glm", manager, user_home=tmp, apply=True)
+            self.assertIn("Claude Code", glm["note"])
+            ds = configure("deepseek", manager, user_home=tmp, apply=True)
+            self.assertIn("Claude Code", ds["note"])
+
+

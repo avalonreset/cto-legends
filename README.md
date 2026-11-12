@@ -19,7 +19,7 @@ This is a curated `cto-legends` module manager, not a directory of every third-p
 skill. It manages verified releases and separate tool environments, while your
 agent supplies the reasoning. [How agent skills and modules fit together](docs/AGENT-SKILLS.md).
 
-The central recipe targets **Grok, Codex, Gemini, Google Antigravity, Claude, Cursor, Windsurf, Aider, and MetaMuse**.
+The central recipe targets **Claude, Codex, Gemini, Grok, Muse, DeepSeek, Qwen, and GLM** (plus multi-provider harnesses such as OpenCode).
 Use the documented host registration or explicitly load the portable skill.
 Host discovery and operational verification are tracked separately.
 
@@ -73,12 +73,12 @@ For access to the AI Marketing Hub Home system, join [AI Marketing Hub Pro](http
 Python 3.11 or newer is required across the manager and all Python ecosystem modules. No Git, provider account, background service,
 or MCP server is needed to install the ecosystem manager.
 
-Install from PyPI (`cto-legends` or `ctolegends`), the 0.2.10 release wheel, or from source:
+Install from PyPI (`cto-legends` or `ctolegends`), the 0.2.11 release wheel, or from source:
 
 ```sh
 python -m pip install cto-legends
 # or directly from GitHub Releases:
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.10/cto_legends-0.2.10-py3-none-any.whl
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.11/cto_legends-0.2.11-py3-none-any.whl
 cto-legends route "Google Maps ranking grids"
 cto-legends install legends-geogrid
 cto-legends install legends-geogrid --apply
@@ -91,15 +91,16 @@ and Python dependencies; it never runs paid research.
 
 ## Install agent skills for your chosen host
 
-Copy the included routing skill into **your chosen agent's skill directory**:
+Register the included single routing skill for **your chosen Frontier agent** (`claude`, `codex`, `gemini`, `grok`, `muse`, `deepseek`, `qwen`, `glm`, or `opencode`), or target an explicit directory:
 
 ```sh
+cto-legends agent-setup claude --apply
+# or codex | gemini | grok | muse | deepseek | qwen | glm | opencode
+# or an explicit skill root:
 cto-legends install-skill --directory ~/.agents/skills --apply
 ```
 
-Use the directory your agent actually reads (for example a configured Codex
-skills directory, `~/.gemini/config/skills`, or `~/.claude/skills`). This is an explicit choice: the installer
-does not scan or rewrite every agent configuration. Existing skills are never
+Each preset writes only to that ecosystem's standard skill path (for example `~/.claude/skills`, `~/.codex/skills` + `~/.agents/skills`, `~/.gemini/skills` + `~/.gemini/config/skills`, `~/.grok/skills`, `~/.qwen/skills` + `~/.agents/skills` for Qwen Code, `~/.zcode/skills` + `~/.config/opencode/skills` + `~/.agents/skills` for Z.ai GLM, and `~/.deepseek/skills` + `~/.config/opencode/skills` + `~/.agents/skills` for DeepSeek). Existing unmanaged or edited skills are never
 overwritten. Reload your agent's skills, then ask:
 
 > Can we generate some AI music?
@@ -125,8 +126,7 @@ cto-legends startup-status codex
 ```
 
 This preserves existing instructions and provides a checked restoration manifest.
-Use `gemini`, `antigravity`, or `claude` for their documented user instruction files. Cursor, Grok
-and MetaMuse need an explicit host-verified instruction file. Read the
+Use `claude`, `codex`, `gemini`, `grok`, `qwen`, or `opencode` for their documented global user instruction files (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`, `~/.grok/AGENTS.md`, `~/.qwen/QWEN.md`, and `~/.config/opencode/AGENTS.md`). For `muse` or workspace-scoped `deepseek` / `glm` setups, pass `--instruction-file ./AGENTS.md` (or run `startup-setup opencode` / `startup-setup claude` for your active harness). Read the
 [startup contract and acceptance procedure](docs/STARTUP.md). Registration alone
 does not prove that a fresh agent loads or follows the instructions.
 
@@ -265,7 +265,7 @@ that lock. Failed or previous environments are not automatically deleted.
 
 ## Central agent discovery
 
-One shared skill supports Codex, Gemini, Google Antigravity, Claude, Cursor, Grok and Muse adapters.
+One shared skill supports Claude, Codex, Gemini, Grok, Muse, DeepSeek, Qwen, GLM, and OpenCode presets (while retaining legacy host presets for existing scripts).
 Preview `cto-legends agent-setup gemini`; add `--apply` to register it. Repeat
 for the hosts you use. `--directory PATH` selects a different skill root.
 Existing unmanaged or edited instructions are preserved. Reload the host after
