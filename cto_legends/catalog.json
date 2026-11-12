@@ -706,11 +706,11 @@
       "readiness": "doctor"
     },
     "legends-geogrid": {
-      "version": "0.2.6",
-      "commit": "700058bb07b0df8b00995547bd9b1347265df91d",
+      "version": "0.2.7",
+      "commit": "a3055838ab4129abbcac66d3ce2b17c7a43e1bec",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "35cfe9be5c8861745335b6743d7a2bbc264baa0bfee7146f9793a2748c01f8e2",
-      "purpose": "Google Maps ranking grids, circular-lattice competitive studies, multi-query strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
+      "sha256": "f09d7cfdf8c81519b48020ce391cbec6fb6fb7d3755c0a581ca1cd9167005ca6",
+      "purpose": "Google Maps ranking grids, circular-lattice competitive studies, web-parity 21-page Letter PDF and HTML strategy reports, zero-overage Google free-stipend basemap and Places routing, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
         "grid",
@@ -726,9 +726,9 @@
         "street-view"
       ],
       "dependencies": {
-        "legends-dataforseo": "0.1.10"
+        "legends-dataforseo": "0.1.11"
       },
-      "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, and multi-query Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
+      "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, zero-overage Google 2D Map Tiles / Static Maps / Places stipend circuit breaker, and multi-query 21-page Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
       "discovery": {
         "signals": [
           "local visibility",
@@ -808,11 +808,11 @@
       ]
     },
     "legends-dataforseo": {
-      "version": "0.1.10",
-      "commit": "cc706b4cd42a2dd14a75905ef138a61369e04317",
+      "version": "0.1.11",
+      "commit": "5f48162261b9fcfad37c10c6729567dad4dfbe82",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "e7e2b4e5900dba33515123ae154ad1bd8d2ccb4fce9d57e1f51d0d5f6c621393",
-      "purpose": "Search, Google Maps, Google Business Profile, SERP redirect unmasking, DataForSEO Labs intelligence, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
+      "sha256": "45b951605f2d98d5f428ff1348ebc52948467ac8bd7f3813e7297beb78c57d6a",
+      "purpose": "Search, Google Maps, Google Business Profile, zero-overage Google free-stipend circuit breaker (Places, PageSpeed Insights, Custom Search, Map Tiles), SERP redirect unmasking, DataForSEO Labs intelligence, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
         "keywords",
@@ -824,10 +824,12 @@
         "research",
         "maps",
         "gbp",
-        "business-profile"
+        "business-profile",
+        "pagespeed",
+        "stipend"
       ],
       "dependencies": {},
-      "scope": "Python API and CLI with full response files, organic /goto redirect unmasking, SERP integrity diagnostics, DataForSEO Labs helpers, offline evidence export, integrity verification, manifest inventory, focused views and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
+      "scope": "Python API and CLI with full response files, zero-overage Google free-stipend ledger and circuit breaker, organic /goto redirect unmasking, SERP integrity diagnostics, DataForSEO Labs helpers, offline evidence export, integrity verification, manifest inventory, focused views and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
       "discovery": {
         "signals": [
           "keyword demand",
