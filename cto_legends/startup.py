@@ -10,8 +10,15 @@ import uuid
 from . import discovery, manager
 from .agents import ALIASES, ROOTS, resolve_host
 
-DEFAULTS = {'codex': '.codex/AGENTS.md', 'gemini': '.gemini/GEMINI.md',
-            'antigravity': '.gemini/GEMINI.md', 'claude': '.claude/CLAUDE.md'}
+DEFAULTS = {
+    'claude': '.claude/CLAUDE.md',
+    'codex': '.codex/AGENTS.md',
+    'gemini': '.gemini/GEMINI.md',
+    'antigravity': '.gemini/GEMINI.md',
+    'grok': '.grok/AGENTS.md',
+    'qwen': '.qwen/QWEN.md',
+    'opencode': '.config/opencode/AGENTS.md',
+}
 BEGIN = b'<!-- cto-legends startup:begin -->'
 END = b'<!-- cto-legends startup:end -->'
 
@@ -64,6 +71,11 @@ def destination(host, *, user_home=None, instruction_file=None):
     if instruction_file:
         return safe_path(instruction_file)
     if host not in DEFAULTS:
+        if host in ('deepseek', 'glm'):
+            raise ValueError(
+                f"{host} requires an explicit --instruction-file PATH (or run 'cto-legends startup-setup opencode' "
+                "or 'cto-legends startup-setup claude' for your active coding harness); automatic startup discovery is unverified"
+            )
         raise ValueError('This host requires an explicit instruction_file; automatic startup discovery is unverified')
     if host == 'codex' and user_home is None and os.environ.get('CODEX_HOME'):
         return safe_path(Path(os.environ['CODEX_HOME']) / 'AGENTS.md')
@@ -140,6 +152,12 @@ def inspect(host, managed_home, *, user_home=None, instruction_file=None):
         warnings.append('AGENTS.override.md is present and may take precedence; this AGENTS.md block may not load.')
     if host in ('gemini', 'antigravity'):
         warnings.append('Default is Gemini CLI global instructions; Antigravity and other Gemini hosts require separate loading proof.')
+    if host == 'grok':
+        warnings.append('Default is Grok CLI global ~/.grok/AGENTS.md; project-level AGENTS.md or .grok/rules may take precedence.')
+    if host == 'qwen':
+        warnings.append('Default is Qwen Code global ~/.qwen/QWEN.md; project-level QWEN.md may take precedence.')
+    if host == 'opencode':
+        warnings.append('Default is OpenCode global ~/.config/opencode/AGENTS.md; project-level AGENTS.md may take precedence.')
     if host == 'windsurf':
         warnings.append('Windsurf natively reads workspace .windsurf/rules; the global skills preset is unverified until a fresh session proves it.')
     if host == 'aider':

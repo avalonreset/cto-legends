@@ -7,9 +7,8 @@ instructions does not install a browser, a model, or provider credentials.
 ## One registered skill, specialized tools on demand
 
 Install cto-legends using the release command in the README. Preview registration
-with `cto-legends agent-setup codex` or `cto-legends agent-setup gemini`, then add
-`--apply`. Claude, Cursor, Grok and MetaMuse have documented registration paths
-or explicit loading instructions in [the host guide](AGENT-HOSTS.md).
+with `cto-legends agent-setup claude`, `cto-legends agent-setup codex`, `cto-legends agent-setup gemini`, `cto-legends agent-setup grok`, `cto-legends agent-setup muse`, `cto-legends agent-setup deepseek`, `cto-legends agent-setup qwen`, or `cto-legends agent-setup glm`, then add
+`--apply`. Full preset paths and loading details are documented in [the host guide](AGENT-HOSTS.md).
 
 Ask your agent to use cto-legends for the desired task. The router chooses a
 module; `install MODULE` previews its setup and `install MODULE --apply` installs
@@ -26,7 +25,7 @@ package dependencies instead of merging every tool into one Python environment.
 | Store research in a vault | Install `legends-empire` and explicitly select the vault. |
 
 The central recipe is shared, but native skill discovery differs by application.
-Grok, Codex, Gemini, Claude, Cursor and MetaMuse still need file and command
+Claude, Codex, Gemini, Grok, Muse, DeepSeek, Qwen, and GLM workflows still need file and command
 access for execution. See the host guide for readiness limits. Installing a
 skill does not prove a host can execute every module.
 

@@ -48,15 +48,17 @@ and any update or repair requirement separately.
 
 | Host | Startup route |
 | --- | --- |
-| Codex | `$CODEX_HOME/AGENTS.md`, otherwise `~/.codex/AGENTS.md`; check for an overriding `AGENTS.override.md` |
-| Gemini CLI | `~/.gemini/GEMINI.md`; custom context-file settings may change this |
-| Claude Code | `~/.claude/CLAUDE.md`; host configuration may exclude files |
-| Cursor | Explicit project `AGENTS.md` or an always-applied rule configured in the application |
-| Grok | Explicit instruction file verified for the installed host |
-| MetaMuse | Explicit instruction file verified for the installed host |
+| Claude (`claude`) | `~/.claude/CLAUDE.md`; host configuration may exclude files |
+| Codex (`codex`) | `$CODEX_HOME/AGENTS.md`, otherwise `~/.codex/AGENTS.md`; check for an overriding `AGENTS.override.md` |
+| Gemini (`gemini`) | `~/.gemini/GEMINI.md`; custom context-file settings may change this |
+| Grok (`grok`) | `~/.grok/AGENTS.md` (Grok CLI global rules; project `AGENTS.md` or `.grok/rules` may override) |
+| Qwen (`qwen` / `qwen-code`) | `~/.qwen/QWEN.md` (Qwen Code global context file; project `QWEN.md` may override) |
+| OpenCode (`opencode`) | `~/.config/opencode/AGENTS.md` (OpenCode global instructions; used by many DeepSeek and GLM Coding Plan setups) |
+| DeepSeek (`deepseek`) / GLM (`glm`) | Run `startup-setup opencode` or `startup-setup claude` for your active harness, or pass `--instruction-file ./AGENTS.md` |
+| Muse (`muse` / `metamuse`) | Explicit `--instruction-file PATH` verified for the installed host |
 
-For the last three, use `--instruction-file PATH` only after verifying that the
-application actually loads that file. An arbitrary Markdown path is not a native
+For hosts without a single fixed global file (`muse`, `deepseek`, `glm`, or legacy `cursor`/`windsurf`/`aider`), pass `--instruction-file PATH` only after verifying that the
+application actually loads that file (or configure the underlying harness such as `opencode` or `claude`). An arbitrary Markdown path is not a native
 integration. Gemini CLI and Antigravity are different launchers; verify the
 installed runtime rather than assuming identical loading behavior.
 

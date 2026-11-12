@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.11 - 2026-11-11
+
+- Add out-of-the-box skill registration (`agent-setup`), discovery auditing (`agent-audit`), and startup discovery (`startup-setup`) presets across all 8 Frontier agent ecosystems (`claude`, `codex`, `gemini`, `grok`, `muse`, `deepseek`, `qwen`, and `glm`) plus `opencode` and convenience aliases (`metamuse`, `qwen-code`, `zai`, `zcode`):
+  - `qwen` (`qwen-code`): registers `~/.qwen/skills/cto-legends/SKILL.md` (with companion `~/.agents/skills`) and configures global `~/.qwen/QWEN.md` via `startup-setup qwen`.
+  - `glm` (`zai`, `zcode`): registers `~/.zcode/skills/cto-legends/SKILL.md` (ZCode), `~/.config/opencode/skills` (OpenCode), and `~/.agents/skills`, with actionable harness guidance for Claude Code and OpenCode users on the Z.ai GLM Coding Plan.
+  - `deepseek`: registers `~/.deepseek/skills/cto-legends/SKILL.md`, `~/.config/opencode/skills`, and `~/.agents/skills`, with actionable harness guidance for OpenCode and Claude Code users.
+  - `grok`: enables documented global `~/.grok/AGENTS.md` startup registration via `startup-setup grok` alongside `~/.grok/skills`.
+  - `codex` and `opencode`: sync companion `~/.agents/skills` on `agent-setup`, and enable `~/.config/opencode/AGENTS.md` via `startup-setup opencode`.
+- Ship bundled catalog `1.0.57` updating `legends-stripe` to `0.1.3` (B2B Hosted Invoicing and receivables radar), `legends-dataforseo` to `0.1.11` (zero-overage Google free-stipend circuit breaker), and `legends-geogrid` to `0.2.7` (21-page Letter PDF strategy reports and Google 2D Map Tiles / Places stipend routing).
+
 ## 0.2.10 - 2026-11-11
 
 - Ship bundled catalog `1.0.56` across all 21 public ecosystem modules (`legends-empire` 0.3.5, `legends-hetzner` 0.1.5, `legends-coolify` 0.2.3, `legends-cloudflare` 0.1.3, `legends-astro` 0.2.4, `legends-stripe` 0.1.2, `legends-buzz` 0.1.1, `legends-gohighlevel` 0.3.5, `legends-geogrid` 0.2.6, `legends-dataforseo` 0.1.10, `legends-firecrawl` 0.3.6, `legends-github` 0.2.4, `legends-grant` 0.3.3, `legends-jev` 0.2.4, `legends-obs` 0.1.5, `legends-captions` 0.1.4, `legends-youtube` 0.1.0, `legends-yt-dlp` 0.1.5, `legends-stable-audio-3` 0.1.5, `legends-hyperyap` 0.1.4, and `legends-ambient-intelligence` 0.1.4).

@@ -4,23 +4,24 @@ cto-legends keeps one canonical `SKILL.md`. Host registration copies this small
 router, not every module skill. The selected module instructions load only when
 needed; Python tools run in independent environments.
 
-`agent-setup` provides nine named directory presets (`agy` aliases `antigravity`)
+`agent-setup` provides first-class presets across all 8 Frontier ecosystems (`claude`, `codex`, `gemini`, `grok`, `muse`, `deepseek`, `qwen`, and `glm`), `opencode`, convenience aliases (`metamuse` -> `muse`, `qwen-code` -> `qwen`, `zai` / `zcode` -> `glm`, `agy` -> `antigravity`), preserved legacy presets (`antigravity`, `cursor`, `windsurf`, `aider`),
 and an explicit `--directory` override. A preset is a registration convenience,
 not a claim that every version of that host discovers it. Use the skill directory
 configured in the actual application, reload it, and verify a fresh invocation
 before claiming support.
 
-| Host | Default preset |
-| --- | --- |
-| Codex | `~/.codex/skills` |
-| Gemini | `~/.gemini/skills` (also syncs `~/.gemini/config/skills` when `--directory` is omitted) |
-| Antigravity (`antigravity` / `agy`) | `~/.gemini/config/skills` |
-| Claude | `~/.claude/skills` |
-| Cursor | `~/.cursor/skills` |
-| Grok | `~/.grok/skills` |
-| MetaMuse | `~/.agents/skills` (explicit generic registration, not verified native discovery) |
-| Windsurf | `~/.windsurf/skills` (unverified; native surface is workspace rules) |
-| Aider | `~/.aider/skills` (no native skill directory; load SKILL.md with an explicit file read) |
+| Ecosystem / Host | Preset (`agent-setup <host>`) | Default skill targets |
+| --- | --- | --- |
+| Claude (Anthropic) | `claude` | `~/.claude/skills` |
+| Codex (OpenAI) | `codex` | `~/.codex/skills` (also syncs `~/.agents/skills` when `--directory` is omitted) |
+| Gemini (Google) | `gemini` | `~/.gemini/skills` (also syncs `~/.gemini/config/skills` when `--directory` is omitted) |
+| Grok (xAI) | `grok` | `~/.grok/skills` |
+| Muse (Meta) | `muse` (`metamuse`) | `~/.agents/skills` (portable Agent Skills directory) |
+| DeepSeek | `deepseek` | `~/.deepseek/skills` (also syncs `~/.config/opencode/skills` and `~/.agents/skills`; if routing through Claude Code, run `agent-setup claude`) |
+| Qwen (Alibaba Qwen Code) | `qwen` (`qwen-code`) | `~/.qwen/skills` (also syncs `~/.agents/skills` when `--directory` is omitted) |
+| GLM (Z.ai / ZCode) | `glm` (`zai` / `zcode`) | `~/.zcode/skills` (also syncs `~/.config/opencode/skills` and `~/.agents/skills`; if routing GLM Coding Plan through Claude Code, run `agent-setup claude`) |
+| OpenCode | `opencode` | `~/.config/opencode/skills` (also syncs `~/.agents/skills` when `--directory` is omitted) |
+| Legacy compatibility | `antigravity` (`agy`), `cursor`, `windsurf`, `aider` | `~/.gemini/config/skills`, `~/.cursor/skills`, `~/.windsurf/skills`, `~/.aider/skills` |
 
 All presets use identical portable instructions. The manager tests registration,
 conflict handling and preservation of edited skills. These tests do not prove

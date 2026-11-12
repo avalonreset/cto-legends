@@ -8,14 +8,45 @@ import platform
 import uuid
 
 ROOTS = {
-    "codex": ".codex/skills", "antigravity": ".gemini/config/skills",
+    "claude": ".claude/skills",
+    "muse": ".agents/skills",
+    "codex": ".codex/skills",
+    "antigravity": ".gemini/config/skills",
     "gemini": ".gemini/skills",
-    "claude": ".claude/skills", "cursor": ".cursor/skills",
-    "grok": ".grok/skills", "muse": ".agents/skills",
-    "windsurf": ".windsurf/skills", "aider": ".aider/skills",
+    "grok": ".grok/skills",
+    "opencode": ".config/opencode/skills",
+    "deepseek": ".deepseek/skills",
+    "qwen": ".qwen/skills",
+    "glm": ".zcode/skills",
+    "cursor": ".cursor/skills",
+    "windsurf": ".windsurf/skills",
+    "aider": ".aider/skills",
 }
-ALIASES = {"agy": "antigravity"}
-COMPANION_ROOTS = {"gemini": (".gemini/config/skills",)}
+ALIASES = {
+    "agy": "antigravity",
+    "metamuse": "muse",
+    "qwen-code": "qwen",
+    "zai": "glm",
+    "zcode": "glm",
+}
+COMPANION_ROOTS = {
+    "codex": (".agents/skills",),
+    "gemini": (".gemini/config/skills",),
+    "opencode": (".agents/skills",),
+    "deepseek": (".config/opencode/skills", ".agents/skills"),
+    "qwen": (".agents/skills",),
+    "glm": (".config/opencode/skills", ".agents/skills"),
+}
+HOST_NOTES = {
+    "deepseek": (
+        "Registers ~/.deepseek/skills, ~/.config/opencode/skills, and ~/.agents/skills. "
+        "If routing DeepSeek through Claude Code (ANTHROPIC_BASE_URL), also run: cto-legends agent-setup claude --apply"
+    ),
+    "glm": (
+        "Registers ~/.zcode/skills (ZCode), ~/.config/opencode/skills (OpenCode), and ~/.agents/skills. "
+        "If routing a Z.ai GLM Coding Plan through Claude Code (ANTHROPIC_BASE_URL), also run: cto-legends agent-setup claude --apply"
+    ),
+}
 
 
 def resolve_host(host):
@@ -42,8 +73,10 @@ def audit(host, *, directories=None, user_home=None):
         roots = list(directories)
     else:
         roots = [base / ROOTS[host]]
-        if host in ('gemini', 'antigravity'):
-            roots.extend([base / '.gemini/skills', base / '.gemini/config/skills'])
+        for rel in COMPANION_ROOTS.get(host, ()):
+            roots.append(base / rel)
+        if host == 'antigravity':
+            roots.append(base / '.gemini/skills')
         roots.append(base / '.agents/skills')
     if not directories and host == 'codex' and os.environ.get('CODEX_HOME'):
         roots.append(Path(os.environ['CODEX_HOME']) / 'skills')
@@ -165,6 +198,8 @@ def configure(host, managed_home, *, user_home=None, directory=None, apply=False
               "discovery": "unverified", "next": "Reload host skills and invoke cto-legends doctor"}
     if companions:
         result["companion_skills"] = [str(item / "SKILL.md") for item in companions]
+    if host in HOST_NOTES:
+        result["note"] = HOST_NOTES[host]
     if apply:
         receipt_text = json.dumps({"host": host, "sha256": digest,
             "python": sys.executable, "managed_home": str(Path(managed_home).resolve()),

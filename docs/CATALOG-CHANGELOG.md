@@ -5,6 +5,12 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.57 - 2026-11-11
+
+- Update `legends-stripe` to 0.1.3 (`380937681d9e7a67ffbc8ee585cb5fa3aa04a7a2`, SHA-256 `727f195c976a3e5dcec0b203cff484de4b69193a61198eb84e252cde71ed4cc5`) adding orphan-free B2B Hosted Invoicing (`send_invoice`) and overdue receivables aging radar.
+- Update `legends-dataforseo` to 0.1.11 (`5f48162261b9fcfad37c10c6729567dad4dfbe82`, SHA-256 `45b951605f2d98d5f428ff1348ebc52948467ac8bd7f3813e7297beb78c57d6a`) adding the zero-overage Google free-stipend ledger and circuit breaker across Places, PageSpeed Insights, Custom Search, and Map Tiles.
+- Update `legends-geogrid` to 0.2.7 (`a3055838ab4129abbcac66d3ce2b17c7a43e1bec`, SHA-256 `f09d7cfdf8c81519b48020ce391cbec6fb6fb7d3755c0a581ca1cd9167005ca6`) adding web-parity 21-page Letter PDF and HTML strategy reports, Google free-stipend basemap/Places routing, and updated `legends-dataforseo` `0.1.11` dependency floor.
+
 ## 1.0.56 - 2026-11-11
 
 - Update 20 ecosystem modules to their Carbon High verified security and release hygiene patch releases (`legends-empire` 0.3.5, `legends-hetzner` 0.1.5, `legends-coolify` 0.2.3, `legends-cloudflare` 0.1.3, `legends-astro` 0.2.4, `legends-stripe` 0.1.2, `legends-buzz` 0.1.1, `legends-gohighlevel` 0.3.5, `legends-geogrid` 0.2.6, `legends-dataforseo` 0.1.10, `legends-firecrawl` 0.3.6, `legends-github` 0.2.4, `legends-grant` 0.3.3, `legends-jev` 0.2.4, `legends-obs` 0.1.5, `legends-captions` 0.1.4, `legends-yt-dlp` 0.1.5, `legends-stable-audio-3` 0.1.5, `legends-hyperyap` 0.1.4, and `legends-ambient-intelligence` 0.1.4) alongside `legends-youtube` 0.1.0 across all 21 cataloged modules.
