@@ -1,7 +1,7 @@
 {
   "template": "legends-social-v1",
   "title": "cto-legends",
-  "subtitle": "agent skills and tool management for the legends ecosystem",
+  "subtitle": "agent skills that show the plan before anything installs",
   "size": [
     1280,
     640
@@ -10,8 +10,8 @@
   "subtitle_px": 36,
   "safe_margin_px": 80,
   "lines": [
-    "agent skills and tool management",
-    "for the legends ecosystem"
+    "agent skills that show the",
+    "plan before anything installs"
   ],
   "text_bounds": [
     [
@@ -23,18 +23,18 @@
     [
       80,
       324,
-      784,
+      652,
       362
     ],
     [
       80,
       372,
-      630,
+      718,
       410
     ]
   ],
   "font_sha256": "3769f0f76477a7d9e2e6cb40422dedacb56c9ab1a6f7beee89b2b9ba6b8091ee",
-  "image_sha256": "4a2cba73d7479d90b4b74645429effcf05d595097f99307a7092b55722f5bcef",
-  "bytes": 20180,
+  "image_sha256": "640552a6f0d481316dac5160c0a9e7a18e5e3876ce3117b3c318db9d4d7e025c",
+  "bytes": 20304,
   "upload_status": "not_attempted"
 }

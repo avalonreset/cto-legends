@@ -1,7 +1,7 @@
 <a name="banner"></a>
 <a name="cto-legends"></a>
 
-![cto-legends banner: the project name in red on black, over the words agent skills and tool management for the legends ecosystem](assets/banner.webp)
+![cto-legends banner: the project name in red on black, over one router skill for 21 open-source modules, every hub change previewed until --apply, for coding agent skills](assets/banner.webp)
 
 # Agent skills that show the plan before anything installs
 
