@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.58 - 2026-11-15
+
+- Update `legends-empire` to 0.4.0 (`7d96ea279e70769df14b94a090cc129dbc9a5f21`, SHA-256 `280d981816525472c247be7e16abbc4565f9f7257a063bd358b2c6f788eed016`) adding the Ontology Engine (`ontology index|resolve|need|ask|propose|certify|bench`), Exact Differential Replacement (`operation_type: "ontology"`) transaction bundles, fail-closed `secret-ref:<file>.env#<VAR>` certification verification, AI Marketing Hub Home `v0.7.1`/`v0.7.2` shared-root compatibility pins and managed upgrades (`home-adapter upgrade`), and the disclosure safety gate (`release disclosure`).
+
 ## 1.0.57 - 2026-11-11
 
 - Update `legends-stripe` to 0.1.3 (`380937681d9e7a67ffbc8ee585cb5fa3aa04a7a2`, SHA-256 `727f195c976a3e5dcec0b203cff484de4b69193a61198eb84e252cde71ed4cc5`) adding orphan-free B2B Hosted Invoicing (`send_invoice`) and overdue receivables aging radar.

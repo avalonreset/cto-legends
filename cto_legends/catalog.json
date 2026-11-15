@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "version": "1.0.57",
+  "version": "1.0.58",
   "modules": {
     "legends-empire": {
-      "version": "0.3.5",
-      "commit": "c24f2fc13fc04c276c2cf017a04d4d0abff22f69",
+      "version": "0.4.0",
+      "commit": "7d96ea279e70769df14b94a090cc129dbc9a5f21",
       "repo": "avalonreset/legends-empire",
-      "sha256": "e924741bf5bd780ada24dfc270593cc95b1600e1add5ce2c2ea2c25e23be620c",
+      "sha256": "280d981816525472c247be7e16abbc4565f9f7257a063bd358b2c6f788eed016",
       "purpose": "Markdown knowledge foundation. For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work. Optional Home-ready shared-root structure supports standalone Empire projects and an independently authorized AI Marketing Hub Home headless capability layer without duplicate business records.",
       "keywords": [
         "empire",
@@ -84,7 +84,8 @@
           "docs/stewardship.md",
           "docs/knowledge-packs.md",
           "docs/RESEARCH-EVIDENCE-HANDOFF.md",
-          "docs/home-adapter.md"
+          "docs/home-adapter.md",
+          "docs/ontology.md"
         ]
       },
       "recipe": {
