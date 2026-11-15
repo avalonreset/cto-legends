@@ -40,7 +40,7 @@ If this is how you want to work with your agent, star the repo. A star is how th
 
 ---
 
-[Plain English](#agent-skills-in-plain-english) · [One skill, not a shelf](#count-your-claude-skills-now-count-your-codex-skills) · [Plan first](#why-agent-skills-should-show-the-plan-first) · [Host setup](#host-setup-claude-skills-codex-skills-and-7-more-presets) · [The 21 modules](#the-21-modules) · [Reference](#reference)
+[Plain English](#agent-skills-in-plain-english) · [One skill, not a shelf](#one-router-instead-of-a-pile-of-claude-skills-and-codex-skills) · [Plan first](#why-agent-skills-should-show-the-plan-first) · [Host setup](#host-setup-claude-skills-codex-skills-and-7-more-presets) · [The 21 modules](#the-21-modules) · [Reference](#reference)
 
 ## Agent skills in plain English
 
@@ -74,43 +74,17 @@ But the machinery is not the point. The modules know about each other so that yo
 
 Pleasant is the easy part. The next two sections are the reasons it stays that way.
 
-## Count your Claude skills. Now count your Codex skills.
+## One router instead of a pile of Claude skills and Codex skills
 
-Open `~/.claude/skills`. Then open `~/.codex/skills`. Count the folders.
+Folders were never the goal. You want what the 21 modules do: the Maps study, the site migration, the research you can find again.
 
-Each one was added for a single job: a search wrapper from Tuesday, a deploy helper from last month, a half-forgotten prompt from a weekend experiment. Every one of them is still sitting there on the days you do something else. Some were copied from a repo that has shipped three releases since, and none of them know the others exist.
-
-Collecting is the habit this whole ecosystem grew up in: one skill per tool, dropped in the host folder, forever. Your Claude skills and your Codex skills turn into two shelves that drift apart. And a shelf only ever grows, because nobody books an afternoon to prune it.
+Collecting is the habit this whole ecosystem grew up in: one skill per tool, dropped into `~/.claude/skills` and again into `~/.codex/skills`, forever. Each folder was added for a single job, and it is still sitting there on the days you do something else. Your Claude skills and your Codex skills turn into two shelves that drift apart, and none of the folders know the others exist.
 
 Almost every agent skills setup asks you to register one skill per tool. This one asks for one skill in total.
 
 A single router skill goes in the folder, and the 21 modules stay off the shelf. When a job calls for one, the agent runs `cto-legends handoff` and reads that module's recipe then, and only that one. The router is a plain Markdown file with a CLI behind it, which is also why there is no Claude Code MCP server sitting resident in every session: nothing has to stay running for a file your agent reads on demand.
 
 <p align="center"><img src="assets/cards/r1/slot-3-shelf-vs-router.svg" width="100%" alt="A shelf of skills against one router: what is registered, when a recipe is read, how a release is pinned, and how it is rolled back"></p>
-
-Nothing about that opinion is theoretical. The single router replaces 31 standalone skills, and the manager still carries every one of their names so it can find them on your machine.
-
-<details>
-<summary><strong>The 31 retired standalone skills one router replaces</strong></summary>
-
-<br>
-
-- **6 hub and module skills:** `cto-legends-library`, `legends-geogrid`, `legends-dataforseo`, `legends-dataforseo-kit`, `legends-github`, `legends-empire`
-- **15 vault and wiki skills, ground `legends-empire` covers now:** `autoresearch`, `canvas`, `defuddle`, `obsidian-bases`, `obsidian-markdown`, `save`, `think`, `wiki`, `wiki-cli`, `wiki-fold`, `wiki-ingest`, `wiki-lint`, `wiki-mode`, `wiki-query`, `wiki-retrieve`
-- **10 repository skills, ground `legends-github` covers now:** `github`, `github-audit`, `github-community`, `github-dataforseo`, `github-empire`, `github-legal`, `github-meta`, `github-readme`, `github-release`, `github-seo`
-
-Thirty-one folders, each one reasonable on the day it was added. That is how a shelf happens.
-
-</details>
-
-Any of them still on your shelf? One audit and one previewed move deal with it, and nothing gets deleted:
-
-```sh
-cto-legends agent-audit claude                 # lists the retired skills still in your folders
-cto-legends isolate-skills claude              # look: the plan to move them to a backup
-cto-legends isolate-skills claude --apply      # do: moved to ~/.cto-legends-skill-backups/<id>/, with a manifest
-cto-legends restore-skills <manifest> --apply  # changed your mind: the manifest is the way back
-```
 
 ## Why agent skills should show the plan first
 
