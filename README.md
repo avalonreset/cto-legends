@@ -1,317 +1,374 @@
 <a name="banner"></a>
 <a name="cto-legends"></a>
 
-# ![cto-legends: agent skills and tool management for the legends ecosystem](assets/banner.webp)
+![cto-legends](assets/banner.webp)
 
-[![release](https://img.shields.io/github/v/release/avalonreset/cto-legends?style=flat-square&label=release&labelColor=000000&color=ff0000)](https://github.com/avalonreset/cto-legends/releases/latest)
-[![checks](https://img.shields.io/github/actions/workflow/status/avalonreset/cto-legends/checks.yml?branch=main&style=flat-square&label=checks&labelColor=000000)](https://github.com/avalonreset/cto-legends/actions/workflows/checks.yml)
-[![community](https://img.shields.io/badge/community-ai--marketing--hub--pro-ff0000?style=flat-square&labelColor=000000)](https://www.skool.com/ai-marketing-hub-pro/about)
-[![license](https://img.shields.io/github/license/avalonreset/cto-legends?style=flat-square&label=license&labelColor=000000&color=666666)](LICENSE)
+# Agent skills that show the plan before anything installs
 
-**An open-source agent skills router and tool manager for the `cto-legends` ecosystem.**
+[![release](https://img.shields.io/github/v/release/avalonreset/cto-legends?label=release&sort=date&style=flat-square&labelColor=000000&color=ff0000)](https://github.com/avalonreset/cto-legends/releases/latest)
+[![checks](https://img.shields.io/github/actions/workflow/status/avalonreset/cto-legends/checks.yml?branch=main&label=checks&style=flat-square&labelColor=000000)](https://github.com/avalonreset/cto-legends/actions/workflows/checks.yml)
+[![license](https://img.shields.io/github/license/avalonreset/cto-legends?label=license&style=flat-square&labelColor=000000&color=666666)](LICENSE)
 
-Tell your agent what you want to do. `cto-legends` helps it find the right module,
-install a verified version, and maintain the components you actually use.
-Each module remains its own open-source project. Register one central skill, then
-load specialized instructions only when a task needs them. This is the single-skill router: install one skill; every module loads on demand.
+`cto-legends` is one skill you register with your coding agent, 21 open-source modules it reaches by plain-English goal, and a hub that shows its plan before each change it makes.
 
-This is a curated `cto-legends` module manager, not a directory of every third-party
-skill. It manages verified releases and separate tool environments, while your
-agent supplies the reasoning. [How agent skills and modules fit together](docs/AGENT-SKILLS.md).
-
-The central recipe targets **Claude, Codex, Gemini, Grok, Muse, DeepSeek, Qwen, and GLM** (plus multi-provider harnesses such as OpenCode).
-Use the documented host registration or explicitly load the portable skill.
-Host discovery and operational verification are tracked separately.
-
-## Table of contents
-
-- [Why this exists](#why-this-exists)
-- [Optional Home compatibility](#optional-home-compatibility)
-- [Quick start and usage](#quick-start-and-usage)
-- [Install agent skills for your chosen host](#install-agent-skills-for-your-chosen-host)
-- [One entry point, instructions loaded on demand](#one-entry-point-instructions-loaded-on-demand)
-- [The module ecosystem](#the-module-ecosystem)
-- [Architecture and how it works](#architecture-and-how-it-works)
-- [Use an installed module](#use-an-installed-module)
-- [Keep the ecosystem current](#keep-the-ecosystem-current)
-- [Where things live](#where-things-live)
-- [Central agent discovery](#central-agent-discovery)
-- [Research memory](#research-memory)
-- [Verify the complete task](#verify-the-complete-task)
-- [FAQ](#faq)
-- [Development, contributing, and license](#development-contributing-and-license)
-
-## Why this exists
-
-`cto-legends` is the tool coordinator for Empire Craft: building and maintaining your own working environment, with independent modules for infrastructure, web engineering, research, recording, audio, and knowledge capture. [legends-empire](https://github.com/avalonreset/legends-empire) supplies the workspace and memory direction.
-
-It can sit alongside AI Marketing Hub workflows and other agent tools. Its focus is discovering and operating `cto-legends` modules and connecting their work to your chosen workspace. It is independently developed and maintained by Benjamin; it is not an AI Marketing Hub product or an official integration.
-
-For research, the [shared evidence workflow](docs/RESEARCH-WORKFLOW.md) connects
-provider collection, full saved responses, offline verification and reuse checks
-with reviewed Empire intake. Client evidence belongs in the user's workspace,
-separate from replaceable module installations.
-
-## Optional Home compatibility
-
-`legends-empire` can prepare a Home-ready shared Empire root and original project
-records while remaining useful without AI Marketing Hub Home. An independently
-authorized Home capability layer can later use the same canonical business and
-project directories. Explicit composition preserves Empire's session entry point.
-
-This is a headless capability integration, not a full Home desktop installation
-or automatic Obsidian plugin setup. Home is not required for standalone Empire.
-The public catalog neither grants private repository access nor redistributes
-Home. Follow the [adapter handoff](docs/HOME-ADAPTER.md) for task-specific readiness
-and reviewed prepare, install, compose, and binding plans. No second agent skill
-or whole-ecosystem installation is needed.
-
-For access to the AI Marketing Hub Home system, join [AI Marketing Hub Pro](https://www.skool.com/ai-marketing-hub-pro/about).
-
-## Quick start and usage
-
-Python 3.11 or newer is required across the manager and all Python ecosystem modules. No Git, provider account, background service,
-or MCP server is needed to install the ecosystem manager.
-
-Install from PyPI (`cto-legends` or `ctolegends`), the 0.2.11 release wheel, or from source:
+Type `cto-legends install legends-geogrid` and nothing gets installed. You get the plan. Add `--apply` after you have read it.
 
 ```sh
 python -m pip install cto-legends
-# or directly from GitHub Releases:
-python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.11/cto_legends-0.2.11-py3-none-any.whl
-cto-legends route "Google Maps ranking grids"
-cto-legends install legends-geogrid
-cto-legends install legends-geogrid --apply
-cto-legends doctor
+cto-legends agent-setup claude               # look: prints the plan, writes nothing
+cto-legends agent-setup claude --apply       # do: registers the one skill
+cto-legends install legends-geogrid          # look: prints the plan, installs nothing
+cto-legends install legends-geogrid --apply  # do: installs that module in its own environment
 ```
 
-Both `cto-legends` and `ctolegends` CLI commands work identically. If your scripts directory is not on PATH, use `python -m cto_legends` (or `python -m ctolegends`) instead
-of `cto-legends`. Installation previews are offline. `--apply` downloads source
-and Python dependencies; it never runs paid research.
+`pip` puts the manager on your machine and installs no module. After that, each line without `--apply` prints its plan as JSON and changes nothing; the same line with `--apply` makes the change. Swap `claude` for your host: `codex`, `gemini`, `grok`, `muse`, `deepseek`, `qwen`, `glm` or `opencode`. Needs Python 3.11 or newer.
 
-## Install agent skills for your chosen host
+Then reload your agent's skills and ask in plain English, for example "study my business on Google Maps". The router skill tells the agent to run the same preview first, and to add `--apply` only when the install is part of what you asked for.
 
-Register the included single routing skill for **your chosen Frontier agent** (`claude`, `codex`, `gemini`, `grok`, `muse`, `deepseek`, `qwen`, `glm`, or `opencode`), or target an explicit directory:
+If you think an agent tool should show its plan before it changes anything, a star helps the next developer find this one.
+
+## Why this exists
+
+Count the folders in your agent's skills directory. Each one was added for a single job, and every one of them is still sitting there on the days you do something else. For Claude Code that directory is `~/.claude/skills`.
+
+`cto-legends` registers one small router skill instead. Registering with a host copies that router, not a skill for every module. When a task calls for a module, `cto-legends handoff MODULE` reads that one module's recipe, and only then. No module needs its own skill registration. [docs/AGENT-SKILLS.md](docs/AGENT-SKILLS.md) explains how skills and modules fit together.
+
+The code shows the trade. [`cto_legends/agents.py`](cto_legends/agents.py#L61-L66) holds a list named `REPLACED`: 31 standalone skill names that the single router replaced, among them `github-audit`, `github-seo` and `wiki-ingest`. Three commands let you check your own machine against that list:
 
 ```sh
-cto-legends agent-setup claude --apply
-# or codex | gemini | grok | muse | deepseek | qwen | glm | opencode
-# or an explicit skill root:
+cto-legends agent-audit claude               # reads only: the router and any retired names in your skill folders
+cto-legends isolate-skills claude            # look: lists what would be set aside
+cto-legends isolate-skills claude --apply    # do: moves them to a backup with a manifest
+cto-legends restore-skills MANIFEST          # look: counts what would come back
+cto-legends restore-skills MANIFEST --apply  # do: puts them back
+```
+
+The backup lands under `~/.cto-legends-skill-backups`, and `isolate-skills --apply` prints the path of the manifest that `restore-skills` needs.
+
+| | A shelf of skills | One router |
+|---|---|---|
+| What is registered | One folder per skill you added | One skill, `cto-legends` |
+| When a recipe is read | Decided by your host | When the task calls for it, through `cto-legends handoff MODULE` |
+| How a release is pinned | Whatever copy is in the folder | By version, commit and SHA-256 in the catalog |
+| How it is rolled back | Whatever backup you kept | With `cto-legends rollback MODULE`; the previous environment is retained |
+
+> [!NOTE]
+> The audit is a filesystem inventory of the `cto-legends` router and the 31 names this project retired, and nothing else. It passes no judgment on skills from other projects. Host plugins and cached catalogs can inject instructions the audit cannot see. Registering writes a file; whether your agent loads it has to be confirmed in a fresh session.
+
+## Nothing changes without `--apply`
+
+A paste and run quick start assumed that a person read the command before running it. With a coding agent, the agent types the command. So the hub makes the preview the default, and the change takes a second, deliberate line.
+
+The first line of [`cto_legends/cli.py`](cto_legends/cli.py#L1) states the rule:
+
+```python
+"""JSON-first CLI; mutations preview unless --apply is explicit."""
+```
+
+Eleven hub commands preview until `--apply`: `install`, `update`, `rollback`, `sync`, `agent-setup`, `install-skill`, `isolate-skills`, `restore-skills`, `startup-setup`, `startup-restore` and `register-guide`.
+
+The plan comes back as JSON. This is `cto-legends install legends-geogrid` at v0.2.11, with the long `scope` text cut short:
+
+```json
+{
+  "preview": true,
+  "changes": [
+    {
+      "id": "legends-geogrid",
+      "version": "0.2.7",
+      "action": "install",
+      "commit": "a3055838ab4129abbcac66d3ce2b17c7a43e1bec",
+      "dependencies": {
+        "legends-dataforseo": "0.1.11"
+      },
+      "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, ..."
+    }
+  ]
+}
+```
+
+The version and commit come from the catalog your manager carries, so yours may be newer.
+
+Add `--apply` and the hub does four things, in this order:
+
+1. Downloads the pinned release source.
+2. Checks that archive against the commit and SHA-256 pin in the catalog. On a mismatch it stops before any module code runs.
+3. Builds the module in its own virtual environment and installs its Python dependencies there.
+4. Runs the module's offline readiness probes, and switches the active version only after they pass.
+
+A failed setup leaves the previous active set intact, and previous environments are retained for rollback.
+
+`install --apply` never runs paid research, never collects credentials and never authorizes a paid call. Installation previews are offline.
+
+`cto-legends run` executes a module; it is not a preview.
+
+Each module keeps its own controls. 12 of the 22 family repos document a preview or a dry run before a change: cto-legends, legends-ambient-intelligence, legends-astro, legends-buzz, legends-cloudflare, legends-empire, legends-github, legends-gohighlevel, legends-hetzner, legends-obs, legends-stripe and legends-yt-dlp. Read a module's README before you let an agent run it.
+
+## One job, start to finish
+
+You tell your agent: "study my business on Google Maps". This is what it runs.
+
+```sh
+cto-legends route "Google Maps ranking grids"  # ranked candidates with reasons, not an install decision
+cto-legends install legends-geogrid            # look: the plan
+cto-legends install legends-geogrid --apply    # do: after you have read it
+cto-legends handoff legends-geogrid            # the module's recipe is loaded only now
+cto-legends doctor                             # checks installed environments offline, no provider API calls
+cto-legends report-readiness                   # checks the reports, map browser and transport, no paid calls
+cto-legends run legends-geogrid -- --help      # runs the module in your current directory
+```
+
+`route` puts `legends-geogrid` first because the goal matched "google maps", and it labels its own answer "Lexical hints only". The agent still checks the module's scope against what you asked for. For a paraphrase, or a goal with several parts, it reads the full index with `cto-legends capabilities --markdown`.
+
+The plan names one more project. [legends-dataforseo](https://github.com/avalonreset/legends-dataforseo) is listed under `dependencies` because it is the provider dependency the map study needs. Installing `legends-geogrid` supplies it automatically; install it on its own only if you want to use it directly.
+
+`run` keeps your current working directory, so the outputs belong to your project. Store reports outside the managed source directories.
+
+Browser binaries and Linux system libraries stay with the module, and credentials stay in your environment. The map study itself, from rank grids to client reports, is documented in [legends-geogrid](https://github.com/avalonreset/legends-geogrid).
+
+When you ask where the results should live, the answer is [legends-empire](https://github.com/avalonreset/legends-empire), the module for source-cited vault memory.
+
+The same pattern serves other requests: "generate some AI music", "convert my WordPress site to Astro v7", "save this research in my vault".
+
+## Register the skill with your agent
+
+`cto-legends agent-setup HOST` prints the path it would write, and `--apply` registers the one skill, as in the first block. Each preset writes only to its own standard skill paths:
+
+| Preset | Skill paths written |
+|---|---|
+| `claude` | `~/.claude/skills` |
+| `codex` | `~/.codex/skills`, `~/.agents/skills` |
+| `gemini` | `~/.gemini/skills`, `~/.gemini/config/skills` |
+| `grok` | `~/.grok/skills` |
+| `muse` | `~/.agents/skills` |
+| `deepseek` | `~/.deepseek/skills`, `~/.config/opencode/skills`, `~/.agents/skills` |
+| `qwen` | `~/.qwen/skills`, `~/.agents/skills` |
+| `glm` | `~/.zcode/skills`, `~/.config/opencode/skills`, `~/.agents/skills` |
+| `opencode` | `~/.config/opencode/skills`, `~/.agents/skills` |
+
+To name a skill root yourself:
+
+```sh
 cto-legends install-skill --directory ~/.agents/skills --apply
 ```
 
-Each preset writes only to that ecosystem's standard skill path (for example `~/.claude/skills`, `~/.codex/skills` + `~/.agents/skills`, `~/.gemini/skills` + `~/.gemini/config/skills`, `~/.grok/skills`, `~/.qwen/skills` + `~/.agents/skills` for Qwen Code, `~/.zcode/skills` + `~/.config/opencode/skills` + `~/.agents/skills` for Z.ai GLM, and `~/.deepseek/skills` + `~/.config/opencode/skills` + `~/.agents/skills` for DeepSeek). Existing unmanaged or edited skills are never
-overwritten. Reload your agent's skills, then ask:
+An existing skill that is unmanaged or edited is never overwritten. Reload your agent's skills after registering. `agent-setup HOST --directory PATH` points a preset at a different skill root, and legacy preset names from earlier releases still work for existing scripts.
 
-> Can we generate some AI music?
-
-The central skill selects the audio workflow and reads its installed recipe.
-It checks model access and hardware before promising generation. No separate
-Stable Audio skill registration is needed. Try "study my business on Google Maps",
-"convert my WordPress site to Astro v7", or "save this research in my vault" for other outcomes.
-
-Agents without native skill loading can read [the same instructions](cto_legends/SKILL.md)
-and use the CLI. Registration writes the skill; successful automatic discovery
-depends on your agent's configuration. No plugin host is required.
-
-## One entry point, instructions loaded on demand
-
-For dependable discovery, connect the central index to startup instructions as
-well as registering its skill:
+Registration puts the skill on disk. For dependable discovery, also connect the capability index to the host's startup instructions. [docs/CAPABILITY-DISCOVERY.md](docs/CAPABILITY-DISCOVERY.md) has the discovery contract and its limits.
 
 ```sh
-cto-legends startup-setup codex
-cto-legends startup-setup codex --apply
-cto-legends startup-status codex
+cto-legends startup-setup codex          # look
+cto-legends startup-setup codex --apply  # do
+cto-legends startup-status codex         # checks the file and the index
 ```
 
-This preserves existing instructions and provides a checked restoration manifest.
-Use `claude`, `codex`, `gemini`, `grok`, `qwen`, or `opencode` for their documented global user instruction files (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`, `~/.grok/AGENTS.md`, `~/.qwen/QWEN.md`, and `~/.config/opencode/AGENTS.md`). For `muse` or workspace-scoped `deepseek` / `glm` setups, pass `--instruction-file ./AGENTS.md` (or run `startup-setup opencode` / `startup-setup claude` for your active harness). Read the
-[startup contract and acceptance procedure](docs/STARTUP.md). Registration alone
-does not prove that a fresh agent loads or follows the instructions.
+This preserves your existing instructions, writes only a marked section and keeps a checked restoration manifest. `claude`, `codex`, `gemini`, `grok`, `qwen` and `opencode` use their global instruction files: `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`, `~/.grok/AGENTS.md`, `~/.qwen/QWEN.md` and `~/.config/opencode/AGENTS.md`. For `muse`, or a workspace scoped `deepseek` or `glm` setup, pass `--instruction-file ./AGENTS.md`. If you run `deepseek` or `glm` through OpenCode or Claude Code, `startup-setup opencode` or `startup-setup claude` covers that harness instead. The contract and its acceptance procedure are in [docs/STARTUP.md](docs/STARTUP.md).
 
-Use `cto-legends capabilities --markdown` for the outcome-based directory and
-`cto-legends handoff <module>` for the exact installed instructions. Routing
-returns bounded candidates and reasons, not an automatic installation decision.
-The agent handles paraphrases and multi-part goals using the capability index.
-[Discovery contract and limits](docs/CAPABILITY-DISCOVERY.md).
+> [!IMPORTANT]
+> Registration is not proof of discovery. It does not prove that a fresh agent loads or follows the instructions, and no live parity across hosts is claimed. To confirm, start a fresh session, make an ordinary request without naming the module, and look at the commands the agent ran. A generic plan that skips `cto-legends` counts as a fail. Host tool permissions and operating system dependencies still apply. Windows and WSL are separate installations. Gemini on a remote execution host needs installation there. [docs/AGENT-HOSTS.md](docs/AGENT-HOSTS.md) defines registered, discovered and operational.
 
-## The module ecosystem
+Agents without native skill loading can read [`cto_legends/SKILL.md`](cto_legends/SKILL.md) and use the CLI. No plugin host is required.
 
-Modules are organized across four capability layers (matching the [ecosystem directory](https://github.com/avalonreset/avalonreset)):
+For instructions of your own that are not in the catalog, `cto-legends register-guide my-notes /path/to/notes/SKILL.md --apply` registers that Markdown file and nothing more: no install, update, execution or readiness claim. A local entry resolves through `capabilities`, `route` and `handoff`, shows in `status`, stays private and never shadows a catalog module of the same name.
 
-| Module | Use it for | Managed setup |
+## The 21 modules
+
+Each module remains its own open-source project. Grouped by job.
+
+### Local search and research
+
+| Module | Use it for | Needs |
 |---|---|---|
-| [legends-empire](https://github.com/avalonreset/legends-empire) | Digital ontology, source-cited vault memory, `vault stewardship` (`legends-vault-stewardship`), and optional AI Marketing Hub Home adapter | Python 3.11+; POSIX/WSL and native Windows local NTFS transaction support |
-| [legends-hetzner](https://github.com/avalonreset/legends-hetzner) | Hetzner Cloud inventory, Cost-Optimized CX/CAX stock radar, Fractional CTO sizing, 10-check preflight, and guarded VPS sniping | Portable Python CLI over `hcloud`; attachable Empire knowledge library |
-| [legends-coolify](https://github.com/avalonreset/legends-coolify) | Coolify inventory, deployment history, resource status, backup schedules and planning | Read-only Python CLI; packaged source-cited library with optional Empire attachment |
-| [legends-cloudflare](https://github.com/avalonreset/legends-cloudflare) | Cloudflare zone and DNS inventory, nameservers, preview-first DNS record changes and readback | Dependency-free Python CLI; Obsidian knowledge vault and attachable Empire library |
-| [legends-astro](https://github.com/avalonreset/legends-astro) | Astro v7 readiness, WordPress and HTML migration contract extraction, Content Layer scaffolding, and `dist/` build parity checks | Dependency-free Python and Node CLI; vendored `withastro/docs` snapshot and attachable Empire library |
-| [legends-stripe](https://github.com/avalonreset/legends-stripe) | Stripe payments, `.env` price-ID governance, product catalog lint, declarative test/live price ladder sync, Stripe Drag fee telemetry, subscription dunning and double-billing radar, and webhook HMAC fortification | Dependency-free Python CLI; preview-first SHA-256 mutations, Astro/Python blueprints, and attachable Empire library |
-| [legends-buzz](https://github.com/avalonreset/legends-buzz) | Self-hosted Block Buzz Nostr relay operations, 26-domain MCP-to-CLI agent routing (`--format agent`), 6-surface relay readiness probes, NIP-29/NIP-OA/NIP-FI membership diagnostics, reply thread isolation, 5-gate attachment inspection, and Windows PE collision audits | Dependency-free Python CLI; preview-first SHA-256 canaries, 9 server/ACP blueprints, and attachable Empire library |
-| [legends-gohighlevel](https://github.com/avalonreset/legends-gohighlevel) | GoHighLevel CRM, Workflows v3, Voice/Conversation AI, Custom Objects, Snapshots V2 batch cloning, headless PIT minting, workflow step X-ray, atomic rebranding, and 5-layer agency governance (`location-batch-clone`, `location-full-unnerf`, `live-audit`) | Dependency-free Python CLI; preview-first mutations, API readback, and attachable Empire library |
-| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) | Google Maps rank grids, local visibility matrices, street maps, and client reports | Research workflow + report libraries + DataForSEO + optional Jev 1.14 signage check |
-| [legends-dataforseo](https://github.com/avalonreset/legends-dataforseo) | Search, keywords, Google Business Profile, `/goto` SERP redirect unmasking, DataForSEO Labs, queued research and reusable evidence | Python library + CLI + evidence exporter |
-| [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) | Web search, scraping, crawling, SERP breadcrumb inner-URL resolution (`resolve`), Alexandria queries, and provider catalog | Python client + offline catalog; vendor CLI and key need module setup |
-| [legends-github](https://github.com/avalonreset/legends-github) | Repository audits, DataForSEO keyword research, README, metadata, social preview, and release preparation | Headless workflows + live research transport |
-| [legends-grant](https://github.com/avalonreset/legends-grant) | Business, nonprofit, tribe, and government grant finding, matching, and application | Markdown lanes + verified federal API routes; agent submits once per authorization |
-| [legends-jev](https://github.com/avalonreset/legends-jev) | Typed optical recognition (OCR), storefront signage verification, and action advice from supplied text and image evidence | Isolated Python CLI; operator validates, existing tools actuate; Jev 1.14 optical grounding |
-| [legends-obs](https://github.com/avalonreset/legends-obs) | OBS recording, scenes, settings, verification, optional cursor overlay extra | Prebuilt CLI; requires Node.js 22+; live control targets Windows |
-| [legends-captions](https://github.com/avalonreset/legends-captions) | Caption correction, forced-alignment timing, active-word rendering, and proof frames | Pip-installed CLI; stdlib only, speech envs optional |
-| [legends-youtube](https://github.com/avalonreset/legends-youtube) | YouTube Data API v3 & Analytics API v2 channel inventory, ETag-guarded lossless metadata updates, quota wave planner, 0-quota public readback & outlier scout, sourced CTR/APV scorecards, Studio quiz/chapter lint, and SHA-256 frozen private-draft uploads | Dependency-free Python CLI; preview-first SHA-256 plan locks and attachable Empire library |
-| [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) | Repeatable video pulls, transcripts, search, and clip-building with pacing and guardrails | Pip-installed CLI; yt-dlp binary and ffmpeg need module setup; Mullvad opt-in |
-| [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) | Instrumental music, sound effects, continuous mixes, and batch planning | Python planning CLI; model/GPU setup separate |
-| [legends-hyperyap](https://github.com/avalonreset/legends-hyperyap) | Local voice typing and desktop dictation powered by NVIDIA Parakeet | Guided desktop installation for Windows, macOS, or Linux |
-| [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) | Ambient audio capture, deduplicated archiving, offline transcription, and vault distillation | Pip-installed CLI; ffmpeg and faster-whisper/NeMo need module setup |
+| [legends-geogrid](https://github.com/avalonreset/legends-geogrid) | Google Maps ranking grids, competitive studies and strategy reports | Report libraries, a map browser, research credentials |
+| [legends-dataforseo](https://github.com/avalonreset/legends-dataforseo) | Search, Google Maps, Google Business Profile and keyword research | Credentials for fresh API work |
+| [legends-jev](https://github.com/avalonreset/legends-jev) | Typed optical recognition (OCR), storefront signage verification, decision advice for computer use | `TYPESAFE_API_KEY` for API execution |
+| [legends-firecrawl](https://github.com/avalonreset/legends-firecrawl) | Firecrawl web operations, inner-URL resolution, saved evidence | `FIRECRAWL_API_KEY` and `firecrawl-cli` for live work |
+| [legends-github](https://github.com/avalonreset/legends-github) | Repository copy, metadata, presentation and releases | GitHub access; `gh` for social preview checks |
+| [legends-grant](https://github.com/avalonreset/legends-grant) | US grant discovery, eligibility review and proposal drafts | No API keys; optional `pdf` extra |
 
-Pinned versions live in the catalog, not here: `cto-legends catalog`
-shows the exact verified set your manager carries. Module recipes load
-through the router on demand; no module needs its own skill registration.
+### Web stack
 
-Twenty modules have managed CLI installations. The one native module uses
-`cto-legends guide <module>`: pinned setup instructions, release downloads,
-platform information, and published asset checksums. `install` for those modules
-returns that handoff, including with `--apply`; it does not run an app installer,
-modify OBS scenes, or claim that a native application is installed. Their native
-updates remain guided and are not part of managed `update` or `rollback`.
+| Module | Use it for | Needs |
+|---|---|---|
+| [legends-hetzner](https://github.com/avalonreset/legends-hetzner) | Hetzner Cloud inventory, CX and CAX stock scans, reviewed server plans | The `hcloud` CLI, installed separately |
+| [legends-coolify](https://github.com/avalonreset/legends-coolify) | Read-only Coolify operations and source-cited runbooks | `COOLIFY_BASE_URL` and `COOLIFY_API_TOKEN` for live reads |
+| [legends-cloudflare](https://github.com/avalonreset/legends-cloudflare) | Cloudflare DNS with reviewed change plans and readback checks | `CLOUDFLARE_API_TOKEN` scoped to your zones |
+| [legends-astro](https://github.com/avalonreset/legends-astro) | Astro v7 site migrations, source contracts, build parity checks | Node.js 22.12 or newer |
+| [legends-stripe](https://github.com/avalonreset/legends-stripe) | Price-ID audits, product catalog lint, test and live price ladder sync | `STRIPE_SECRET_KEY` for live reads |
+| [legends-gohighlevel](https://github.com/avalonreset/legends-gohighlevel) | GoHighLevel CRM, workflows, voice and conversation AI, agency governance | No credentials for offline audits; live commands need GoHighLevel credentials |
+| [legends-buzz](https://github.com/avalonreset/legends-buzz) | Self-hosted Block Buzz Nostr relay operations, membership diagnostics, attachment inspection | `BUZZ_RELAY_URL` and `BUZZ_PRIVATE_KEY` for live probes |
 
-`legends-geogrid` report libraries are installed; browser binaries and Linux system libraries need module setup. `legends-github` may need `gh` authentication for remote work. Follow each module's README;
-the manager's doctor verifies its managed Python capabilities, not every optional
-feature or provider credential.
+### Recording, audio and video
 
-Python modules get separate environments, so their dependency versions
-can differ safely. `legends-obs` uses a verified prebuilt Node package and your Node
-runtime. Installing `legends-geogrid` supplies its provider dependency automatically;
-you only need a standalone module installation for direct module use.
+| Module | Use it for | Needs |
+|---|---|---|
+| [legends-obs](https://github.com/avalonreset/legends-obs) | OBS Studio recording workflows, with an optional cursor overlay | Node.js 22 or newer, Windows OBS, WebSocket setup |
+| [legends-captions](https://github.com/avalonreset/legends-captions) | Video caption correction, alignment timing, rendering and proof evidence | No services or keys; optional speech environment |
+| [legends-youtube](https://github.com/avalonreset/legends-youtube) | YouTube channel operations, guarded metadata updates, quota-cost planning | API key or OAuth; SHA-256 plan locks on live changes |
+| [legends-yt-dlp](https://github.com/avalonreset/legends-yt-dlp) | Repeatable yt-dlp pulls, transcripts, search and clip-building | Its managed `yt-dlp` binary; `ffmpeg` for clips |
+| [legends-stable-audio-3](https://github.com/avalonreset/legends-stable-audio-3) | Instrumental music, sound effects and continuous mixes | Models and hardware, set up separately |
+| [legends-hyperyap](https://github.com/avalonreset/legends-hyperyap) | Local voice typing, dictation and app-focused paste | Guided native setup; microphone permission, speech models |
+| [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) | Ambient audio capture, deduplicated archiving, offline transcription, vault distillation | `ffmpeg` on PATH and a speech backend |
 
-## Architecture and how it works
+### Memory
 
-1. **Frozen single-skill router, living catalog:** Your agent registers a single unchanging skill (`cto_legends/SKILL.md`). Module recipes, versions, commit pins, and SHA-256 archive checksums live in `cto_legends/catalog.json` (`validate_catalog`).
-2. **Just-in-time remote catalog peek:** Local `route` and `handoff` use your active catalog first with zero network delay when a local match exists. If `route` gets `no_match` or `handoff` is called for a newly released module not yet in your local catalog, `cto-legends` performs a bounded, read-only peek of the canonical remote catalog (validating its schema and checksums in memory without writing to disk) and tells you when `cto-legends sync` will unlock the new capability. When `handoff` runs for an existing module that has a newer pin upstream, it attaches a non-blocking `remote_update_available` hint.
-3. **Isolated per-module environments and atomic activation:** Each managed Python module installs into its own virtual environment under `releases/<module>/<version>-<hash>/` and must pass its offline readiness probes before `state.json` switches the active version.
+| Module | Use it for | Needs |
+|---|---|---|
+| [legends-empire](https://github.com/avalonreset/legends-empire) | Markdown knowledge foundation, vault stewardship, optional Home-ready structure | A vault you select |
 
-## Use an installed module
+Twenty modules have managed CLI installs. `legends-hyperyap` is a guided native setup: `cto-legends guide legends-hyperyap` shows pinned setup instructions, platform information and release downloads. `install` returns that same handoff, even with `--apply`, and runs no app installer. Native updates stay guided and are not part of managed `update` or `rollback`.
+
+Pinned versions live in the catalog, not in this README. `cto-legends catalog` shows the exact set your manager carries. All 22 product repos, this hub and the 21 modules, carry a tagged release.
+
+Python modules get separate environments, so their dependency versions can differ. The manager and every Python module need Python 3.11 or newer. `legends-obs` uses a prebuilt Node package and needs Node.js 22 or newer.
+
+The "Needs" column shortens each module's setup note in the catalog. `cto-legends handoff MODULE` prints the full note for one module, and each module's README has the rest.
+
+## Commands
+
+All 24 subcommands at v0.2.11. Output is JSON first. A manager error prints `{"ok": false, "error": "..."}` on stderr and exits with status 1. Three cases differ: `task-readiness` prints its report on stdout and exits 1 when a required check is not ready, `report-readiness` and `run` return the exit status of the module code they start, and an invalid flag exits 2.
+
+**Find** (read only)
+
+| Command | What it does |
+|---|---|
+| `capabilities [--markdown]` | Reads the outcome-based capability index offline |
+| `route GOAL` | Ranks candidate modules for a plain-English goal |
+| `handoff MODULE` | Resolves one module's instructions without registering another skill |
+| `guide MODULE` | Shows pinned setup instructions, platform requirements and release downloads |
+| `catalog` | Lists the module set your manager carries |
+
+**Install, update and run**
+
+| Command | What it does | Waits for `--apply` |
+|---|---|---|
+| `install MODULE...` | Installs each named module in its own environment | yes |
+| `update [MODULE...]` | Refreshes installed modules to the catalog pins | yes |
+| `rollback MODULE` | Switches one module to its retained previous environment | yes |
+| `sync [--rollback] [--apply]` | Previews a catalog refresh, or with `--rollback` a return to the previous catalog. Neither changes anything until `--apply` | yes |
+| `run MODULE -- ARGS` | Runs an installed module; everything after `--` goes straight to it | runs now |
+
+**Check** (read only)
+
+| Command | What it does |
+|---|---|
+| `status` | Shows managed paths and installed versions |
+| `doctor` | Checks installed environments without provider API calls |
+| `report-readiness` | Checks installed GeoGrid reports, map browser and transport without paid calls |
+| `task-readiness [all\|reports\|research\|evidence\|github]` | Checks task prerequisites offline, separate from CLI installation |
+| `check-updates` | Compares installed, catalog and upstream versions without installing |
+
+**Hosts**
+
+| Command | What it does | Waits for `--apply` |
+|---|---|---|
+| `agent-setup HOST` | Registers the one skill for a host preset | yes |
+| `install-skill --directory PATH` | Registers the skill in a skill directory you name | yes |
+| `startup-setup HOST` | Adds the capability index to the host's startup instructions | yes |
+| `startup-status HOST` | Inspects the startup section and its index | |
+| `startup-restore MANIFEST` | Restores a startup change from its checked backup | yes |
+| `agent-audit HOST` | Inventories the host's skill folders; read only | |
+| `isolate-skills HOST` | Moves retired standalone skills to a backup | yes |
+| `restore-skills MANIFEST` | Puts set-aside skills back | yes |
+| `register-guide NAME PATH` | Registers a local Markdown file as instructions | yes |
+
+Once a module is installed, `run` reaches its own CLI:
 
 ```sh
-cto-legends run legends-geogrid -- --help
 cto-legends run legends-dataforseo -- routes
-cto-legends run legends-github -- capabilities
-cto-legends install legends-astro --apply
 cto-legends run legends-astro -- doctor --json
-cto-legends install legends-stable-audio-3 --apply
 cto-legends run legends-stable-audio-3 -- plan --hours 1 --vram-gb 16
-cto-legends install legends-obs --apply
 cto-legends run legends-obs -- manifest
-cto-legends guide legends-hyperyap
 cto-legends status
 ```
 
-`status` returns the runtime, source, and agent-guide paths (Python is null for
-the Node module). Advanced module
-tools can use that interpreter directly. Execution keeps your current working
-directory so your outputs belong to your project. Store reports outside the
-managed source directories.
+`cto-legends` and `ctolegends` work identically. If your scripts directory is not on PATH, use `python -m cto_legends` (or `python -m ctolegends`). `--home PATH` goes before the command.
 
-Audio installation does not download model weights or PyTorch, accept model
-licenses, or spend hosted credits. OBS installation does not connect to OBS or
-change settings; follow its first-run guide before live operation.
-
-Credentials stay in your environment. Research tools retain their own explicit
-execution and spending controls. Installation neither collects credentials nor
-authorizes paid calls.
-
-## Keep the ecosystem current
+Two other install routes exist: the 0.2.11 release wheel from GitHub Releases, or a source checkout of this repo.
 
 ```sh
-cto-legends check-updates
-cto-legends sync
-cto-legends sync --apply
-cto-legends update --apply
+python -m pip install https://github.com/avalonreset/cto-legends/releases/download/v0.2.11/cto_legends-0.2.11-py3-none-any.whl
+python -m pip install .   # from the root of a source checkout
 ```
 
-`check-updates` compares installed versions, your active catalog, and upstream
-releases, naming the next step for each drift. `sync` previews a refreshed
-catalog from the canonical live copy; `--apply` adopts it (the previous
-catalog is kept, and `sync --rollback` restores it). `update --apply` then
-refreshes **installed modules only** to the new pins. Module updates and new
-modules arrive through catalog syncs: no manager upgrade and no skill change
-needed. Your agent can handle those steps when you ask it to update
-`cto-legends`. A new upstream tag is not automatically a tested combination.
+Installing the manager needs no Git, provider account, background service or MCP server.
 
-Source archives and the prebuilt OBS package are pinned to versions and SHA-256
-checksums, with their source commits recorded. New managed installations
-must pass their checks before the active set changes. Failed setups leave the
-previous active set intact. Previous environments are retained:
+## Keep it current
 
 ```sh
-cto-legends rollback legends-geogrid
-cto-legends rollback legends-geogrid --apply
+cto-legends check-updates   # compares installed versions, your catalog and upstream releases
+cto-legends sync            # look: previews a refreshed catalog
+cto-legends sync --apply    # do: adopts it and keeps the previous catalog
+cto-legends update          # look: what would change for installed modules
+cto-legends update --apply  # do: refreshes installed modules to the new pins
 ```
 
-Rollback switches one module to its previous environment, including its own
-dependencies. It does not undo work performed by that module.
+`check-updates` names the next step for each difference it finds. `update` refreshes installed modules only. New modules and module updates arrive through catalog syncs, with no manager upgrade and no skill change. Your agent can run these steps when you ask it to update `cto-legends`.
+
+You do not reinstall the skill when a new module comes out, because the registered router skill names no modules. `route` and `handoff` use your local catalog first. When nothing local matches, when a module is unknown, or to flag a newer pin, they peek at the upstream catalog, read only and in memory, and say when `sync` will unlock something new. `--no-remote-peek` turns that off for one command, and setting `CTO_LEGENDS_OFFLINE=1` turns the peek off for every command.
+
+A new upstream tag is not automatically a tested combination. Source archives and the prebuilt OBS package are pinned to versions and SHA-256 checksums, with source commits recorded, and a new install must pass its checks before the active set changes.
+
+## Undo and removal
+
+Each undo follows the same shape: run the line to see what would happen, then add `--apply`.
+
+| To back out of | Run | What it does |
+|---|---|---|
+| A module update | `cto-legends rollback legends-geogrid` | Previews a switch of that one module to its retained previous environment, dependencies included; add `--apply` to switch. It does not undo work the module performed. |
+| A catalog sync | `cto-legends sync --rollback` | Previews a return to the catalog saved in `catalog.previous.json`; add `--apply` to restore it |
+| Startup instructions | `cto-legends startup-restore MANIFEST` | With `--apply`, restores only when the installed files still match the receipt |
+| Set-aside skills | `cto-legends restore-skills MANIFEST` | With `--apply`, moves them back, and refuses if something already sits at the destination |
+
+Failed or previous environments are not deleted automatically.
+
+There is no uninstall command in v0.2.11, and this release documents no full removal procedure. [Where things live](#where-things-live) lists what the hub keeps on disk.
+
+## Safety notes and limits
+
+- **Credentials.** They stay in your environment. Installation neither collects credentials nor authorizes paid calls, and research modules keep their own execution and spending controls.
+- **Spending.** 5 of the 22 family repos document a spend ceiling, a quota plan or a cost check before a paid call: legends-dataforseo, legends-geogrid, legends-github, legends-stable-audio-3 and legends-youtube. For any other module, read its README before a paid call.
+- **What an install leaves alone.** The audio install does not download model weights or PyTorch, accept model licenses or spend hosted credits. The OBS install does not connect to OBS or change settings; follow that module's first-run instructions before live operation.
+- **What the checks cover.** `doctor` checks managed CLI capabilities only, not native apps, GPU or models, browser UI, credentials or paid calls. `task-readiness` checks browser execution, credential presence, evidence support and artwork dependencies; it makes no paid calls and does not certify provider authentication. Missing credentials block live research, not offline analysis.
+- **Pins.** A SHA-256 pin shows that a download matches the reviewed source. It is not a signature, and the hub is not a sandbox.
+- **Paths.** The manager refuses symlinks, Windows junctions and reparse points, and oversized state files, on its managed home and on host startup paths.
+- **Dependencies.** Python dependencies installed by individual modules may come from PyPI and are not all reproducibly locked by this manager.
+- **Hosts.** Host support is stated as registration presets only. Host discovery and operational verification are tracked separately.
+
+To report a vulnerability, follow [SECURITY.md](SECURITY.md). Release checks are described in [docs/VERIFICATION.md](docs/VERIFICATION.md).
 
 ## Where things live
 
-Default: `~/.cto-legends`. Set `CTO_LEGENDS_HOME` or pass `--home PATH` **before**
-the command to choose another location. Module versions live under `releases/`;
-`state.json` selects active versions, and `catalog.json` holds your synced
-catalog with `catalog.previous.json` as its rollback copy. Do not move this
-folder after installation: Python virtual environments are not relocatable.
+The default home is `~/.cto-legends`. Set `CTO_LEGENDS_HOME`, or pass `--home PATH` before the command, to choose another.
 
-Interrupted installations retain diagnostics in `install.log`. If a process was
-killed while holding `operation.lock`, confirm it has stopped before removing
-that lock. Failed or previous environments are not automatically deleted.
+```text
+~/.cto-legends/
+  releases/<module>/<version>-<hash>/   one folder for each installed module version
+    install.log                         what that install printed, kept for diagnosis
+  state.json                            selects the active versions
+  catalog.json                          your synced catalog, present after the first sync
+  catalog.previous.json                 its rollback copy
+```
 
-## Central agent discovery
+Do not move the folder after installation: Python virtual environments are not relocatable.
 
-One shared skill supports Claude, Codex, Gemini, Grok, Muse, DeepSeek, Qwen, GLM, and OpenCode presets (while retaining legacy host presets for existing scripts).
-Preview `cto-legends agent-setup gemini`; add `--apply` to register it. Repeat
-for the hosts you use. `--directory PATH` selects a different skill root.
-Existing unmanaged or edited instructions are preserved. Reload the host after
-registration; actual discovery must be confirmed in that host, not inferred
-from a file being written. No live parity across all hosts is claimed.
+An interrupted install keeps its diagnostics in the `install.log` inside that module version's release folder. If a process was killed while holding `operation.lock`, confirm it has stopped before you remove the lock.
 
-Only this central skill needs registration. It reads the chosen module's
-instructions on demand. Host tool permissions and operating-system dependency
-support still apply. Gemini on a remote execution host needs installation there.
+`cto-legends status` returns the runtime, source and agent recipe paths for each installed module. Advanced module tools can use the listed Python interpreter directly; it is null for the Node module.
 
-For an existing local product not in the public catalog:
-`cto-legends register-guide my-notes /path/to/notes/SKILL.md --apply`.
-This registers a guide only: no installation, update, execution or readiness
-claim. Such guides resolve through `capabilities`, `route`, and `handoff`,
-appear in `status`, stay private, and remain user-managed. They never shadow
-a catalog module of the same name.
+The install transaction and the trust boundaries are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-See [agent discovery and readiness](docs/AGENT-HOSTS.md) for the distinction between registration, discovery, and an operational host.
+## Vault memory and optional Home compatibility
 
-## Research memory
+Neither part of this section is required to use the hub.
 
-`cto-legends install legends-empire --apply` installs the verified catalog pin
-of the public source in an isolated Python environment. Run
-`cto-legends run legends-empire -- contracts --check-only` to verify its
-portable contracts, then read the router path returned by `status`.
-Python 3.11+ is required. Vault writes use POSIX/WSL or native Windows local NTFS;
-installing the module never creates or changes a vault.
+**Vault memory.** `cto-legends install legends-empire --apply` installs the public source in its own environment, and `cto-legends run legends-empire -- contracts --check-only` verifies its portable contracts. Installing the module never creates or changes a vault. Vault writes use POSIX, WSL or native Windows local NTFS. Research evidence belongs in your workspace, separate from replaceable module installs. [docs/RESEARCH-WORKFLOW.md](docs/RESEARCH-WORKFLOW.md) covers collection, saved responses, offline verification, reuse checks and reviewed intake into a vault.
 
-## Verify the complete task
+**AI Marketing Hub Home.** `legends-empire` can prepare a Home-ready Empire root. Home is optional, and standalone Empire does not require it. This is a headless capability integration, not a full Home desktop install, and it needs no second agent skill. The public catalog neither grants private repository access nor redistributes Home. The steps are in [docs/HOME-ADAPTER.md](docs/HOME-ADAPTER.md). For access to Home itself, join [AI Marketing Hub Pro](https://www.skool.com/ai-marketing-hub-pro/about) on Skool.
 
-`cto-legends task-readiness` checks more than CLI installation: map browser execution, provider credential presence, reusable evidence support, and artwork dependencies. It makes no paid calls and does not certify provider authentication. Missing credentials block live research, not offline analysis.
+`cto-legends` is independently developed and maintained by Avalon Reset. It is not an AI Marketing Hub product or an official integration.
 
-Use `agent-audit HOST` to inspect discovery roots, and `isolate-skills HOST` to preview reversible consolidation. See [host setup and recovery](docs/AGENT-HOSTS.md). Windows and WSL are separate installations.
-
-## FAQ
-
-### Do I need to upgrade `cto-legends` or reinstall my agent skill when a new module comes out?
-No. The registered router skill (`cto_legends/SKILL.md`) is generic and names no modules. When a new module is released into the catalog, `cto-legends route` and `cto-legends handoff` automatically detect it via the read-only remote catalog peek and prompt you to run `cto-legends sync` (`--apply` when authorized).
-
-### Does installing `cto-legends` install all 21 modules on my machine?
-No. Installing `cto-legends` installs only the lightweight Python router and catalog manager. You preview and install individual modules (`cto-legends install <module> --apply`) only when a task actually needs them.
-
-### How do I connect `cto-legends` and `legends-empire` to AI Marketing Hub Home?
-Install `legends-empire` to prepare a Home-ready shared Empire root (`docs/HOME-ADAPTER.md`). For access to the private AI Marketing Hub Home capability layer, join [AI Marketing Hub Pro](https://www.skool.com/ai-marketing-hub-pro/about).
-
-## Development, contributing, and license
+## Develop, license and credits
 
 ```sh
 python -m unittest discover -s tests -v
@@ -320,24 +377,25 @@ python -m build
 python -m twine check dist/*
 ```
 
-See [architecture](docs/ARCHITECTURE.md), [contributing](CONTRIBUTING.md), [code of conduct](CODE_OF_CONDUCT.md), [security](SECURITY.md), [support](SUPPORT.md), and [third-party notices](THIRD_PARTY_NOTICES.md). Python dependencies installed by individual modules may come from PyPI and are not all reproducibly locked by this manager. Module licenses remain in their packages. The manager is [MIT licensed](LICENSE).
-Audio uses Apache-2.0; `legends-hyperyap` uses AGPL-3.0; OBS Cursor uses GPL-2.0-or-later.
-They remain separate projects and keep their own licensing and model terms.
+Before a pull request, read [CONTRIBUTING.md](CONTRIBUTING.md) and the [code of conduct](CODE_OF_CONDUCT.md). Design notes are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), help routes in [SUPPORT.md](SUPPORT.md) and vulnerability reporting in [SECURITY.md](SECURITY.md).
 
-- **Community & Home system access:** [AI Marketing Hub Pro](https://www.skool.com/ai-marketing-hub-pro/about)
-- **Website:** [cto-legends.com](https://cto-legends.com)
+The manager is [MIT licensed](LICENSE). Module licenses remain in their packages: audio uses Apache-2.0, `legends-hyperyap` uses AGPL-3.0 and OBS Cursor uses GPL-2.0-or-later. They remain separate projects with their own licensing and model terms, listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-## Live specifications and engineering dispatches
+Made by Avalon Reset. The site is [cto-legends.com](https://cto-legends.com).
 
-- **Router specification & comparison matrix:** [cto-legends.com/modules/cto-legends](https://cto-legends.com/modules/cto-legends)
-- **Full 21-module catalog & ecosystem hub:** [cto-legends.com/home](https://cto-legends.com/home)
+## Start here
 
-**Engineering dispatches & benchmarks:**
-- [Codex vs Claude Code: CLI and Cursor Agent Benchmarks](https://cto-legends.com/blog?post=codex-vs-claude-code-benchmarks)
-- [How to Build AI Agents: Production CLI & MCP Routing](https://cto-legends.com/blog?post=how-to-build-ai-agents-cli-mcp-routing)
-- [Obsidian Second Brain: Markdown Knowledge Base Guide](https://cto-legends.com/blog?post=obsidian-second-brain-markdown-knowledge-base)
-- [Claude Code Skills: MCP vs CLI Workflow Architecture](https://cto-legends.com/blog?post=claude-code-skills-mcp-vs-cli-workflow)
-- [Railway vs Render: Fly.io vs Self-Hosted Coolify PaaS](https://cto-legends.com/blog?post=railway-vs-render-fly-io-coolify-paas)
-- [Browser Automation AI: Computer Use Agent Benchmarks](https://cto-legends.com/blog?post=browser-automation-ai-computer-use-benchmarks)
-- [Fractional CTO Advisory: Technical Due Diligence Guide](https://cto-legends.com/blog?post=fractional-cto-technical-due-diligence-guide)
-- [Hetzner vs AWS & DigitalOcean: Cloud Server Planning](https://cto-legends.com/blog?post=hetzner-vs-aws-digitalocean-cloud-server-planning)
+One way in for all 21 modules:
+
+```sh
+python -m pip install cto-legends
+cto-legends agent-setup claude
+```
+
+Read the plan it prints, then add `--apply`.
+
+If you think an agent tool should show its plan before it changes anything, a star helps the next developer find this one.
+
+Want this way of working applied to your own stack? Message Avalon Reset at the site message desk: https://cto-legends.com/dm
+
+Avalon Reset
