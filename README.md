@@ -13,6 +13,10 @@
 
 Type `cto-legends install legends-geogrid` and nothing gets installed. You get the plan. Add `--apply` after you have read it.
 
+<p align="left">
+  <img src="assets/cards/r1/slot-2-look-then-do.svg" width="100%" align="top" alt="Look, then do: no flag prints the plan; --apply makes the change" />
+</p>
+
 ```sh
 python -m pip install cto-legends
 cto-legends agent-setup claude               # look: prints the plan, writes nothing
@@ -46,6 +50,10 @@ cto-legends restore-skills MANIFEST --apply  # do: puts them back
 ```
 
 The backup lands under `~/.cto-legends-skill-backups`, and `isolate-skills --apply` prints the path of the manifest that `restore-skills` needs.
+
+<p align="left">
+  <img src="assets/cards/r1/slot-3-shelf-vs-router.svg" width="100%" align="top" alt="A shelf of skills against One router: what is registered, when a recipe is read, how a release is pinned, and how it is rolled back" />
+</p>
 
 | | A shelf of skills | One router |
 |---|---|---|
@@ -110,6 +118,10 @@ Each module keeps its own controls. 12 of the 22 family repos document a preview
 
 You tell your agent: "study my business on Google Maps". This is what it runs. The `--apply` line runs only when the install is part of what you asked for; otherwise the agent explains the proposed install and asks first.
 
+<p align="left">
+  <img src="assets/cards/r1/slot-4-seven-steps.svg" width="100%" align="top" alt="One job, start to finish in seven steps: route, look, do, handoff, doctor, readiness, run" />
+</p>
+
 ```sh
 cto-legends route "Google Maps ranking grids"  # ranked candidates, not a decision
 cto-legends install legends-geogrid            # look: the plan
@@ -135,6 +147,12 @@ The same pattern serves other requests: "generate some AI music", "convert my Wo
 ## Register the skill with your agent
 
 `cto-legends agent-setup HOST` prints the path it would write, and `--apply` registers the one skill, as in the first block. Each preset writes only to its own standard skill paths, and an existing skill that is unmanaged or edited is never overwritten. Reload your agent's skills after registering.
+
+<p align="left">
+  <a href="#claude-skills-the-claude-preset"><img src="assets/cards/r1/slot-5-claude.svg" width="33.33%" align="top" alt="Claude: the claude preset writes ~/.claude/skills/cto-legends" /></a><!--
+  --><a href="#codex-skills-the-codex-preset"><img src="assets/cards/r1/slot-5-codex.svg" width="33.33%" align="top" alt="Codex: the codex preset writes ~/.codex/skills and ~/.agents/skills" /></a><!--
+  --><a href="#agent-skills-paths-for-every-preset"><img src="assets/cards/r1/slot-5-every-preset.svg" width="33.33%" align="top" alt="Every preset: skill paths for all nine host presets" /></a>
+</p>
 
 ### Claude skills: the `claude` preset
 
@@ -244,6 +262,10 @@ Each module remains its own open-source project. They are grouped by job here, a
 
 ### Local search and research
 
+<p align="left">
+  <a href="#local-search-and-research"><img src="assets/cards/r1/slot-6-local-search-and-research.svg" width="100%" align="top" alt="Local search and research: 6 modules (geogrid, dataforseo, jev, firecrawl, github, grant)" /></a>
+</p>
+
 | Module | Use it for | Needs |
 |---|---|---|
 | [legends-geogrid](https://github.com/avalonreset/legends-geogrid) | Google Maps ranking grids, competitive studies and strategy reports | Report libraries, a map browser, research credentials |
@@ -254,6 +276,10 @@ Each module remains its own open-source project. They are grouped by job here, a
 | [legends-grant](https://github.com/avalonreset/legends-grant) | US grant discovery, eligibility review and proposal drafts | No API keys; optional `pdf` extra |
 
 ### Web stack
+
+<p align="left">
+  <a href="#web-stack"><img src="assets/cards/r1/slot-6-web-stack.svg" width="100%" align="top" alt="Web stack: 7 modules (hetzner, coolify, cloudflare, astro, stripe, gohighlevel, buzz)" /></a>
+</p>
 
 | Module | Use it for | Needs |
 |---|---|---|
@@ -267,6 +293,10 @@ Each module remains its own open-source project. They are grouped by job here, a
 
 ### Recording, audio and video
 
+<p align="left">
+  <a href="#recording-audio-and-video"><img src="assets/cards/r1/slot-6-recording-audio-and-video.svg" width="100%" align="top" alt="Recording, audio and video: 7 modules (obs, captions, youtube, yt-dlp, stable-audio-3, hyperyap, ambient-intelligence)" /></a>
+</p>
+
 | Module | Use it for | Needs |
 |---|---|---|
 | [legends-obs](https://github.com/avalonreset/legends-obs) | OBS Studio recording workflows, with an optional cursor overlay | Node.js 22 or newer, Windows OBS, WebSocket setup |
@@ -278,6 +308,10 @@ Each module remains its own open-source project. They are grouped by job here, a
 | [legends-ambient-intelligence](https://github.com/avalonreset/legends-ambient-intelligence) | Ambient audio capture, deduplicated archiving, offline transcription, vault distillation | `ffmpeg` on PATH and a speech backend |
 
 ### Memory
+
+<p align="left">
+  <a href="#memory"><img src="assets/cards/r1/slot-6-memory.svg" width="100%" align="top" alt="Memory: 1 module (legends-empire)" /></a>
+</p>
 
 | Module | Use it for | Needs |
 |---|---|---|
@@ -462,6 +496,10 @@ cto-legends agent-setup claude
 Read the plan it prints, then add `--apply`.
 
 If you think an agent tool should show its plan before it changes anything, a star helps the next developer find this one.
+
+<p align="left">
+  <a href="https://cto-legends.com/dm"><img src="assets/cards/r1/slot-7-message-avalon-reset.svg" width="100%" align="top" alt="Want this way of working applied to your own stack? Message Avalon Reset at cto-legends.com/dm" /></a>
+</p>
 
 Want this way of working applied to your own stack? Message Avalon Reset at the [site message desk](https://cto-legends.com/dm).
 
