@@ -708,10 +708,10 @@
     },
     "legends-geogrid": {
       "version": "0.2.7",
-      "commit": "a3055838ab4129abbcac66d3ce2b17c7a43e1bec",
+      "commit": "2732e0a6bf1f66f9030732ffbeab4d4ee0ebd0ce",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "f09d7cfdf8c81519b48020ce391cbec6fb6fb7d3755c0a581ca1cd9167005ca6",
-      "purpose": "Google Maps ranking grids, circular-lattice competitive studies, web-parity 21-page Letter PDF and HTML strategy reports, zero-overage Google free-stipend basemap and Places routing, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
+      "sha256": "efa0f2edb5dc4e94775ea4d6c9a3e0977ea45688a699db13be1acc1215847998",
+      "purpose": "Google Maps ranking grids, circular-lattice competitive studies, web-parity 21-page Letter PDF and HTML strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
         "grid",
@@ -729,7 +729,7 @@
       "dependencies": {
         "legends-dataforseo": "0.1.11"
       },
-      "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, zero-overage Google 2D Map Tiles / Static Maps / Places stipend circuit breaker, and multi-query 21-page Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
+      "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, OpenFreeMap .osm-legends dark basemap rendering, and multi-query 21-page Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
       "discovery": {
         "signals": [
           "local visibility",
@@ -810,10 +810,10 @@
     },
     "legends-dataforseo": {
       "version": "0.1.11",
-      "commit": "5f48162261b9fcfad37c10c6729567dad4dfbe82",
+      "commit": "434bd0f62d141d226226407a86e258a6ee4ba2df",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "45b951605f2d98d5f428ff1348ebc52948467ac8bd7f3813e7297beb78c57d6a",
-      "purpose": "Search, Google Maps, Google Business Profile, zero-overage Google free-stipend circuit breaker (Places, PageSpeed Insights, Custom Search, Map Tiles), SERP redirect unmasking, DataForSEO Labs intelligence, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
+      "sha256": "a08a2baa7f043f0cec079a64ae3fefdc44ecf0f27274b51b788dab03395df57c",
+      "purpose": "Search, Google Maps, Google Business Profile, SERP redirect unmasking, DataForSEO Labs intelligence, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
       "keywords": [
         "seo",
         "keywords",
@@ -825,12 +825,10 @@
         "research",
         "maps",
         "gbp",
-        "business-profile",
-        "pagespeed",
-        "stipend"
+        "business-profile"
       ],
       "dependencies": {},
-      "scope": "Python API and CLI with full response files, zero-overage Google free-stipend ledger and circuit breaker, organic /goto redirect unmasking, SERP integrity diagnostics, DataForSEO Labs helpers, offline evidence export, integrity verification, manifest inventory, focused views and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
+      "scope": "Python API and CLI with full response files, organic /goto redirect unmasking, SERP integrity diagnostics, DataForSEO Labs helpers, offline evidence export, integrity verification, manifest inventory, focused views and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
       "discovery": {
         "signals": [
           "keyword demand",

@@ -12,8 +12,8 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 ## 1.0.57 - 2026-11-11
 
 - Update `legends-stripe` to 0.1.3 (`380937681d9e7a67ffbc8ee585cb5fa3aa04a7a2`, SHA-256 `727f195c976a3e5dcec0b203cff484de4b69193a61198eb84e252cde71ed4cc5`) adding orphan-free B2B Hosted Invoicing (`send_invoice`) and overdue receivables aging radar.
-- Update `legends-dataforseo` to 0.1.11 (`5f48162261b9fcfad37c10c6729567dad4dfbe82`, SHA-256 `45b951605f2d98d5f428ff1348ebc52948467ac8bd7f3813e7297beb78c57d6a`) adding the zero-overage Google free-stipend ledger and circuit breaker across Places, PageSpeed Insights, Custom Search, and Map Tiles.
-- Update `legends-geogrid` to 0.2.7 (`a3055838ab4129abbcac66d3ce2b17c7a43e1bec`, SHA-256 `f09d7cfdf8c81519b48020ce391cbec6fb6fb7d3755c0a581ca1cd9167005ca6`) adding web-parity 21-page Letter PDF and HTML strategy reports, Google free-stipend basemap/Places routing, and updated `legends-dataforseo` `0.1.11` dependency floor.
+- Update `legends-dataforseo` to 0.1.11 (`434bd0f62d141d226226407a86e258a6ee4ba2df`, SHA-256 `a08a2baa7f043f0cec079a64ae3fefdc44ecf0f27274b51b788dab03395df57c`) adding POSIX ancestor-chain path hardening and release gate parity.
+- Update `legends-geogrid` to 0.2.7 (`2732e0a6bf1f66f9030732ffbeab4d4ee0ebd0ce`, SHA-256 `efa0f2edb5dc4e94775ea4d6c9a3e0977ea45688a699db13be1acc1215847998`) adding web-parity 21-page Letter PDF and HTML strategy reports, 4-Lens Companion Intelligence, and updated `legends-dataforseo` `0.1.11` dependency floor.
 
 ## 1.0.56 - 2026-11-11
 
