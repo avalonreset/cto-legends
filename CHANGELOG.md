@@ -8,7 +8,7 @@
   - `deepseek`: registers `~/.deepseek/skills/cto-legends/SKILL.md`, `~/.config/opencode/skills`, and `~/.agents/skills`, with actionable harness guidance for OpenCode and Claude Code users.
   - `grok`: enables documented global `~/.grok/AGENTS.md` startup registration via `startup-setup grok` alongside `~/.grok/skills`.
   - `codex` and `opencode`: sync companion `~/.agents/skills` on `agent-setup`, and enable `~/.config/opencode/AGENTS.md` via `startup-setup opencode`.
-- Ship bundled catalog `1.0.57` updating `legends-stripe` to `0.1.3` (B2B Hosted Invoicing and receivables radar), `legends-dataforseo` to `0.1.11` (zero-overage Google free-stipend circuit breaker), and `legends-geogrid` to `0.2.7` (21-page Letter PDF strategy reports and Google 2D Map Tiles / Places stipend routing).
+- Ship bundled catalog `1.0.57` updating `legends-stripe` to `0.1.3` (B2B Hosted Invoicing and receivables radar), `legends-dataforseo` to `0.1.11` (POSIX ancestor-chain path hardening and release gate parity), and `legends-geogrid` to `0.2.7` (21-page Letter PDF strategy reports and 4-Lens Companion Intelligence).
 
 ## 0.2.10 - 2026-11-11
 

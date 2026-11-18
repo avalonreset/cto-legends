@@ -112,11 +112,11 @@ Below is what your agent gets back when it types the install command and stops t
       "id": "legends-geogrid",
       "version": "0.2.7",
       "action": "install",
-      "commit": "a3055838ab4129abbcac66d3ce2b17c7a43e1bec",
+      "commit": "2732e0a6bf1f66f9030732ffbeab4d4ee0ebd0ce",
       "dependencies": {
         "legends-dataforseo": "0.1.11"
       },
-      "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, zero-overage Google 2D Map Tiles / Static Maps / Places stipend circuit breaker, and multi-query 21-page Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box."
+      "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, OpenFreeMap .osm-legends dark basemap rendering, and multi-query 21-page Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box."
     }
   ]
 }
