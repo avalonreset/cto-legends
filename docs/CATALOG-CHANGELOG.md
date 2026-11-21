@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.61 - 2026-11-21
+
+- Update `legends-geogrid` to 0.2.10 (`42ab7bdc936506ae5837802d35e695e061e8237c`, SHA-256 `4c7ebd5ac02784c68076c544f07ebc6a6a3344e0fc2e0bb65089bcf9683d1d80`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` agent setup and CLI reference drawers.
+
 ## 1.0.60 - 2026-11-21
 
 - Update `legends-empire` to 0.4.2 (`cf766b8b4e5b4ecb5c121c0970ce4f39d4fa608c`, SHA-256 `67c819b456cd7d10feef260116cf7571f9b683733fddee633577b8126b0b6185`) shipping the Seven Provinces starter framework (`Work`, `Money`, `Craft`, `Home`, `People`, `Self`, `Ambition`) with `## The Map` and `## The Blueprint` in `templates/vault/wiki/`, `_BOOTSTRAP_COMMON_PATHS` expansion, and the refreshed README and `r1` outlined Legends Font SVG design cards.
