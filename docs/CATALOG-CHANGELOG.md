@@ -7,7 +7,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.61 - 2026-11-21
 
-- Update `legends-geogrid` to 0.2.10 (`42ab7bdc936506ae5837802d35e695e061e8237c`, SHA-256 `4c7ebd5ac02784c68076c544f07ebc6a6a3344e0fc2e0bb65089bcf9683d1d80`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` agent setup and CLI reference drawers.
+- Update `legends-geogrid` to 0.2.10 (`42ab7bdc936506ae5837802d35e695e061e8237c`, SHA-256 `77ed8b6cc8d3ec8e9243014b55438d2fe49fd3b736bd526477ff52cdec8b71be`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` agent setup and CLI reference drawers.
 
 ## 1.0.60 - 2026-11-21
 
