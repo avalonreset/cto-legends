@@ -125,7 +125,7 @@ def render_slot_2() -> None:
             "01",
             "Talk like a human",
             [
-                "Say the job in plain English.",
+                "Say the job in plain english.",
                 "No module names or CLI flags",
                 "to memorize.",
             ],
@@ -143,9 +143,9 @@ def render_slot_2() -> None:
             "03",
             "Look, then do",
             [
-                "Your agent brings you the plan",
-                "first and changes nothing on",
-                "disk until --apply.",
+                "Your agent shows you the plan",
+                "before anything installs or",
+                "changes on your machine.",
             ],
         ),
     ]
