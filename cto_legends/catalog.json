@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.65",
+  "version": "1.0.66",
   "modules": {
     "legends-empire": {
       "version": "0.4.2",
@@ -543,10 +543,10 @@
           "kind": "path"
         }
       },
-      "commit": "380937681d9e7a67ffbc8ee585cb5fa3aa04a7a2",
-      "sha256": "727f195c976a3e5dcec0b203cff484de4b69193a61198eb84e252cde71ed4cc5",
+      "commit": "3688410e42ff6d7b3d4264f5201869ffc20f1d70",
+      "sha256": "3717091f3c8329d4d5eb1c05931bcf715ba073ca19723fe104a150d8b34f63f7",
       "license": "MIT",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "discovery": {
         "instructions": [
           "README.md",
@@ -643,10 +643,10 @@
           "kind": "path"
         }
       },
-      "commit": "c80b3b533023f2555fdb0e839f4c9372879a7662",
-      "sha256": "42c921a8a1690b39579d3c1093e4b5a3c13b4215a6cad931e510ac531b4a1189",
+      "commit": "b9048a3d5364309c7e9a461c78625f669b71f38d",
+      "sha256": "1db348bf902d8308e84a50fb60721320bb078b6a690f2177ca937fd7bb3fbfbc",
       "license": "MIT",
-      "version": "0.3.5",
+      "version": "0.3.6",
       "discovery": {
         "instructions": [
           "README.md",
@@ -1096,10 +1096,10 @@
       ]
     },
     "legends-grant": {
-      "version": "0.3.3",
-      "commit": "432f2a4e8223865bcee4d085a1ce5a2d474deb5a",
+      "version": "0.3.4",
+      "commit": "3ce4ec0d5409ee5c8185e7a2ee69598ba5888baf",
       "repo": "avalonreset/legends-grant",
-      "sha256": "2fa4cd31a9d805e8dadc03871bcc41babd66b8b10f1207ea674d686892652649",
+      "sha256": "6100e32aa38ee672462f09607a17b07c7daad8c01d380d2bba8f21b7b406f9c4",
       "purpose": "Discover US grants, collect evidence, review eligibility and draft evidence-linked grant proposals for businesses, nonprofits, tribes, governments, researchers and individuals.",
       "keywords": [
         "grant",
@@ -1196,10 +1196,10 @@
       "license": "MIT"
     },
     "legends-jev": {
-      "version": "0.2.4",
-      "commit": "f41e217d4acf9ba3f0c1ce695ae60a7e06713135",
+      "version": "0.2.5",
+      "commit": "05d37ab0b63fd1a76a64d99badeddc63226858fc",
       "repo": "avalonreset/legends-jev",
-      "sha256": "c652c266690b9f43a056060f65b2f80b275abe1797d8dd54c4468dc395b5d0dd",
+      "sha256": "c9d0eb338a58ddfd24e364c80c256ee332559dc9398146dbd176e3e817663126",
       "purpose": "Typed optical recognition (OCR), storefront signage verification, and decision advice for computer use, application control and browser action selection from supplied text evidence, local images, and candidates.",
       "keywords": [
         "jev",
