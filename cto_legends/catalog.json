@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.62",
+  "version": "1.0.63",
   "modules": {
     "legends-empire": {
       "version": "0.4.2",
@@ -913,10 +913,10 @@
       ]
     },
     "legends-firecrawl": {
-      "version": "0.3.7",
-      "commit": "47f00a0afab538a2d039c0a8db7ea9ea8a6b12d8",
+      "version": "0.3.8",
+      "commit": "b2ad712d934e2f8bc83877d3c450a2b4e536244d",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "e215a4c9c788329a6f8209215db12c4c0c7d419aba0f32f42b599423f26c6758",
+      "sha256": "4f803f667a24cd7c570ceb0842effef281d6a20b27b975a652741535a3eaae95",
       "purpose": "15-route Firecrawl v2 web operations (scrape, crawl, map, search, developer, research, parse, agent, interact, monitor, search-feedback), allowlisted website_name SERP target resolution, fail-closed scrape-serp verified-SERP guard, and Alexandria queries with complete saved offline evidence, integrity verification, and explicit reuse checks.",
       "keywords": [
         "firecrawl",
