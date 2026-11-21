@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.66",
+  "version": "1.0.67",
   "modules": {
     "legends-empire": {
       "version": "0.4.2",
@@ -1286,9 +1286,9 @@
       "readiness": "doctor"
     },
     "legends-obs": {
-      "version": "0.1.5",
+      "version": "0.1.6",
       "repo": "avalonreset/legends-obs",
-      "commit": "ea4cccd250db780b4b5ac8ae4efaccf94a5008ee",
+      "commit": "e94c7ec34817ae1f0d2b6beac63be3115691d415",
       "purpose": "Inspect, configure, and verify OBS Studio recording workflows, plus an optional cursor overlay extra.",
       "keywords": [
         "obs",
@@ -1308,7 +1308,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "56d75ab0175b86077c1455e732b45695d19bbea628beae8fc9a82b31e272f69f",
+      "sha256": "9f5e225d1c7e4826e8385dc0909d7190b3be68d75bd2453f4c91d7170ff52572",
       "discovery": {
         "signals": [
           "record my screen",
@@ -1333,7 +1333,7 @@
           "docs/RECIPES.md"
         ]
       },
-      "artifact_url": "https://github.com/avalonreset/legends-obs/releases/download/v0.1.5/avalonreset-legends-obs-0.1.5.tgz",
+      "artifact_url": "https://github.com/avalonreset/legends-obs/releases/download/v0.1.6/avalonreset-legends-obs-0.1.6.tgz",
       "recipe": {
         "requires_node": 22,
         "env": false,
@@ -1362,10 +1362,10 @@
       "readiness": "doctor"
     },
     "legends-captions": {
-      "version": "0.1.4",
-      "commit": "70ee868df3f877af8c2b5f826ad8c87ffff6211c",
+      "version": "0.1.5",
+      "commit": "e4932aedc2c208037c99217f70aae6870ad36aec",
       "repo": "avalonreset/legends-captions",
-      "sha256": "ef27cadf0f7782433e109336a9f4dae141d5503509933511b12c4a240ef0b46a",
+      "sha256": "5f5716df870898337af840597a11e6c17684b4542c1c8a7dbbfba7c570e7bc52",
       "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
       "keywords": [
         "caption",
@@ -1452,10 +1452,10 @@
       "readiness": "doctor"
     },
     "legends-yt-dlp": {
-      "version": "0.1.5",
-      "commit": "582fba9a26cdbfc41f0082eaa7046c1321162ef1",
+      "version": "0.1.6",
+      "commit": "6ce8c11c96bd0bf8360b87c9d092ac01fe098d0d",
       "repo": "avalonreset/legends-yt-dlp",
-      "sha256": "083903469a5216e019a73771d57fb3a472f4ed944442314dd47fa035ba5d3c3d",
+      "sha256": "45bf27125fff32d30d043675511be40dc39e113eabe4eeb6ca15d3f57a70001e",
       "purpose": "Repeatable yt-dlp source pulls, verification, transcripts, search, and clip-building with pacing and bulk guardrails.",
       "keywords": [
         "youtube",
@@ -1876,10 +1876,10 @@
       "readiness": "doctor"
     },
     "legends-youtube": {
-      "version": "0.1.0",
-      "commit": "62abf439582067672a68d1d870a0e0dc7c14bd23",
+      "version": "0.1.1",
+      "commit": "5d18395ffcaadc5c5bc4250be1d3df6719940bb1",
       "repo": "avalonreset/legends-youtube",
-      "sha256": "5a0ef3961ecf963553a5de538d703511170721e5bc0d9f543f00c783dc4c7625",
+      "sha256": "b284088ad5fb46d6aafe797e2278cc0d8b56fc4041aa6cc01c631ac3b6efceb2",
       "purpose": "Operate YouTube channels over Data API v3 and Analytics API v2 with ETag-guarded lossless metadata updates, quota-cost wave planning, 0-quota public readback and outlier scouting, sourced CTR/retention A/B scorecards, Studio quiz and chapter validators, SHA-256 frozen private-draft uploads, and an attachable Empire knowledge pack.",
       "keywords": [
         "youtube",
