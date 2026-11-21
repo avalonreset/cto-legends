@@ -389,6 +389,67 @@ def render_slot_6() -> None:
         (CARDS_DIR / f"{fname}.svg").write_text(svg(f"0 0 886 {h}", body, t), encoding="utf-8")
 
 
+
+def star_points(cx: float, cy: float, r_out: float, r_in: float) -> str:
+    pts = []
+    for i in range(10):
+        ang = math.radians(-90 + i * 36)
+        r = r_out if i % 2 == 0 else r_in
+        pts.append(f"{cx + r * math.cos(ang):.2f},{cy + r * math.sin(ang):.2f}")
+    return " ".join(pts)
+
+
+def render_slot_shrine() -> None:
+    """Graphic shrine for the 22-repository CTO Legends GitHub Star List."""
+    import math
+    t = Typesetter()
+    hd, ti, bd, lb = u("head", K_WIDE), u("title", K_WIDE), u("body", K_WIDE), u("label", K_WIDE)
+    h = 96
+    pts_outer = []
+    pts_inner = []
+    cx, cy = 58.0, 48.0
+    for i in range(10):
+        ang = math.radians(-90 + i * 36)
+        ro = 21.0 if i % 2 == 0 else 8.6
+        ri = 11.0 if i % 2 == 0 else 4.5
+        pts_outer.append(f"{cx + ro * math.cos(ang):.2f},{cy + ro * math.sin(ang):.2f}")
+        pts_inner.append(f"{cx + ri * math.cos(ang):.2f},{cy + ri * math.sin(ang):.2f}")
+    star_poly = " ".join(pts_outer)
+    star_core = " ".join(pts_inner)
+
+    body = (
+        panel_defs(h)
+        + f'  <rect x="1" y="1" width="884" height="{h - 2}" rx="4" fill="#0c0507" {RED}/>\n'
+        + f'  <rect x="1" y="1" width="884" height="{h - 2}" rx="4" fill="url(#sheen)"/>\n'
+        + f'  <rect x="1" y="1" width="4" height="{h - 2}" rx="2" fill="#ff0000"/>\n'
+        # Left Star Sigil Chamber
+        + '  <rect x="18" y="12" width="80" height="72" rx="4" fill="#000000" stroke="#ff0000" stroke-opacity="0.55" stroke-width="1"/>\n'
+        + f'  <circle cx="{cx:.1f}" cy="{cy:.1f}" r="28" fill="none" stroke="#ff0000" stroke-opacity="0.28" stroke-width="1"/>\n'
+        + f'  <circle cx="{cx:.1f}" cy="{cy:.1f}" r="23" fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>\n'
+        + f'  <line x1="{cx:.1f}" y1="15" x2="{cx:.1f}" y2="21" stroke="#ff0000" stroke-opacity="0.65" stroke-width="1"/>\n'
+        + f'  <line x1="{cx:.1f}" y1="75" x2="{cx:.1f}" y2="81" stroke="#ff0000" stroke-opacity="0.65" stroke-width="1"/>\n'
+        + f'  <line x1="25" y1="{cy:.1f}" x2="31" y2="{cy:.1f}" stroke="#ff0000" stroke-opacity="0.65" stroke-width="1"/>\n'
+        + f'  <line x1="85" y1="{cy:.1f}" x2="91" y2="{cy:.1f}" stroke="#ff0000" stroke-opacity="0.65" stroke-width="1"/>\n'
+        + f'  <polygon points="{star_poly}" fill="#ff0000"/>\n'
+        + f'  <polygon points="{star_core}" fill="#000000" opacity="0.28"/>\n'
+    )
+    tx = 116
+    sub = "Bookmark or star the router and all 21 modules from one GitHub list."
+    body += t.run(tx, 27, lb, "GITHUB STAR LIST", "#ff0000", "700")
+    x_meta = tx + width("GITHUB STAR LIST", lb) + 10
+    body += t.run(x_meta, 27, lb, "// github.com/stars/avalonreset/lists/cto-legends", "#a1a1aa", "400")
+    body += t.run(tx, 52, hd, "The complete 22-repository collection on one page", "#ffffff", "700")
+    body += t.run(tx, 74, bd, sub, "#d4d4d8", "400")
+
+    btn_w = 216
+    btn_x = 868 - btn_w
+    assert tx + width(sub, bd) + 20 <= btn_x, "Shrine subline collides with button"
+    body += f'  <rect x="{btn_x}" y="29" width="{btn_w}" height="38" rx="3" fill="#000000" {RED}/>\n'
+    body += button(t, btn_x + btn_w / 2, 52.5, "#ffffff", 'OPEN 22-REPO LIST <tspan fill="#ff0000">↗</tspan>', lb, "700")
+
+    (CARDS_DIR / "slot-collection-shrine.svg").write_text(svg(f"0 0 886 {h}", body, t), encoding="utf-8")
+
+
 def render_slot_7() -> None:
     """Slot 7: Closing message desk CTA card ('Message Avalon Reset')."""
     t = Typesetter()
@@ -425,6 +486,7 @@ def validate() -> None:
         "slot-6-recording-audio-and-video.svg",
         "slot-6-web-stack.svg",
         "slot-7-message-avalon-reset.svg",
+        "slot-collection-shrine.svg",
     ]
     svgs = sorted(CARDS_DIR.glob("*.svg"))
     names = [p.name for p in svgs]
@@ -456,6 +518,7 @@ def main() -> int:
     render_slot_4()
     render_slot_5()
     render_slot_6()
+    render_slot_shrine()
     render_slot_7()
     validate()
     print(f"Rendered and validated 12 SVG cards in {CARDS_DIR.relative_to(ROOT)} (font={FONT}).")

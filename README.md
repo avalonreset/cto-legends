@@ -110,7 +110,9 @@ Any coding agent without native skill loading can read [cto_legends/SKILL.md](ct
 
 ## The 21 curated modules
 
-Every module is an independent open-source repository with its own test suite and release pins, and you never need to memorize their names. They are listed below so you can see how far a single plain-english request reaches. Browse the interactive specs at [cto-legends.com/modules](https://cto-legends.com/modules), or view all 22 repositories in one place in the [CTO Legends GitHub collection](https://github.com/stars/avalonreset/lists/cto-legends).
+Every module is an independent open-source repository with its own test suite and release pins, and you never need to memorize their names. They are listed below so you can see how far a single plain-english request reaches, and you can also browse the interactive engineering specs at [cto-legends.com/modules](https://cto-legends.com/modules).
+
+<p align="center"><a href="https://github.com/stars/avalonreset/lists/cto-legends"><img src="assets/cards/r2/slot-collection-shrine.svg" width="100%" alt="GitHub Star List: The complete 22-repository collection on one page. Bookmark or star the router and all 21 modules from one GitHub list."></a></p>
 
 Twenty modules install as managed local CLIs inside their own isolated release folders (19 Python virtual environments plus the prebuilt `legends-obs` Node CLI). The one native desktop application, `legends-hyperyap`, routes through `cto-legends guide legends-hyperyap` so the router never triggers an operating system installer behind your back.
 
