@@ -132,7 +132,7 @@ def render_slot_2() -> None:
         ),
         (
             "02",
-            "21 curated CTO tools",
+            "21 curated tools",
             [
                 "One opinionated best-in-class",
                 "stack where every tool already",
