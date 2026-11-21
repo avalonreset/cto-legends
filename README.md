@@ -13,7 +13,7 @@ For decades, computers forced human beings to think like machines. You hunted fo
 
 Your coding agent registers one small skill, once. From that moment on, you state what you want in plain english the way you would brief a sharp colleague across the desk, and your agent reaches into a curated stack of open-source modules, loads the right playbook on demand, and brings you a plan to approve.
 
-<p align="center"><img src="assets/cards/r3/slot-1-agent-handoff.svg" width="100%" alt="Agent handoff: paste this into Claude Code, Codex, or any coding agent and it does the setup"></p>
+<p align="center"><img src="assets/cards/r4/slot-1-agent-handoff.svg" width="100%" alt="Agent handoff: paste this into Claude Code, Codex, or any coding agent and it does the setup"></p>
 
 ```text
 Install cto-legends (python -m pip install cto-legends) and wire the router skill
@@ -21,7 +21,7 @@ into your host with cto-legends agent-setup. From then on, whenever I describe a
 job in plain english, find the right module and show me the plan before making changes.
 ```
 
-<p align="center"><img src="assets/cards/r3/slot-2-three-pillars.svg" width="100%" alt="Three pillars of cto-legends agent skills: 01 Talk like a human in plain english, 02 Curated stack, and 03 Look, then do across 9 host presets"></p>
+<p align="center"><img src="assets/cards/r4/slot-2-three-pillars.svg" width="100%" alt="Three pillars of cto-legends agent skills: 01 Talk like a human in plain english, 02 Curated stack, and 03 Look, then do across 9 host presets"></p>
 
 [Plain english](#agent-skills-in-plain-english) · [Curated stack](#why-a-curated-stack-beats-a-pile-of-claude-skills-and-codex-skills) · [Plan first](#why-your-agent-shows-the-plan-before-anything-changes) · [Host setup](#host-setup-claude-skills-codex-skills-and-7-more-presets) · [The modules](#the-curated-modules) · [Reference](#reference)
 
@@ -33,7 +33,7 @@ Nobody who uses this describes it to a friend as a router or a CLI manager. They
 
 Months of building with coding agents every day taught this project one plain lesson: momentum dies the minute you stop thinking about your business or your build to hunt for a CLI flag, an environment variable, or a package name. The best sessions feel like a conversation across a desk. You state the outcome, and the stack assembles itself behind the scenes.
 
-<p align="center"><img src="assets/cards/r3/slot-3-plain-english-chains.svg" width="100%" alt="Say the job in plain words: four spoken sentences routing directly into curated cto-legends module chains"></p>
+<p align="center"><img src="assets/cards/r4/slot-3-plain-english-chains.svg" width="100%" alt="Say the job in plain words: four spoken sentences routing directly into curated cto-legends module chains"></p>
 
 Start where a human actually starts, with a sentence. Here are four the stack was built to answer.
 
@@ -65,7 +65,7 @@ Nobody wants a bookmark list of every package on GitHub. You want the internet b
 
 Compare that with how most people manage Claude skills and Codex skills today. You find a repo, drop a folder into `~/.claude/skills`, copy it into `~/.codex/skills`, and repeat that over and over until your agent has two diverging shelves of stale instructions. Worse, if you wire up a dozen separate `claude code mcp` servers, every single session pays a permanent context-window tax before you even say hello.
 
-<p align="center"><img src="assets/cards/r3/slot-4-shelf-vs-router.svg" width="100%" alt="A shelf of individual Claude skills and Codex skills compared against one cto-legends router skill loaded on demand"></p>
+<p align="center"><img src="assets/cards/r4/slot-4-shelf-vs-router.svg" width="100%" alt="A shelf of individual Claude skills and Codex skills compared against one cto-legends router skill loaded on demand"></p>
 
 `cto-legends` asks your agent to register one lightweight router skill in total. Every module stays off the shelf until a sentence you speak calls for one. When it does, your agent runs `cto-legends handoff` and reads that single module's playbook on demand. Because the router is a plain Markdown skill backed by a local CLI, no background daemon or resident `claude code mcp` server ever sits in memory eating tokens between turns.
 
@@ -86,9 +86,9 @@ Routing a question never triggers a hidden download, and installing a module nev
 Every preset wires the single router skill into that host's standard directory and never overwrites a file you have customized by hand. Whether you rely on Claude skills, Codex skills, or switch between nine different coding agents, every host reads the same router contract.
 
 <p align="center">
-  <a href="#all-9-presets"><img src="assets/cards/r3/slot-5-claude.svg" width="33.33%" align="top" alt="Claude preset: writes the router skill to ~/.claude/skills/cto-legends" /></a><!--
-  --><a href="#all-9-presets"><img src="assets/cards/r3/slot-5-codex.svg" width="33.33%" align="top" alt="Codex preset: writes the router skill to ~/.codex/skills and ~/.agents/skills" /></a><!--
-  --><a href="#all-9-presets"><img src="assets/cards/r3/slot-5-every-preset.svg" width="33.33%" align="top" alt="Every preset: skill paths for all nine supported coding agent hosts" /></a>
+  <a href="#all-9-presets"><img src="assets/cards/r4/slot-5-claude.svg" width="33.33%" align="top" alt="Claude preset: writes the router skill to ~/.claude/skills/cto-legends" /></a><!--
+  --><a href="#all-9-presets"><img src="assets/cards/r4/slot-5-codex.svg" width="33.33%" align="top" alt="Codex preset: writes the router skill to ~/.codex/skills and ~/.agents/skills" /></a><!--
+  --><a href="#all-9-presets"><img src="assets/cards/r4/slot-5-every-preset.svg" width="33.33%" align="top" alt="Every preset: skill paths for all nine supported coding agent hosts" /></a>
 </p>
 
 <a id="all-9-presets"></a>
@@ -111,13 +111,13 @@ Any coding agent without native skill loading can read [cto_legends/SKILL.md](ct
 
 Every module is an independent open-source repository with its own test suite and release pins, and you never need to memorize their names. They are listed below so you can see how far a single plain-english request reaches, and you can also browse the interactive engineering specs at [cto-legends.com/modules](https://cto-legends.com/modules).
 
-<p align="center"><a href="https://github.com/stars/avalonreset/lists/cto-legends"><img src="assets/cards/r3/slot-collection-star-shrine.svg" width="100%" alt="GitHub Star List: The complete CTO Legends collection on one page. Bookmark or star the router and every module from a single GitHub list."></a></p>
+<p align="center"><a href="https://github.com/stars/avalonreset/lists/cto-legends"><img src="assets/cards/r4/slot-collection-star-shrine.svg" width="100%" alt="GitHub Star List: The complete cto-legends collection on one page. Bookmark or star the router and every module from a single GitHub list."></a></p>
 
 Every CLI module installs inside its own isolated release folder (dedicated Python virtual environments plus the prebuilt `legends-obs` Node CLI). The native desktop application, `legends-hyperyap`, routes through `cto-legends guide legends-hyperyap` so the router never triggers an operating system installer behind your back.
 
 <a id="local-search-and-research"></a>
 
-<p align="center"><a href="#local-search-and-research"><img src="assets/cards/r3/slot-6-local-search-and-research.svg" width="100%" alt="Local search and research: geogrid, dataforseo, jev, firecrawl, github, grant"></a></p>
+<p align="center"><a href="#local-search-and-research"><img src="assets/cards/r4/slot-6-local-search-and-research.svg" width="100%" alt="Local search and research: geogrid, dataforseo, jev, firecrawl, github, grant"></a></p>
 
 See where a business or product actually stands across Google, Maps, and AI answer engines, and keep the evidence so you never pay for the same lookup twice.
 
@@ -132,7 +132,7 @@ See where a business or product actually stands across Google, Maps, and AI answ
 
 <a id="web-stack"></a>
 
-<p align="center"><a href="#web-stack"><img src="assets/cards/r3/slot-6-web-stack.svg" width="100%" alt="Web stack: hetzner, coolify, cloudflare, astro, stripe, gohighlevel, buzz"></a></p>
+<p align="center"><a href="#web-stack"><img src="assets/cards/r4/slot-6-web-stack.svg" width="100%" alt="Web stack: hetzner, coolify, cloudflare, astro, stripe, gohighlevel, buzz"></a></p>
 
 Move from a scraped legacy site to a live production server taking payments and syncing CRM pipelines, one reviewed plan at a time.
 
@@ -148,7 +148,7 @@ Move from a scraped legacy site to a live production server taking payments and 
 
 <a id="recording-audio-and-video"></a>
 
-<p align="center"><a href="#recording-audio-and-video"><img src="assets/cards/r3/slot-6-recording-audio-and-video.svg" width="100%" alt="Recording, audio and video: obs, captions, youtube, yt-dlp, stable-audio-3, hyperyap, ambient-intelligence"></a></p>
+<p align="center"><a href="#recording-audio-and-video"><img src="assets/cards/r4/slot-6-recording-audio-and-video.svg" width="100%" alt="Recording, audio and video: obs, captions, youtube, yt-dlp, stable-audio-3, hyperyap, ambient-intelligence"></a></p>
 
 Record your screen, score it with local AI audio, render active-word captions, and ship a verified private YouTube draft, with your own voice as the keyboard.
 
@@ -164,7 +164,7 @@ Record your screen, score it with local AI audio, render active-word captions, a
 
 <a id="memory"></a>
 
-<p align="center"><a href="#memory"><img src="assets/cards/r3/slot-6-memory.svg" width="100%" alt="Memory: legends-empire"></a></p>
+<p align="center"><a href="#memory"><img src="assets/cards/r4/slot-6-memory.svg" width="100%" alt="Memory: legends-empire"></a></p>
 
 Memory is the vault that every other module writes into, so tomorrow's session begins with everything today's session proved.
 
@@ -258,6 +258,6 @@ Paste the [agent handoff block](#cto-legends-agent-skills-that-let-you-speak-in-
 
 Running a company and not a terminal? Founders and operators who want this way of working applied directly to their own business stack have one route: message Avalon Reset at [cto-legends.com/dm](https://cto-legends.com/dm). The desk is async, so the conversation starts the moment you write and nobody forces you onto a sales call.
 
-<p align="center"><a href="https://cto-legends.com/dm"><img src="assets/cards/r3/slot-7-message-avalon-reset.svg" width="100%" alt="Want this way of working applied to your own stack? Message Avalon Reset at cto-legends.com/dm"></a></p>
+<p align="center"><a href="https://cto-legends.com/dm"><img src="assets/cards/r4/slot-7-message-avalon-reset.svg" width="100%" alt="Want this way of working applied to your own stack? Message Avalon Reset at cto-legends.com/dm"></a></p>
 
 Built in public by one maker, Avalon Reset.

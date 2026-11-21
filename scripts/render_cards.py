@@ -30,7 +30,7 @@ sys.path.insert(0, str(AVALON_ROOT))
 from typeset import CAP, EM, FONT, Typesetter, width  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-REV = "r3"
+REV = "r4"
 CARDS_DIR = ROOT / "assets" / "cards" / REV
 README_PATH = ROOT / "README.md"
 
@@ -458,7 +458,7 @@ def render_slot_shrine() -> None:
     body += t.run(tx, 27, lb, "GITHUB STAR LIST", "#ff0000", "700")
     x_meta = tx + width("GITHUB STAR LIST", lb) + 10
     body += t.run(x_meta, 27, lb, "// github.com/stars/avalonreset/lists/cto-legends", "#a1a1aa", "400")
-    body += t.run(tx, 52, hd, "The complete CTO Legends collection on one page", "#ffffff", "700")
+    body += t.run(tx, 52, hd, "The complete cto-legends collection on one page", "#ffffff", "700")
     body += t.run(tx, 74, bd, sub, "#d4d4d8", "400")
 
     btn_w = 216
