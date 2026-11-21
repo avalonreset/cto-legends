@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.64",
+  "version": "1.0.65",
   "modules": {
     "legends-empire": {
       "version": "0.4.2",
@@ -144,10 +144,10 @@
       ]
     },
     "legends-hetzner": {
-      "version": "0.1.5",
+      "version": "0.1.6",
       "repo": "avalonreset/legends-hetzner",
-      "commit": "3f15715bded67587f1cfa77cd6f5e04b75be254a",
-      "sha256": "5f7ecf74797e61e93d3fb688fd9ea12ce991d6e749269f0747ad01bf3f4fc0b5",
+      "commit": "9e5eb43c7748c9c1a65a674f5b51f2c9db77b010",
+      "sha256": "50d87ff3e9cfec3e1436e0e8ee06c92143fea99fe11a3ad9d838fb82045efaeb",
       "purpose": "Inspect Hetzner Cloud projects, scan Cost-Optimized CX/CAX stock with Fractional CTO sizing, prepare reviewed server plans, snipe scarce capacity safely, and attach a source-cited operations library to a selected Empire vault.",
       "keywords": [
         "hetzner",
@@ -277,10 +277,10 @@
           "kind": "path"
         }
       },
-      "commit": "932f0387a238a6a2a4b0d87515e3d8090590ba16",
-      "sha256": "2d3b7702aff5e1c2ec623596b8e6bcfae213e7f37c75b3002600dae8ab61f173",
+      "commit": "f79d1de452a4021ea240328ce7e947eef7cf28d0",
+      "sha256": "afecbc7c1716fb7977b88f20a6f272a75c65d2fc8c7bf69200f098eb860dbe61",
       "license": "MIT",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "discovery": {
         "instructions": [
           "README.md",
@@ -366,10 +366,10 @@
           "kind": "path"
         }
       },
-      "commit": "d02d8129097e6ed5ba67a912b0e7f17f951d1e16",
-      "sha256": "e71f2fbfbce1bf20168846ca9000330b37fc5b5f90a78801566064755df44bcc",
+      "commit": "54bb35869f588429e90f8616c2bf2d67aee7a7a9",
+      "sha256": "a93be08fe9be6fbd1eb1c584768c022b0ac45e877f9e42835756585a88c838b2",
       "license": "MIT",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "discovery": {
         "instructions": [
           "README.md",
@@ -452,10 +452,10 @@
           "kind": "path"
         }
       },
-      "commit": "e2d9cc82ca1ace1cf319cf676ae9c73bac5ebbec",
-      "sha256": "a41c9462ae0df7fd86c655c13f0856bfa8d8939d8a6269abb665de4b07990523",
+      "commit": "f5a79528834db5a7c5b44998bd161ece8c64da9b",
+      "sha256": "7f70f557b6dd4a93564a0539d86731074ac530be7ad360e210e7a1508f4bf2d5",
       "license": "MIT",
-      "version": "0.2.4",
+      "version": "0.2.5",
       "discovery": {
         "instructions": [
           "README.md",

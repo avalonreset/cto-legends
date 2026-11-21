@@ -5,6 +5,13 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.65 - 2026-11-21
+
+- Update `legends-hetzner` to 0.1.6 (`9e5eb43c7748c9c1a65a674f5b51f2c9db77b010`, SHA-256 `50d87ff3e9cfec3e1436e0e8ee06c92143fea99fe11a3ad9d838fb82045efaeb`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
+- Update `legends-coolify` to 0.2.4 (`f79d1de452a4021ea240328ce7e947eef7cf28d0`, SHA-256 `afecbc7c1716fb7977b88f20a6f272a75c65d2fc8c7bf69200f098eb860dbe61`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
+- Update `legends-cloudflare` to 0.1.4 (`54bb35869f588429e90f8616c2bf2d67aee7a7a9`, SHA-256 `a93be08fe9be6fbd1eb1c584768c022b0ac45e877f9e42835756585a88c838b2`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
+- Update `legends-astro` to 0.2.5 (`f5a79528834db5a7c5b44998bd161ece8c64da9b`, SHA-256 `7f70f557b6dd4a93564a0539d86731074ac530be7ad360e210e7a1508f4bf2d5`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
+
 ## 1.0.64 - 2026-11-21
 
 - Update `legends-github` to 0.2.5 (`16affcb9104d1ad3d13496f1f5f417ce5565f16a`, SHA-256 `11a868fb7354de31b85d10d6ea2c870e470109b1d546e89df8f0cfdaf779e9fc`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), expanded evergreen documentation for the 13 repository workflows, four-state clean-tree external evidence audits, DataForSEO `0.1.13` 20-topic commercial intent synthesis, non-destructive README preservation mode, and 1280x640 Open Graph GraphQL pixel-parity verification.
