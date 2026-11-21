@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.12 - 2026-11-21
+
+- Expand `cto_legends/SKILL.md` YAML frontmatter `description:` to a single-line, host-safe (<= 1,024 chars, LF-only, zero `legends-[a-z0-9]` identifiers) trigger index covering all 21 ecosystem domains and vendor names (including Alexandria) so agent hosts without `startup-setup` reliably route plain-English requests to `cto-legends`, backed by a new regression test in `tests/test_capabilities.py`.
+- Document public `cto-legends` GitHub Star List synchronization in `docs/MODULE-RELEASE.md`.
+- Ship bundled catalog `1.0.59` updating `legends-dataforseo` to `0.1.12` (fail-closed decoy SERP defense, 5x Google operator billing guard, 53-route catalog), `legends-firecrawl` to `0.3.7` (15-route Firecrawl v2 expansion, allowlisted `website_name` SERP target resolution, fail-closed `scrape-serp`), `legends-empire` to `0.4.1` (`steward entry-audit`, `steward digest`, cached ontology index, large-vault lint optimization, native Windows test isolation), and `legends-geogrid` to `0.2.9` (embeddable `geogrid-viewer/v1` viewer with full per-point rankings).
+
 ## 0.2.11 - 2026-11-11
 
 - Add out-of-the-box skill registration (`agent-setup`), discovery auditing (`agent-audit`), and startup discovery (`startup-setup`) presets across all 8 Frontier agent ecosystems (`claude`, `codex`, `gemini`, `grok`, `muse`, `deepseek`, `qwen`, and `glm`) plus `opencode` and convenience aliases (`metamuse`, `qwen-code`, `zai`, `zcode`):

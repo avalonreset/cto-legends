@@ -5,6 +5,13 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.59 - 2026-11-21
+
+- Update `legends-dataforseo` to 0.1.12 (`869896216ae2c1a283f40671b0cc21dbdea0ef92`, SHA-256 `9ba476b9a9552d20d6c4c66a88830cb38d8bb8080053b9b17e9aec9a8ae7cc55`) adding fail-closed decoy SERP defense (`resolve_poisoned_results: true`, `serp_integrity.verified` stamping, `suspect_decoy` detector, `UnverifiedSerpError`), Google 5x search-operator billing preflight guard, depth-aware `resolve_goto_urls` and closed `WEBSITE_NAME_PLATFORMS` allowlist, certifi-backed `docs` discovery, and expansion from 30 to 53 DataForSEO v3 routes.
+- Update `legends-firecrawl` to 0.3.7 (`47f00a0afab538a2d039c0a8db7ea9ea8a6b12d8`, SHA-256 `e215a4c9c788329a6f8209215db12c4c0c7d419aba0f32f42b599423f26c6758`) adding 15-route Firecrawl v2 / `firecrawl-cli@1.23.3` catalog coverage (`developer`, `research`, `parse`, `agent`, `interact`, `monitor`, `search-feedback`), allowlisted `website_name` SERP target resolution (`require_candidate=True`), and fail-closed `lfc scrape-serp` requiring `legends-dataforseo >= 0.1.12` `serp_integrity.verified: true`.
+- Update `legends-empire` to 0.4.1 (`60207ab3ed1f14b840798d15218ec221ef50ee66`, SHA-256 `b97b684477a4c2d199e3a44a3b2e41d1570ec20fda72f979123d87e60f1e8d04`) adding `steward entry-audit` multi-vendor entry checks, `steward digest` atomic health digests, cached `stat_fingerprint` ontology index reuse, large-vault lint performance optimization, stewardship knowledge pack `0.2.2`, and native Windows test isolation fixes.
+- Update `legends-geogrid` to 0.2.9 (`e47028aca64a01846cf0fd5bf9bae9a5dcf70eb6`, SHA-256 `a89f7b8fb2c3a4ddb839a1c737c6f2a3fafaba557dee5f73754abc9d54e17666`) adding the embeddable `geogrid-viewer/v1` report viewer with full per-point Location and Competitors rankings.
+
 ## 1.0.58 - 2026-11-15
 
 - Update `legends-empire` to 0.4.0 (`7d96ea279e70769df14b94a090cc129dbc9a5f21`, SHA-256 `280d981816525472c247be7e16abbc4565f9f7257a063bd358b2c6f788eed016`) adding the Ontology Engine (`ontology index|resolve|need|ask|propose|certify|bench`), Exact Differential Replacement (`operation_type: "ontology"`) transaction bundles, fail-closed `secret-ref:<file>.env#<VAR>` certification verification, AI Marketing Hub Home `v0.7.1`/`v0.7.2` shared-root compatibility pins and managed upgrades (`home-adapter upgrade`), and the disclosure safety gate (`release disclosure`).
