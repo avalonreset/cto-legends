@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.67",
+  "version": "1.0.68",
   "modules": {
     "legends-empire": {
       "version": "0.4.2",
@@ -1546,9 +1546,9 @@
       "readiness": "doctor"
     },
     "legends-stable-audio-3": {
-      "version": "0.1.5",
+      "version": "0.1.6",
       "repo": "avalonreset/legends-stable-audio-3",
-      "commit": "8cc42360d12c4054c269fdce937e597f634c3096",
+      "commit": "e883eb018f03ba95ee54c37b0feec743ebaeb9cb",
       "purpose": "Create instrumental music, sound effects, and continuous mixes.",
       "keywords": [
         "music",
@@ -1568,7 +1568,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "b7a28c7f021bca55937a16ebc2fd0780d81419fa3305263a8e5e0f613417b6e5",
+      "sha256": "2fd70cc930c7cfea4d751e8ebda86bb1b22f20938f24a45e4f191eb1d2c1cc48",
       "discovery": {
         "signals": [
           "make music",
@@ -1631,9 +1631,9 @@
       }
     },
     "legends-hyperyap": {
-      "version": "0.1.4",
+      "version": "0.1.5",
       "repo": "avalonreset/legends-hyperyap",
-      "commit": "31b3fcbd8eb369301dced1d9a17cd869009527cc",
+      "commit": "7234028241fafcf7e6384c5d5f99a1612c5f1f71",
       "purpose": "Local voice typing, dictation, and app-focused paste.",
       "keywords": [
         "voice",
@@ -1652,7 +1652,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "685cf87786e91cbe1a24cb9f98d407c913a5d7158dc24fd7b05c28d490354cb4",
+      "sha256": "ffacd917c98e3ec25e9baf9cc46ea39b9a363fdb73bb5b7d3f11de5eeee3bd51",
       "next": "v0.1.4 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
       "discovery": {
         "signals": [
@@ -1678,10 +1678,10 @@
       }
     },
     "legends-ambient-intelligence": {
-      "version": "0.1.4",
-      "commit": "a85e373a20d3d95b5283a4e1a7b5b3684bb49e9b",
+      "version": "0.1.5",
+      "commit": "1d9f35dd932a1ecb75989e726733e28b5a48bab6",
       "repo": "avalonreset/legends-ambient-intelligence",
-      "sha256": "53f7c1c34dc9d04157b2210970472b2a450c3b160becc5bc632efcd3bf0e63d9",
+      "sha256": "0ca78da60f8f37eee59beac4cf4cb2f7b1fdca8e941b21355efbbaf67060ac5f",
       "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
       "keywords": [
         "ambient",
@@ -1772,10 +1772,10 @@
       "readiness": "doctor"
     },
     "legends-buzz": {
-      "version": "0.1.1",
-      "commit": "14b592856ebce0937539eb0031ffaecb1da3ee1f",
+      "version": "0.1.2",
+      "commit": "ac5885667ecfe269480d2dd6afb1039839a1d66a",
       "repo": "avalonreset/legends-buzz",
-      "sha256": "c0a0f3dda1545e220c6d47747c14232aec60154fc470a7ca2d849c3fcb7d6f45",
+      "sha256": "0246dc602f4e511ff97a1506af3b332e1dd205db91580cec68b33fdf090003f2",
       "purpose": "Self-hosted Block Buzz Nostr relay operations, 26-domain MCP-to-CLI agent routing, NIP-29/NIP-OA/NIP-FI membership diagnostics, connected-component reply thread reconstruction, 5-gate attachment inspection, and desktop PE/asset verification.",
       "keywords": [
         "buzz",

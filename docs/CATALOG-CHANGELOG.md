@@ -5,6 +5,13 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.68 - 2026-11-21
+
+- Update `legends-stable-audio-3` to 0.1.6 (`e883eb018f03ba95ee54c37b0feec743ebaeb9cb`, SHA-256 `2fd70cc930c7cfea4d751e8ebda86bb1b22f20938f24a45e4f191eb1d2c1cc48`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
+- Update `legends-ambient-intelligence` to 0.1.5 (`1d9f35dd932a1ecb75989e726733e28b5a48bab6`, SHA-256 `0ca78da60f8f37eee59beac4cf4cb2f7b1fdca8e941b21355efbbaf67060ac5f`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
+- Update `legends-hyperyap` to 0.1.5 (`7234028241fafcf7e6384c5d5f99a1612c5f1f71`, SHA-256 `ffacd917c98e3ec25e9baf9cc46ea39b9a363fdb73bb5b7d3f11de5eeee3bd51`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
+- Update `legends-buzz` to 0.1.2 (`ac5885667ecfe269480d2dd6afb1039839a1d66a`, SHA-256 `0246dc602f4e511ff97a1506af3b332e1dd205db91580cec68b33fdf090003f2`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
+
 ## 1.0.67 - 2026-11-21
 
 - Update `legends-youtube` to 0.1.1 (`5d18395ffcaadc5c5bc4250be1d3df6719940bb1`, SHA-256 `b284088ad5fb46d6aafe797e2278cc0d8b56fc4041aa6cc01c631ac3b6efceb2`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
