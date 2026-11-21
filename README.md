@@ -52,9 +52,9 @@ Once the pages build cleanly, the rest of the web infrastructure lines up in ord
 
 [`legends-empire`](https://github.com/avalonreset/legends-empire) is the long-term memory that the rest of the stack writes into. Search and scraping tools export portable evidence packages bound to a SHA-256 manifest, and Empire verifies every file before planning it into your Markdown vault. With ontology queries, vault stewardship, and instant vault search built in, research you paid for on Tuesday is ready to query on Friday instead of bought twice.
 
-**"Can we generate some AI music?"**
+**"Record and caption a YouTube tutorial."**
 
-[`legends-stable-audio-3`](https://github.com/avalonreset/legends-stable-audio-3) installs as a lightweight planner that checks your local GPU and model access before it downloads a single weight file. Once your instrumental score or sound effect renders, it flows straight into the studio chain: underneath a screen recording configured by [`legends-obs`](https://github.com/avalonreset/legends-obs), paired with active-word subtitles rendered by [`legends-captions`](https://github.com/avalonreset/legends-captions), and packaged by [`legends-youtube`](https://github.com/avalonreset/legends-youtube) into a verified private draft upload.
+[`legends-obs`](https://github.com/avalonreset/legends-obs) configures and verifies your recording scenes first. Once the take wraps, [`legends-captions`](https://github.com/avalonreset/legends-captions) renders active-word subtitles with alignment timing, [`legends-stable-audio-3`](https://github.com/avalonreset/legends-stable-audio-3) scores background music or sound effects after checking your local GPU and model access, and [`legends-youtube`](https://github.com/avalonreset/legends-youtube) validates the chapters and thumbnail before freezing a private draft upload.
 
 Four everyday sentences, zero module names typed, and zero CLI flags memorized. Your agent connects the tools because the tools were designed as one family from day one, so you never have to play switchboard operator.
 

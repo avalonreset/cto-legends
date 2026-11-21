@@ -217,12 +217,12 @@ def render_slot_3() -> None:
         (
             "03",
             '"Save this research in my vault"',
-            'legends-empire <tspan fill="#a1a1aa">(hash-verified evidence intake &amp; vault search)</tspan>',
+            'legends-dataforseo · legends-firecrawl <tspan fill="#ff0000">→</tspan> legends-empire',
         ),
         (
             "04",
-            '"Can we generate some AI music?"',
-            'legends-stable-audio-3 <tspan fill="#ff0000">→</tspan> legends-obs <tspan fill="#ff0000">→</tspan> legends-captions <tspan fill="#ff0000">→</tspan> legends-youtube',
+            '"Record and caption a YouTube tutorial"',
+            'legends-obs <tspan fill="#ff0000">→</tspan> legends-captions <tspan fill="#ff0000">→</tspan> legends-stable-audio-3 <tspan fill="#ff0000">→</tspan> legends-youtube',
         ),
     ]
 
