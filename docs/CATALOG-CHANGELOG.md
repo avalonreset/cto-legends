@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.62 - 2026-11-21
+
+- Update `legends-dataforseo` to 0.1.13 (`8c1b7fd7637e834e70bea71c57b6d4581cbc1816`, SHA-256 `f0dea3a6dfb54d4b3d4bb9d7b810339811a8c88bfbc66c5556bbd7351f21ef3f`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), the 40-keyword Decoy SERP defense benchmark documentation, and collapsible `cto-legends` setup and CLI/Python reference drawers.
+
 ## 1.0.61 - 2026-11-21
 
 - Update `legends-geogrid` to 0.2.10 (`42ab7bdc936506ae5837802d35e695e061e8237c`, SHA-256 `77ed8b6cc8d3ec8e9243014b55438d2fe49fd3b736bd526477ff52cdec8b71be`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` agent setup and CLI reference drawers.

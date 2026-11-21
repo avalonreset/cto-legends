@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.61",
+  "version": "1.0.62",
   "modules": {
     "legends-empire": {
       "version": "0.4.2",
@@ -813,10 +813,10 @@
       ]
     },
     "legends-dataforseo": {
-      "version": "0.1.12",
-      "commit": "869896216ae2c1a283f40671b0cc21dbdea0ef92",
+      "version": "0.1.13",
+      "commit": "8c1b7fd7637e834e70bea71c57b6d4581cbc1816",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "9ba476b9a9552d20d6c4c66a88830cb38d8bb8080053b9b17e9aec9a8ae7cc55",
+      "sha256": "f0dea3a6dfb54d4b3d4bb9d7b810339811a8c88bfbc66c5556bbd7351f21ef3f",
       "purpose": "53-route DataForSEO v3 catalog for search, Google Maps, Google Business Profile, fail-closed decoy SERP defense (resolve_poisoned_results), depth-aware resolve_goto_urls and allowlisted website_name domain mapping, Google 5x search-operator billing guard, Labs/LLM Mentions/Backlinks/Lighthouse/On-Page intelligence, and keyword research with complete saved offline evidence, integrity verification, and explicit reuse checks.",
       "keywords": [
         "seo",
