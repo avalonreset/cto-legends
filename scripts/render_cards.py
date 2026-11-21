@@ -30,7 +30,7 @@ sys.path.insert(0, str(AVALON_ROOT))
 from typeset import CAP, EM, FONT, Typesetter, width  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-REV = "r2"
+REV = "r3"
 CARDS_DIR = ROOT / "assets" / "cards" / REV
 README_PATH = ROOT / "README.md"
 
@@ -116,7 +116,7 @@ def render_slot_2() -> None:
     body += t.run(x0, y_head, ti, "&gt;_", "#ff0000", "700")
     x_title = x0 + width("&gt;_", ti) + 8
     body += t.run(x_title, y_head, hd, "The human is the controller. The agents do the operating.", "#ffffff", "700")
-    body += t.run(x1, y_head, lb, "// 1 skill · 21 curated tools", "#a1a1aa", "400", "end")
+    body += t.run(x1, y_head, lb, "// 1 skill · curated stack", "#a1a1aa", "400", "end")
     body += f'  <line x1="{x0}" y1="40" x2="{x1}" y2="40" {HAIR}/>\n'
 
     # Three equal columns separated by vertical hairlines
@@ -132,7 +132,7 @@ def render_slot_2() -> None:
         ),
         (
             "02",
-            "21 curated tools",
+            "Curated stack",
             [
                 "One opinionated best-in-class",
                 "stack where every tool already",
@@ -350,25 +350,25 @@ def render_slot_6() -> None:
             "slot-6-local-search-and-research",
             "01",
             "Local search and research",
-            "6 modules · geogrid · dataforseo · jev · firecrawl · github · grant",
+            "geogrid · dataforseo · jev · firecrawl · github · grant",
         ),
         (
             "slot-6-web-stack",
             "02",
             "Web stack",
-            "7 modules · hetzner · coolify · cloudflare · astro · stripe · gohighlevel · buzz",
+            "hetzner · coolify · cloudflare · astro · stripe · gohighlevel · buzz",
         ),
         (
             "slot-6-recording-audio-and-video",
             "03",
             "Recording, audio and video",
-            "7 modules · obs · captions · youtube · yt-dlp · stable-audio-3 · hyperyap · ambient-intelligence",
+            "obs · captions · youtube · yt-dlp · stable-audio-3 · hyperyap · ambient-intelligence",
         ),
         (
             "slot-6-memory",
             "04",
             "Memory",
-            "1 module · legends-empire · source-cited vault memory, search and stewardship",
+            "legends-empire · source-cited vault memory, search and stewardship",
         ),
     ]
     hd, lb = u("head", K_WIDE), u("label", K_WIDE)
@@ -454,18 +454,18 @@ def render_slot_shrine() -> None:
         + f'  <polygon points="{mini_star(86.5, 48.0)}" fill="#ff0000" opacity="0.75"/>\n'
     )
     tx = 116
-    sub = "Bookmark or star the router and all 21 modules from one GitHub list."
+    sub = "Bookmark or star the router and every module from a single GitHub list."
     body += t.run(tx, 27, lb, "GITHUB STAR LIST", "#ff0000", "700")
     x_meta = tx + width("GITHUB STAR LIST", lb) + 10
     body += t.run(x_meta, 27, lb, "// github.com/stars/avalonreset/lists/cto-legends", "#a1a1aa", "400")
-    body += t.run(tx, 52, hd, "The complete 22-repository collection on one page", "#ffffff", "700")
+    body += t.run(tx, 52, hd, "The complete CTO Legends collection on one page", "#ffffff", "700")
     body += t.run(tx, 74, bd, sub, "#d4d4d8", "400")
 
     btn_w = 216
     btn_x = 868 - btn_w
     assert tx + width(sub, bd) + 20 <= btn_x, "Shrine subline collides with button"
     body += f'  <rect x="{btn_x}" y="29" width="{btn_w}" height="38" rx="3" fill="#000000" {RED}/>\n'
-    body += button(t, btn_x + btn_w / 2, 52.5, "#ffffff", 'OPEN 22-REPO LIST <tspan fill="#ff0000">↗</tspan>', lb, "700")
+    body += button(t, btn_x + btn_w / 2, 52.5, "#ffffff", 'OPEN GITHUB LIST <tspan fill="#ff0000">↗</tspan>', lb, "700")
 
     (CARDS_DIR / "slot-collection-star-shrine.svg").write_text(svg(f"0 0 886 {h}", body, t), encoding="utf-8")
 
