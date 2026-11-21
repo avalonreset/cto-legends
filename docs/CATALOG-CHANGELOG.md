@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.60 - 2026-11-21
+
+- Update `legends-empire` to 0.4.2 (`cf766b8b4e5b4ecb5c121c0970ce4f39d4fa608c`, SHA-256 `67c819b456cd7d10feef260116cf7571f9b683733fddee633577b8126b0b6185`) shipping the Seven Provinces starter framework (`Work`, `Money`, `Craft`, `Home`, `People`, `Self`, `Ambition`) with `## The Map` and `## The Blueprint` in `templates/vault/wiki/`, `_BOOTSTRAP_COMMON_PATHS` expansion, and the refreshed README and `r1` outlined Legends Font SVG design cards.
+
 ## 1.0.59 - 2026-11-21
 
 - Update `legends-dataforseo` to 0.1.12 (`869896216ae2c1a283f40671b0cc21dbdea0ef92`, SHA-256 `9ba476b9a9552d20d6c4c66a88830cb38d8bb8080053b9b17e9aec9a8ae7cc55`) adding fail-closed decoy SERP defense (`resolve_poisoned_results: true`, `serp_integrity.verified` stamping, `suspect_decoy` detector, `UnverifiedSerpError`), Google 5x search-operator billing preflight guard, depth-aware `resolve_goto_urls` and closed `WEBSITE_NAME_PLATFORMS` allowlist, certifi-backed `docs` discovery, and expansion from 30 to 53 DataForSEO v3 routes.
