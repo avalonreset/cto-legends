@@ -59,7 +59,7 @@ class ManagerTests(unittest.TestCase):
             "legends-dataforseo", "legends-geogrid", "legends-github",
             "legends-stable-audio-3", "legends-obs", "legends-hyperyap",
             "legends-empire", "legends-grant", "legends-firecrawl",
-            "legends-yt-dlp", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev",
+            "legends-temporal", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev",
             "legends-hetzner", "legends-cloudflare", "legends-astro", "legends-stripe", "legends-gohighlevel",
             "legends-buzz", "legends-youtube"})
 
@@ -83,7 +83,8 @@ class ManagerTests(unittest.TestCase):
     def test_new_module_routes(self):
         for goal, expected in (("voice dictation", "legends-hyperyap"), ("cursor overlay", "legends-obs"),
                                ("music audio", "legends-stable-audio-3"), ("OBS recording", "legends-obs"),
-                               ("rip this video", "legends-yt-dlp"),
+                               ("rip this video", "legends-youtube"),
+                               ("durable timer on temporal", "legends-temporal"),
                                ("transcribe my voice memos", "legends-ambient-intelligence"),
                                ("caption this video", "legends-captions"),
                                ("Inspect my Cloudflare DNS records", "legends-cloudflare"),

@@ -132,9 +132,9 @@ See where a business or product actually stands across Google, Maps, and AI answ
 
 <a id="web-stack"></a>
 
-<p align="center"><a href="#web-stack"><img src="assets/cards/r4/slot-6-web-stack.svg" width="100%" alt="Web stack: hetzner, coolify, cloudflare, astro, stripe, gohighlevel, buzz"></a></p>
+<p align="center"><a href="#web-stack"><img src="assets/cards/r4/slot-6-web-stack.svg" width="100%" alt="Web stack: hetzner, coolify, cloudflare, astro, stripe, gohighlevel, buzz, temporal"></a></p>
 
-Move from a scraped legacy site to a live production server taking payments and syncing CRM pipelines, one reviewed plan at a time.
+Move from a scraped legacy site to a live production server taking payments, running durable background schedules, and syncing CRM pipelines, one reviewed plan at a time.
 
 | Module | Say something like | What it does |
 | --- | --- | --- |
@@ -145,19 +145,19 @@ Move from a scraped legacy site to a live production server taking payments and 
 | [`legends-stripe`](https://github.com/avalonreset/legends-stripe) | "Audit my .env file against Stripe and check for mismatched price IDs" | Stripe governance: price-ID audits, catalog lint, hosted invoicing, fee telemetry and webhook verification |
 | [`legends-gohighlevel`](https://github.com/avalonreset/legends-gohighlevel) | "Audit my GoHighLevel sub-account health, pipelines and workflows" | GoHighLevel CRM, workflows and agency governance, with preview-first changes and API readback |
 | [`legends-buzz`](https://github.com/avalonreset/legends-buzz) | "Check why my Buzz agent gets HTTP 403 when the relay is healthy" | Self-hosted Buzz relay operations, membership diagnostics and agent routing |
+| [`legends-temporal`](https://github.com/avalonreset/legends-temporal) | "Schedule a nightly 2:30am job and diagnose any failed workflows" | Temporal durable cron schedules, one-shot timers, zero-rewrite ScriptJob workers and failure history verdicts |
 
 <a id="recording-audio-and-video"></a>
 
-<p align="center"><a href="#recording-audio-and-video"><img src="assets/cards/r4/slot-6-recording-audio-and-video.svg" width="100%" alt="Recording, audio and video: obs, captions, youtube, yt-dlp, stable-audio-3, hyperyap, ambient-intelligence"></a></p>
+<p align="center"><a href="#recording-audio-and-video"><img src="assets/cards/r4/slot-6-recording-audio-and-video.svg" width="100%" alt="Recording, audio and video: obs, captions, youtube, stable-audio-3, hyperyap, ambient-intelligence"></a></p>
 
-Record your screen, score it with local AI audio, render active-word captions, and ship a verified private YouTube draft, with your own voice as the keyboard.
+Record your screen, score it with local AI audio, render active-word captions, pull verified yt-dlp video archives, and ship a verified private YouTube draft, with your own voice as the keyboard.
 
 | Module | Say something like | What it does |
 | --- | --- | --- |
 | [`legends-obs`](https://github.com/avalonreset/legends-obs) | "Prepare OBS scenes for a 4K tutorial recording" | Inspects, configures and verifies OBS Studio recording workflows (live OBS control targets Windows) |
 | [`legends-captions`](https://github.com/avalonreset/legends-captions) | "Caption this video with active-word timing" | Caption QA and rendering with contextual correction, alignment timing and proof evidence |
-| [`legends-youtube`](https://github.com/avalonreset/legends-youtube) | "Validate my chapters and thumbnail before freezing a private draft upload" | Channel operations: lossless metadata updates, quota planning, scorecards and frozen private-draft uploads |
-| [`legends-yt-dlp`](https://github.com/avalonreset/legends-yt-dlp) | "Archive this video channel with transcripts" | Repeatable source pulls, verification, transcripts, search and clip-building |
+| [`legends-youtube`](https://github.com/avalonreset/legends-youtube) | "Pull this video batch, cut word-timed clips, and freeze a private draft" | YouTube channel operations, lossless metadata updates, quota planning, private-draft uploads and verified yt-dlp archiving (`legends-yt-dlp`) |
 | [`legends-stable-audio-3`](https://github.com/avalonreset/legends-stable-audio-3) | "Can we generate some AI music?" | Instrumental music, sound effects and continuous mixes |
 | [`legends-hyperyap`](https://github.com/avalonreset/legends-hyperyap) | "Let me type with my voice in any app" | Local voice typing, dictation and app-focused paste |
 | [`legends-ambient-intelligence`](https://github.com/avalonreset/legends-ambient-intelligence) | "Transcribe my voice memos offline and distill key notes" | Ambient audio capture, deduplicated archiving, offline transcription and vault distillation |

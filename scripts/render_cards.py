@@ -356,13 +356,13 @@ def render_slot_6() -> None:
             "slot-6-web-stack",
             "02",
             "Web stack",
-            "hetzner · coolify · cloudflare · astro · stripe · gohighlevel · buzz",
+            "hetzner · coolify · cloudflare · astro · stripe · gohighlevel · buzz · temporal",
         ),
         (
             "slot-6-recording-audio-and-video",
             "03",
             "Recording, audio and video",
-            "obs · captions · youtube · yt-dlp · stable-audio-3 · hyperyap · ambient-intelligence",
+            "obs · captions · youtube · stable-audio-3 · hyperyap · ambient-intelligence",
         ),
         (
             "slot-6-memory",

@@ -5,6 +5,11 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.69 - 2026-11-21
+
+- Add `legends-temporal` 0.1.0 (`37060daf9b4375b08563024cab2db00ad1f46cc3`, SHA-256 `572e45926d601de12b747c2ee6a8ea89c78945cf1c405626bd5ac783b1ccb41d`) for local, self-hosted, and Temporal Cloud cluster operations, server-side cron and interval schedules, one-shot `start_delay` timers, replay-safe 11-field `ScriptJob` and `AgentJob` workers across split control and exec task queues, compact event-history failure diagnosis (`workflow history --diagnose`), a confirm-gated stdio MCP server (`legends-temporal mcp`), and an attachable 6-note `legends-empire` knowledge pack (`knowledge/temporal/pack.json`).
+- Update `legends-youtube` to 0.2.0 (`a1d015c1127a68f79857f735c9b5dd715a6c77e1`, SHA-256 `4aa681b13381ab1f93ced28e94a4630f7a8133849caa2db46a53f9ba70b1cded`) unifying `legends-youtube` (YouTube Data API v3, Analytics API v2, 0-quota public readback and outlier radar, Perfect Video Score idea scoring, ETag-guarded lossless snippet merges, Studio chapter/quiz linters, and SHA-256 private-draft uploads) and `legends-yt-dlp` (preview-first `items.jsonl` probing, SHA-256 `yt-dlp.conf` anonymous option allowlist, `ffprobe` stream verification, and local GPU CrispASR Parakeet word ledgers and FFmpeg clip plans) into a single package, with `legends-yt-dlp` and `legends-yt-dlp-kit` retained as catalog aliases resolving to `legends-youtube`.
+
 ## 1.0.68 - 2026-11-21
 
 - Update `legends-stable-audio-3` to 0.1.6 (`e883eb018f03ba95ee54c37b0feec743ebaeb9cb`, SHA-256 `2fd70cc930c7cfea4d751e8ebda86bb1b22f20938f24a45e4f191eb1d2c1cc48`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), evergreen README documentation, and collapsible `cto-legends` setup and CLI reference drawers.
