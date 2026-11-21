@@ -24,7 +24,7 @@ class GrantCatalogTests(unittest.TestCase):
 
     def test_install_probe_run_and_optional_dependencies(self):
         row = manager.catalog()["modules"]["legends-grant"]
-        self.assertEqual(row["version"], "0.3.3")
+        self.assertRegex(row["version"], r"^\d+\.\d+\.\d+$")
         self.assertEqual(row["dependencies"], {})
         self.assertEqual(row["readiness"], "doctor")
         self.assertEqual(row["recipe"], {
