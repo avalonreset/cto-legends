@@ -1,196 +1,148 @@
-<p align="center"><img src="assets/banner.webp" width="100%" alt="cto-legends agent skills router: one skill for 21 open-source modules, every change previewed until --apply"></p>
+<p align="center"><img src="assets/banner.webp" width="100%" alt="cto-legends agent skills router: speak to your coding agent in plain English across 21 curated open-source tools"></p>
 
-# cto-legends: agent skills that work in plain English and show the plan before anything installs
+# cto-legends: agent skills that let you speak in plain English across 21 curated tools
 
 [![PyPI](https://img.shields.io/pypi/v/cto-legends?style=flat-square&label=pypi&labelColor=000000&color=ff0000)](https://pypi.org/project/cto-legends/)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-ff0000?style=flat-square&labelColor=000000)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-ff0000?style=flat-square&labelColor=000000)](LICENSE)
-[![21 modules](https://img.shields.io/badge/modules-21-ff0000?style=flat-square&labelColor=000000)](#the-21-modules)
-[![Preview until --apply](https://img.shields.io/badge/changes-preview_until_----apply-ff0000?style=flat-square&labelColor=000000)](#why-agent-skills-should-show-the-plan-first)
+[![21 modules](https://img.shields.io/badge/modules-21-ff0000?style=flat-square&labelColor=000000)](#the-21-curated-modules)
+[![Preview until --apply](https://img.shields.io/badge/changes-preview_until_----apply-ff0000?style=flat-square&labelColor=000000)](#why-your-agent-shows-the-plan-before-anything-changes)
 
-Most agent skills quietly turn you into the help. You find the tool, you install it, you remember it exists.
+For decades, computers forced human beings to think like machines. You hunted for packages, memorized flags, and tippity-typed system commands into a terminal. Coding agents were supposed to end that, yet most agent skills setups quietly turn you back into the computer's assistant.
 
 **The human is the controller. The agents do the operating. Stop being your computer's assistant.**
 
-Here is how it feels instead. Your coding agent registers one small skill, once. After that you say the job the way you would say it to a colleague (*study my business on Google Maps*, *can we generate some AI music?*) and the agent finds the right one of 21 open-source modules, reads that module's instructions on demand, and brings you a plan to approve.
+Your coding agent registers one small skill, once. From that moment on, you state what you want in plain English the way you would brief a sharp colleague across the desk, and your agent reaches into a curated stack of 21 open-source modules, loads the right playbook on demand, and brings you a plan to approve.
 
-Type `cto-legends install legends-geogrid` and nothing gets installed. You get the plan. Add `--apply` after you have read it.
-
-**`>_ agent handoff`** (paste this to your coding agent)
+<p align="center"><img src="assets/cards/r2/slot-1-agent-handoff.svg" width="100%" alt="Agent handoff: paste this into Claude Code, Codex, or any coding agent and it does the setup"></p>
 
 ```text
 Install cto-legends for me. Run: python -m pip install cto-legends
 Then run cto-legends agent-setup for the host you are running in, show me the
 preview, and add --apply only after I say go. From then on, when I describe a
-job, find the module with cto-legends route and show me every plan before --apply.
+job in plain English, find the right module and show me the plan before --apply.
 ```
 
-**`>_ terminal quick start`** (or type it yourself)
+Prefer to run the first step in your own terminal? Three lines do the entire setup:
 
 ```sh
 python -m pip install cto-legends
-cto-legends agent-setup claude                        # look: prints the plan
-cto-legends agent-setup claude --apply                # do: registers the one router skill
-cto-legends route "study my business on Google Maps"  # ranked candidates, with reasons
-cto-legends install legends-geogrid                   # look: the plan, nothing installed
-cto-legends install legends-geogrid --apply           # do: after you have read it
+cto-legends agent-setup claude          # look: prints the plan, changes nothing
+cto-legends agent-setup claude --apply  # do: registers the one router skill
 ```
 
-If this is how you want to work with your agent, star the repo. A star is how the next builder finds the door.
+If this is how you want to work with your computer, star the repo, or open the [22-repo GitHub list](https://github.com/stars/avalonreset/lists/cto-legends) to star the whole family from one page. A star is how the next builder finds the door.
+
+<p align="center"><img src="assets/cards/r2/slot-2-three-pillars.svg" width="100%" alt="Three pillars of cto-legends agent skills: 01 Talk like a human in plain English, 02 21 curated CTO tools, and 03 Look, then do before --apply across 9 host presets"></p>
+
+[Plain English](#agent-skills-in-plain-english) · [Curated CTO stack](#why-a-curated-cto-stack-beats-a-pile-of-claude-skills-and-codex-skills) · [Plan first](#why-your-agent-shows-the-plan-before-anything-changes) · [Host setup](#host-setup-claude-skills-codex-skills-and-7-more-presets) · [The 21 modules](#the-21-curated-modules) · [Reference](#reference)
 
 ---
 
-[Plain English](#agent-skills-in-plain-english) · [One skill, not a shelf](#one-router-instead-of-a-pile-of-claude-skills-and-codex-skills) · [Plan first](#why-agent-skills-should-show-the-plan-first) · [Host setup](#host-setup-claude-skills-codex-skills-and-7-more-presets) · [The 21 modules](#the-21-modules) · [Reference](#reference)
-
 ## Agent skills in plain English
 
-Nobody who uses this describes it to a friend as a router or a manager. They say: you tell your agent what you want in normal words, it finds the right tool, shows you the install, and reads the instructions only then.
+Nobody who uses this describes it to a friend as a router or a CLI manager. They say: you tell your coding agent what you want in normal words, and it already knows which tools to combine to get the job done.
 
-Eight months of building with coding agents every day taught this project one thing fast: momentum dies the minute you stop thinking about the work to hunt for a flag, an environment variable or a package name. The good sessions are the ones where you just say what you want, the way you would brief a sharp partner across the desk.
+Months of building with coding agents every day taught this project one plain lesson: momentum dies the minute you stop thinking about your business or your build to hunt for a CLI flag, an environment variable, or a package name. The best sessions feel like a conversation across a desk. You state the outcome, and the stack assembles itself behind the scenes.
 
-So start where you would actually start, with a sentence. Here are four the project is built around.
+<p align="center"><img src="assets/cards/r2/slot-3-plain-english-chains.svg" width="100%" alt="Say the job in plain words: four spoken sentences routing directly into curated cto-legends module chains"></p>
 
-> **Study my business on Google Maps.**
+Start where a human actually starts, with a sentence. Here are four the stack was built to answer.
 
-Your agent asks the router and gets back ranked candidates with reasons, not a decision made behind your back, and [`legends-geogrid`](https://github.com/avalonreset/legends-geogrid) comes out on top. Its install plan names [`legends-dataforseo`](https://github.com/avalonreset/legends-dataforseo) as a dependency, so the module that carries the Maps queries arrives with it. Add [`legends-jev`](https://github.com/avalonreset/legends-jev) and GeoGrid can check whether the keywords in a competitor's listing title actually appear on the sign over their door.
+**"Study my business on Google Maps."**
 
-> **Convert my WordPress site to Astro v7.**
+Your agent asks the router and gets back ranked candidates with clear reasons, not a blind guess. [`legends-geogrid`](https://github.com/avalonreset/legends-geogrid) leads the plan and pairs with [`legends-dataforseo`](https://github.com/avalonreset/legends-dataforseo) alongside it, combining city-wide Maps ranking grids with live Search demand, Business Profile audits, and visibility checks across Google AI Mode and LLM Mentions. Add [`legends-jev`](https://github.com/avalonreset/legends-jev) and your agent can verify whether the keywords stuffed into a competitor's Maps title actually appear on the physical sign above their storefront door.
 
-Migrations land on [`legends-astro`](https://github.com/avalonreset/legends-astro), and it does not work alone. [`legends-firecrawl`](https://github.com/avalonreset/legends-firecrawl) scrapes the old site, and Astro's source audit turns those scrapes into a migration contract: routes, titles, meta descriptions, canonicals, structured data and the content itself.
+**"Convert my WordPress site to Astro v7."**
 
-After that the rest of the web stack lines up without you drawing the diagram. [`legends-stripe`](https://github.com/avalonreset/legends-stripe) supplies Astro server blueprints and webhook verification, [`legends-hetzner`](https://github.com/avalonreset/legends-hetzner) sizes and plans the server, [`legends-coolify`](https://github.com/avalonreset/legends-coolify) inspects the deployment, and [`legends-cloudflare`](https://github.com/avalonreset/legends-cloudflare) cuts the DNS over with a reviewed change plan.
+Migrations land on [`legends-astro`](https://github.com/avalonreset/legends-astro), and it never works alone. [`legends-firecrawl`](https://github.com/avalonreset/legends-firecrawl) scrapes the legacy pages, runs interactive browser sessions when a site hides behind dynamic scripts, parses local PDFs, Word documents, and spreadsheets into clean Markdown, and queries structured data through Alexandria. Astro's source audit turns that harvest into a strict migration contract covering every URL, title, canonical tag, and structured data block.
 
-> **Save this research in my vault.**
+Once the pages build cleanly, the rest of the web infrastructure lines up in order. [`legends-stripe`](https://github.com/avalonreset/legends-stripe) audits price IDs and verifies payment webhooks, [`legends-hetzner`](https://github.com/avalonreset/legends-hetzner) sizes the cloud server, [`legends-coolify`](https://github.com/avalonreset/legends-coolify) inspects the deployment pipeline, and [`legends-cloudflare`](https://github.com/avalonreset/legends-cloudflare) cuts the DNS over with a reviewed change plan.
 
-[`legends-empire`](https://github.com/avalonreset/legends-empire) is the memory, and the other modules were built to write to it. The search and scraping modules export portable evidence packages bound to a hashed manifest, and each one is verified before it is planned into your vault, so research you paid for once can be found again instead of bought again. Eight modules ship their own knowledge packs, and attaching one previews every write and leaves your own notes alone.
+**"Save this research in my vault."**
 
-> **Can we generate some AI music?**
+[`legends-empire`](https://github.com/avalonreset/legends-empire) is the long-term memory that the rest of the stack writes into. Search and scraping tools export portable evidence packages bound to a SHA-256 manifest, and Empire verifies every file before planning it into your Markdown vault. With ontology queries, vault stewardship, and instant vault search built in, research you paid for on Tuesday is ready to query on Friday instead of bought twice.
 
-Probably, and [`legends-stable-audio-3`](https://github.com/avalonreset/legends-stable-audio-3) finds out before it promises. Its install is a lightweight planner that downloads no model weights, and its recipe has your agent check model access and hardware first. When the track exists it has somewhere to go: under a recording planned in [`legends-obs`](https://github.com/avalonreset/legends-obs), beside active-word captions from [`legends-captions`](https://github.com/avalonreset/legends-captions), into a package that [`legends-youtube`](https://github.com/avalonreset/legends-youtube) freezes and uploads as a private draft.
+**"Can we generate some AI music?"**
 
-Four sentences, and you never typed a module name. Underneath each one the agent runs the same five verbs (`route`, `install`, `install --apply`, `handoff`, `run`), and you can run them by hand any time you want to see the machinery.
+[`legends-stable-audio-3`](https://github.com/avalonreset/legends-stable-audio-3) installs as a lightweight planner that checks your local GPU and model access before it downloads a single weight file. Once your instrumental score or sound effect renders, it flows straight into the studio chain: underneath a screen recording configured by [`legends-obs`](https://github.com/avalonreset/legends-obs), paired with active-word subtitles rendered by [`legends-captions`](https://github.com/avalonreset/legends-captions), and packaged by [`legends-youtube`](https://github.com/avalonreset/legends-youtube) into a verified private draft upload.
 
-But the machinery is not the point. The modules know about each other so that you do not have to.
+Four everyday sentences, zero module names typed, and zero CLI flags memorized. Your agent connects the tools because the tools were designed as one family from day one, so you never have to play switchboard operator.
 
-Pleasant is the easy part. The next two sections are the reasons it stays that way.
+## Why a curated CTO stack beats a pile of Claude skills and Codex skills
 
-## One router instead of a pile of Claude skills and Codex skills
+In a sea of infinite options, a directory of five hundred unvetted plugins is not help. It is more homework.
 
-Folders were never the goal. You want what the 21 modules do: the Maps study, the site migration, the research you can find again.
+When a founder or operator hires a real CTO, they never ask for a bookmark list of every package on GitHub. They ask for an opinionated decision: boil the internet down to the one stack where every piece is vetted, maintained, and built to pass data cleanly to the next. That is why this project is called `cto-legends`. It curates 21 specific tools across local search, web hosting, site migration, payments, CRM, studio production, voice dictation, and vault memory.
 
-Collecting is the habit this whole ecosystem grew up in: one skill per tool, dropped into `~/.claude/skills` and again into `~/.codex/skills`, forever. Each folder was added for a single job, and it is still sitting there on the days you do something else. Your Claude skills and your Codex skills turn into two shelves that drift apart, and none of the folders know the others exist.
+Compare that with how most people manage Claude skills and Codex skills today. You find a repo, drop a folder into `~/.claude/skills`, copy it into `~/.codex/skills`, and repeat that twenty times until your agent has two diverging shelves of stale instructions. Worse, if you wire up fifteen separate `claude code mcp` servers, every single session pays a permanent context-window tax before you even say hello.
 
-Almost every agent skills setup asks you to register one skill per tool. This one asks for one skill in total.
+<p align="center"><img src="assets/cards/r2/slot-4-shelf-vs-router.svg" width="100%" alt="A shelf of individual Claude skills and Codex skills compared against one cto-legends router skill loaded on demand"></p>
 
-A single router skill goes in the folder, and the 21 modules stay off the shelf. When a job calls for one, the agent runs `cto-legends handoff` and reads that module's recipe then, and only that one. The router is a plain Markdown file with a CLI behind it, which is also why there is no Claude Code MCP server sitting resident in every session: nothing has to stay running for a file your agent reads on demand.
+`cto-legends` asks your agent to register one lightweight router skill in total. All 21 modules stay off the shelf until a sentence you speak calls for one. When it does, your agent runs `cto-legends handoff` and reads that single module's playbook on demand. Because the router is a plain Markdown skill backed by a local CLI, no background daemon or resident `claude code mcp` server ever sits in memory eating tokens between turns.
 
-<p align="center"><img src="assets/cards/r1/slot-3-shelf-vs-router.svg" width="100%" alt="A shelf of skills against one router: what is registered, when a recipe is read, how a release is pinned, and how it is rolled back"></p>
+## Why your agent shows the plan before anything changes
 
-## Why agent skills should show the plan first
+When you speak in plain English and let your coding agent drive, you only need one guarantee: the agent proposes, and you approve.
 
-Every quick start you have ever pasted rests on one habit: an install command installs. Paste the line, trust the line, move on.
+Every quick start on the internet was written for an era when a human read the command before pressing Enter. Now your coding agent is the one typing. It types at machine speed, with total confidence, and without pausing to wonder what an install script is about to do to your global Python environment.
 
-That habit was fine when a person read the line before pressing Enter. But you are not the one typing anymore. Your coding agent is.
-
-It types fast, it types with total confidence, and it does not stop to wonder what a command is about to write to your disk.
-
-Which is why this hub turns the habit around. The first line of its CLI source is the whole contract:
+That is why `cto-legends` flips the default. The first line of its CLI source is the entire contract:
 
 ```python
 """JSON-first CLI; mutations preview unless --apply is explicit."""
 ```
 
-<p align="center"><img src="assets/cards/r1/slot-2-look-then-do.svg" width="100%" alt="Look, then do: no flag prints the plan; --apply makes the change"></p>
+Eleven commands can change something on your machine (`install`, `update`, `rollback`, `sync`, `agent-setup`, `install-skill`, `isolate-skills`, `restore-skills`, `startup-setup`, `startup-restore`, and `register-guide`), and every one follows the same rule. Run any of them without `--apply` and nothing changes on disk. On a fresh machine, a preview does not even create the `~/.cto-legends` directory. It prints the exact release pin, commit hash, dependencies, and scope so your agent can show you the plan in plain sight.
 
-Below is what your agent gets back when it types the install command and stops there. It is real output from a fresh machine, not a mockup:
+Once you say go and your agent adds `--apply`, the hub does the careful version of the work. It verifies the download against a pinned SHA-256 digest, unpacks the tool into its own isolated environment so dependencies never collide with your project, and keeps your previous working environment intact on disk for instant one-command `rollback`.
 
-```json
-{
-  "preview": true,
-  "changes": [
-    {
-      "id": "legends-geogrid",
-      "version": "0.2.7",
-      "action": "install",
-      "commit": "2732e0a6bf1f66f9030732ffbeab4d4ee0ebd0ce",
-      "dependencies": {
-        "legends-dataforseo": "0.1.11"
-      },
-      "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, OpenFreeMap .osm-legends dark basemap rendering, and multi-query 21-page Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box."
-    }
-  ]
-}
-```
-
-Read it the way you would read anything you are about to sign. One module, version 0.2.7, pinned to an exact commit, bringing `legends-dataforseo` 0.1.11 along with it. Nothing was downloaded to produce that, and on a fresh machine the preview does not even create the hub's own home folder.
-
-Eleven commands can change something on your machine, and all eleven behave this way: `install`, `update`, `rollback`, `sync`, `agent-setup`, `install-skill`, `isolate-skills`, `restore-skills`, `startup-setup`, `startup-restore` and `register-guide`. No flag prints the plan. `--apply` makes the change.
-
-And when you do say go, `--apply` does the careful version of the job. It downloads the pinned release, checks it against the SHA-256 digest and commit in the catalog, builds the module its own isolated environment, and keeps the previous environment so `cto-legends rollback` has somewhere to go back to.
-
-This is why the preview is mandatory and not merely polite. When the agent operates and you control, the plan is the moment of control. Take it away and you are back to being the assistant, cleaning up after a machine that was only trying to help.
-
-One job, start to finish, looks like this:
-
-<p align="center"><img src="assets/cards/r1/slot-4-seven-steps.svg" width="100%" alt="One job, start to finish in seven steps: route, look, do, handoff, doctor, readiness, run"></p>
+Underneath every plain-English request, your agent runs the same clean sequence:
 
 ```sh
 cto-legends route "study my business on Google Maps"  # 1 route: ranked candidates, with reasons
-cto-legends install legends-geogrid                   # 2 look: the plan, nothing changes
-cto-legends install legends-geogrid --apply           # 3 do: pinned release, its own environment
-cto-legends handoff legends-geogrid                   # 4 handoff: the agent reads this one recipe now
-cto-legends doctor                                    # 5 doctor: offline check, no provider calls
-cto-legends report-readiness                          # 6 readiness: reports and map browser, no paid calls
-cto-legends run legends-geogrid -- --help             # 7 run: everything after -- goes to the module
+cto-legends install legends-geogrid                   # 2 look: prints the plan, changes nothing
+cto-legends install legends-geogrid --apply           # 3 do: SHA-256 verified, isolated environment
+cto-legends handoff legends-geogrid                   # 4 handoff: loads this one recipe on demand
+cto-legends run legends-geogrid -- --help             # 5 run: executes inside its own environment
+cto-legends rollback legends-geogrid --apply          # 6 rollback: previous env stays ready on disk
 ```
 
-Routing never triggers a hidden install, and installing never burns a paid API credit. Each step hands a clean JSON receipt to the next, so you stay in control whether you type the commands yourself or let your agent drive.
-
-Learn the pair once, look then do, and you know the whole tool. Staying current has the same shape:
-
-```sh
-cto-legends check-updates                     # compare installed, catalog and upstream; installs nothing
-cto-legends sync                              # look: a catalog refresh
-cto-legends sync --apply                      # do: adopt it
-cto-legends update                            # look: which installed modules would move
-cto-legends update --apply                    # do: move them to the catalog's versions
-cto-legends rollback legends-geogrid          # look: the kept release it would switch to
-cto-legends rollback legends-geogrid --apply  # a release let you down: go back to the one you kept
-```
+Routing never triggers a hidden download, and installing never burns a paid API credit. You get the ease of speaking to a colleague, backed by the discipline of a systems engineer.
 
 ---
 
 ## Host setup: Claude skills, Codex skills and 7 more presets
 
-Pick your host. Every preset previews first, writes the one router into that host's standard skills folder, and never overwrites a skill you have edited. Whether you keep Claude skills, Codex skills or both, they end up reading the same file.
+Pick your coding agent host. Every preset previews its file paths first, writes the single router skill into that host's standard directory, and never overwrites a file you have customized by hand. Whether you rely on Claude skills, Codex skills, or switch between nine different harnesses, every agent reads the same router contract.
 
 <p align="center">
-  <a href="#claude-preset"><img src="assets/cards/r1/slot-5-claude.svg" width="33.33%" align="top" alt="Claude: the claude preset writes ~/.claude/skills/cto-legends" /></a><!--
-  --><a href="#codex-preset"><img src="assets/cards/r1/slot-5-codex.svg" width="33.33%" align="top" alt="Codex: the codex preset writes ~/.codex/skills and ~/.agents/skills" /></a><!--
-  --><a href="#all-9-presets"><img src="assets/cards/r1/slot-5-every-preset.svg" width="33.33%" align="top" alt="Every preset: skill paths for all nine host presets" /></a>
+  <a href="#claude-preset"><img src="assets/cards/r2/slot-5-claude.svg" width="33.33%" align="top" alt="Claude preset: writes the router skill to ~/.claude/skills/cto-legends" /></a><!--
+  --><a href="#codex-preset"><img src="assets/cards/r2/slot-5-codex.svg" width="33.33%" align="top" alt="Codex preset: writes the router skill to ~/.codex/skills and ~/.agents/skills" /></a><!--
+  --><a href="#all-9-presets"><img src="assets/cards/r2/slot-5-every-preset.svg" width="33.33%" align="top" alt="Every preset: skill paths for all nine supported coding agent hosts" /></a>
 </p>
 
 ### Claude preset
 
 ```sh
-cto-legends agent-setup claude            # look
+cto-legends agent-setup claude            # look: previews the target skill path
 cto-legends agent-setup claude --apply    # do: writes ~/.claude/skills/cto-legends/SKILL.md
-cto-legends startup-setup claude          # look: optional capability index for ~/.claude/CLAUDE.md
-cto-legends startup-setup claude --apply  # do: one fenced block, with a backup manifest
+cto-legends startup-setup claude          # look: optional capability pointer for ~/.claude/CLAUDE.md
+cto-legends startup-setup claude --apply  # do: writes one marked block with a backup manifest
 ```
 
-Reload your skills and ask it something real: *Can we generate some AI music?* There is no server to start and no plugin host to configure. The optional `startup-setup` pair adds a small fenced capability index to your instruction file, and `startup-restore` takes it back out from the manifest.
+Reload your skills and ask a real question: *Can we generate some AI music?* There is no background server to launch and no JSON schema wall to debug. The optional `startup-setup` command places a compact marked pointer to your local capability index into your host's root instruction file, and `startup-restore` removes it cleanly from the backup manifest whenever you like.
 
 ### Codex preset
 
 ```sh
-cto-legends agent-setup codex             # look
-cto-legends agent-setup codex --apply     # do: writes ~/.codex/skills and the shared ~/.agents/skills root
-cto-legends startup-setup codex           # look: optional capability index for ~/.codex/AGENTS.md
-cto-legends startup-setup codex --apply   # do: one fenced block, with a backup manifest
+cto-legends agent-setup codex             # look: previews the target skill paths
+cto-legends agent-setup codex --apply     # do: writes ~/.codex/skills and ~/.agents/skills
+cto-legends startup-setup codex           # look: optional capability pointer for ~/.codex/AGENTS.md
+cto-legends startup-setup codex --apply   # do: writes one marked block with a backup manifest
 ```
 
-Same router, same sentence, same plan before anything changes. Set `CODEX_HOME` and both pairs follow it.
+Same router, same conversational workflow, same preview before anything touches disk. If you set `CODEX_HOME`, both commands follow it automatically.
 
 ### All 9 presets
 
@@ -206,83 +158,83 @@ Same router, same sentence, same plan before anything changes. Set `CODEX_HOME` 
 | `glm` | `~/.zcode/skills`, `~/.config/opencode/skills`, `~/.agents/skills` | pass `--instruction-file <path>` |
 | `opencode` | `~/.config/opencode/skills`, `~/.agents/skills` | `~/.config/opencode/AGENTS.md` |
 
-Add `--apply` to any preset once you have read its preview. For a skills folder somewhere else, `cto-legends install-skill --directory <folder> --apply` takes any path. An agent with no skill loading at all can read [the same Markdown file](cto_legends/SKILL.md) and use the CLI directly.
+Add `--apply` to any preset after reviewing its preview. For a custom skills directory anywhere on disk, run `cto-legends install-skill --directory <folder> --apply`. Any coding agent without native skill loading can read [cto_legends/SKILL.md](cto_legends/SKILL.md) and call the CLI directly.
 
-Private playbooks ride the same router. `cto-legends register-guide <name> <path.md> --apply` registers one of your own local Markdown guides so `handoff` can resolve it, and it never executes anything.
+You can also route your own internal team playbooks through the same hub. Running `cto-legends register-guide <name> <path.md> --apply` registers a local Markdown guide so `handoff` resolves it alongside the 21 public modules.
 
-## The 21 modules
+## The 21 curated modules
 
-All 21 modules are their own open-source repos with their own releases, and you never have to memorize this list. It is here so you can see how far one sentence reaches. The full catalog lives at [cto-legends.com/modules](https://cto-legends.com/modules).
+Every module is an independent open-source repository with its own test suite and release pins, and you never need to memorize their names. They are listed below so you can see how far a single plain-English request reaches. Browse the interactive specs at [cto-legends.com/modules](https://cto-legends.com/modules), or open the [22-repo GitHub list](https://github.com/stars/avalonreset/lists/cto-legends) to explore or star the entire family from one page.
 
-Twenty of them install as managed CLIs in their own environments. The one native desktop app, `legends-hyperyap`, goes through `cto-legends guide legends-hyperyap` instead, so nothing runs an OS installer uninvited.
+Twenty modules install as managed local CLIs inside their own isolated release folders (19 Python virtual environments plus the prebuilt `legends-obs` Node CLI). The one native desktop application, `legends-hyperyap`, routes through `cto-legends guide legends-hyperyap` so the router never triggers an operating system installer behind your back.
 
 <a id="local-search-and-research"></a>
 
-<p align="center"><a href="#local-search-and-research"><img src="assets/cards/r1/slot-6-local-search-and-research.svg" width="100%" alt="Local search and research: 6 modules (geogrid, dataforseo, jev, firecrawl, github, grant)"></a></p>
+<p align="center"><a href="#local-search-and-research"><img src="assets/cards/r2/slot-6-local-search-and-research.svg" width="100%" alt="Local search and research: 6 modules (geogrid, dataforseo, jev, firecrawl, github, grant)"></a></p>
 
-Find out where a business really stands, then keep the evidence so the same answer never has to be bought twice.
+See where a business or product actually stands across Google, Maps, and AI answer engines, and keep the evidence so you never pay for the same lookup twice.
 
 | Module | Say something like | What it does |
 | --- | --- | --- |
-| [`legends-geogrid`](https://github.com/avalonreset/legends-geogrid) | "Where does my pizza shop appear on Google Maps?" | Google Maps ranking grids, competitive studies and a 21-page strategy report in PDF and HTML |
-| [`legends-dataforseo`](https://github.com/avalonreset/legends-dataforseo) | "Research keyword demand" | Search, Maps, Business Profile and keyword research, with saved evidence you can retrieve offline |
-| [`legends-jev`](https://github.com/avalonreset/legends-jev) | "Extract visible text and bounding boxes from a screenshot or photo" | Optical recognition, storefront signage verification and advice on the next computer-use action |
-| [`legends-firecrawl`](https://github.com/avalonreset/legends-firecrawl) | "Scrape this page to markdown" | Firecrawl scraping and web search, with saved evidence and explicit reuse checks |
-| [`legends-github`](https://github.com/avalonreset/legends-github) | "Improve discovery of my GitHub project" | Researches search demand, then improves repository copy, metadata, presentation and releases |
+| [`legends-geogrid`](https://github.com/avalonreset/legends-geogrid) | "Where does my pizza shop rank on Google Maps across the city?" | Google Maps ranking grids, competitive studies and a 21-page strategy report in PDF and HTML |
+| [`legends-dataforseo`](https://github.com/avalonreset/legends-dataforseo) | "Check our Google AI Mode visibility and keyword demand" | Google AI Mode, LLM Mentions, Search, Maps, Business Profile and keyword research, with saved offline evidence |
+| [`legends-jev`](https://github.com/avalonreset/legends-jev) | "Read the text on this storefront photo and verify the sign" | Optical recognition, storefront signage verification and advice on the next computer-use action |
+| [`legends-firecrawl`](https://github.com/avalonreset/legends-firecrawl) | "Turn this website and its PDF brochures into clean Markdown" | Web scraping, local PDF and document-to-Markdown parsing, interactive browser sessions, paper search and Alexandria data queries |
+| [`legends-github`](https://github.com/avalonreset/legends-github) | "Improve how developers discover my GitHub repository" | Researches search demand, then improves repository copy, metadata, presentation and releases |
 | [`legends-grant`](https://github.com/avalonreset/legends-grant) | "Find US grants for a small business or nonprofit" | Discovers US grants, reviews eligibility and drafts evidence-linked proposals |
 
 <a id="web-stack"></a>
 
-<p align="center"><a href="#web-stack"><img src="assets/cards/r1/slot-6-web-stack.svg" width="100%" alt="Web stack: 7 modules (hetzner, coolify, cloudflare, astro, stripe, gohighlevel, buzz)"></a></p>
+<p align="center"><a href="#web-stack"><img src="assets/cards/r2/slot-6-web-stack.svg" width="100%" alt="Web stack: 7 modules (hetzner, coolify, cloudflare, astro, stripe, gohighlevel, buzz)"></a></p>
 
-From a scraped legacy site to a deployed build that takes payments, one reviewed plan at a time.
+Move from a scraped legacy site to a live production server taking payments and syncing CRM pipelines, one reviewed plan at a time.
 
 | Module | Say something like | What it does |
 | --- | --- | --- |
 | [`legends-hetzner`](https://github.com/avalonreset/legends-hetzner) | "Check my Hetzner project and plan a new server" | Inspects Hetzner Cloud projects, scans Cost-Optimized stock and prepares reviewed server plans |
-| [`legends-coolify`](https://github.com/avalonreset/legends-coolify) | "Inspect my Coolify applications" | Read-only Coolify operations and source-cited runbooks |
-| [`legends-cloudflare`](https://github.com/avalonreset/legends-cloudflare) | "Preview a DNS change before applying it" | Cloudflare DNS automation with reviewed change plans and readback checks |
+| [`legends-coolify`](https://github.com/avalonreset/legends-coolify) | "Inspect my Coolify applications and deployment logs" | Read-only Coolify operations and source-cited runbooks |
+| [`legends-cloudflare`](https://github.com/avalonreset/legends-cloudflare) | "Preview a DNS cutover before applying it" | Cloudflare DNS automation with reviewed change plans and readback checks |
 | [`legends-astro`](https://github.com/avalonreset/legends-astro) | "Convert my WordPress export to an Astro v7 site and verify parity" | Astro v7 migrations, source contract extraction and build parity checks |
 | [`legends-stripe`](https://github.com/avalonreset/legends-stripe) | "Audit my .env file against Stripe and check for mismatched price IDs" | Stripe governance: price-ID audits, catalog lint, hosted invoicing, fee telemetry and webhook verification |
-| [`legends-gohighlevel`](https://github.com/avalonreset/legends-gohighlevel) | "Audit my GoHighLevel sub-account health, pipelines and published workflows" | GoHighLevel CRM, workflows and agency governance, with preview-first changes and API readback |
+| [`legends-gohighlevel`](https://github.com/avalonreset/legends-gohighlevel) | "Audit my GoHighLevel sub-account health, pipelines and workflows" | GoHighLevel CRM, workflows and agency governance, with preview-first changes and API readback |
 | [`legends-buzz`](https://github.com/avalonreset/legends-buzz) | "Check why my Buzz agent gets HTTP 403 when the relay is healthy" | Self-hosted Buzz relay operations, membership diagnostics and agent routing |
 
 <a id="recording-audio-and-video"></a>
 
-<p align="center"><a href="#recording-audio-and-video"><img src="assets/cards/r1/slot-6-recording-audio-and-video.svg" width="100%" alt="Recording, audio and video: 7 modules (obs, captions, youtube, yt-dlp, stable-audio-3, hyperyap, ambient-intelligence)"></a></p>
+<p align="center"><a href="#recording-audio-and-video"><img src="assets/cards/r2/slot-6-recording-audio-and-video.svg" width="100%" alt="Recording, audio and video: 7 modules (obs, captions, youtube, yt-dlp, stable-audio-3, hyperyap, ambient-intelligence)"></a></p>
 
-Record it, caption it, score it and ship it as a private draft, with your own voice as the keyboard.
+Record your screen, score it with local AI audio, render active-word captions, and ship a verified private YouTube draft, with your own voice as the keyboard.
 
 | Module | Say something like | What it does |
 | --- | --- | --- |
-| [`legends-obs`](https://github.com/avalonreset/legends-obs) | "Prepare OBS scenes for a tutorial" | Inspects, configures and verifies OBS Studio recording workflows (live OBS control targets Windows) |
+| [`legends-obs`](https://github.com/avalonreset/legends-obs) | "Prepare OBS scenes for a 4K tutorial recording" | Inspects, configures and verifies OBS Studio recording workflows (live OBS control targets Windows) |
 | [`legends-captions`](https://github.com/avalonreset/legends-captions) | "Caption this video with active-word timing" | Caption QA and rendering with contextual correction, alignment timing and proof evidence |
 | [`legends-youtube`](https://github.com/avalonreset/legends-youtube) | "Validate my chapters and thumbnail before freezing a private draft upload" | Channel operations: lossless metadata updates, quota planning, scorecards and frozen private-draft uploads |
-| [`legends-yt-dlp`](https://github.com/avalonreset/legends-yt-dlp) | "Archive this channel with pacing" | Repeatable source pulls, verification, transcripts, search and clip-building |
+| [`legends-yt-dlp`](https://github.com/avalonreset/legends-yt-dlp) | "Archive this video channel with transcripts" | Repeatable source pulls, verification, transcripts, search and clip-building |
 | [`legends-stable-audio-3`](https://github.com/avalonreset/legends-stable-audio-3) | "Can we generate some AI music?" | Instrumental music, sound effects and continuous mixes |
-| [`legends-hyperyap`](https://github.com/avalonreset/legends-hyperyap) | "Type with my voice" | Local voice typing, dictation and app-focused paste |
-| [`legends-ambient-intelligence`](https://github.com/avalonreset/legends-ambient-intelligence) | "Transcribe my voice memos offline" | Ambient audio capture, deduplicated archiving, offline transcription and vault distillation |
+| [`legends-hyperyap`](https://github.com/avalonreset/legends-hyperyap) | "Let me type with my voice in any app" | Local voice typing, dictation and app-focused paste |
+| [`legends-ambient-intelligence`](https://github.com/avalonreset/legends-ambient-intelligence) | "Transcribe my voice memos offline and distill key notes" | Ambient audio capture, deduplicated archiving, offline transcription and vault distillation |
 
 <a id="memory"></a>
 
-<p align="center"><a href="#memory"><img src="assets/cards/r1/slot-6-memory.svg" width="100%" alt="Memory: 1 module (legends-empire)"></a></p>
+<p align="center"><a href="#memory"><img src="assets/cards/r2/slot-6-memory.svg" width="100%" alt="Memory: 1 module (legends-empire)"></a></p>
 
-Memory is the place everything else writes to, so the next session starts where this one ended.
+Memory is the vault that every other module writes into, so tomorrow's session begins with everything today's session proved.
 
 | Module | Say something like | What it does |
 | --- | --- | --- |
-| [`legends-empire`](https://github.com/avalonreset/legends-empire) | "Save this research in my vault" | A Markdown knowledge foundation: vault memory, research evidence intake and vault stewardship |
+| [`legends-empire`](https://github.com/avalonreset/legends-empire) | "Save this research in my vault and index it" | Markdown vault memory, instant vault search, hash-verified research intake and ontology stewardship |
 
 ## Reference
 
-Everything most people need is in the essay above. These two drawers hold the rest.
+Everything you need to use `cto-legends` with your coding agent is in the essay above. Open these two drawers whenever you want the full command table or filesystem layout.
 
 <details>
 <summary><strong>The full CLI: all 24 commands</strong></summary>
 
 <br>
 
-JSON comes back from every command. A "yes" in the last column means the command prints its plan and changes nothing until you add `--apply`.
+Every command returns structured JSON. A "yes" in the final column means the command prints its preview plan and changes nothing on disk until you add `--apply`.
 
 | Group | Command | What it does | Look, then do |
 | --- | --- | --- | --- |
@@ -311,7 +263,19 @@ JSON comes back from every command. A "yes" in the last column means the command
 | Host and shelf | `startup-restore <manifest>` | Restores a startup change from its checked backup | yes |
 | Host and shelf | `register-guide <name> <path>` | Registers one of your own local Markdown guides so `handoff` can resolve it | yes |
 
-Global options: `--home <path>` moves the managed home, `--version` prints the version. The same CLI also answers to `ctolegends`, `python -m cto_legends` and `python -m ctolegends`.
+Staying current follows the exact same look-then-do rhythm:
+
+```sh
+cto-legends check-updates                     # compare installed, catalog and upstream; installs nothing
+cto-legends sync                              # look: preview a catalog refresh
+cto-legends sync --apply                      # do: adopt the refreshed catalog
+cto-legends update                            # look: see which installed modules would move
+cto-legends update --apply                    # do: upgrade them in isolated environments
+cto-legends rollback legends-geogrid          # look: preview the kept release it would switch to
+cto-legends rollback legends-geogrid --apply  # do: switch back to the retained working environment
+```
+
+Global options: `--home <path>` moves the managed home folder, and `--version` prints the installed version. The CLI answers to `cto-legends`, `ctolegends`, `python -m cto_legends` and `python -m ctolegends`.
 
 </details>
 
@@ -320,17 +284,17 @@ Global options: `--home <path>` moves the managed home, `--version` prints the v
 
 <br>
 
-- **Where it lives.** Everything the hub manages sits under `~/.cto-legends` (change it with `--home` or the `CTO_LEGENDS_HOME` variable). Each module unpacks under `~/.cto-legends/releases/` with its own environment, so modules never share dependencies with each other or with your projects.
-- **What gets verified.** Every release in the catalog is pinned by version, commit and SHA-256 digest, and `--apply` checks the download against that pin before it builds anything. The current catalog is 1.0.59, and `cto-legends catalog` prints every pin.
-- **How you go back.** The previous environment is kept when a module updates, so `cto-legends rollback <module> --apply` switches back without a new download. The catalog keeps a rollback copy too, and an interrupted install leaves its diagnostics in the managed `install.log`.
+- **Where it lives.** Everything the hub manages sits under `~/.cto-legends` (override it with `--home` or the `CTO_LEGENDS_HOME` environment variable). Managed modules unpack under `~/.cto-legends/releases/` into isolated per-release folders (dedicated virtual environments for Python modules and a self-contained prebuilt package for `legends-obs`), so modules never share dependencies with each other or pollute your project packages.
+- **What gets verified.** Every release in the bundled catalog is pinned by version, commit hash and SHA-256 digest. Running `--apply` verifies the downloaded archive against that cryptographic pin before building the virtual environment. Run `cto-legends catalog` at any time to inspect every pin.
+- **How you go back.** When a module updates, the previous environment stays on disk so `cto-legends rollback <module> --apply` restores your prior working version in one step without a new download. The catalog keeps a rollback copy too, and any interrupted install writes full diagnostics to `install.log`.
 - **Refused paths.** Managed paths reject symlinks, Windows junctions and reparse points.
-- **Requirements.** Python 3.11 or newer. `cto-legends doctor` also reports whether the optional tools `node`, `pnpm` and `gh` are on your path.
-- **More hosts.** `agent-setup` also accepts `antigravity` (alias `agy`), `cursor`, `windsurf` and `aider`, plus the aliases `metamuse`, `qwen-code`, `zai` and `zcode`.
-- **Old names still work.** Twelve earlier module names resolve as aliases, and the retired `legends-obsidian` is succeeded by `legends-empire`.
-- **Licenses.** `cto-legends` is [MIT](LICENSE). Nineteen of the 21 modules are MIT, `legends-stable-audio-3` is Apache-2.0, `legends-hyperyap` is AGPL-3.0 and the optional OBS cursor overlay extra is GPL-2.0-or-later, all listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) beside [NOTICE](NOTICE).
+- **Requirements.** Python 3.11 or newer. Running `cto-legends doctor` also checks whether optional host binaries (`node`, `pnpm` and `gh`) are available on your `PATH`.
+- **More hosts.** Beyond the nine main presets, `agent-setup` also accepts `antigravity` (alias `agy`), `cursor`, `windsurf` and `aider`, plus the aliases `metamuse`, `qwen-code`, `zai` and `zcode`.
+- **Old names still work.** Twelve earlier module names resolve automatically as aliases, and the retired `legends-obsidian` slug maps cleanly to `legends-empire`.
+- **Licenses.** `cto-legends` is [MIT](LICENSE). Nineteen of the 21 modules are MIT, `legends-stable-audio-3` is Apache-2.0, `legends-hyperyap` is AGPL-3.0 and the optional OBS cursor overlay extra is GPL-2.0-or-later, all documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) beside [NOTICE](NOTICE).
 - **Deeper docs.** [Architecture](docs/ARCHITECTURE.md), [capability discovery](docs/CAPABILITY-DISCOVERY.md), [agent hosts](docs/AGENT-HOSTS.md), [startup](docs/STARTUP.md), [research workflow](docs/RESEARCH-WORKFLOW.md), [Home adapter](docs/HOME-ADAPTER.md), [contributing](CONTRIBUTING.md) and [security](SECURITY.md).
 
-Contributors can run the same checks the project does:
+Contributors can run the release verification suite locally:
 
 ```sh
 python -m unittest discover -s tests -v
@@ -343,17 +307,19 @@ python -m twine check dist/*
 
 ## Start here
 
+Paste the handoff block at the top of this page to your coding agent, or run these two lines yourself:
+
 ```sh
 python -m pip install cto-legends
 cto-legends agent-setup claude
 ```
 
-Line two prints a plan. Read it, add `--apply` when you agree with it, and then say your first sentence. One install is the way in to all 21 modules, and agent skills never have to pile up on your shelf again.
+Line two prints a plan. Read it, add `--apply` when you agree with it, and then speak your first sentence. One install opens the door to all 21 curated modules, and agent skills never have to pile up in your folders again.
 
-Think agent tools should show the plan before they touch anything? Star the repo and say so. It costs one click, and it tells the next builder this door exists.
+If you believe coding agents should let humans speak in plain English and show the plan before touching disk, star this repository, or star the whole family from the [22-repo GitHub list](https://github.com/stars/avalonreset/lists/cto-legends). It takes one click, and it helps the next builder find the door.
 
-Running a company and not a terminal? Founders and operators who want this way of working applied to their own stack have one route: message Avalon Reset at [cto-legends.com/dm](https://cto-legends.com/dm). The desk is async, so the conversation starts when you write and nobody makes you book a call.
+Running a company and not a terminal? Founders and operators who want this way of working applied directly to their own business stack have one route: message Avalon Reset at [cto-legends.com/dm](https://cto-legends.com/dm). The desk is async, so the conversation starts the moment you write and nobody forces you onto a sales call.
 
-<p align="center"><a href="https://cto-legends.com/dm"><img src="assets/cards/r1/slot-7-message-avalon-reset.svg" width="100%" alt="Want this way of working applied to your own stack? Message Avalon Reset at cto-legends.com/dm"></a></p>
+<p align="center"><a href="https://cto-legends.com/dm"><img src="assets/cards/r2/slot-7-message-avalon-reset.svg" width="100%" alt="Want this way of working applied to your own stack? Message Avalon Reset at cto-legends.com/dm"></a></p>
 
-Built in public by one maker, Avalon Reset: this hub and all 21 modules.
+Built in public by one maker, Avalon Reset: this router and all 21 modules.
