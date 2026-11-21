@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.64 - 2026-11-21
+
+- Update `legends-github` to 0.2.5 (`16affcb9104d1ad3d13496f1f5f417ce5565f16a`, SHA-256 `11a868fb7354de31b85d10d6ea2c870e470109b1d546e89df8f0cfdaf779e9fc`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), expanded evergreen documentation for the 13 repository workflows, four-state clean-tree external evidence audits, DataForSEO `0.1.13` 20-topic commercial intent synthesis, non-destructive README preservation mode, and 1280x640 Open Graph GraphQL pixel-parity verification.
+
 ## 1.0.63 - 2026-11-21
 
 - Update `legends-firecrawl` to 0.3.8 (`b2ad712d934e2f8bc83877d3c450a2b4e536244d`, SHA-256 `4f803f667a24cd7c570ceb0842effef281d6a20b27b975a652741535a3eaae95`) shipping the `r1` outlined Legends Font SVG design card suite (`assets/cards/r1/*.svg`), expanded documentation for the 15-route Firecrawl v2 CLI (`lfc`) and 114-provider Alexandria catalog (`lax`), fail-closed SERP handoff (`lfc scrape-serp --resolve-goto`), and collapsible `cto-legends` setup and evidence reference drawers.
