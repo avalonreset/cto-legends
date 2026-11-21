@@ -1,43 +1,34 @@
-<p align="center"><img src="assets/banner.webp" width="100%" alt="cto-legends agent skills router: speak to your coding agent in plain English across 21 curated open-source tools"></p>
+<p align="center"><img src="assets/banner.webp" width="100%" alt="cto-legends agent skills router: speak to your coding agent in plain english across 21 curated open-source tools"></p>
 
-# cto-legends: agent skills that let you speak in plain English across 21 curated tools
+# cto-legends: agent skills that let you speak in plain english across 21 curated tools
 
 [![PyPI](https://img.shields.io/pypi/v/cto-legends?style=flat-square&label=pypi&labelColor=000000&color=ff0000)](https://pypi.org/project/cto-legends/)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-ff0000?style=flat-square&labelColor=000000)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-ff0000?style=flat-square&labelColor=000000)](LICENSE)
 [![21 modules](https://img.shields.io/badge/modules-21-ff0000?style=flat-square&labelColor=000000)](#the-21-curated-modules)
-[![Preview until --apply](https://img.shields.io/badge/changes-preview_until_----apply-ff0000?style=flat-square&labelColor=000000)](#why-your-agent-shows-the-plan-before-anything-changes)
+[![1 router skill](https://img.shields.io/badge/setup-1_router_skill-ff0000?style=flat-square&labelColor=000000)](#why-a-curated-stack-beats-a-pile-of-claude-skills-and-codex-skills)
 
-For decades, computers forced human beings to think like machines. You hunted for packages, memorized flags, and tippity-typed system commands into a terminal. Coding agents were supposed to end that, yet most agent skills setups quietly turn you back into the computer's assistant.
+For decades, computers forced human beings to think like machines. You hunted for packages, memorized flags, and typed system commands into a terminal. Coding agents were supposed to end that, yet most agent skills setups quietly turn you back into the computer's assistant.
 
 **The human is the controller. The agents do the operating. Stop being your computer's assistant.**
 
-Your coding agent registers one small skill, once. From that moment on, you state what you want in plain English the way you would brief a sharp colleague across the desk, and your agent reaches into a curated stack of 21 open-source modules, loads the right playbook on demand, and brings you a plan to approve.
+Your coding agent registers one small skill, once. From that moment on, you state what you want in plain english the way you would brief a sharp colleague across the desk, and your agent reaches into a curated stack of 21 open-source modules, loads the right playbook on demand, and brings you a plan to approve.
 
 <p align="center"><img src="assets/cards/r2/slot-1-agent-handoff.svg" width="100%" alt="Agent handoff: paste this into Claude Code, Codex, or any coding agent and it does the setup"></p>
 
 ```text
-Install cto-legends for me. Run: python -m pip install cto-legends
-Then run cto-legends agent-setup for the host you are running in, show me the
-preview, and add --apply only after I say go. From then on, when I describe a
-job in plain English, find the right module and show me the plan before --apply.
+Install cto-legends (python -m pip install cto-legends) and wire the router skill
+into your host with cto-legends agent-setup. From then on, whenever I describe a
+job in plain english, find the right module and show me the plan before making changes.
 ```
 
-Prefer to run the first step in your own terminal? Three lines do the entire setup:
+<p align="center"><img src="assets/cards/r2/slot-2-three-pillars.svg" width="100%" alt="Three pillars of cto-legends agent skills: 01 Talk like a human in plain english, 02 21 curated tools, and 03 Look, then do across 9 host presets"></p>
 
-```sh
-python -m pip install cto-legends
-cto-legends agent-setup claude          # look: prints the plan, changes nothing
-cto-legends agent-setup claude --apply  # do: registers the one router skill
-```
-
-<p align="center"><img src="assets/cards/r2/slot-2-three-pillars.svg" width="100%" alt="Three pillars of cto-legends agent skills: 01 Talk like a human in plain English, 02 21 curated tools, and 03 Look, then do before --apply across 9 host presets"></p>
-
-[Plain English](#agent-skills-in-plain-english) · [Curated stack](#why-a-curated-stack-beats-a-pile-of-claude-skills-and-codex-skills) · [Plan first](#why-your-agent-shows-the-plan-before-anything-changes) · [Host setup](#host-setup-claude-skills-codex-skills-and-7-more-presets) · [The 21 modules](#the-21-curated-modules) · [Reference](#reference)
+[Plain english](#agent-skills-in-plain-english) · [Curated stack](#why-a-curated-stack-beats-a-pile-of-claude-skills-and-codex-skills) · [Plan first](#why-your-agent-shows-the-plan-before-anything-changes) · [Host setup](#host-setup-claude-skills-codex-skills-and-7-more-presets) · [The 21 modules](#the-21-curated-modules) · [Reference](#reference)
 
 ---
 
-## Agent skills in plain English
+## Agent skills in plain english
 
 Nobody who uses this describes it to a friend as a router or a CLI manager. They say: you tell your coding agent what you want in normal words, and it already knows which tools to combine to get the job done.
 
@@ -81,70 +72,29 @@ Compare that with how most people manage Claude skills and Codex skills today. Y
 
 ## Why your agent shows the plan before anything changes
 
-When you speak in plain English and let your coding agent drive, you only need one guarantee: the agent proposes, and you approve.
+When you speak in plain english and let your coding agent drive, you only need one guarantee: the agent proposes, and you approve.
 
-Every quick start on the internet was written for an era when a human read the command before pressing Enter. Now your coding agent is the one typing. It types at machine speed, with total confidence, and without pausing to wonder what an install script is about to do to your global Python environment.
+Traditional quick starts were written for an era when a human read the command before pressing Enter. Now your coding agent is the one typing. Left unchecked, an agent acts at machine speed without pausing to wonder what a random install script is about to do to your global Python environment or your live accounts.
 
-That is why `cto-legends` flips the default. The first line of its CLI source is the entire contract:
+`cto-legends` turns that habit around at the system level. Every action that can write to your disk or install a module prints its plan first and waits for confirmation. When you say go, the download is verified against a cryptographic SHA-256 digest, unpacked into its own isolated environment so dependencies never collide with your project, and backed by your previous working version for instant rollback.
 
-```python
-"""JSON-first CLI; mutations preview unless --apply is explicit."""
-```
-
-Eleven commands can change something on your machine (`install`, `update`, `rollback`, `sync`, `agent-setup`, `install-skill`, `isolate-skills`, `restore-skills`, `startup-setup`, `startup-restore`, and `register-guide`), and every one follows the same rule. Run any of them without `--apply` and nothing changes on disk. On a fresh machine, a preview does not even create the `~/.cto-legends` directory. It prints the exact release pin, commit hash, dependencies, and scope so your agent can show you the plan in plain sight.
-
-Once you say go and your agent adds `--apply`, the hub does the careful version of the work. It verifies the download against a pinned SHA-256 digest, unpacks the tool into its own isolated environment so dependencies never collide with your project, and keeps your previous working environment intact on disk for instant one-command `rollback`.
-
-Underneath every plain-English request, your agent runs the same clean sequence:
-
-```sh
-cto-legends route "study my business on Google Maps"  # 1 route: ranked candidates, with reasons
-cto-legends install legends-geogrid                   # 2 look: prints the plan, changes nothing
-cto-legends install legends-geogrid --apply           # 3 do: SHA-256 verified, isolated environment
-cto-legends handoff legends-geogrid                   # 4 handoff: loads this one recipe on demand
-cto-legends run legends-geogrid -- --help             # 5 run: executes inside its own environment
-cto-legends rollback legends-geogrid --apply          # 6 rollback: previous env stays ready on disk
-```
-
-Routing never triggers a hidden download, and installing never burns a paid API credit. You get the ease of speaking to a colleague, backed by the discipline of a systems engineer.
+Routing a question never triggers a hidden download, and installing a module never burns a paid API credit. You get the ease of speaking to a colleague, backed by the discipline of a systems engineer.
 
 ---
 
 ## Host setup: Claude skills, Codex skills and 7 more presets
 
-Pick your coding agent host. Every preset previews its file paths first, writes the single router skill into that host's standard directory, and never overwrites a file you have customized by hand. Whether you rely on Claude skills, Codex skills, or switch between nine different harnesses, every agent reads the same router contract.
+Every preset wires the single router skill into that host's standard directory and never overwrites a file you have customized by hand. Whether you rely on Claude skills, Codex skills, or switch between nine different coding agents, every host reads the same router contract.
 
 <p align="center">
-  <a href="#claude-preset"><img src="assets/cards/r2/slot-5-claude.svg" width="33.33%" align="top" alt="Claude preset: writes the router skill to ~/.claude/skills/cto-legends" /></a><!--
-  --><a href="#codex-preset"><img src="assets/cards/r2/slot-5-codex.svg" width="33.33%" align="top" alt="Codex preset: writes the router skill to ~/.codex/skills and ~/.agents/skills" /></a><!--
+  <a href="#all-9-presets"><img src="assets/cards/r2/slot-5-claude.svg" width="33.33%" align="top" alt="Claude preset: writes the router skill to ~/.claude/skills/cto-legends" /></a><!--
+  --><a href="#all-9-presets"><img src="assets/cards/r2/slot-5-codex.svg" width="33.33%" align="top" alt="Codex preset: writes the router skill to ~/.codex/skills and ~/.agents/skills" /></a><!--
   --><a href="#all-9-presets"><img src="assets/cards/r2/slot-5-every-preset.svg" width="33.33%" align="top" alt="Every preset: skill paths for all nine supported coding agent hosts" /></a>
 </p>
 
-### Claude preset
+<a id="all-9-presets"></a>
 
-```sh
-cto-legends agent-setup claude            # look: previews the target skill path
-cto-legends agent-setup claude --apply    # do: writes ~/.claude/skills/cto-legends/SKILL.md
-cto-legends startup-setup claude          # look: optional capability pointer for ~/.claude/CLAUDE.md
-cto-legends startup-setup claude --apply  # do: writes one marked block with a backup manifest
-```
-
-Reload your skills and ask a real question: *Can we generate some AI music?* There is no background server to launch and no JSON schema wall to debug. The optional `startup-setup` command places a compact marked pointer to your local capability index into your host's root instruction file, and `startup-restore` removes it cleanly from the backup manifest whenever you like.
-
-### Codex preset
-
-```sh
-cto-legends agent-setup codex             # look: previews the target skill paths
-cto-legends agent-setup codex --apply     # do: writes ~/.codex/skills and ~/.agents/skills
-cto-legends startup-setup codex           # look: optional capability pointer for ~/.codex/AGENTS.md
-cto-legends startup-setup codex --apply   # do: writes one marked block with a backup manifest
-```
-
-Same router, same conversational workflow, same preview before anything touches disk. If you set `CODEX_HOME`, both commands follow it automatically.
-
-### All 9 presets
-
-| Preset | Skill folders `agent-setup` writes | Default `startup-setup` file |
+| Preset | Skill folders `agent-setup` writes | Optional `startup-setup` file |
 | --- | --- | --- |
 | `claude` | `~/.claude/skills` | `~/.claude/CLAUDE.md` |
 | `codex` | `~/.codex/skills`, `~/.agents/skills` | `~/.codex/AGENTS.md` |
@@ -156,13 +106,11 @@ Same router, same conversational workflow, same preview before anything touches 
 | `glm` | `~/.zcode/skills`, `~/.config/opencode/skills`, `~/.agents/skills` | pass `--instruction-file <path>` |
 | `opencode` | `~/.config/opencode/skills`, `~/.agents/skills` | `~/.config/opencode/AGENTS.md` |
 
-Add `--apply` to any preset after reviewing its preview. For a custom skills directory anywhere on disk, run `cto-legends install-skill --directory <folder> --apply`. Any coding agent without native skill loading can read [cto_legends/SKILL.md](cto_legends/SKILL.md) and call the CLI directly.
-
-You can also route your own internal team playbooks through the same hub. Running `cto-legends register-guide <name> <path.md> --apply` registers a local Markdown guide so `handoff` resolves it alongside the 21 public modules.
+Any coding agent without native skill loading can read [cto_legends/SKILL.md](cto_legends/SKILL.md) directly, and you can register your own internal Markdown playbooks alongside the 21 public modules with `cto-legends register-guide`.
 
 ## The 21 curated modules
 
-Every module is an independent open-source repository with its own test suite and release pins, and you never need to memorize their names. They are listed below so you can see how far a single plain-English request reaches. Browse the interactive specs at [cto-legends.com/modules](https://cto-legends.com/modules), or view all 22 repositories in one place in the [CTO Legends GitHub collection](https://github.com/stars/avalonreset/lists/cto-legends).
+Every module is an independent open-source repository with its own test suite and release pins, and you never need to memorize their names. They are listed below so you can see how far a single plain-english request reaches. Browse the interactive specs at [cto-legends.com/modules](https://cto-legends.com/modules), or view all 22 repositories in one place in the [CTO Legends GitHub collection](https://github.com/stars/avalonreset/lists/cto-legends).
 
 Twenty modules install as managed local CLIs inside their own isolated release folders (19 Python virtual environments plus the prebuilt `legends-obs` Node CLI). The one native desktop application, `legends-hyperyap`, routes through `cto-legends guide legends-hyperyap` so the router never triggers an operating system installer behind your back.
 
@@ -236,7 +184,7 @@ Every command returns structured JSON. A "yes" in the final column means the com
 
 | Group | Command | What it does | Look, then do |
 | --- | --- | --- | --- |
-| Discovery | `route "<goal>"` | Finds modules for a plain-English goal and returns ranked candidates with reasons | |
+| Discovery | `route "<goal>"` | Finds modules for a plain-english goal and returns ranked candidates with reasons | |
 | Discovery | `capabilities [--markdown]` | Reads the outcome-based capability index offline | |
 | Discovery | `handoff <module>` | Resolves one module's instructions without registering another skill | |
 | Discovery | `guide <module>` | Shows pinned setup instructions, platform requirements and release downloads | |
@@ -305,15 +253,7 @@ python -m twine check dist/*
 
 ## Start here
 
-Paste the handoff block at the top of this page to your coding agent, or run these two lines yourself:
-
-```sh
-python -m pip install cto-legends
-cto-legends agent-setup claude
-```
-
-Line two prints a plan. Read it, add `--apply` when you agree with it, and then speak your first sentence. One install opens the door to all 21 curated modules, and agent skills never have to pile up in your folders again.
-
+Paste the [agent handoff block](#cto-legends-agent-skills-that-let-you-speak-in-plain-english-across-21-curated-tools) at the top of this page into your coding agent, let it wire the router skill, and speak your first sentence. One install opens the door to all 21 curated modules, and agent skills never have to pile up in your folders again.
 
 Running a company and not a terminal? Founders and operators who want this way of working applied directly to their own business stack have one route: message Avalon Reset at [cto-legends.com/dm](https://cto-legends.com/dm). The desk is async, so the conversation starts the moment you write and nobody forces you onto a sales call.
 
