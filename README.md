@@ -321,7 +321,7 @@ Global options: `--home <path>` moves the managed home, `--version` prints the v
 <br>
 
 - **Where it lives.** Everything the hub manages sits under `~/.cto-legends` (change it with `--home` or the `CTO_LEGENDS_HOME` variable). Each module unpacks under `~/.cto-legends/releases/` with its own environment, so modules never share dependencies with each other or with your projects.
-- **What gets verified.** Every release in the catalog is pinned by version, commit and SHA-256 digest, and `--apply` checks the download against that pin before it builds anything. The current catalog is 1.0.58, and `cto-legends catalog` prints every pin.
+- **What gets verified.** Every release in the catalog is pinned by version, commit and SHA-256 digest, and `--apply` checks the download against that pin before it builds anything. The current catalog is 1.0.59, and `cto-legends catalog` prints every pin.
 - **How you go back.** The previous environment is kept when a module updates, so `cto-legends rollback <module> --apply` switches back without a new download. The catalog keeps a rollback copy too, and an interrupted install leaves its diagnostics in the managed `install.log`.
 - **Refused paths.** Managed paths reject symlinks, Windows junctions and reparse points.
 - **Requirements.** Python 3.11 or newer. `cto-legends doctor` also reports whether the optional tools `node`, `pnpm` and `gh` are on your path.

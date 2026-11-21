@@ -17,6 +17,7 @@ class RenameTests(unittest.TestCase):
             release = home / relative
             (release / 'source/docs').mkdir(parents=True)
             (release / 'source/README.md').write_text('installed recipe')
+            (release / 'source/docs/AGENT-RECIPE.md').write_text('agent recipe')
             (release / 'source/docs/RESEARCH-MEMORY.md').write_text('evidence')
             row = dict(m.catalog()['modules'][NEW], version='0.1.3', commit='a'*40)
             (release / 'receipt.json').write_text(json.dumps(row))

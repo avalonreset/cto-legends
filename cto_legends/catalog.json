@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "version": "1.0.58",
+  "version": "1.0.59",
   "modules": {
     "legends-empire": {
-      "version": "0.4.0",
-      "commit": "7d96ea279e70769df14b94a090cc129dbc9a5f21",
+      "version": "0.4.1",
+      "commit": "60207ab3ed1f14b840798d15218ec221ef50ee66",
       "repo": "avalonreset/legends-empire",
-      "sha256": "280d981816525472c247be7e16abbc4565f9f7257a063bd358b2c6f788eed016",
-      "purpose": "Markdown knowledge foundation. For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work. Optional Home-ready shared-root structure supports standalone Empire projects and an independently authorized AI Marketing Hub Home headless capability layer without duplicate business records.",
+      "sha256": "b97b684477a4c2d199e3a44a3b2e41d1570ec20fda72f979123d87e60f1e8d04",
+      "purpose": "Markdown knowledge foundation with Ontology Engine, multi-vendor entry-chain auditing (steward entry-audit) and non-ratcheting health digests (steward digest). For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work. Optional Home-ready shared-root structure supports standalone Empire projects and an independently authorized AI Marketing Hub Home headless capability layer without duplicate business records.",
       "keywords": [
         "empire",
         "obsidian",
@@ -22,10 +22,12 @@
         "projects",
         "handoffs",
         "adapter",
-        "ontology"
+        "ontology",
+        "entry-audit",
+        "digest"
       ],
       "dependencies": {},
-      "scope": "Python 3.11+ standard-library core. Reviewed transactions and knowledge attachment support native Windows on local fixed NTFS, plus macOS/Linux/POSIX. Windows fails closed on reparse paths, network shares and non-NTFS volumes. Windows process-crash recovery does not claim POSIX directory-fsync power-loss equivalence. Bash utilities remain POSIX-only; WSL DrvFS needs metadata. Obsidian Desktop is optional.",
+      "scope": "Python 3.11+ standard-library core with Ontology Engine (cached stat_fingerprint index), multi-vendor entry-harness auditing (steward entry-audit), atomic health digests (steward digest), fast large-vault linting, and stewardship knowledge pack 0.2.2. Reviewed transactions and knowledge attachment support native Windows on local fixed NTFS, plus macOS/Linux/POSIX. Windows fails closed on reparse paths, network shares and non-NTFS volumes. Windows process-crash recovery does not claim POSIX directory-fsync power-loss equivalence. Bash utilities remain POSIX-only; WSL DrvFS needs metadata. Obsidian Desktop is optional.",
       "discovery": {
         "signals": [
           "remember this",
@@ -42,6 +44,8 @@
           "clean up my vault",
           "vault stewardship",
           "vault steward",
+          "steward entry audit",
+          "steward digest",
           "stale projects",
           "neglected projects",
           "unfinished work",
@@ -707,11 +711,11 @@
       "readiness": "doctor"
     },
     "legends-geogrid": {
-      "version": "0.2.7",
-      "commit": "2732e0a6bf1f66f9030732ffbeab4d4ee0ebd0ce",
+      "version": "0.2.9",
+      "commit": "e47028aca64a01846cf0fd5bf9bae9a5dcf70eb6",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "efa0f2edb5dc4e94775ea4d6c9a3e0977ea45688a699db13be1acc1215847998",
-      "purpose": "Google Maps ranking grids, circular-lattice competitive studies, web-parity 21-page Letter PDF and HTML strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
+      "sha256": "a89f7b8fb2c3a4ddb839a1c737c6f2a3fafaba557dee5f73754abc9d54e17666",
+      "purpose": "Google Maps ranking grids, circular-lattice competitive studies, embeddable interactive report viewer with full per-point rankings, web-parity 21-page Letter PDF and HTML strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
       "keywords": [
         "maps",
         "grid",
@@ -729,7 +733,7 @@
       "dependencies": {
         "legends-dataforseo": "0.1.11"
       },
-      "scope": "Self-contained static HTML competitive map companion (study.py --open), circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, OpenFreeMap .osm-legends dark basemap rendering, and multi-query 21-page Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
+      "scope": "Self-contained static HTML competitive map companion (study.py --open), embeddable geogrid-viewer/v1 report viewer with full per-point Location and Competitors rankings, circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, OpenFreeMap .osm-legends dark basemap rendering, and multi-query 21-page Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
       "discovery": {
         "signals": [
           "local visibility",
@@ -809,11 +813,11 @@
       ]
     },
     "legends-dataforseo": {
-      "version": "0.1.11",
-      "commit": "434bd0f62d141d226226407a86e258a6ee4ba2df",
+      "version": "0.1.12",
+      "commit": "869896216ae2c1a283f40671b0cc21dbdea0ef92",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "a08a2baa7f043f0cec079a64ae3fefdc44ecf0f27274b51b788dab03395df57c",
-      "purpose": "Search, Google Maps, Google Business Profile, SERP redirect unmasking, DataForSEO Labs intelligence, and keyword research through DataForSEO, with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
+      "sha256": "9ba476b9a9552d20d6c4c66a88830cb38d8bb8080053b9b17e9aec9a8ae7cc55",
+      "purpose": "53-route DataForSEO v3 catalog for search, Google Maps, Google Business Profile, fail-closed decoy SERP defense (resolve_poisoned_results), depth-aware resolve_goto_urls and allowlisted website_name domain mapping, Google 5x search-operator billing guard, Labs/LLM Mentions/Backlinks/Lighthouse/On-Page intelligence, and keyword research with complete saved offline evidence, integrity verification, and explicit reuse checks.",
       "keywords": [
         "seo",
         "keywords",
@@ -825,16 +829,19 @@
         "research",
         "maps",
         "gbp",
-        "business-profile"
+        "business-profile",
+        "llm-mentions",
+        "lighthouse"
       ],
       "dependencies": {},
-      "scope": "Python API and CLI with full response files, organic /goto redirect unmasking, SERP integrity diagnostics, DataForSEO Labs helpers, offline evidence export, integrity verification, manifest inventory, focused views and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
+      "scope": "Python API and CLI across 53 DataForSEO v3 routes (each with section and mode), mandatory resolve_poisoned_results: true and serp_integrity.verified stamping, 5x Google operator cost preflight floor, optional verify_no_swap double-pull, depth-aware resolve_goto_urls with allowlisted website_name domain extraction, certifi-backed docs discovery, offline evidence export, integrity verification, manifest inventory, focused views, and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
       "discovery": {
         "signals": [
           "keyword demand",
           "search demand",
           "search volume",
           "serp",
+          "decoy serp",
           "backlinks",
           "keyword research",
           "search results",
@@ -843,7 +850,11 @@
           "gbp lookup",
           "competitor keywords",
           "ranked keywords",
-          "relevant pages"
+          "relevant pages",
+          "llm mentions",
+          "ai overview",
+          "lighthouse",
+          "content parsing"
         ],
         "examples": [
           "Research keyword demand",
@@ -854,6 +865,7 @@
         "setup": "Offline inspection needs no credentials; fresh API work requires credentials and explicit execution authorization.",
         "instructions": [
           "README.md",
+          "docs/AGENT-RECIPE.md",
           "docs/RESEARCH-MEMORY.md"
         ]
       },
@@ -901,11 +913,11 @@
       ]
     },
     "legends-firecrawl": {
-      "version": "0.3.6",
-      "commit": "21adc337d7ba7fbd32e87210fb80dd090b822da4",
+      "version": "0.3.7",
+      "commit": "47f00a0afab538a2d039c0a8db7ea9ea8a6b12d8",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "48607e7527c2f6ec56fc96d986307a3a2514196d801e2037c5a0a50563b2a64c",
-      "purpose": "Official Firecrawl web operations, SERP breadcrumb inner-URL resolution, and Alexandria queries with complete saved evidence, offline retrieval, integrity verification and explicit reuse checks.",
+      "sha256": "e215a4c9c788329a6f8209215db12c4c0c7d419aba0f32f42b599423f26c6758",
+      "purpose": "15-route Firecrawl v2 web operations (scrape, crawl, map, search, developer, research, parse, agent, interact, monitor, search-feedback), allowlisted website_name SERP target resolution, fail-closed scrape-serp verified-SERP guard, and Alexandria queries with complete saved offline evidence, integrity verification, and explicit reuse checks.",
       "keywords": [
         "firecrawl",
         "scrape",
@@ -914,11 +926,14 @@
         "crawling",
         "search",
         "resolve",
+        "parse",
+        "agent",
+        "monitor",
         "alexandria",
         "web"
       ],
       "dependencies": {},
-      "scope": "Official Firecrawl execution only. Full captures live outside installations by default, with inner-URL resolution (resolve), portable evidence export, verification, inventory, focused views and reuse checks. No native bypasses or savings claims. Python web client and Node Alexandria launcher; live calls need setup and authorization. Alexandria queries require --confirm.",
+      "scope": "Official Firecrawl v2 execution only across 15 routes including multipart document parsing (parse for PDF/DOCX/XLSX/HTML), autonomous agent with --max-credits cap, browser interact, change monitor, developer and research paper search, fail-closed scrape-serp requiring legends-dataforseo >= 0.1.12 serp_integrity.verified: true, and require_candidate=True for --resolve-goto. Full captures live outside installations by default with portable evidence export, verification, inventory, focused views, and reuse checks. No native bypasses or savings claims. Python web client and Node Alexandria launcher; live calls need setup and authorization. Paid Alexandria and scrape-serp requests require --confirm.",
       "discovery": {
         "signals": [
           "web search",
@@ -931,7 +946,13 @@
           "firecrawl",
           "alexandria",
           "provider catalog",
-          "site map"
+          "site map",
+          "parse pdf",
+          "document parsing",
+          "scrape serp",
+          "research papers",
+          "firecrawl agent",
+          "firecrawl monitor"
         ],
         "examples": [
           "Scrape this page to markdown",

@@ -200,3 +200,28 @@ class CapabilitiesTests(unittest.TestCase):
         self.assertIn('cto-legends capabilities --markdown', skill)
         self.assertIn('cto-legends check-updates', skill)
         self.assertIn('cto-legends sync', skill)
+
+    def test_router_skill_frontmatter_covers_all_21_domains_within_host_limits(self):
+        import re
+        raw = (m.ROOT / 'SKILL.md').read_bytes()
+        self.assertNotIn(b'\r\n', raw, 'SKILL.md must use LF line endings for contract.yml parity')
+        skill = raw.decode('utf-8')
+        self.assertTrue(skill.startswith('---\nname: cto-legends\ndescription: '))
+        header = skill.split('\n---\n', 1)[0]
+        lines = header.splitlines()
+        self.assertEqual(len(lines), 3, 'Frontmatter must remain a single-line name + description block')
+        desc = lines[2].removeprefix('description: ')
+        self.assertLessEqual(len(desc), 1024, 'Frontmatter description must stay within 1024-char host limit')
+        self.assertNotIn(': ', desc, 'Avoid unquoted YAML colon-space ambiguity in description')
+        self.assertNotIn('\u2014', skill)
+        self.assertNotIn('\u2013', skill)
+        self.assertEqual(re.findall(r'legends-[a-z0-9]', desc), [])
+        lower = desc.lower()
+        for token in (
+            'dataforseo', 'firecrawl', 'alexandria', 'geogrid', 'hetzner', 'coolify',
+            'cloudflare', 'astro', 'stripe', 'gohighlevel', 'github',
+            'grant', 'jev', 'youtube', 'yt-dlp', 'captions', 'obs',
+            'stable audio', 'ambient intelligence', 'hyperyap', 'buzz', 'empire',
+        ):
+            with self.subTest(token=token):
+                self.assertIn(token, lower)

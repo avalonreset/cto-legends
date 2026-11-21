@@ -22,7 +22,7 @@ Start from the [release receipt template](RELEASE-RECEIPT-TEMPLATE.md).
 | GitHub presentation | `legends-github` review, relevant research applied to copy and metadata, usable README and inspected artwork |
 | Social preview | Supported browser upload, saved setting and verification of the image actually served by GitHub |
 | Discovery | Immutable catalog pin, clean install, upgrade, readiness, recipe handoff and ordinary outcome routing |
-| Ecosystem directory | Accurate module link and description on the publisher's profile, verified after publication |
+| Ecosystem directory & Star List | Accurate module link and description on the publisher's profile and inclusion in the public `cto-legends` GitHub Star List (`legends_github.py lists --from-catalog --exact --reorder --apply`), verified after publication |
 
 `legends-github` prepares and verifies social images. Actual upload uses the
 agent host's supported browser/file-upload controls; it does not require
