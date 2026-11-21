@@ -1,28 +1,35 @@
 {
-  "renderer": "legends-type-v1",
-  "text": "cto-legends",
+  "template": "legends-type-v1",
+  "title": "cto-legends",
   "subtitle_lines": [
-    "one router skill for 21 open-source modules",
-    "every hub change previewed until --apply"
+    "the human is the controller. the agents do the operating.",
+    "speak plain english across 21 curated open-source tools."
   ],
-  "font": "Legends-Regular.ttf",
-  "master": {
-    "path": "assets/banner.png",
-    "width": 4096,
-    "height": 1024,
-    "sha256": "3cfd96b19fd4aee6ce8a46e3f429e61dcd64e5bed66e58a248d5b46ef0df611a"
-  },
-  "readme_asset": {
-    "path": "assets/banner.webp",
-    "width": 4096,
-    "height": 1024,
-    "lossless": true,
-    "sha256": "189cf884ca43a2cdca03499782a78267d362b0d0a10b2d0b1edd169b6fae5846"
-  },
-  "preview": {
-    "path": "assets/preview.png",
-    "width": 1024,
-    "height": 256,
-    "sha256": "3a0e73635677462cd350941c34ab7868986f78a62062c315e0390129d120e62e"
-  }
+  "size": [
+    4096,
+    1024
+  ],
+  "text_bounds": [
+    [
+      192,
+      212,
+      1391,
+      383
+    ],
+    [
+      192,
+      534,
+      3840,
+      636
+    ],
+    [
+      192,
+      666,
+      3776,
+      768
+    ]
+  ],
+  "font_sha256": "3769f0f76477a7d9e2e6cb40422dedacb56c9ab1a6f7beee89b2b9ba6b8091ee",
+  "banner_sha256": "622e15b96d385b6a8394af81e92080a6721bfd28d63d24720b8e72afd66ba18c",
+  "published": true
 }
