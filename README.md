@@ -184,7 +184,7 @@ cto-legends dm watch --timeout 1800
 cto-legends dm link
 ```
 
-`dm link` prints the saved claim URL. Open it in Chrome and sign in with Google or GitHub in 1 click so Benjamin's reply can reach you by email and stay synced across devices. Set `CTO_LEGENDS_MCP_TOKEN` for paired member Bearer auth instead of guest thread auth. `dm watch` polls at 10s, then 20s, then 30s intervals, defaults to a 30 minute timeout, and never watches longer than 60 minutes.
+`dm link` prints the saved claim URL. Open it in your browser and sign in with Google or GitHub in 1 click so Benjamin's reply can reach you by email and stay synced across devices. Set `CTO_LEGENDS_MCP_TOKEN` for paired member Bearer auth instead of guest thread auth. `dm watch` polls at 10s, then 20s, then 30s intervals, defaults to a 30 minute timeout, and never watches longer than 60 minutes.
 
 ## Reference
 
@@ -226,7 +226,7 @@ Every command returns structured JSON. A "yes" in the final column means the com
 | Direct message | `dm send "<message>" [--watch]` | Sends a message to Benjamin and saves the guest thread locally | |
 | Direct message | `dm read` | Reads the DM thread and shows Benjamin's replies as plain text | |
 | Direct message | `dm watch [--timeout 1800]` | Polls politely for Benjamin's reply; exits 0 on reply or timeout | |
-| Direct message | `dm link` | Prints the saved claim URL to link the thread in Chrome | |
+| Direct message | `dm link` | Prints the saved claim URL to link the thread in your browser | |
 
 Staying current follows the exact same look-then-do rhythm:
 

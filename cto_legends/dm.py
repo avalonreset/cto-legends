@@ -5,7 +5,9 @@ message, then poll politely for a human reply. Message text is only ever
 displayed; it is never executed.
 """
 import json
+import math
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -14,16 +16,29 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+from . import manager
+
 DEFAULT_BASE_URL = "https://cto-legends.com"
 DEFAULT_TIMEOUT = 1800
 MAX_TIMEOUT = 3600
 STATE_ENV = "CTO_LEGENDS_DM_STATE_PATH"
 TOKEN_ENV = "CTO_LEGENDS_MCP_TOKEN"
+ALLOW_UNTRUSTED_ENV = "CTO_LEGENDS_ALLOW_UNTRUSTED_BASE_URL"
+MAX_RESPONSE_BYTES = 2 * 1024 * 1024
+MAX_ERROR_BYTES = 65536
+LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost", "::1"})
+TRUSTED_TOKEN_HOSTS = frozenset({"cto-legends.com", "staging.cto-legends.com"}) | LOOPBACK_HOSTS
+_ANSI_RE = re.compile(
+    r"\x1b\[[0-9;?]*[ -/]*[@-~]"
+    r"|\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)"
+    r"|\x1b[@-Z\\-_]"
+)
 DEFAULT_NUDGE = (
-    "Sent straight to Benjamin's live Block Buzz desk. He's a real human, "
-    "not a bot, so replies can take a few minutes or a few hours. Open the "
-    "link above to sign in with Google or GitHub in 1 click for email "
-    "alerts and next-day sync."
+    "Sent straight to Benjamin's live Block Buzz desk. He is a real human, "
+    "not an AI bot, so replies can take a few minutes or a few hours. "
+    "Sign in with Google or GitHub in 1 click. If Benjamin replies hours "
+    "later, you get an email, and tomorrow you or your AI agent can just "
+    "ask: did Ben reply?"
 )
 
 
@@ -50,13 +65,75 @@ def _now():
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
+def validate_base_url(base_url):
+    raw = (base_url or DEFAULT_BASE_URL)
+    if not isinstance(raw, str):
+        raise DmError(f"Invalid DM base URL: {raw!r}")
+    raw = raw.strip()
+    if not raw:
+        raise DmError("Invalid DM base URL: empty")
+    parsed = urllib.parse.urlparse(raw)
+    if parsed.username or parsed.password:
+        raise DmError(f"DM base URL must not contain credentials: {raw!r}")
+    if parsed.query:
+        raise DmError(f"DM base URL must not contain a query string: {raw!r}")
+    if parsed.fragment:
+        raise DmError(f"DM base URL must not contain a fragment: {raw!r}")
+    if parsed.scheme not in ("https", "http"):
+        raise DmError(f"DM base URL must use https:// (http:// is allowed only for loopback): {raw!r}")
+    host = (parsed.hostname or "").lower()
+    if not host:
+        raise DmError(f"DM base URL must include a host: {raw!r}")
+    if parsed.scheme == "http" and host not in LOOPBACK_HOSTS:
+        raise DmError(f"DM base URL must use https:// for non-loopback hosts: {raw!r}")
+    return raw.rstrip("/")
+
+
+def _host_of(url):
+    return (urllib.parse.urlparse(url).hostname or "").lower()
+
+
+def _is_trusted_token_host(host):
+    return (host or "").lower() in TRUSTED_TOKEN_HOSTS
+
+
+def sanitize_terminal_text(value):
+    text = "" if value is None else str(value)
+    text = _ANSI_RE.sub("", text)
+    return "".join(
+        ch for ch in text
+        if ch in ("\n", "\t") or not (ord(ch) < 0x20 or ord(ch) == 0x7F or 0x80 <= ord(ch) <= 0x9F)
+    )
+
+
+# Short alias used across plain-text printing paths.
+_clean = sanitize_terminal_text
+
+
+class NoCrossOriginRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        old = urllib.parse.urlparse(req.full_url)
+        new = urllib.parse.urlparse(newurl)
+        if new.scheme != old.scheme or new.netloc != old.netloc:
+            raise DmError(f"Blocked cross-origin redirect from {old.scheme}://{old.netloc} to {new.scheme}://{new.netloc}")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+def _build_opener():
+    return urllib.request.build_opener(
+        urllib.request.HTTPSHandler(),
+        urllib.request.HTTPHandler(),
+        NoCrossOriginRedirectHandler(),
+    )
+
+
 def load_state(path=None):
     target = state_path(path)
-    if not target.exists():
+    if not target.exists() and not target.is_symlink():
         return {}
     try:
-        data = json.loads(target.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        data = json.loads(manager.read_bounded_text(target))
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
         raise DmError(f"Could not read DM thread state at {target}: {exc}") from exc
     if not isinstance(data, dict):
         raise DmError(f"DM thread state at {target} is not a JSON object")
@@ -65,17 +142,12 @@ def load_state(path=None):
 
 def save_state(state, path=None):
     target = state_path(path)
-    target.parent.mkdir(parents=True, exist_ok=True)
     merged = dict(state)
     merged["updated_at"] = _now()
-    tmp = target.with_name(target.name + ".tmp")
-    tmp.write_text(json.dumps(merged, indent=2) + "\n", encoding="utf-8")
-    tmp.replace(target)
-    if os.name == "posix":
-        try:
-            target.chmod(0o600)
-        except OSError:
-            pass
+    try:
+        manager.atomic_write_text(target, json.dumps(merged, indent=2) + "\n", mode=0o600)
+    except (OSError, ValueError) as exc:
+        raise DmError(f"Could not write DM thread state at {target}: {exc}") from exc
     return merged
 
 
@@ -84,6 +156,16 @@ def _bearer_token():
 
 
 def _http(method, url, body=None, thread_token=None):
+    parsed_url = urllib.parse.urlparse(url)
+    if parsed_url.username or parsed_url.password:
+        raise DmError("DM request URL must not contain credentials")
+    if parsed_url.scheme not in ("https", "http"):
+        raise DmError(f"DM request URL must use https:// (http:// is allowed only for loopback): {url!r}")
+    host = (parsed_url.hostname or "").lower()
+    if not host:
+        raise DmError(f"DM request URL must include a host: {url!r}")
+    if parsed_url.scheme == "http" and host not in LOOPBACK_HOSTS:
+        raise DmError(f"DM request URL must use https:// for non-loopback hosts: {url!r}")
     headers = {"Accept": "application/json", "User-Agent": "cto-legends-dm-cli"}
     data = None
     if body is not None:
@@ -91,15 +173,23 @@ def _http(method, url, body=None, thread_token=None):
         headers["Content-Type"] = "application/json"
     bearer = _bearer_token()
     if bearer:
+        if not _is_trusted_token_host(host) and os.environ.get(ALLOW_UNTRUSTED_ENV) != "1":
+            raise DmError(
+                f"Refusing to send {TOKEN_ENV} to untrusted host {host!r}; "
+                f"set {ALLOW_UNTRUSTED_ENV}=1 to override"
+            )
         headers["Authorization"] = f"Bearer {bearer}"
     elif thread_token and method == "GET":
         headers["X-DM-Thread-Token"] = thread_token
     request = urllib.request.Request(url, data=data, headers=headers, method=method)
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
-            raw = response.read().decode("utf-8")
+        with _build_opener().open(request, timeout=30) as response:
+            raw_bytes = response.read(MAX_RESPONSE_BYTES + 1)
+            if len(raw_bytes) > MAX_RESPONSE_BYTES:
+                raise DmError("DM service response too large")
+            raw = raw_bytes.decode("utf-8")
     except urllib.error.HTTPError as exc:
-        raw = exc.read().decode("utf-8", errors="replace") if exc.fp else ""
+        raw = exc.read(MAX_ERROR_BYTES).decode("utf-8", errors="replace") if exc.fp else ""
         payload = {}
         try:
             payload = json.loads(raw) if raw else {}
@@ -123,7 +213,7 @@ def _http(method, url, body=None, thread_token=None):
 
 
 def _base(base_url):
-    return (base_url or DEFAULT_BASE_URL).rstrip("/")
+    return validate_base_url(base_url)
 
 
 def _resolve_base(explicit, state):
@@ -139,16 +229,29 @@ def _resolve_base(explicit, state):
 def effective_timeout(timeout):
     if timeout is None:
         return DEFAULT_TIMEOUT
-    if timeout < 0:
-        raise ValueError("timeout must not be negative")
+    try:
+        finite = math.isfinite(timeout)
+    except TypeError:
+        raise ValueError("timeout must be a finite number") from None
+    if not finite or timeout < 0:
+        raise ValueError("timeout must be a finite non-negative number")
     return min(timeout, MAX_TIMEOUT)
 
 
 def poll_delay(elapsed, override=None):
     if override is not None:
-        if override <= 0:
+        try:
+            finite = math.isfinite(override)
+        except TypeError:
+            raise ValueError("poll-interval must be positive") from None
+        if not finite or override <= 0:
             raise ValueError("poll-interval must be positive")
         return override
+    try:
+        if not math.isfinite(elapsed):
+            raise ValueError("elapsed must be a finite number")
+    except TypeError:
+        raise ValueError("elapsed must be a finite number") from None
     if elapsed < 120:
         return 10.0
     if elapsed < 600:
@@ -309,7 +412,7 @@ def link(path=None):
 
 def _format_message(message):
     label = message.get("senderLabel") or ("Benjamin" if message.get("sender") == "benjamin" else "You")
-    return f"{label}: {message.get('text', '')}"
+    return f"{_clean(label)}: {_clean(message.get('text', ''))}"
 
 
 def run_command(args):
@@ -343,7 +446,7 @@ def run_command(args):
                 for message in messages:
                     print(_format_message(message))
                 if result.get("claimUrl"):
-                    print(f"Thread: {result['claimUrl']}")
+                    print(f"Thread: {_clean(result['claimUrl'])}")
             return 0
         if args.dm_command == "watch":
             watched = watch(base_url=args.base_url, thread_token=args.thread,
@@ -355,13 +458,13 @@ def run_command(args):
             if json_output:
                 print(json.dumps(result, indent=2))
             else:
-                print(result["claimUrl"])
+                print(_clean(result["claimUrl"]))
                 status = "saved thread"
                 if result.get("last_seen_message_id"):
-                    status += f", last seen message {result['last_seen_message_id']}"
+                    status += f", last seen message {_clean(result['last_seen_message_id'])}"
                 if result.get("updated_at"):
-                    status += f", updated {result['updated_at']}"
-                print(f"Thread status: {status}. Open the link in Chrome and sign in with Google or GitHub for email alerts.")
+                    status += f", updated {_clean(result['updated_at'])}"
+                print(f"Thread status: {_clean(status)}. Open it in your browser and sign in with Google or GitHub in 1 click for email alerts.")
             return 0
         raise ValueError("Unknown dm command")
     except DmError as exc:
@@ -369,27 +472,27 @@ def run_command(args):
             if json_output:
                 print(json.dumps({"ok": False, "error": str(exc), "fallbackUrl": exc.fallback_url}, indent=2))
             else:
-                print(f"Direct messaging is unavailable right now. Open this link to continue: {exc.fallback_url}")
-                print(str(exc), file=sys.stderr)
+                print(f"Direct messaging is unavailable right now. Open this link in your browser to continue: {_clean(exc.fallback_url)}")
+                print(_clean(str(exc)), file=sys.stderr)
             return 1
         if json_output:
             print(json.dumps({"ok": False, "error": str(exc)}, indent=2), file=sys.stderr)
         else:
-            print(str(exc), file=sys.stderr)
+            print(_clean(str(exc)), file=sys.stderr)
         return 1
     except ValueError as exc:
         if json_output:
             print(json.dumps({"ok": False, "error": str(exc)}, indent=2), file=sys.stderr)
         else:
-            print(str(exc), file=sys.stderr)
+            print(_clean(str(exc)), file=sys.stderr)
         return 1
 
 
 def _print_send(result):
     print("Message sent to Benjamin.")
     if result.get("claimUrl"):
-        print(result["claimUrl"])
-    print(result.get("signInNudge") or DEFAULT_NUDGE)
+        print(_clean(result["claimUrl"]))
+    print(_clean(result.get("signInNudge") or DEFAULT_NUDGE))
 
 
 def _print_watch(result, json_output):
@@ -399,8 +502,8 @@ def _print_watch(result, json_output):
     if result.get("timed_out"):
         print("No reply yet. Benjamin is a real human, so replies can take a while.")
         if result.get("claimUrl"):
-            print(f"Open your thread to sign in with Google or GitHub for email alerts: {result['claimUrl']}")
+            print(f"Open it in your browser to sign in with Google or GitHub in 1 click for email alerts: {_clean(result['claimUrl'])}")
         return
     for message in result.get("messages") or []:
         # Plain text only; never execute message content.
-        print(message.get("text", ""))
+        print(_clean(message.get("text", "")))
