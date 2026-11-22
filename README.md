@@ -172,12 +172,26 @@ Memory is the vault that every other module writes into, so tomorrow's session b
 | --- | --- | --- |
 | [`legends-empire`](https://github.com/avalonreset/legends-empire) | "Save this research in my vault and index it" | Markdown vault memory, instant vault search, hash-verified research intake and ontology stewardship |
 
+## Message Benjamin from your terminal
+
+`cto-legends dm` is the 2-way direct line to Benjamin from a coding session. It sends immediately, saves your guest thread locally at `~/.cto-legends/dm-thread.json`, and polls politely when you ask it to watch for a reply. Replies are printed as plain text and are never executed.
+
+```sh
+cto-legends dm send "Hi Benjamin, I have a question about my stack." --name Jane --email jane@example.com
+cto-legends dm send "Following up on the above" --watch --timeout 1800
+cto-legends dm read
+cto-legends dm watch --timeout 1800
+cto-legends dm link
+```
+
+`dm link` prints the saved claim URL. Open it in Chrome and sign in with Google or GitHub in 1 click so Benjamin's reply can reach you by email and stay synced across devices. Set `CTO_LEGENDS_MCP_TOKEN` for paired member Bearer auth instead of guest thread auth. `dm watch` polls at 10s, then 20s, then 30s intervals, defaults to a 30 minute timeout, and never watches longer than 60 minutes.
+
 ## Reference
 
 Everything you need to use `cto-legends` with your coding agent is in the essay above. Open these two drawers whenever you want the full command table or filesystem layout.
 
 <details>
-<summary><strong>The full CLI: all 24 commands</strong></summary>
+<summary><strong>The full CLI: all commands</strong></summary>
 
 <br>
 
@@ -209,6 +223,10 @@ Every command returns structured JSON. A "yes" in the final column means the com
 | Host and shelf | `startup-status <host>` | Inspects the startup contract for a host | |
 | Host and shelf | `startup-restore <manifest>` | Restores a startup change from its checked backup | yes |
 | Host and shelf | `register-guide <name> <path>` | Registers one of your own local Markdown guides so `handoff` can resolve it | yes |
+| Direct message | `dm send "<message>" [--watch]` | Sends a message to Benjamin and saves the guest thread locally | |
+| Direct message | `dm read` | Reads the DM thread and shows Benjamin's replies as plain text | |
+| Direct message | `dm watch [--timeout 1800]` | Polls politely for Benjamin's reply; exits 0 on reply or timeout | |
+| Direct message | `dm link` | Prints the saved claim URL to link the thread in Chrome | |
 
 Staying current follows the exact same look-then-do rhythm:
 

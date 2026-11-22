@@ -9,6 +9,7 @@ import subprocess
 import sys
 from . import __version__, manager as m
 from . import agents, readiness, discovery, startup
+from . import dm as dm_module
 
 
 from .discovery import route
@@ -94,10 +95,37 @@ def parser():
     r = sub.add_parser("run", help="Run an installed module; following arguments go directly to it")
     r.add_argument("module")
     r.add_argument("args", nargs=argparse.REMAINDER)
+    d = sub.add_parser("dm", help="Message Benjamin directly; use dm send/read/watch/link")
+    dm_sub = d.add_subparsers(dest="dm_command", required=True)
+    s = dm_sub.add_parser("send", help="Send a message to Benjamin")
+    s.add_argument("message")
+    s.add_argument("--name")
+    s.add_argument("--email")
+    s.add_argument("--phone")
+    s.add_argument("--watch", action="store_true", help="Poll for Benjamin's reply after sending")
+    s.add_argument("--timeout", type=float, default=dm_module.DEFAULT_TIMEOUT)
+    s.add_argument("--poll-interval", type=float, default=None, help="Override adaptive polling interval (seconds)")
+    s.add_argument("--base-url", default=dm_module.DEFAULT_BASE_URL)
+    s.add_argument("--json", action="store_true", dest="json_output")
+    s = dm_sub.add_parser("read", help="Read the DM thread and show replies")
+    s.add_argument("--thread")
+    s.add_argument("--since")
+    s.add_argument("--base-url", default=dm_module.DEFAULT_BASE_URL)
+    s.add_argument("--json", action="store_true", dest="json_output")
+    s = dm_sub.add_parser("watch", help="Poll politely until Benjamin replies or timeout")
+    s.add_argument("--thread")
+    s.add_argument("--timeout", type=float, default=dm_module.DEFAULT_TIMEOUT)
+    s.add_argument("--poll-interval", type=float, default=None, help="Override adaptive polling interval (seconds)")
+    s.add_argument("--base-url", default=dm_module.DEFAULT_BASE_URL)
+    s.add_argument("--json", action="store_true", dest="json_output")
+    s = dm_sub.add_parser("link", help="Print the saved claim URL for this thread")
+    s.add_argument("--json", action="store_true", dest="json_output")
     return p
 
 
 def execute(args):
+    if getattr(args, "command", None) == "dm":
+        return dm_module.run_command(args)
     home = args.home.expanduser().resolve()
     cmd = args.command
     if cmd == "startup-setup":
