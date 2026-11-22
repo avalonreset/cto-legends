@@ -22,6 +22,13 @@ class Stub:
     counter = 0
     redirect_to = None
     oversized = False
+    pair_verification_uri = None
+    pair_interval = 0.01
+    pending_count = 0
+    exchange_calls = 0
+    exchange_always_pending = False
+    revoke_status = 200
+    unauthorized_token = None
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -65,6 +72,32 @@ class Handler(BaseHTTPRequestHandler):
         Stub.requests.append({"method": "POST", "path": self.path, "body": body,
                               "authorization": self.headers.get("Authorization"),
                               "thread_header": self.headers.get("X-DM-Thread-Token")})
+        base = f"http://{self.headers['Host']}"
+        if self.path == "/api/agent/mcp/pair/start":
+            self._json(200, {"ok": True,
+                             "verificationUri": Stub.pair_verification_uri or f"{base}/pair",
+                             "userCode": "ABCD-EFGH", "deviceSecret": "device-secret-123",
+                             "interval": Stub.pair_interval, "expiresIn": 600})
+            return
+        if self.path == "/api/agent/mcp/pair/exchange":
+            Stub.exchange_calls += 1
+            if Stub.exchange_always_pending or Stub.exchange_calls <= Stub.pending_count:
+                self._json(400, {"ok": False, "code": "authorization_pending",
+                                 "error": "authorization_pending"})
+                return
+            self._json(200, {"ok": True, "accessToken": "member-access-token-xyz",
+                             "expiresIn": 3600, "memberEmail": "jane@example.com",
+                             "scopes": ["dm:read", "dm:send"]})
+            return
+        if self.path == "/api/agent/mcp/revoke":
+            if Stub.revoke_status != 200:
+                self._json(Stub.revoke_status, {"ok": False, "error": "Unauthorized"})
+                return
+            self._json(200, {"ok": True})
+            return
+        if Stub.unauthorized_token and self.headers.get("Authorization") == f"Bearer {Stub.unauthorized_token}":
+            self._json(401, {"ok": False, "error": "Unauthorized"})
+            return
         if Stub.fail_send:
             self._json(503, {"ok": False, "error": "DM send disabled",
                              "fallbackUrl": "http://stub/dm?draft=hello%20there"})
@@ -88,6 +121,9 @@ class Handler(BaseHTTPRequestHandler):
         Stub.requests.append({"method": "GET", "path": self.path, "body": None,
                               "authorization": self.headers.get("Authorization"),
                               "thread_header": self.headers.get("X-DM-Thread-Token")})
+        if Stub.unauthorized_token and self.headers.get("Authorization") == f"Bearer {Stub.unauthorized_token}":
+            self._json(401, {"ok": False, "error": "Unauthorized"})
+            return
         since = (query.get("sinceMessageId") or [None])[0]
         ids = [m["id"] for m in Stub.messages]
         new = Stub.messages[ids.index(since) + 1:] if since in ids else list(Stub.messages)
@@ -105,6 +141,9 @@ class DmTests(unittest.TestCase):
     def setUp(self):
         Stub.messages, Stub.requests, Stub.fail_send, Stub.counter = [], [], False, 0
         Stub.redirect_to, Stub.oversized = None, False
+        Stub.pair_verification_uri, Stub.pending_count, Stub.exchange_calls = None, 0, 0
+        Stub.pair_interval, Stub.exchange_always_pending = 0.01, False
+        Stub.revoke_status, Stub.unauthorized_token = 200, None
         self.server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
@@ -409,6 +448,226 @@ class DmTests(unittest.TestCase):
         self.assertIn("Open it in your browser", out)
         self.assertIn("in 1 click", out)
         self.assertNotIn("Chrome", out)
+
+    def login_cli(self, *extra):
+        return self.run_cli("dm", "login", "--base-url", self.base,
+                            "--no-browser", "--timeout", "5", "--poll-interval", "0.01", *extra)
+
+    # --- dm login / logout / saved token auth ---
+    def test_login_full_flow_then_send_read_use_saved_bearer(self):
+        self.send()
+        Stub.pending_count = 1
+        Stub.requests = []
+        code, out, err = self.login_cli()
+        self.assertEqual(code, 0, err)
+        self.assertIn(f"{self.base}/pair", out)
+        self.assertIn("(Code: ABCD-EFGH)", out)
+        self.assertIn("in 1 click and approve connection", out)
+        self.assertIn("Signed in as jane@example.com.", out)
+        self.assertNotIn("member-access-token-xyz", out)
+        self.assertNotIn("member-access-token-xyz", err)
+        self.assertNotIn("\u2014", out)
+        starts = [r for r in Stub.requests if r["path"] == "/api/agent/mcp/pair/start"]
+        self.assertEqual(starts[-1]["body"]["clientName"], "cto-legends CLI")
+        self.assertEqual(starts[-1]["body"]["threadToken"], "dmt.test-token")
+        exchanges = [r for r in Stub.requests if r["path"] == "/api/agent/mcp/pair/exchange"]
+        self.assertEqual(len(exchanges), 2)
+        self.assertEqual(exchanges[-1]["body"], {"userCode": "ABCD-EFGH", "deviceSecret": "device-secret-123"})
+        saved = json.loads(self.state.read_text())
+        self.assertEqual(saved["access_token"], "member-access-token-xyz")
+        self.assertEqual(saved["member_email"], "jane@example.com")
+        self.assertEqual(saved["token_scopes"], ["dm:read", "dm:send"])
+        self.assertIn("token_expires_at", saved)
+        self.assertEqual(saved["base_url"], self.base)
+        self.assertEqual(saved["thread_token"], "dmt.test-token")
+        if os.name == "posix":
+            self.assertEqual(stat.S_IMODE(self.state.stat().st_mode), 0o600)
+        # Subsequent send/read automatically use the saved Bearer token.
+        Stub.requests = []
+        code, _out, _err = self.send()
+        self.assertEqual(code, 0)
+        sends = [r for r in Stub.requests if r["path"] == "/api/agent/dm/send"]
+        self.assertEqual(sends[-1]["authorization"], "Bearer member-access-token-xyz")
+        self.assertNotIn("threadToken", sends[-1]["body"])
+        self.assertEqual(json.loads(self.state.read_text())["access_token"], "member-access-token-xyz")
+        code, _out, _err = self.run_cli("dm", "read", "--base-url", self.base)
+        self.assertEqual(code, 0)
+        gets = [r for r in Stub.requests if r["method"] == "GET"]
+        self.assertEqual(gets[-1]["authorization"], "Bearer member-access-token-xyz")
+        self.assertEqual(json.loads(self.state.read_text())["access_token"], "member-access-token-xyz")
+
+    def test_login_without_guest_thread_omits_thread_token(self):
+        code, _out, err = self.login_cli()
+        self.assertEqual(code, 0, err)
+        starts = [r for r in Stub.requests if r["path"] == "/api/agent/mcp/pair/start"]
+        self.assertNotIn("threadToken", starts[-1]["body"])
+
+    def test_login_json_does_not_leak_token_or_open_browser(self):
+        with patch.object(dm.webbrowser, "open") as mocked_open:
+            code, out, err = self.run_cli("dm", "login", "--base-url", self.base,
+                                          "--timeout", "5", "--poll-interval", "0.01", "--json")
+        self.assertEqual(code, 0, err)
+        mocked_open.assert_not_called()
+        payload = json.loads(out)
+        self.assertTrue(payload["ok"])
+        self.assertEqual(payload["memberEmail"], "jane@example.com")
+        self.assertNotIn("member-access-token-xyz", out)
+        self.assertNotIn("member-access-token-xyz", err)
+        self.assertIn(f"{self.base}/pair", err)
+
+    def test_login_opens_browser_unless_no_browser(self):
+        with patch.object(dm.webbrowser, "open") as mocked_open:
+            code, _out, err = self.run_cli("dm", "login", "--base-url", self.base,
+                                           "--timeout", "5", "--poll-interval", "0.01")
+        self.assertEqual(code, 0, err)
+        mocked_open.assert_called_once_with(f"{self.base}/pair")
+        Stub.exchange_calls = 0
+        with patch.object(dm.webbrowser, "open") as mocked_open:
+            code, _out, err = self.login_cli()
+        self.assertEqual(code, 0, err)
+        mocked_open.assert_not_called()
+
+    def test_login_browser_error_swallowed(self):
+        with patch.object(dm.webbrowser, "open", side_effect=RuntimeError("headless")):
+            code, out, err = self.run_cli("dm", "login", "--base-url", self.base,
+                                          "--timeout", "5", "--poll-interval", "0.01")
+        self.assertEqual(code, 0, err)
+        self.assertIn("Signed in as jane@example.com.", out)
+
+    def test_login_rejects_cross_origin_verification_uri(self):
+        for bad in ("https://evil.example.com/pair", "file:///etc/passwd",
+                    "http://127.0.0.1:9999/pair", "https://user:pass@evil.example.com/pair"):
+            with self.subTest(bad=bad):
+                Stub.pair_verification_uri = bad
+                before = len([r for r in Stub.requests if r["path"] == "/api/agent/mcp/pair/exchange"])
+                if self.state.exists():
+                    self.state.unlink()
+                code, _out, err = self.login_cli()
+                self.assertEqual(code, 1)
+                self.assertIn("verification URL", err)
+                self.assertFalse(self.state.exists())
+                after = len([r for r in Stub.requests if r["path"] == "/api/agent/mcp/pair/exchange"])
+                self.assertEqual(after, before)
+
+    def test_login_timeout_message_and_code(self):
+        Stub.exchange_always_pending = True
+        code, _out, err = self.run_cli("dm", "login", "--base-url", self.base,
+                                       "--no-browser", "--timeout", "0.05", "--poll-interval", "0.01")
+        self.assertEqual(code, 1)
+        self.assertIn("Sign-in timed out before approval. Run cto-legends dm login again when ready.", err)
+
+    def test_login_timeout_cap_and_finite_guards(self):
+        self.assertEqual(dm.effective_login_timeout(None), 300)
+        self.assertEqual(dm.effective_login_timeout(300), 300)
+        self.assertEqual(dm.effective_login_timeout(99999), 600)
+        for bad in (float("nan"), float("inf"), float("-inf"), -1):
+            with self.subTest(bad=bad):
+                with self.assertRaises(ValueError):
+                    dm.effective_login_timeout(bad)
+                with self.assertRaises(ValueError):
+                    dm.login(base_url=self.base, timeout=5, poll_interval=bad, open_browser=False)
+        code, _out, err = self.run_cli("dm", "login", "--base-url", self.base,
+                                       "--no-browser", "--timeout", "5", "--poll-interval", "nan")
+        self.assertEqual(code, 1)
+        self.assertIn("poll-interval must be positive", err)
+        code, _out, err = self.run_cli("dm", "login", "--base-url", self.base,
+                                       "--no-browser", "--timeout", "inf", "--poll-interval", "0.01")
+        self.assertEqual(code, 1)
+        self.assertIn("timeout must be a finite", err)
+
+    def test_logout_revokes_and_clears_saved_token(self):
+        code, _out, err = self.login_cli()
+        self.assertEqual(code, 0, err)
+        Stub.requests = []
+        code, out, err = self.run_cli("dm", "logout", "--base-url", self.base)
+        self.assertEqual(code, 0, err)
+        self.assertIn("Signed out.", out)
+        revokes = [r for r in Stub.requests if r["path"] == "/api/agent/mcp/revoke"]
+        self.assertEqual(revokes[-1]["authorization"], "Bearer member-access-token-xyz")
+        saved = json.loads(self.state.read_text())
+        for key in ("access_token", "member_email", "token_scopes", "token_expires_at"):
+            self.assertNotIn(key, saved)
+        if os.name == "posix":
+            self.assertEqual(stat.S_IMODE(self.state.stat().st_mode), 0o600)
+        code, out, _err = self.run_cli("dm", "logout", "--base-url", self.base, "--json")
+        self.assertEqual(code, 0)
+        self.assertFalse(json.loads(out)["signed_out"])
+
+    def test_logout_best_effort_on_401_still_clears(self):
+        self.login_cli()
+        Stub.revoke_status = 401
+        code, out, err = self.run_cli("dm", "logout", "--base-url", self.base)
+        self.assertEqual(code, 0, err)
+        self.assertIn("Signed out.", out)
+        self.assertNotIn("access_token", json.loads(self.state.read_text()))
+
+    def test_logout_when_not_signed_in_makes_no_request(self):
+        code, out, _err = self.run_cli("dm", "logout", "--base-url", self.base)
+        self.assertEqual(code, 0)
+        self.assertIn("Not signed in.", out)
+        self.assertEqual([r for r in Stub.requests if r["path"] == "/api/agent/mcp/revoke"], [])
+
+    def test_expired_saved_token_401_guides_to_login(self):
+        self.send()
+        saved = json.loads(self.state.read_text())
+        saved.update({"access_token": "expired-token", "member_email": "jane@example.com"})
+        self.state.write_text(json.dumps(saved) + "\n", encoding="utf-8")
+        Stub.unauthorized_token = "expired-token"
+        code, _out, err = self.run_cli("dm", "read", "--base-url", self.base)
+        self.assertEqual(code, 1)
+        self.assertIn("cto-legends dm login", err)
+        self.assertIn("Google or GitHub in 1 click", err)
+
+    def test_saved_token_trusted_host_guard_and_precedence(self):
+        with self.assertRaises(dm.DmError) as ctx:
+            dm._http("GET", "https://example.com/api/agent/dm/thread", access_token="saved-secret")
+        self.assertIn("untrusted host", str(ctx.exception))
+        self.assertIn(dm.ALLOW_UNTRUSTED_ENV, str(ctx.exception))
+
+        class FakeResponse:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *exc):
+                return False
+
+            def read(self, n=-1):
+                return b'{"ok": true}'
+
+        captured = {}
+
+        class FakeOpener:
+            def open(self, request, timeout=None):
+                captured["auth"] = request.headers.get("Authorization")
+                return FakeResponse()
+
+        with patch.object(dm, "_build_opener", return_value=FakeOpener()):
+            self.assertTrue(dm._http("GET", "https://cto-legends.com/api/agent/dm/thread",
+                                     access_token="saved-secret")["ok"])
+            self.assertEqual(captured["auth"], "Bearer saved-secret")
+            # Env token wins over the saved token.
+            with patch.dict(os.environ, {dm.TOKEN_ENV: "env-secret"}):
+                self.assertTrue(dm._http("GET", "https://cto-legends.com/api/agent/dm/thread",
+                                         access_token="saved-secret")["ok"])
+            self.assertEqual(captured["auth"], "Bearer env-secret")
+
+    def test_link_shows_signed_in_without_leaking_token(self):
+        self.send()
+        code, out, _err = self.run_cli("dm", "link")
+        self.assertEqual(code, 0)
+        self.assertIn("cto-legends dm login", out)
+        self.login_cli()
+        code, out, _err = self.run_cli("dm", "link")
+        self.assertEqual(code, 0)
+        self.assertIn("Signed in as jane@example.com.", out)
+        self.assertNotIn("member-access-token-xyz", out)
+        code, out, _err = self.run_cli("dm", "link", "--json")
+        self.assertEqual(code, 0)
+        payload = json.loads(out)
+        self.assertTrue(payload["signed_in"])
+        self.assertEqual(payload["member_email"], "jane@example.com")
+        self.assertNotIn("member-access-token-xyz", out)
+        self.assertNotIn("access_token", payload)
 
     def test_no_thread_errors(self):
         code, _, err = self.run_cli("dm", "read", "--base-url", self.base)
