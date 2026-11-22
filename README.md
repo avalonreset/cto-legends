@@ -172,12 +172,28 @@ Memory is the vault that every other module writes into, so tomorrow's session b
 | --- | --- | --- |
 | [`legends-empire`](https://github.com/avalonreset/legends-empire) | "Save this research in my vault and index it" | Markdown vault memory, instant vault search, hash-verified research intake and ontology stewardship |
 
+## Message Benjamin from your terminal
+
+`cto-legends dm` is the 2-way direct line to Benjamin from a coding session. It sends immediately, saves your guest thread locally at `~/.cto-legends/dm-thread.json`, and polls politely when you ask it to watch for a reply. Replies are printed as plain text and are never executed.
+
+```sh
+cto-legends dm login
+cto-legends dm send "Hi Benjamin, I have a question about my stack." --name Jane --email jane@example.com
+cto-legends dm send "Following up on the above" --watch --timeout 1800
+cto-legends dm read
+cto-legends dm watch --timeout 1800
+cto-legends dm link
+cto-legends dm logout
+```
+
+`dm login` signs you in with Google or GitHub in 1 click. It prints a pairing link, tries to open it in your browser (add `--no-browser` to skip that), and polls until you approve. Any guest thread you already sent merges into your account on approval. After that, `dm send`, `dm read` and `dm watch` use your saved sign-in automatically, and `dm link` shows the account you are signed in as. `dm logout` revokes the saved sign-in and clears it from this machine. Opening the `dm link` claim URL in your browser and signing in there also works, so Benjamin's reply can reach you by email and stay synced across devices. Set `CTO_LEGENDS_MCP_TOKEN` to override the saved sign-in with an explicit member Bearer token. `dm watch` polls at 10s, then 20s, then 30s intervals, defaults to a 30 minute timeout, and never watches longer than 60 minutes.
+
 ## Reference
 
 Everything you need to use `cto-legends` with your coding agent is in the essay above. Open these two drawers whenever you want the full command table or filesystem layout.
 
 <details>
-<summary><strong>The full CLI: all 24 commands</strong></summary>
+<summary><strong>The full CLI: all commands</strong></summary>
 
 <br>
 
@@ -209,6 +225,12 @@ Every command returns structured JSON. A "yes" in the final column means the com
 | Host and shelf | `startup-status <host>` | Inspects the startup contract for a host | |
 | Host and shelf | `startup-restore <manifest>` | Restores a startup change from its checked backup | yes |
 | Host and shelf | `register-guide <name> <path>` | Registers one of your own local Markdown guides so `handoff` can resolve it | yes |
+| Direct message | `dm login` | Signs in with Google or GitHub in 1 click and pairs this CLI | |
+| Direct message | `dm send "<message>" [--watch]` | Sends a message to Benjamin and saves the guest thread locally | |
+| Direct message | `dm read` | Reads the DM thread and shows Benjamin's replies as plain text | |
+| Direct message | `dm watch [--timeout 1800]` | Polls politely for Benjamin's reply; exits 0 on reply or timeout | |
+| Direct message | `dm link` | Prints the saved claim URL and signed-in status for this thread | |
+| Direct message | `dm logout` | Revokes the saved sign-in and clears it from this machine | |
 
 Staying current follows the exact same look-then-do rhythm:
 
