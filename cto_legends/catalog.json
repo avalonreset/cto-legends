@@ -4,9 +4,9 @@
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
-      "commit": "d1ccbf1e4b957f7545e4cbc24328e557b93aefd9",
+      "commit": "9cede43a11554c94b552a98410e7b63513af3df0",
       "repo": "avalonreset/legends-empire",
-      "sha256": "613590f9122fa0ff85239467636fcb1737f1d58bcc65cd66a853d7ec45acecc2",
+      "sha256": "620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3",
       "purpose": "Markdown knowledge foundation with Ontology Engine, multi-vendor entry-chain auditing (steward entry-audit) and non-ratcheting health digests (steward digest). For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work. Optional Home-ready shared-root structure supports standalone Empire projects and an independently authorized AI Marketing Hub Home headless capability layer without duplicate business records.",
       "keywords": [
         "empire",

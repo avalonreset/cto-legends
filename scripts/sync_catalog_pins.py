@@ -148,12 +148,24 @@ def main(argv: list[str] | None = None) -> int:
             f"- Update `{c['id']}` to {c['new_version']} (`{c['new_commit'][:12]}`, "
             f"codeload-zip SHA-256 `{c['new_sha256']}`) with unified router skill pin and verified release checksums."
         )
-    section = f"## {new_cat_ver} - {args.date}\n\n" + "\n".join(bullets) + "\n\n"
-    marker = f"## {old_cat_ver}"
-    idx = cl_text.find(marker)
-    if idx == -1:
-        raise RuntimeError(f"Could not find {marker} in {CHANGELOG_PATH}")
-    updated_cl = cl_text[:idx] + section + cl_text[idx:]
+    if new_cat_ver == old_cat_ver and f"## {new_cat_ver}" in cl_text:
+        for c, b in zip(changes, bullets):
+            import re as _re
+            cl_text = _re.sub(
+                r"^- Update `" + _re.escape(c["id"]) + r"` to [^\n]+$",
+                b,
+                cl_text,
+                count=1,
+                flags=_re.MULTILINE,
+            )
+        updated_cl = cl_text
+    else:
+        section = f"## {new_cat_ver} - {args.date}\n\n" + "\n".join(bullets) + "\n\n"
+        marker = f"## {old_cat_ver}"
+        idx = cl_text.find(marker)
+        if idx == -1:
+            raise RuntimeError(f"Could not find {marker} in {CHANGELOG_PATH}")
+        updated_cl = cl_text[:idx] + section + cl_text[idx:]
     CHANGELOG_PATH.write_bytes(updated_cl.encode("utf-8"))
     print(f"\nApplied catalog {new_cat_ver} across {len(changes)} module(s) and updated docs/CATALOG-CHANGELOG.md.")
     return 0

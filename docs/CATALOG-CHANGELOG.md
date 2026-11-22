@@ -14,7 +14,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 - Update `legends-cloudflare` to 0.1.5 (`9884a00ce5d2`, codeload-zip SHA-256 `2ea46ed29f7e70c0d0218e010ffa319d9843ce0b46b9003fe56d6903a7bceb7c`) with unified router skill pin and verified release checksums.
 - Update `legends-coolify` to 0.2.5 (`cc646c6de14d`, codeload-zip SHA-256 `fbb115d2a9283bbe723220aa83a98a8c55480afed1247b7b734d563e243d3ba9`) with unified router skill pin and verified release checksums.
 - Update `legends-dataforseo` to 0.1.14 (`bffbd0e5e422`, codeload-zip SHA-256 `556ed4e411e9596eb24e22cd8e0bc53dd708ed4eca2236e625c1f4e324773e39`) with unified router skill pin and verified release checksums.
-- Update `legends-empire` to 0.4.3 (`d1ccbf1e4b95`, codeload-zip SHA-256 `613590f9122fa0ff85239467636fcb1737f1d58bcc65cd66a853d7ec45acecc2`) with unified router skill pin and verified release checksums.
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 - Update `legends-firecrawl` to 0.3.9 (`2631d6c6a60f`, codeload-zip SHA-256 `062ce6660e5edf1f4a8a8acfb5f17df0aaa2d628acdde74237728b09382b5a3c`) with unified router skill pin and verified release checksums.
 - Update `legends-geogrid` to 0.2.11 (`d6f3bee10401`, codeload-zip SHA-256 `552a7a9526185090a779839d315dab9c85a1354db220e4a37c209dfe21c0e020`) with unified router skill pin and verified release checksums.
 - Update `legends-github` to 0.2.6 (`d300e505e80a`, codeload-zip SHA-256 `649c01a11e6bdfc765bbf828b729f1320308991cb80eeb11bd5b969dc32883f6`) with unified router skill pin and verified release checksums.
@@ -37,7 +37,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 - Sync `legends-cloudflare` (0.1.4) catalog pin to `37d0eec1f7d9` (SHA-256 `844e1768ad7cff1b7e8b1745caf25f483d4911f416926a3c54b44077d14453f8`) following Markdown Empire vault documentation updates.
 - Sync `legends-coolify` (0.2.4) catalog pin to `648e67bbd468` (SHA-256 `af0c00a1efeab500adfef3c591e070ed238cb19662988a2d883ed749e3aeb9d0`) following Markdown Empire vault documentation updates.
 - Sync `legends-dataforseo` (0.1.13) catalog pin to `d589719dc1fd` (SHA-256 `dd0f09ba4882488277eef0edcd69c97d194eec265a9b70f55b093b3f8b684fc0`) following Markdown Empire vault documentation updates.
-- Sync `legends-empire` (0.4.2) catalog pin to `f4329d7b2f3b` (SHA-256 `ee7758e1562b3152780a63cc64935600462828aa611965da0a7b98a5af361d9f`) following Markdown Empire vault documentation updates.
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 - Sync `legends-firecrawl` (0.3.8) catalog pin to `aac28c88bd62` (SHA-256 `341a2d142969a87325f13d8128f330c9fae7ab1d2125180b8ffa6cde233c6165`) following Markdown Empire vault documentation updates.
 - Sync `legends-geogrid` (0.2.10) catalog pin to `f377cac68f19` (SHA-256 `f3ec38f6069edbcc96e4f46610a47dec2cb6f806711c6c15c82f564560635681`) following Markdown Empire vault documentation updates.
 - Sync `legends-gohighlevel` (0.3.6) catalog pin to `2a83d536420d` (SHA-256 `61e7a188bb8359d5a27d9ff3952ff2151d1ed2486146da05d5d87c39e7f8df06`) following Markdown Empire vault documentation updates.
@@ -50,7 +50,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.69 - 2026-11-21
 
-- Add `legends-temporal` 0.1.0 (`37060daf9b4375b08563024cab2db00ad1f46cc3`, SHA-256 `572e45926d601de12b747c2ee6a8ea89c78945cf1c405626bd5ac783b1ccb41d`) for local, self-hosted, and Temporal Cloud cluster operations, server-side cron and interval schedules, one-shot `start_delay` timers, replay-safe 11-field `ScriptJob` and `AgentJob` workers across split control and exec task queues, compact event-history failure diagnosis (`workflow history --diagnose`), a confirm-gated stdio MCP server (`legends-temporal mcp`), and an attachable 6-note `legends-empire` knowledge pack (`knowledge/temporal/pack.json`).
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 - Update `legends-youtube` to 0.2.0 (`0bda1d306c525e49a8f499591f960348196f8431`, SHA-256 `c607c58cae8f716f1b4d7b3a5ae69ed78aec032f2372c7e2d9e4eff084629899`) unifying `legends-youtube` (YouTube Data API v3, Analytics API v2, 0-quota public readback and outlier radar, Perfect Video Score idea scoring, ETag-guarded lossless snippet merges, Studio chapter/quiz linters, and SHA-256 private-draft uploads) and `legends-yt-dlp` (preview-first `items.jsonl` probing, SHA-256 `yt-dlp.conf` anonymous option allowlist, `ffprobe` stream verification, and local GPU CrispASR Parakeet word ledgers and FFmpeg clip plans) into a single package, with `legends-yt-dlp` and `legends-yt-dlp-kit` retained as catalog aliases resolving to `legends-youtube`.
 
 ## 1.0.68 - 2026-11-21
@@ -99,18 +99,18 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.60 - 2026-11-21
 
-- Update `legends-empire` to 0.4.2 (`cf766b8b4e5b4ecb5c121c0970ce4f39d4fa608c`, SHA-256 `67c819b456cd7d10feef260116cf7571f9b683733fddee633577b8126b0b6185`) shipping the Seven Provinces starter framework (`Work`, `Money`, `Craft`, `Home`, `People`, `Self`, `Ambition`) with `## The Map` and `## The Blueprint` in `templates/vault/wiki/`, `_BOOTSTRAP_COMMON_PATHS` expansion, and the refreshed README and `r1` outlined Legends Font SVG design cards.
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 
 ## 1.0.59 - 2026-11-21
 
 - Update `legends-dataforseo` to 0.1.12 (`869896216ae2c1a283f40671b0cc21dbdea0ef92`, SHA-256 `9ba476b9a9552d20d6c4c66a88830cb38d8bb8080053b9b17e9aec9a8ae7cc55`) adding fail-closed decoy SERP defense (`resolve_poisoned_results: true`, `serp_integrity.verified` stamping, `suspect_decoy` detector, `UnverifiedSerpError`), Google 5x search-operator billing preflight guard, depth-aware `resolve_goto_urls` and closed `WEBSITE_NAME_PLATFORMS` allowlist, certifi-backed `docs` discovery, and expansion from 30 to 53 DataForSEO v3 routes.
 - Update `legends-firecrawl` to 0.3.7 (`47f00a0afab538a2d039c0a8db7ea9ea8a6b12d8`, SHA-256 `e215a4c9c788329a6f8209215db12c4c0c7d419aba0f32f42b599423f26c6758`) adding 15-route Firecrawl v2 / `firecrawl-cli@1.23.3` catalog coverage (`developer`, `research`, `parse`, `agent`, `interact`, `monitor`, `search-feedback`), allowlisted `website_name` SERP target resolution (`require_candidate=True`), and fail-closed `lfc scrape-serp` requiring `legends-dataforseo >= 0.1.12` `serp_integrity.verified: true`.
-- Update `legends-empire` to 0.4.1 (`60207ab3ed1f14b840798d15218ec221ef50ee66`, SHA-256 `b97b684477a4c2d199e3a44a3b2e41d1570ec20fda72f979123d87e60f1e8d04`) adding `steward entry-audit` multi-vendor entry checks, `steward digest` atomic health digests, cached `stat_fingerprint` ontology index reuse, large-vault lint performance optimization, stewardship knowledge pack `0.2.2`, and native Windows test isolation fixes.
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 - Update `legends-geogrid` to 0.2.9 (`e47028aca64a01846cf0fd5bf9bae9a5dcf70eb6`, SHA-256 `a89f7b8fb2c3a4ddb839a1c737c6f2a3fafaba557dee5f73754abc9d54e17666`) adding the embeddable `geogrid-viewer/v1` report viewer with full per-point Location and Competitors rankings.
 
 ## 1.0.58 - 2026-11-15
 
-- Update `legends-empire` to 0.4.0 (`7d96ea279e70769df14b94a090cc129dbc9a5f21`, SHA-256 `280d981816525472c247be7e16abbc4565f9f7257a063bd358b2c6f788eed016`) adding the Ontology Engine (`ontology index|resolve|need|ask|propose|certify|bench`), Exact Differential Replacement (`operation_type: "ontology"`) transaction bundles, fail-closed `secret-ref:<file>.env#<VAR>` certification verification, AI Marketing Hub Home `v0.7.1`/`v0.7.2` shared-root compatibility pins and managed upgrades (`home-adapter upgrade`), and the disclosure safety gate (`release disclosure`).
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 
 ## 1.0.57 - 2026-11-11
 
@@ -120,17 +120,17 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.56 - 2026-11-11
 
-- Update 20 ecosystem modules to their Carbon High verified security and release hygiene patch releases (`legends-empire` 0.3.5, `legends-hetzner` 0.1.5, `legends-coolify` 0.2.3, `legends-cloudflare` 0.1.3, `legends-astro` 0.2.4, `legends-stripe` 0.1.2, `legends-buzz` 0.1.1, `legends-gohighlevel` 0.3.5, `legends-geogrid` 0.2.6, `legends-dataforseo` 0.1.10, `legends-firecrawl` 0.3.6, `legends-github` 0.2.4, `legends-grant` 0.3.3, `legends-jev` 0.2.4, `legends-obs` 0.1.5, `legends-captions` 0.1.4, `legends-yt-dlp` 0.1.5, `legends-stable-audio-3` 0.1.5, `legends-hyperyap` 0.1.4, and `legends-ambient-intelligence` 0.1.4) alongside `legends-youtube` 0.1.0 across all 21 cataloged modules.
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 - Update `legends-geogrid` and `legends-github` dependency floor on `legends-dataforseo` from `0.1.8` to `0.1.10` to match the pinned catalog version.
 - Update `legends-stable-audio-3` `discovery.instructions` from `["README.md", "docs/first-run.md"]` to `["README.md", "docs/AGENT-RECIPE.md"]` for uniform agent recipe discovery across all 21 ecosystem modules.
 
 ## 1.0.55 - 2026-11-11
 
-- Add `legends-youtube` 0.1.0 (`62abf439582067672a68d1d870a0e0dc7c14bd23`, SHA-256 `5a0ef3961ecf963553a5de538d703511170721e5bc0d9f543f00c783dc4c7625`) for YouTube Data API v3 and Analytics API v2 channel inventory (2 quota units per 50 videos via `relatedPlaylists.uploads`), multi-day quota wave planning against the 10,000-unit daily pool and 2026-06-01 granular per-method caps, ETag-guarded (`If-Match`) lossless `snippet` metadata updates with SHA-256 plan locks and post-write readback, 0-quota public watch-page/oEmbed readback and RSS outlier velocity scouting, sourced CTR/APV/mid-roll scorecards, Perfect Video Score pre-recording idea radar, transcript-to-chapter/Shorts gem-cut compilation, retention-to-transcript cliff X-ray, Studio video quiz (`ytve-posts-modal`) and description chapter linting, SHA-256 frozen private-draft resumable uploads, and an attachable `legends-empire` knowledge pack (`knowledge/youtube/pack.json`).
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 
 ## 1.0.54 - 2026-11-10
 
-- Add `legends-buzz` 0.1.0 (`405a92182f2c45020b8ff1a7b08a5af965b9621f`, SHA-256 `2c8ced313b8e66d0743b6b6b32384b6eda3d90e61afbb56c237956c939e2032b`) for self-hosted Block Buzz Nostr relay operations, 26-domain / 108-subcommand MCP-to-CLI routing (`--format agent`), SSRF-guarded 6-surface relay readiness probes (`/_readiness`, `/health`, NIP-11, Tauri CORS, `/invite/*` CSP edge, `/pair` RFC 6455 WebSocket `101`), residual HTTP `403` vs `NIP-FI` membership diagnostics, Bech32 `npub1...`/hex channel owner governance audits, connected-component `kind:9` reply thread reconstruction, 5-gate zero-trust attachment inspection, Windows NTFS `Buzz.exe`/`buzz.exe` PE subsystem collision detection, preview-first SHA-256 disposable message canaries, 8-gate relay upgrade planning, 9 server/ACP blueprints, and attachable `legends-empire` knowledge pack (`knowledge/buzz/pack.json`).
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 
 ## 1.0.53 - 2026-11-07
 
@@ -143,11 +143,11 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.51 - 2026-11-05
 
-- Update all 19 public ecosystem modules to their Gold-Standard `+0.0.1` releases (`legends-empire` 0.3.4, `legends-hetzner` 0.1.4, `legends-coolify` 0.2.2, `legends-cloudflare` 0.1.2, `legends-astro` 0.2.3, `legends-stripe` 0.1.1, `legends-gohighlevel` 0.3.2, `legends-geogrid` 0.2.5, `legends-dataforseo` 0.1.8, `legends-firecrawl` 0.3.4, `legends-github` 0.2.3, `legends-grant` 0.3.2, `legends-jev` 0.2.3, `legends-obs` 0.1.4, `legends-captions` 0.1.3, `legends-yt-dlp` 0.1.4, `legends-stable-audio-3` 0.1.4, `legends-hyperyap` 0.1.3, and `legends-ambient-intelligence` 0.1.3) with complete `license`, `platforms`, `readiness`, `docs/AGENT-RECIPE.md` discovery instructions, and offline `doctor` readiness probes.
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 
 ## 1.0.50 - 2026-11-05
 
-- Add `legends-stripe` 0.1.0 (`1b5ef5825110aac4285acd5ff3dca66858546702`, SHA-256 `0810f38e5a68e8be147a5565905dfd26997f4df3c312061cf97e76dd0fedd0a4`) for Stripe payment infrastructure governance: `.env` test/live price-ID cross-checking (`env-audit`, `price-map`), cent-exact treasury reconciliation and Stripe Drag fee telemetry (`telemetry`), product catalog lint and declarative price ladder sync (`catalog-audit`, `ladder-plan`, `catalog-diff`, `catalog-sync`), subscription MRR/dunning/double-billing radar (`subscription-audit`, `checkout-smoke`), constant-time `Stripe-Signature` HMAC verification and Soft-Land lifecycle audits (`verify-webhook`, `sign-webhook`, `webhook-audit`, `webhook-probe`, `webhook-bootstrap`, `custom-domain-check`), Astro/Python server blueprints (`blueprint`), and an attachable `legends-empire` knowledge pack (`knowledge/stripe/pack.json`).
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 
 ## 1.0.49 - 2026-11-04
 
@@ -172,7 +172,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.44 - 2026-11-04
 
-- Update `legends-empire` to 0.3.3 (`49ea828ce5211cb987f690cd040b6a2b48836a98`) lowering `BATCH_SIZE` in `claude_empire/home_install.py` from `400` to `150` files per transaction batch, removing `scripts/compact-skill-descriptions.ps1`, and clarifying `scripts/wiki-mode.py templates` guidance.
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 
 ## 1.0.43 - 2026-11-04
 
@@ -221,7 +221,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
   Voice/Conversation AI and Custom Objects inspection, live internal backend
   5-layer agency governance (`location-unnerf`, `user-unnerf`,
   `unlock-dashboards`, `smtp-unlock`, `rebilling-sync`), and an optional
-  versioned `legends-empire` knowledge pack (`knowledge/gohighlevel/pack.json`).
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 - Add `legends-gohighlevel-kit` as a catalog and CLI compatibility alias.
 
 ## 1.0.32 - 2026-10-31
@@ -252,10 +252,10 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 - Add `legends-astro` 0.2.0 for Astro v7 site migrations, HTML/WordPress/Firecrawl
   source contract extraction, Content Layer scaffolding, post-build `dist/`
   parity verification, pinned `withastro/docs` lookup, and an optional
-  versioned `legends-empire` knowledge pack (`knowledge/astro/pack.json`).
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 - Add `legends-astro-kit` as a catalog and CLI compatibility alias.
 - Pin `legends-github` 0.2.0 and unify the 17-module catalog sequence across
-  the four capability layers (`legends-empire` foundation, cloud/web stack,
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
   search/research/decision stack, and media/voice/studio production stack).
 
 ## 1.0.26 - 2026-10-22
@@ -298,7 +298,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.23 - 2026-10-10
 
-- Update `legends-empire` to 0.3.2 so validated, already rolled-back
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
   transaction history from another OS permits unrelated new native writes.
   History and backups remain unchanged; incomplete foreign recovery and
   same-operation retries still require the original backend.
@@ -312,7 +312,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
   stricter collection checks, portable packaged resources and generic setup.
 - Discover its source-cited operations library and optional versioned Empire
   shelf. Installation does not write to a vault; attachment uses the reviewed
-  `legends-empire` transaction workflow.
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 - Add the historical `legends-coolify-kit` name as an alias. Extend readiness
   probes to verify the installed recipe and knowledge pack.
 - Expand the shared module release contract and receipt template to require
@@ -333,7 +333,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.20 - 2026-10-09
 
-- Update `legends-empire` to 0.3.1 with reviewed native Windows
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
   transactions and knowledge attachment on local fixed NTFS. Unsupported
   reparse paths, network shares, non-NTFS volumes and security conditions
   fail closed. macOS/Linux/POSIX support remains; Bash utilities stay POSIX-only.
@@ -415,7 +415,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.12 - 2026-10-01
 
-- Pin `legends-empire` 0.3.0 for an optional Home-ready shared Empire root,
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
   original standalone records and independently authorized Home capability layers.
 - Expose reviewed prepare/install/compose/bind readiness and native validation
   through the existing router; Home is never a global Empire dependency.
@@ -426,7 +426,7 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 ## 1.0.11 - 2026-10-01
 
 - Pin `legends-dataforseo-kit` 0.1.3, `legends-firecrawl` 0.3.1 and
-  `legends-empire` 0.2.4 for portable research evidence workflows.
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
 - Expose offline inventory, integrity verification, selected/full inspection and
   explicit reuse checks in discovery. Add Empire's evidence verification and
   intake-planning recipe to the installed handoff.
@@ -478,20 +478,20 @@ manager refuses a catalog with a newer schema and asks for a manager update.
 
 ## 1.0.5 - 2026-09-29
 
-- Pin `legends-empire` 0.2.2, checking filesystem permission support before
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
   transaction notes or journals are written. Clarify the WSL DrvFS metadata
   requirement in capability discovery and setup.
 - No manager or router skill change. Stewardship knowledge pack remains 0.2.0.
 
 ## 1.0.4 - 2026-09-29
 
-- Pin `legends-empire` 0.2.1, accepting validated historical transaction journals
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
   so existing vaults can attach the stewardship knowledge shelf.
 - Knowledge pack content remains 0.2.0. No manager or router skill change.
 
 ## 1.0.3 - 2026-09-29
 
-- Pin `legends-empire` 0.2.0 with integrated vault stewardship and its attachable
+- Update `legends-empire` to 0.4.3 (`9cede43a1155`, codeload-zip SHA-256 `620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3`) with unified router skill pin and verified release checksums.
   Markdown knowledge pack. No additional module or registered skill.
 - Discover vault cleanup, neglected-project review and session continuity from
   ordinary outcome phrases. Handoff loads stewardship and attachment recipes.
