@@ -1,6 +1,8 @@
-<p align="center"><img src="assets/banner.webp" width="100%" alt="cto-legends agent skills router: speak to your coding agent in plain english across a curated open-source stack"></p>
+<p align="center"><img src="assets/banner.webp" width="100%" alt="cto-legends: sovereign business infrastructure & operational ontology"></p>
 
 # cto-legends: agent skills that let you speak in plain english across a curated stack
+
+sovereign business infrastructure & operational ontology
 
 [![PyPI](https://img.shields.io/pypi/v/cto-legends?style=flat-square&label=pypi&labelColor=000000&color=ff0000)](https://pypi.org/project/cto-legends/)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-ff0000?style=flat-square&labelColor=000000)](pyproject.toml)

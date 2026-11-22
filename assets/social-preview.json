@@ -1,7 +1,7 @@
 {
   "template": "legends-social-v1",
   "title": "cto-legends",
-  "subtitle": "the human is the controller. the agents do the operating. speak plain english across 21 curated open-source tools.",
+  "subtitle": "sovereign business infrastructure & operational ontology",
   "size": [
     1280,
     640
@@ -10,9 +10,8 @@
   "subtitle_px": 36,
   "safe_margin_px": 80,
   "lines": [
-    "the human is the controller. the agents",
-    "do the operating. speak plain english",
-    "across 21 curated open-source tools."
+    "sovereign business infrastructure",
+    "& operational ontology"
   ],
   "text_bounds": [
     [
@@ -24,24 +23,18 @@
     [
       80,
       324,
-      938,
+      806,
       362
     ],
     [
       80,
       372,
-      894,
+      564,
       410
-    ],
-    [
-      80,
-      420,
-      872,
-      455
     ]
   ],
   "font_sha256": "3769f0f76477a7d9e2e6cb40422dedacb56c9ab1a6f7beee89b2b9ba6b8091ee",
-  "image_sha256": "28a29a40bdfe4741a6deac6eb31183a977f15b8d2a6a2013262d741905205612",
-  "bytes": 27311,
+  "image_sha256": "49547fbc66a182d2dbb88af024b95e013c1d0010c22385db4f9d2ce04123a7dd",
+  "bytes": 20407,
   "upload_status": "not_attempted"
 }
