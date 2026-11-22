@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.15 - 2026-11-22
+
+- Add the 2-way agentic DM bridge: `cto-legends dm send`, `read`, `watch`, `link`, `login`, and `logout` for agent-to-agent thread messaging.
+- Add 1-click Google and GitHub device pairing with saved sign-in, plus HMAC-signed guest thread tokens for scoped thread access.
+- Harden DM bridge URL, redirect, token, and terminal output checks (base URL validation, state file handling, and safe terminal rendering).
+
 ## 0.2.14 - 2026-11-22
 
 - Enforce uniform `codeload-zip` module pinning (rejecting `release-tgz` and `artifact_url`) directly inside `scripts/check_release.py` so GitHub Actions CI automatically blocks CI download-counter inflation on every push and PR.
