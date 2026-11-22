@@ -1453,9 +1453,9 @@
     },
     "legends-temporal": {
       "version": "0.1.1",
-      "commit": "9efd2605797dd8236ad51d315c2ee6a77d457b61",
+      "commit": "70ca82677a84ed11c77dbfa1cc8b09d6d5d617f8",
       "repo": "avalonreset/legends-temporal",
-      "sha256": "02ea036bccabe2b79c6e17fbc643e4f84e20ddef3cff3d7e5e1bc0ea7cefbb6b",
+      "sha256": "09d53488b3f18ea6eeb1b7f005ee71b8c525ed204aaddf4927ec1f0bbb1ba7d5",
       "purpose": "Operate local, self-hosted, or Temporal Cloud clusters with durable cron and interval schedules, one-shot start_delay timers, first-class cto-legends --module scheduling, orphaned-queue and declarative inventory drift auditing (audit), local SQLite/Docker Compose/systemd cluster bootstrap (bootstrap), zero-rewrite 11-field ScriptJob and AgentJob workers across split control and exec task queues, compact event-history failure diagnosis, a 10-tool stdio MCP server, and a 7-note Empire knowledge pack.",
       "keywords": [
         "temporal",
@@ -1888,9 +1888,9 @@
     },
     "legends-youtube": {
       "version": "0.2.0",
-      "commit": "a1d015c1127a68f79857f735c9b5dd715a6c77e1",
+      "commit": "0bda1d306c525e49a8f499591f960348196f8431",
       "repo": "avalonreset/legends-youtube",
-      "sha256": "4aa681b13381ab1f93ced28e94a4630f7a8133849caa2db46a53f9ba70b1cded",
+      "sha256": "c607c58cae8f716f1b4d7b3a5ae69ed78aec032f2372c7e2d9e4eff084629899",
       "purpose": "Operate YouTube channels over Data API v3 and Analytics API v2 with ETag-guarded lossless metadata updates, quota-cost wave planning, 0-quota public readback and outlier scouting, sourced CTR/retention A/B scorecards, Studio quiz and chapter validators, SHA-256 frozen private-draft uploads, repeatable yt-dlp source pulls, transcripts, search, and word-timed clip-building (legends-yt-dlp), and an attachable 18-file Empire knowledge pack.",
       "keywords": [
         "youtube",
