@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.69",
+  "version": "1.0.70",
   "modules": {
     "legends-empire": {
       "version": "0.4.2",
@@ -1452,11 +1452,11 @@
       "readiness": "doctor"
     },
     "legends-temporal": {
-      "version": "0.1.0",
-      "commit": "37060daf9b4375b08563024cab2db00ad1f46cc3",
+      "version": "0.1.1",
+      "commit": "9efd2605797dd8236ad51d315c2ee6a77d457b61",
       "repo": "avalonreset/legends-temporal",
-      "sha256": "572e45926d601de12b747c2ee6a8ea89c78945cf1c405626bd5ac783b1ccb41d",
-      "purpose": "Operate local, self-hosted, or Temporal Cloud clusters with durable cron and interval schedules, one-shot start_delay timers, zero-rewrite 11-field ScriptJob and AgentJob workers across split control and exec task queues, compact event-history failure diagnosis, a confirm-gated stdio MCP server, and a 6-note Empire knowledge pack.",
+      "sha256": "02ea036bccabe2b79c6e17fbc643e4f84e20ddef3cff3d7e5e1bc0ea7cefbb6b",
+      "purpose": "Operate local, self-hosted, or Temporal Cloud clusters with durable cron and interval schedules, one-shot start_delay timers, first-class cto-legends --module scheduling, orphaned-queue and declarative inventory drift auditing (audit), local SQLite/Docker Compose/systemd cluster bootstrap (bootstrap), zero-rewrite 11-field ScriptJob and AgentJob workers across split control and exec task queues, compact event-history failure diagnosis, a 10-tool stdio MCP server, and a 7-note Empire knowledge pack.",
       "keywords": [
         "temporal",
         "temporal-io",
@@ -1474,7 +1474,7 @@
         "worker"
       ],
       "dependencies": {},
-      "scope": "Python 3.11+ CLI and stdio MCP server backed by the official temporalio SDK over gRPC (plain, TLS, mTLS, or Temporal Cloud API key). Supports offline doctor, config, resources, and --dry-run schedule/timer previews with zero network calls, plus split control-plane and exec-plane ScriptJob workers and 6-note Empire knowledge pack attachment.",
+      "scope": "Python 3.11+ CLI and 10-tool stdio MCP server backed by the official temporalio SDK over gRPC (plain, TLS, mTLS, or Temporal Cloud API key). Supports offline doctor, config, resources, bootstrap compose/systemd previews, offline schedule/inventory audits, and --dry-run schedule/timer previews (including --module <legends-module>) with zero network calls, plus live queue-poller cross-check audits, split control-plane and exec-plane ScriptJob workers, and 7-note Empire knowledge pack attachment.",
       "discovery": {
         "signals": [
           "temporal",
@@ -1489,7 +1489,10 @@
           "cron schedule",
           "workflow history",
           "diagnose failed workflow",
-          "legends-temporal"
+          "legends-temporal",
+          "schedule legends module",
+          "audit temporal schedules",
+          "bootstrap temporal"
         ],
         "examples": [
           "Check if our Temporal server, namespace, and control and exec task-queue pollers are healthy",

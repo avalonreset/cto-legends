@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.70 - 2026-11-21
+
+- Update `legends-temporal` to 0.1.1 (`9efd2605797dd8236ad51d315c2ee6a77d457b61`, SHA-256 `02ea036bccabe2b79c6e17fbc643e4f84e20ddef3cff3d7e5e1bc0ea7cefbb6b`) adding first-class `cto-legends` ecosystem module scheduling (`--module <legends-module>`), `legends-temporal audit` (offline cron/timezone/secret/overlap scanner plus live task-queue poller cross-check and 3-way declarative inventory drift radar), `legends-temporal bootstrap local|compose|systemd` (SQLite-persisted local dev server launcher, hardened `127.0.0.1`/Tailscale Docker Compose stack generator, and `systemd` worker/backup units), 10 stdio MCP tools (`temporal_schedule_audit`, `temporal_bootstrap_plan`), and Note 07 in the attachable Empire knowledge pack (`07-why-not-cron-or-built-in-agent-schedulers.md`).
+
 ## 1.0.69 - 2026-11-21
 
 - Add `legends-temporal` 0.1.0 (`37060daf9b4375b08563024cab2db00ad1f46cc3`, SHA-256 `572e45926d601de12b747c2ee6a8ea89c78945cf1c405626bd5ac783b1ccb41d`) for local, self-hosted, and Temporal Cloud cluster operations, server-side cron and interval schedules, one-shot `start_delay` timers, replay-safe 11-field `ScriptJob` and `AgentJob` workers across split control and exec task queues, compact event-history failure diagnosis (`workflow history --diagnose`), a confirm-gated stdio MCP server (`legends-temporal mcp`), and an attachable 6-note `legends-empire` knowledge pack (`knowledge/temporal/pack.json`).
