@@ -5,6 +5,21 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.71 - 2026-11-21
+
+- Sync `legends-ambient-intelligence` (0.1.5) catalog pin to `fb0370a329ae` (SHA-256 `61befd7f314ffc427368b9ae78c96dd99ef4823e09498a66a5aa3a1bd50dfc88`) following Markdown Empire vault documentation updates.
+- Sync `legends-astro` (0.2.5) catalog pin to `250c460f7056` (SHA-256 `f28e2a3e9fed61b9f893942216f4e0565c1a5cdc85061fe8140c7260f106d73e`) following Markdown Empire vault documentation updates.
+- Sync `legends-buzz` (0.1.2) catalog pin to `9c60d399a2c4` (SHA-256 `6cecad5c0bd4d59e4f493b9b3ab24c55929043c775425a301fb7291f9dcd54a2`) following Markdown Empire vault documentation updates.
+- Sync `legends-cloudflare` (0.1.4) catalog pin to `37d0eec1f7d9` (SHA-256 `844e1768ad7cff1b7e8b1745caf25f483d4911f416926a3c54b44077d14453f8`) following Markdown Empire vault documentation updates.
+- Sync `legends-coolify` (0.2.4) catalog pin to `648e67bbd468` (SHA-256 `af0c00a1efeab500adfef3c591e070ed238cb19662988a2d883ed749e3aeb9d0`) following Markdown Empire vault documentation updates.
+- Sync `legends-dataforseo` (0.1.13) catalog pin to `d589719dc1fd` (SHA-256 `dd0f09ba4882488277eef0edcd69c97d194eec265a9b70f55b093b3f8b684fc0`) following Markdown Empire vault documentation updates.
+- Sync `legends-empire` (0.4.2) catalog pin to `f4329d7b2f3b` (SHA-256 `ee7758e1562b3152780a63cc64935600462828aa611965da0a7b98a5af361d9f`) following Markdown Empire vault documentation updates.
+- Sync `legends-firecrawl` (0.3.8) catalog pin to `aac28c88bd62` (SHA-256 `341a2d142969a87325f13d8128f330c9fae7ab1d2125180b8ffa6cde233c6165`) following Markdown Empire vault documentation updates.
+- Sync `legends-geogrid` (0.2.10) catalog pin to `f377cac68f19` (SHA-256 `f3ec38f6069edbcc96e4f46610a47dec2cb6f806711c6c15c82f564560635681`) following Markdown Empire vault documentation updates.
+- Sync `legends-gohighlevel` (0.3.6) catalog pin to `2a83d536420d` (SHA-256 `61e7a188bb8359d5a27d9ff3952ff2151d1ed2486146da05d5d87c39e7f8df06`) following Markdown Empire vault documentation updates.
+- Sync `legends-grant` (0.3.4) catalog pin to `fbfe58b51eaf` (SHA-256 `6f36309bf0ea04d1f08daf16265e83e60aa6ce63cdabab0253eee7a24c2e898b`) following Markdown Empire vault documentation updates.
+- Sync `legends-youtube` (0.2.0) catalog pin to `738d26972a8c` (SHA-256 `d4848d8c03a4da55670033aee5a08b74aa5beb7d71fcc32b301f4b41f885665a`) following Markdown Empire vault documentation updates.
+
 ## 1.0.70 - 2026-11-21
 
 - Update `legends-temporal` to 0.1.1 (`70ca82677a84ed11c77dbfa1cc8b09d6d5d617f8`, SHA-256 `09d53488b3f18ea6eeb1b7f005ee71b8c525ed204aaddf4927ec1f0bbb1ba7d5`) adding first-class `cto-legends` ecosystem module scheduling (`--module <legends-module>`), `legends-temporal audit` (offline cron/timezone/secret/overlap scanner plus live task-queue poller cross-check and 3-way declarative inventory drift radar), `legends-temporal bootstrap local|compose|systemd` (SQLite-persisted local dev server launcher, hardened `127.0.0.1`/Tailscale Docker Compose stack generator, and `systemd` worker/backup units), 10 stdio MCP tools (`temporal_schedule_audit`, `temporal_bootstrap_plan`), and Note 07 in the attachable Empire knowledge pack (`07-why-not-cron-or-built-in-agent-schedulers.md`).
