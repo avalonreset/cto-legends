@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import json
 import re
 import subprocess
@@ -373,6 +374,36 @@ def audit_repo(entry: dict, catalog: dict) -> tuple[str, list[Check]]:
     if "draft(s) present" in rel_note:
         checks.append(Check(None, "no leftover draft releases", rel_note))
 
+    # --- remote side: standardized release assets + SHA256SUMS.txt & tag==main HEAD.
+    tag_commit_sha: str | None = None
+    main_head_sha: str | None = None
+    if rel is not None:
+        asset_names = sorted(
+            str(a.get("name", ""))
+            for a in (rel.get("assets") or [])
+            if isinstance(a, dict) and a.get("name")
+        )
+        has_sums = "SHA256SUMS.txt" in asset_names
+        pkg_assets = [n for n in asset_names if n != "SHA256SUMS.txt"]
+        checks.append(Check(
+            bool(has_sums and pkg_assets),
+            "gh latest release carries assets + SHA256SUMS.txt",
+            f"assets={asset_names}" if (has_sums and pkg_assets)
+            else f"missing package or SHA256SUMS.txt (found: {asset_names or 'none'})",
+        ))
+        try:
+            main_head_sha = str(gh_api(f"repos/{full}/commits/main").get("sha") or "")
+            tag_commit_sha = str(gh_api(f"repos/{full}/commits/{rel['tag_name']}").get("sha") or "")
+            checks.append(Check(
+                bool(main_head_sha and tag_commit_sha == main_head_sha),
+                "release tag commit matches main HEAD",
+                f"{rel['tag_name']} == main @ {main_head_sha[:12]}"
+                if (main_head_sha and tag_commit_sha == main_head_sha)
+                else f"tag {rel['tag_name']}={str(tag_commit_sha)[:12]} != main={str(main_head_sha)[:12]}",
+            ))
+        except RuntimeError as exc:
+            checks.append(Check(False, "release tag commit matches main HEAD", f"gh query failed: {exc}"))
+
     # --- catalog side.
     if is_router:
         catalog_ver: str | None = None
@@ -431,10 +462,46 @@ def audit_repo(entry: dict, catalog: dict) -> tuple[str, list[Check]]:
             catalog_ver = None
         else:
             catalog_ver = mod.get("version")
+            pin_commit = str(mod.get("commit", ""))
             checks.append(Check(
                 True, "catalog entry present",
-                f"v{catalog_ver} @ {str(mod.get('commit', ''))[:12]}",
+                f"v{catalog_ver} @ {pin_commit[:12]}",
             ))
+            if tag_commit_sha:
+                checks.append(Check(
+                    pin_commit == tag_commit_sha,
+                    "catalog commit matches latest release tag commit",
+                    f"both @ {pin_commit[:12]}" if pin_commit == tag_commit_sha
+                    else f"catalog={pin_commit[:12]} != tag={tag_commit_sha[:12]}",
+                ))
+            src_kind = mod.get("recipe", {}).get("source", "codeload-zip")
+            has_art_url = "artifact_url" in mod
+            checks.append(Check(
+                src_kind == "codeload-zip" and not has_art_url,
+                "catalog uses uniform codeload-zip source (zero CI asset inflation)",
+                "source=codeload-zip" if (src_kind == "codeload-zip" and not has_art_url)
+                else f"source={src_kind!r}, artifact_url={mod.get('artifact_url')!r}",
+            ))
+            try:
+                router_dir = str(_DRIVE_ROOT / "cto-legends-public")
+                if router_dir not in sys.path:
+                    sys.path.insert(0, router_dir)
+                from cto_legends.manager import fetch as manager_fetch  # noqa
+                zip_url = f"https://codeload.github.com/{full}/zip/{pin_commit}"
+                raw_zip = manager_fetch(zip_url, {full})
+                live_sha256 = hashlib.sha256(raw_zip).hexdigest()
+                want_sha256 = str(mod.get("sha256", ""))
+                checks.append(Check(
+                    live_sha256 == want_sha256,
+                    "live codeload-zip SHA-256 matches catalog.json",
+                    f"sha256={live_sha256[:16]}..." if live_sha256 == want_sha256
+                    else f"want {want_sha256[:16]}..., got {live_sha256[:16]}...",
+                ))
+            except Exception as exc:
+                checks.append(Check(
+                    False, "live codeload-zip SHA-256 matches catalog.json",
+                    f"download/hash check failed: {exc}",
+                ))
 
     # --- tree side.
     local = entry.get("local")

@@ -5,6 +5,30 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.72 - 2026-11-22
+
+- Update `legends-ambient-intelligence` to 0.1.6 (`8281058c134d`, codeload-zip SHA-256 `aa7527563414f1f5bd2259318daf3ff19cc1200412109a2c27ba02fafde4c091`) with unified router skill pin and verified release checksums.
+- Update `legends-astro` to 0.2.6 (`9fbdc40cf323`, codeload-zip SHA-256 `f5586a343e0cfd8c85f8dc9130cdc0459a2f24e28ce51019b1aa86db1a26a8fb`) with unified router skill pin and verified release checksums.
+- Update `legends-buzz` to 0.1.3 (`0d2083101c3f`, codeload-zip SHA-256 `28a5cd44e5166fa17050f09311043a5c89d2b5390886ac355d8b40810319f3de`) with unified router skill pin and verified release checksums.
+- Update `legends-captions` to 0.1.6 (`2d08345b61c1`, codeload-zip SHA-256 `7dc30df7c63df18b3bc77f7eda6a6c9d319306549b73a5ae1700274e99207204`) with unified router skill pin and verified release checksums.
+- Update `legends-cloudflare` to 0.1.5 (`9884a00ce5d2`, codeload-zip SHA-256 `2ea46ed29f7e70c0d0218e010ffa319d9843ce0b46b9003fe56d6903a7bceb7c`) with unified router skill pin and verified release checksums.
+- Update `legends-coolify` to 0.2.5 (`cc646c6de14d`, codeload-zip SHA-256 `fbb115d2a9283bbe723220aa83a98a8c55480afed1247b7b734d563e243d3ba9`) with unified router skill pin and verified release checksums.
+- Update `legends-dataforseo` to 0.1.14 (`bffbd0e5e422`, codeload-zip SHA-256 `556ed4e411e9596eb24e22cd8e0bc53dd708ed4eca2236e625c1f4e324773e39`) with unified router skill pin and verified release checksums.
+- Update `legends-empire` to 0.4.3 (`d1ccbf1e4b95`, codeload-zip SHA-256 `613590f9122fa0ff85239467636fcb1737f1d58bcc65cd66a853d7ec45acecc2`) with unified router skill pin and verified release checksums.
+- Update `legends-firecrawl` to 0.3.9 (`2631d6c6a60f`, codeload-zip SHA-256 `062ce6660e5edf1f4a8a8acfb5f17df0aaa2d628acdde74237728b09382b5a3c`) with unified router skill pin and verified release checksums.
+- Update `legends-geogrid` to 0.2.11 (`d6f3bee10401`, codeload-zip SHA-256 `552a7a9526185090a779839d315dab9c85a1354db220e4a37c209dfe21c0e020`) with unified router skill pin and verified release checksums.
+- Update `legends-github` to 0.2.6 (`d300e505e80a`, codeload-zip SHA-256 `649c01a11e6bdfc765bbf828b729f1320308991cb80eeb11bd5b969dc32883f6`) with unified router skill pin and verified release checksums.
+- Update `legends-gohighlevel` to 0.3.7 (`2506933c2b85`, codeload-zip SHA-256 `fe355ee355d419f41c0ab99fc128401b7c82262cfcdeb6c254a42236c02949c9`) with unified router skill pin and verified release checksums.
+- Update `legends-grant` to 0.3.5 (`8a5f4bd14433`, codeload-zip SHA-256 `b9ef5f778b9ec592914f83d100af01cf9504df9ab1016facd88ca7d1eb051e84`) with unified router skill pin and verified release checksums.
+- Update `legends-hetzner` to 0.1.7 (`0cdcd3b24f40`, codeload-zip SHA-256 `4040985825b4fd465a63f45839820b73408b293565814935fae415e013c8f6d0`) with unified router skill pin and verified release checksums.
+- Update `legends-hyperyap` to 0.1.6 (`ed80d0b38fa8`, codeload-zip SHA-256 `57e7a4c0f98b764439518ee9a4f82ad35ac1781f70236d375c0456b8f77bfbed`) with unified router skill pin and verified release checksums.
+- Update `legends-jev` to 0.2.6 (`34a978fa169b`, codeload-zip SHA-256 `d307bc6990adf35808d8b3e42ac47612e42bbba01dcbb454b51cf80619ed7463`) with unified router skill pin and verified release checksums.
+- Update `legends-obs` to 0.1.7 (`2b2f318309cd`, codeload-zip SHA-256 `5969bece999c72a46ded35673128485718be9a56ddee4fac5fdb268b8160388f`) with unified router skill pin and verified release checksums.
+- Update `legends-stable-audio-3` to 0.1.7 (`31253e9c14b4`, codeload-zip SHA-256 `a533fe3d6c18da79d36cf80a88a7146811b335d0c52c1d6b5dd55929ab4fd87d`) with unified router skill pin and verified release checksums.
+- Update `legends-stripe` to 0.1.5 (`133feb34ae9f`, codeload-zip SHA-256 `6c525da2d68e20c671ce2759feb94ca6d8ad35cb39b3d6659f0ba2f3c1713d7d`) with unified router skill pin and verified release checksums.
+- Update `legends-temporal` to 0.1.2 (`a6fcc58f451c`, codeload-zip SHA-256 `ef74b0f483d78255c6ed087b2d474008d0a57e89f3b52a54354d6cf9f0ae0dfe`) with unified router skill pin and verified release checksums.
+- Update `legends-youtube` to 0.2.1 (`cb7aa7a20491`, codeload-zip SHA-256 `47ca56bbc8995a888b5c7be375bdfe1494aa5f1de6bfba8dd49be1a5d33ca78b`) with unified router skill pin and verified release checksums.
+
 ## 1.0.71 - 2026-11-21
 
 - Sync `legends-ambient-intelligence` (0.1.5) catalog pin to `fb0370a329ae` (SHA-256 `61befd7f314ffc427368b9ae78c96dd99ef4823e09498a66a5aa3a1bd50dfc88`) following Markdown Empire vault documentation updates.

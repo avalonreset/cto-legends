@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.13 - 2026-11-22
+
+- Unify all 21 catalog modules on `codeload-zip` source archives (migrating `legends-obs` off `release-tgz` so CI matrix runs never increment public GitHub Release Asset download counters).
+- Add deterministic `scripts/sync_catalog_pins.py` and upgrade `scripts/fleet-audit.py` to enforce live `codeload-zip` SHA-256 verification, `tag == main HEAD == catalog commit`, and standardized release assets + `SHA256SUMS.txt` across all 22 repositories.
+- Ship catalog `1.0.72` across all 21 module micro-releases.
+
 ## 0.2.12 - 2026-11-21
 
 - Expand `cto_legends/SKILL.md` YAML frontmatter `description:` to a single-line, host-safe (<= 1,024 chars, LF-only, zero `legends-[a-z0-9]` identifiers) trigger index covering all 21 ecosystem domains and vendor names (including Alexandria) so agent hosts without `startup-setup` reliably route plain-English requests to `cto-legends`, backed by a new regression test in `tests/test_capabilities.py`.
