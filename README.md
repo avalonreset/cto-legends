@@ -237,7 +237,7 @@ Global options: `--home <path>` moves the managed home folder, and `--version` p
 - **Refused paths.** Managed paths reject symlinks, Windows junctions and reparse points.
 - **Requirements.** Python 3.11 or newer. Running `cto-legends doctor` also checks whether optional host binaries (`node`, `pnpm` and `gh`) are available on your `PATH`.
 - **More hosts.** Beyond the nine main presets, `agent-setup` also accepts `antigravity` (alias `agy`), `cursor`, `windsurf` and `aider`, plus the aliases `metamuse`, `qwen-code`, `zai` and `zcode`.
-- **Old names still work.** Twelve earlier module names resolve automatically as aliases, and the retired `legends-obsidian` slug maps cleanly to `legends-empire`.
+- **Old names still work.** Twelve earlier module names resolve automatically as aliases in the router catalog.
 - **Licenses.** `cto-legends` is [MIT](LICENSE). Every module is MIT except `legends-stable-audio-3` (Apache-2.0) and `legends-hyperyap` (AGPL-3.0), and the optional OBS cursor overlay extra is GPL-2.0-or-later, all documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) beside [NOTICE](NOTICE).
 - **Deeper docs.** [Architecture](docs/ARCHITECTURE.md), [capability discovery](docs/CAPABILITY-DISCOVERY.md), [agent hosts](docs/AGENT-HOSTS.md), [startup](docs/STARTUP.md), [research workflow](docs/RESEARCH-WORKFLOW.md), [Home adapter](docs/HOME-ADAPTER.md), [contributing](CONTRIBUTING.md) and [security](SECURITY.md).
 

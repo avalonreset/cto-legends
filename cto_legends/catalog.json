@@ -27,7 +27,7 @@
         "digest"
       ],
       "dependencies": {},
-      "scope": "Python 3.11+ standard-library core with Ontology Engine (cached stat_fingerprint index), multi-vendor entry-harness auditing (steward entry-audit), atomic health digests (steward digest), fast large-vault linting, and stewardship knowledge pack 0.2.2. Reviewed transactions and knowledge attachment support native Windows on local fixed NTFS, plus macOS/Linux/POSIX. Windows fails closed on reparse paths, network shares and non-NTFS volumes. Windows process-crash recovery does not claim POSIX directory-fsync power-loss equivalence. Bash utilities remain POSIX-only; WSL DrvFS needs metadata. Obsidian Desktop is optional.",
+      "scope": "Python 3.11+ standard-library core with Ontology Engine (cached stat_fingerprint index), multi-vendor entry-harness auditing (steward entry-audit), atomic health digests (steward digest), fast large-vault linting, and stewardship knowledge pack 0.2.2. Reviewed transactions and knowledge attachment support native Windows on local fixed NTFS, plus macOS/Linux/POSIX. Windows fails closed on reparse paths, network shares and non-NTFS volumes. Windows process-crash recovery does not claim POSIX directory-fsync power-loss equivalence. Bash utilities remain POSIX-only; WSL DrvFS needs metadata. No third-party desktop app is required.",
       "discovery": {
         "signals": [
           "remember this",
@@ -79,7 +79,7 @@
           "Prepare a Home-ready Empire without installing Home",
           "Add my authorized Home capability layer to the shared Empire root"
         ],
-        "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it. Native Windows transactions do not support network/UNC shares, reparse paths or non-NTFS volumes, and do not promise POSIX-equivalent power-loss durability. Bash utilities require POSIX. Does not grant private Home repository access, redistribute Home, activate Obsidian plugins, or automatically migrate business records.",
+        "not_for": "Inventing sources, treating orphaned notes as disposable, controlling live agent sessions, or modifying a vault without selecting it. Native Windows transactions do not support network/UNC shares, reparse paths or non-NTFS volumes, and do not promise POSIX-equivalent power-loss durability. Bash utilities require POSIX. Does not grant private Home repository access, redistribute Home, activate third-party plugins, or automatically migrate business records.",
         "setup": "Select a vault. For vault stewardship, follow the installed recipe and run cto-legends run legends-vault-stewardship -- steward doctor. Research-export readiness applies only to research-export tasks. Native Windows transactions and knowledge attachment require Empire 0.3.1+, Python 3.11+, local fixed NTFS and supported current-user ACL ownership/security state; readiness fails closed for unsupported paths or security conditions. Review and apply in the same environment. macOS/Linux use POSIX filesystem semantics; WSL DrvFS needs metadata. Bash utilities remain POSIX-only. For optional Home-ready shared-root work, read docs/home-adapter.md. Preparation and original scaffolds work without Home. Adding the headless capability layer requires independently authorized pinned local Home source and explicit reviewed install, compose, and shared-root binding plans. Native Home validation has separate interpreter/dependency requirements. Home is not required for ordinary Empire installation, doctor, or vault workflows.",
         "instructions": [
           "README.md",
@@ -406,7 +406,7 @@
         "nameservers",
         "dns-records"
       ],
-      "scope": "Portable Python CLI for zones, DNS inventory, nameservers, preview-first single-record upsert and exact-ID deletion. Obsidian-compatible knowledge vault, attachable Empire knowledge pack, and private Empire templates.",
+      "scope": "Portable Python CLI for zones, DNS inventory, nameservers, preview-first single-record upsert and exact-ID deletion. Source-cited Markdown knowledge pack, attachable Empire knowledge pack, and private Empire templates.",
       "dependencies": {},
       "readiness": "doctor"
     },
