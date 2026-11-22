@@ -256,7 +256,7 @@ python -m twine check dist/*
 
 Paste the [agent handoff block](#cto-legends-agent-skills-that-let-you-speak-in-plain-english-across-a-curated-stack) at the top of this page into your coding agent, let it wire the router skill, and speak your first sentence. One install opens the door to every module in the stack, and agent skills never have to pile up in your folders again.
 
-Running a company and not a terminal? Founders and operators who want this way of working applied directly to their own business stack have one route: message Avalon Reset at [cto-legends.com/dm](https://cto-legends.com/dm). The desk is async, so the conversation starts the moment you write and nobody forces you onto a sales call.
+Running a company and not a terminal? Founders and operators who want this way of working applied directly to their own business stack have one route: message Avalon Reset at [cto-legends.com/dm](https://cto-legends.com/dm) or start with a 48-hour diagnostic at [cto-legends.com/home#home-offer](https://cto-legends.com/home#home-offer). The desk is async, so the conversation starts the moment you write and nobody forces you onto a sales call.
 
 <p align="center"><a href="https://cto-legends.com/dm"><img src="assets/cards/r4/slot-7-message-avalon-reset.svg" width="100%" alt="Want this way of working applied to your own stack? Message Avalon Reset at cto-legends.com/dm"></a></p>
 
