@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.14 - 2026-11-22
+
+- Enforce uniform `codeload-zip` module pinning (rejecting `release-tgz` and `artifact_url`) directly inside `scripts/check_release.py` so GitHub Actions CI automatically blocks CI download-counter inflation on every push and PR.
+- Ship bundled catalog `1.0.73` updating `legends-hyperyap` to `0.1.7` (Rust 1.100+ Windows `ort-sys` build layout fix, 4/4 green CI).
+
 ## 0.2.13 - 2026-11-22
 
 - Unify all 21 catalog modules on `codeload-zip` source archives (migrating `legends-obs` off `release-tgz` so CI matrix runs never increment public GitHub Release Asset download counters).

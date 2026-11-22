@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.72",
+  "version": "1.0.73",
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
@@ -1641,9 +1641,9 @@
       }
     },
     "legends-hyperyap": {
-      "version": "0.1.6",
+      "version": "0.1.7",
       "repo": "avalonreset/legends-hyperyap",
-      "commit": "ed80d0b38fa88e788743faff281c22db1a9acacc",
+      "commit": "26889fa11ea4e2fe70b8c8a3122e5622586729c2",
       "purpose": "Local voice typing, dictation, and app-focused paste.",
       "keywords": [
         "voice",
@@ -1662,7 +1662,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "57e7a4c0f98b764439518ee9a4f82ad35ac1781f70236d375c0456b8f77bfbed",
+      "sha256": "e19af573f3825d6154bc2aea8096f8fa9ddeb34c59c930342baa3c553e6a466c",
       "next": "v0.1.4 ships source only; platform installer binaries are pending. Follow the README for the current install path. Model downloads and native permissions need user setup.",
       "discovery": {
         "signals": [

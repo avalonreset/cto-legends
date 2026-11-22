@@ -125,6 +125,13 @@ def check(root: Path = ROOT) -> list[str]:
 
     cat = catalog()
     validate_catalog(cat)
+    for mod_id, row in sorted(cat.get("modules", {}).items()):
+        src = (row.get("recipe") or {}).get("source", "codeload-zip")
+        if src != "codeload-zip" or "artifact_url" in row:
+            errors.append(
+                f"Module {mod_id} must use source='codeload-zip' without artifact_url "
+                f"(found source={src!r}, artifact_url={'artifact_url' in row})"
+            )
     cat_cl = (root / "docs" / "CATALOG-CHANGELOG.md").read_text(encoding="utf-8")
     m_ccl = re.search(r"^##\s+(\d+\.\d+\.\d+)", cat_cl, re.MULTILINE)
     ccl_ver = m_ccl.group(1) if m_ccl else None

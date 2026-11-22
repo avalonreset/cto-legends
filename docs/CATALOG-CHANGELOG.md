@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.73 - 2026-11-22
+
+- Update `legends-hyperyap` to 0.1.7 (`26889fa11ea4`, codeload-zip SHA-256 `e19af573f3825d6154bc2aea8096f8fa9ddeb34c59c930342baa3c553e6a466c`) with unified router skill pin and verified release checksums.
+
 ## 1.0.72 - 2026-11-22
 
 - Update `legends-ambient-intelligence` to 0.1.6 (`8281058c134d`, codeload-zip SHA-256 `aa7527563414f1f5bd2259318daf3ff19cc1200412109a2c27ba02fafde4c091`) with unified router skill pin and verified release checksums.
