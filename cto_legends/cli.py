@@ -131,10 +131,10 @@ def parser():
 
 
 def execute(args):
-    if getattr(args, "command", None) == "dm":
-        return dm_module.run_command(args)
     home = m.ensure_not_linked(args.home.expanduser()).resolve()
     cmd = args.command
+    if cmd == "dm":
+        return dm_module.run_command(args)
     if cmd == "startup-setup":
         return startup.configure(args.host, home, instruction_file=args.instruction_file, apply=args.apply)
     if cmd == "startup-status":
@@ -225,6 +225,7 @@ def execute(args):
                 **update_result,
                 "preview": False,
                 "sync": {
+                    "preview": False,
                     "catalog_version": sync_result["catalog_version"],
                     "diff": sync_result["diff"],
                 },
@@ -234,10 +235,34 @@ def execute(args):
             }
             if dropped:
                 result["skipped_not_in_catalog"] = dropped
-            if router.get("update_available"):
-                result["next"] = f"Router update available ({router['installed']} -> {router['latest_version']}): {router['next']}"
+            startup_ref = sync_result["startup_refresh"]
+            skill_ref = sync_result["skill_refresh"]
+            residuals = int(startup_ref.get("residuals", 0)) + int(skill_ref.get("residuals", 0))
+            refreshed_any = any(
+                r.get("status") == "refreshed"
+                for block in (startup_ref, skill_ref)
+                for r in block.get("registrations", [])
+            )
+            has_failure_log = any(
+                isinstance(info, dict) and info.get("log")
+                for info in result.get("failed", {}).values()
+            )
+            parts = []
+            if result["ok"]:
+                parts.append("Sync and module updates complete.")
+            elif has_failure_log:
+                parts.append("Sync completed; inspect failed modules and install.log.")
             else:
-                result["next"] = "Sync and module updates complete." if result["ok"] else "Sync completed; inspect failed modules and install.log."
+                parts.append("Sync completed; inspect failed modules.")
+            if residuals > 0 and refreshed_any:
+                parts.append("Inspect preserved startup_refresh/skill_refresh residuals and reload refreshed hosts.")
+            elif residuals > 0:
+                parts.append("Inspect preserved startup_refresh/skill_refresh residuals.")
+            elif refreshed_any:
+                parts.append("Reload refreshed hosts.")
+            if router.get("update_available"):
+                parts.append(f"Router update available ({router['installed']} -> {router['latest_version']}): {router['next']}")
+            result["next"] = " ".join(parts)
             return result
         cat = m.active_catalog(home)
         state = m.read_state(home)

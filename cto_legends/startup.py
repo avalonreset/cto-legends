@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import stat
 import sys
+import time
 import uuid
 
 from . import discovery, manager
@@ -212,11 +213,23 @@ def _atomic(path, raw, mode=None):
     safe_path(path)
     temporary = path.with_name(path.name + '.' + uuid.uuid4().hex + '.tmp')
     target_mode = 0o600 if mode is None else mode
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_BINARY', 0)
+    fd = os.open(temporary, flags, target_mode)
     try:
-        temporary.write_bytes(raw)
+        with os.fdopen(fd, 'wb') as handle:
+            handle.write(raw)
+            handle.flush()
+            os.fsync(handle.fileno())
         if os.name != 'nt' or mode is not None:
             temporary.chmod(target_mode)
-        os.replace(temporary, path)
+        for attempt in range(3):
+            try:
+                os.replace(temporary, path)
+                break
+            except PermissionError:
+                if os.name != 'nt' or attempt == 2:
+                    raise
+                time.sleep(0.02)
     finally:
         temporary.unlink(missing_ok=True)
 

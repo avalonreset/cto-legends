@@ -1,4 +1,5 @@
 """Small discovery adapters; all hosts read the same canonical skill."""
+import contextlib
 import hashlib
 import json
 from pathlib import Path
@@ -258,12 +259,18 @@ def install_directory(directory, managed_home, *, apply=False, allow_refresh=Fal
         ),
     }
     if apply:
-        directory.mkdir(parents=True, exist_ok=True)
-        target.mkdir(parents=True, exist_ok=True)
-        receipt_text = json.dumps(_build_receipt("custom", digest, managed_home, overlay_meta), indent=2)
-        m.atomic_write_text(skill, content)
-        m.atomic_write_text(receipt, receipt_text + "\n")
-        _write_skill_registration(managed_home, "custom", target)
+        resolved_home = m.ensure_not_linked(Path(managed_home).expanduser()).resolve()
+        with m.lock(resolved_home):
+            skill, receipt = _validate_target(target)
+            if not allow_refresh and target.exists():
+                raise ValueError("Skill destination exists; review it before replacing. No files changed.")
+            content, digest, overlay_meta = _render_skill_content(resolved_home)
+            directory.mkdir(parents=True, exist_ok=True)
+            target.mkdir(parents=True, exist_ok=True)
+            receipt_text = json.dumps(_build_receipt("custom", digest, resolved_home, overlay_meta), indent=2)
+            m.atomic_write_text(skill, content)
+            m.atomic_write_text(receipt, receipt_text + "\n")
+            _write_skill_registration(resolved_home, "custom", target)
         result["registration"] = "installed"
     return result
 
@@ -285,12 +292,16 @@ def configure(host, managed_home, *, user_home=None, directory=None, apply=False
     if host in HOST_NOTES:
         result["note"] = HOST_NOTES[host]
     if apply:
-        receipt_text = json.dumps(_build_receipt(host, digest, managed_home, overlay_meta), indent=2)
-        for item, (item_skill, item_receipt) in zip(targets, validated):
-            item.mkdir(parents=True, exist_ok=True)
-            m.atomic_write_text(item_skill, content)
-            m.atomic_write_text(item_receipt, receipt_text + "\n")
-            _write_skill_registration(managed_home, host, item)
+        resolved_home = m.ensure_not_linked(Path(managed_home).expanduser()).resolve()
+        with m.lock(resolved_home):
+            validated = [_validate_target(item) for item in targets]
+            content, digest, overlay_meta = _render_skill_content(resolved_home)
+            receipt_text = json.dumps(_build_receipt(host, digest, resolved_home, overlay_meta), indent=2)
+            for item, (item_skill, item_receipt) in zip(targets, validated):
+                item.mkdir(parents=True, exist_ok=True)
+                m.atomic_write_text(item_skill, content)
+                m.atomic_write_text(item_receipt, receipt_text + "\n")
+                _write_skill_registration(resolved_home, host, item)
         result["registration"] = "installed"
     return result
 
@@ -299,118 +310,119 @@ def refresh_registered(managed_home, *, user_home=None, apply=False):
     """Refresh existing clean host SKILL.md registrations owned by managed_home."""
     resolved_home = m.ensure_not_linked(Path(managed_home).expanduser()).resolve()
     norm_home = _normalize_path_text(resolved_home)
-    content, new_digest, overlay_meta = _render_skill_content(resolved_home)
-
     rows = []
-    discovered = []
-    seen = set()
 
-    skills_dir = resolved_home / "skills"
-    if skills_dir.exists() and not skills_dir.is_symlink() and skills_dir.is_dir():
-        for rec_path in sorted(skills_dir.glob("active-*.json")):
+    with (m.lock(resolved_home) if apply else contextlib.nullcontext()):
+        content, new_digest, overlay_meta = _render_skill_content(resolved_home)
+        discovered = []
+        seen = set()
+
+        skills_dir = resolved_home / "skills"
+        if skills_dir.exists() and not skills_dir.is_symlink() and skills_dir.is_dir():
+            for rec_path in sorted(skills_dir.glob("active-*.json")):
+                try:
+                    m.ensure_not_linked(rec_path)
+                    rec = json.loads(m.read_bounded_text(rec_path))
+                    if not isinstance(rec, dict) or rec.get("schema") != 1:
+                        raise ValueError("Invalid skill registration receipt schema")
+                    skill_dir = rec.get("skill_dir")
+                    if not isinstance(skill_dir, str) or not Path(skill_dir).is_absolute():
+                        raise ValueError("Skill registration receipt requires an absolute skill_dir")
+                    rec_home = rec.get("managed_home")
+                    if not isinstance(rec_home, str) or _normalize_path_text(rec_home) != norm_home:
+                        continue
+                    target = Path(skill_dir)
+                    key = _normalize_path_text(target)
+                    if key not in seen:
+                        seen.add(key)
+                        discovered.append((target, rec.get("host"), rec_path))
+                except (OSError, ValueError, TypeError, KeyError) as exc:
+                    rows.append({
+                        "receipt": str(rec_path),
+                        "status": "preserved",
+                        "changed": False,
+                        "issue": str(exc),
+                    })
+
+        base = Path(user_home or Path.home())
+        scan_roots = [base / rel for rel in ROOTS.values()]
+        for rels in COMPANION_ROOTS.values():
+            scan_roots.extend(base / rel for rel in rels)
+        if user_home is None and os.environ.get("CODEX_HOME"):
+            scan_roots.append(Path(os.environ["CODEX_HOME"]).expanduser() / "skills")
+
+        for root in scan_roots:
+            candidate = root / "cto-legends"
             try:
-                m.ensure_not_linked(rec_path)
-                rec = json.loads(m.read_bounded_text(rec_path))
-                if not isinstance(rec, dict) or rec.get("schema") != 1:
-                    raise ValueError("Invalid skill registration receipt schema")
-                skill_dir = rec.get("skill_dir")
-                if not isinstance(skill_dir, str) or not Path(skill_dir).is_absolute():
-                    raise ValueError("Skill registration receipt requires an absolute skill_dir")
-                rec_home = rec.get("managed_home")
+                key = _normalize_path_text(candidate)
+            except OSError:
+                continue
+            if key in seen:
+                continue
+            if not candidate.exists() or candidate.is_symlink():
+                continue
+            receipt = candidate / "installation.json"
+            if not receipt.is_file() or receipt.is_symlink():
+                continue
+            try:
+                m.ensure_not_linked(candidate)
+                old = json.loads(m.read_bounded_text(receipt))
+            except (OSError, ValueError, TypeError):
+                continue
+            if not isinstance(old, dict) or not isinstance(old.get("managed_home"), str):
+                continue
+            if _normalize_path_text(old["managed_home"]) != norm_home:
+                continue
+            seen.add(key)
+            discovered.append((candidate, old.get("host"), None))
+
+        for target, declared_host, active_rec in discovered:
+            skill = target / "SKILL.md"
+            receipt = target / "installation.json"
+            row = {
+                "skill": str(skill),
+                "host": declared_host,
+                "status": "preserved",
+                "changed": False,
+            }
+            attempted_write = False
+            try:
+                if target.is_symlink():
+                    raise ValueError("Existing linked skill is user-owned; preserved")
+                m.ensure_not_linked(target)
+                if not target.is_dir() or not skill.is_file() or not receipt.is_file() or skill.is_symlink() or receipt.is_symlink():
+                    raise ValueError("Existing skill is missing or unmanaged; preserved")
+                old = json.loads(m.read_bounded_text(receipt))
+                if not isinstance(old, dict):
+                    raise ValueError("Malformed skill installation receipt; preserved")
+                rec_home = old.get("managed_home")
                 if not isinstance(rec_home, str) or _normalize_path_text(rec_home) != norm_home:
-                    continue
-                target = Path(skill_dir)
-                key = _normalize_path_text(target)
-                if key not in seen:
-                    seen.add(key)
-                    discovered.append((target, rec.get("host"), rec_path))
+                    raise ValueError("Existing skill belongs to a different managed home; preserved")
+                skill_bytes = m.read_bounded_text(skill).encode("utf-8")
+                if hashlib.sha256(skill_bytes).hexdigest() != old.get("sha256"):
+                    raise ValueError("Existing skill was edited; preserved")
+                host = old.get("host") or declared_host or "custom"
+                row["host"] = host
+                if new_digest == old.get("sha256"):
+                    row["status"] = "current"
+                    row["changed"] = False
+                elif not apply:
+                    row["status"] = "refresh_pending"
+                    row["changed"] = True
+                else:
+                    attempted_write = True
+                    receipt_text = json.dumps(_build_receipt(host, new_digest, resolved_home, overlay_meta), indent=2)
+                    m.atomic_write_text(skill, content)
+                    m.atomic_write_text(receipt, receipt_text + "\n")
+                    if active_rec is None or not active_rec.is_file():
+                        _write_skill_registration(resolved_home, host, target)
+                    row["status"] = "refreshed"
+                    row["changed"] = True
             except (OSError, ValueError, TypeError, KeyError) as exc:
-                rows.append({
-                    "receipt": str(rec_path),
-                    "status": "preserved",
-                    "changed": False,
-                    "issue": str(exc),
-                })
-
-    base = Path(user_home or Path.home())
-    scan_roots = [base / rel for rel in ROOTS.values()]
-    for rels in COMPANION_ROOTS.values():
-        scan_roots.extend(base / rel for rel in rels)
-    if user_home is None and os.environ.get("CODEX_HOME"):
-        scan_roots.append(Path(os.environ["CODEX_HOME"]).expanduser() / "skills")
-
-    for root in scan_roots:
-        candidate = root / "cto-legends"
-        try:
-            key = _normalize_path_text(candidate)
-        except OSError:
-            continue
-        if key in seen:
-            continue
-        if not candidate.exists() or candidate.is_symlink():
-            continue
-        receipt = candidate / "installation.json"
-        if not receipt.is_file() or receipt.is_symlink():
-            continue
-        try:
-            m.ensure_not_linked(candidate)
-            old = json.loads(m.read_bounded_text(receipt))
-        except (OSError, ValueError, TypeError):
-            continue
-        if not isinstance(old, dict) or not isinstance(old.get("managed_home"), str):
-            continue
-        if _normalize_path_text(old["managed_home"]) != norm_home:
-            continue
-        seen.add(key)
-        discovered.append((candidate, old.get("host"), None))
-
-    for target, declared_host, active_rec in discovered:
-        skill = target / "SKILL.md"
-        receipt = target / "installation.json"
-        row = {
-            "skill": str(skill),
-            "host": declared_host,
-            "status": "preserved",
-            "changed": False,
-        }
-        attempted_write = False
-        try:
-            if target.is_symlink():
-                raise ValueError("Existing linked skill is user-owned; preserved")
-            m.ensure_not_linked(target)
-            if not target.is_dir() or not skill.is_file() or not receipt.is_file() or skill.is_symlink() or receipt.is_symlink():
-                raise ValueError("Existing skill is missing or unmanaged; preserved")
-            old = json.loads(m.read_bounded_text(receipt))
-            if not isinstance(old, dict):
-                raise ValueError("Malformed skill installation receipt; preserved")
-            rec_home = old.get("managed_home")
-            if not isinstance(rec_home, str) or _normalize_path_text(rec_home) != norm_home:
-                raise ValueError("Existing skill belongs to a different managed home; preserved")
-            skill_bytes = m.read_bounded_text(skill).encode("utf-8")
-            if hashlib.sha256(skill_bytes).hexdigest() != old.get("sha256"):
-                raise ValueError("Existing skill was edited; preserved")
-            host = old.get("host") or declared_host or "custom"
-            row["host"] = host
-            if new_digest == old.get("sha256"):
-                row["status"] = "current"
-                row["changed"] = False
-            elif not apply:
-                row["status"] = "refresh_pending"
-                row["changed"] = True
-            else:
-                attempted_write = True
-                receipt_text = json.dumps(_build_receipt(host, new_digest, resolved_home, overlay_meta), indent=2)
-                m.atomic_write_text(skill, content)
-                m.atomic_write_text(receipt, receipt_text + "\n")
-                if active_rec is None or not active_rec.is_file():
-                    _write_skill_registration(resolved_home, host, target)
-                row["status"] = "refreshed"
-                row["changed"] = True
-        except (OSError, ValueError, TypeError, KeyError) as exc:
-            row["issue"] = str(exc)
-            if attempted_write:
-                row.update(status="failed", changed=None)
-        rows.append(row)
+                row["issue"] = str(exc)
+                if attempted_write:
+                    row.update(status="failed", changed=None)
+            rows.append(row)
 
     return {
         "preview": not apply,

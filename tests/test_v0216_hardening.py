@@ -201,13 +201,16 @@ class LockRecoveryAndSafetyTests(unittest.TestCase):
         with patch.object(Path, "lstat", fake_home_lstat):
             with self.assertRaisesRegex(ValueError, "symlink or junction"):
                 execute(parser().parse_args(["--home", str(link_home), "status"]))
+            with self.assertRaisesRegex(ValueError, "symlink or junction"):
+                execute(parser().parse_args(["--home", str(link_home), "dm", "link"]))
 
 
 class CheckpointedUpdateAndProgressTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.home = Path(self.temp.name).resolve()
+        self.base = Path(self.temp.name).resolve()
+        self.home = self.base / "home"
 
     def _seed_old_install(self, key):
         rel = f"releases/{key}/old"
@@ -391,6 +394,49 @@ class SkillRefreshAndInstallSkillTests(unittest.TestCase):
         self.assertEqual(res["registrations"][0]["status"], "refreshed")
         self.assertEqual(len(list((self.home_a / "skills").glob("active-*.json"))), 1)
 
+    def test_agents_mutations_acquire_manager_lock_and_fail_closed_on_live_lock(self):
+        self.home_a.mkdir(parents=True, exist_ok=True)
+        live_lock = self.home_a / "operation.lock"
+        raw_lock = json.dumps({"schema": 1, "pid": os.getpid(), "token": "busy", "started_at": 1.0})
+        live_lock.write_text(raw_lock, encoding="utf-8")
+
+        custom_dir = self.base / "locked-custom"
+        # Preview operations do NOT acquire lock and succeed read-only
+        self.assertTrue(agents.install_directory(custom_dir, self.home_a, apply=False)["preview"])
+        self.assertTrue(agents.configure("claude", self.home_a, user_home=self.base, apply=False)["preview"])
+        self.assertTrue(agents.refresh_registered(self.home_a, user_home=self.base, apply=False)["preview"])
+
+        # Apply operations acquire m.lock and fail closed on live lock without writing
+        with self.assertRaisesRegex(ValueError, "operation.lock"):
+            agents.install_directory(custom_dir, self.home_a, apply=True)
+        self.assertFalse(custom_dir.exists())
+
+        with self.assertRaisesRegex(ValueError, "operation.lock"):
+            agents.configure("claude", self.home_a, user_home=self.base, apply=True)
+        self.assertFalse((self.base / ".claude/skills/cto-legends/SKILL.md").exists())
+
+        with self.assertRaisesRegex(ValueError, "operation.lock"):
+            agents.refresh_registered(self.home_a, user_home=self.base, apply=True)
+        self.assertEqual(live_lock.read_text(encoding="utf-8"), raw_lock)
+
+        # After lock release, apply succeeds cleanly and releases lock
+        live_lock.unlink()
+        lock_calls = []
+        real_lock = m.lock
+
+        def tracking_lock(home):
+            lock_calls.append(Path(home))
+            return real_lock(home)
+
+        with patch.object(m, "lock", side_effect=tracking_lock):
+            agents.configure("claude", self.home_a, user_home=self.base, apply=True)
+            agents.install_directory(custom_dir, self.home_a, apply=True)
+            (self.home_a / "skill-local.md").write_text("## Lock refresh\n", encoding="utf-8")
+            refreshed = agents.refresh_registered(self.home_a, user_home=self.base, apply=True)
+        self.assertEqual(len(lock_calls), 3)
+        self.assertTrue(all(r["status"] == "refreshed" for r in refreshed["registrations"]))
+        self.assertFalse(live_lock.exists())
+
 
 class RouterDriftAndUpdateSyncTests(unittest.TestCase):
     def setUp(self):
@@ -488,13 +534,86 @@ class RouterDriftAndUpdateSyncTests(unittest.TestCase):
                 code = main(["--home", str(self.home), "update", "--sync", "--apply"])
         self.assertEqual(code, 0)
         applied = json.loads(out.getvalue())
-        self.assertTrue(applied["ok"])
+        self.assertEqual(applied["ok"], True)
+        self.assertFalse(applied["sync"]["preview"])
         self.assertEqual(m.active_catalog(self.home)["version"], "9.9.9")
         self.assertEqual(applied["updated"], ["legends-grant"])
         self.assertEqual(applied["skill_refresh"]["registrations"][0]["status"], "refreshed")
         self.assertIn("## Sync overlay", (custom_skills / "cto-legends" / "SKILL.md").read_text(encoding="utf-8"))
         self.assertTrue(applied["router"]["update_available"])
         self.assertIn("pip install --upgrade", applied["next"])
+        self.assertIn("Reload refreshed hosts", applied["next"])
+
+    def test_update_sync_apply_schema_residuals_and_nolog_failure_next_text(self):
+        candidate = copy.deepcopy(m.catalog())
+        candidate["version"] = "9.9.9"
+        candidate["modules"]["legends-grant"]["version"] = "9.9.0"
+        candidate["modules"]["legends-grant"]["commit"] = "f" * 40
+
+        def fake_fetch(url, repos, *, timeout=90):
+            if url == m.CANONICAL_CATALOG_URL:
+                return json.dumps(candidate).encode("utf-8")
+            if url == f"https://api.github.com/repos/{m.CATALOG_REPO}/releases/latest":
+                return json.dumps({"tag_name": f"v{m.MANAGER_VERSION}"}).encode("utf-8")
+            raise AssertionError(f"unexpected fetch {url}")
+
+        old_rel = "releases/legends-grant/old"
+        (self.home / old_rel).mkdir(parents=True)
+        (self.home / old_rel / "receipt.json").write_text(json.dumps(m.catalog()["modules"]["legends-grant"]), encoding="utf-8")
+        m.write_state(self.home, {"schema": 1, "active": {"legends-grant": old_rel}, "previous": {}})
+
+        # One clean custom skill (will refresh) and one edited custom skill (residual)
+        clean_dir = self.base / "clean-skills"
+        edited_dir = self.base / "edited-skills"
+        install_skill(clean_dir, self.home, apply=True)
+        install_skill(edited_dir, self.home, apply=True)
+        (edited_dir / "cto-legends" / "SKILL.md").write_text("hand edited", encoding="utf-8")
+        (self.home / "skill-local.md").write_text("## Residual overlay\n", encoding="utf-8")
+
+        # 1. Failure with log=None must NOT mention install.log and must set sync.preview == False
+        with patch.object(m, "fetch", side_effect=fake_fetch), \
+             patch.object(m, "prepare", side_effect=ValueError("Archive checksum mismatch; no module code was executed")):
+            res_nolog = execute(parser().parse_args(["--home", str(self.home), "update", "--sync", "--apply", "--quiet"]))
+        self.assertFalse(res_nolog["ok"])
+        self.assertFalse(res_nolog["sync"]["preview"])
+        self.assertIsNone(res_nolog["failed"]["legends-grant"]["log"])
+        self.assertNotIn("install.log", res_nolog["next"])
+        self.assertIn("inspect failed modules", res_nolog["next"])
+        self.assertIn("residuals", res_nolog["next"])
+        self.assertIn("reload refreshed hosts", res_nolog["next"])
+
+        # 2. Failure WITH an install.log MUST mention install.log
+        def fail_with_log(key, module, home, *, progress=None):
+            bad_dir = home / "releases" / key / "failed-with-log"
+            bad_dir.mkdir(parents=True, exist_ok=True)
+            (bad_dir / "install.log").write_text("pip failed\n", encoding="utf-8")
+            raise subprocess.CalledProcessError(1, ["pip"])
+
+        with patch.object(m, "fetch", side_effect=fake_fetch), \
+             patch.object(m, "prepare", side_effect=fail_with_log):
+            res_withlog = execute(parser().parse_args(["--home", str(self.home), "update", "--sync", "--apply", "--quiet"]))
+        self.assertFalse(res_withlog["ok"])
+        self.assertIsNotNone(res_withlog["failed"]["legends-grant"]["log"])
+        self.assertIn("install.log", res_withlog["next"])
+
+        # 3. Success with preserved residual (edited_dir) and newly clean refresh mentions both
+        (self.home / "skill-local.md").write_text("## Second overlay\n", encoding="utf-8")
+
+        def fake_prepare_ok(key, module, home, *, progress=None):
+            rel = f"releases/{key}/v{module['version']}"
+            dest = home / rel
+            dest.mkdir(parents=True, exist_ok=True)
+            (dest / "receipt.json").write_text(json.dumps(module), encoding="utf-8")
+            return rel
+
+        with patch.object(m, "fetch", side_effect=fake_fetch), \
+             patch.object(m, "prepare", side_effect=fake_prepare_ok):
+            res_ok = execute(parser().parse_args(["--home", str(self.home), "update", "--sync", "--apply", "--quiet"]))
+        self.assertTrue(res_ok["ok"])
+        self.assertFalse(res_ok["sync"]["preview"])
+        self.assertIn("residuals", res_ok["next"])
+        self.assertIn("reload refreshed hosts", res_ok["next"])
+        self.assertNotIn("install.log", res_ok["next"])
 
 
 class MiscHardeningTests(unittest.TestCase):
@@ -606,6 +725,7 @@ class MiscHardeningTests(unittest.TestCase):
         self.assertIn("cto-legends>={", alias_text)
         self.assertNotIn("cto-legends=={", alias_text)
         self.assertIn('Homepage = "https://cto-legends.com/home"', alias_text)
+        self.assertIn('Documentation = "https://cto-legends.com/home"', alias_text)
 
         spec = importlib.util.spec_from_file_location("check_release", root / "scripts" / "check_release.py")
         mod = importlib.util.module_from_spec(spec)
@@ -621,6 +741,62 @@ class MiscHardeningTests(unittest.TestCase):
         with patch.object(Path, "read_text", bad_alias_read):
             issues = mod.check(root)
         self.assertTrue(any("build_ctolegends_alias.py" in issue for issue in issues), issues)
+
+    def test_prepare_checksum_mismatch_leaves_no_orphaned_release_directory(self):
+        module = copy.deepcopy(m.catalog()["modules"]["legends-grant"])
+        with patch.object(m, "fetch", return_value=b"corrupted-archive-bytes"):
+            with self.assertRaisesRegex(ValueError, "Archive checksum mismatch"):
+                m.prepare("legends-grant", module, self.home)
+        releases_dir = self.home / "releases" / "legends-grant"
+        self.assertFalse(releases_dir.exists())
+
+        # Failed venv/probe that creates install.log MUST retain its directory
+        import zipfile
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream, "w") as zf:
+            zf.writestr("legends-grant-0.1.0/README.md", "hi")
+        raw = stream.getvalue()
+        module["sha256"] = hashlib.sha256(raw).hexdigest()
+
+        def failing_run(command, cwd, *, log=True):
+            (Path(cwd) / "install.log").write_text("simulated venv failure\n", encoding="utf-8")
+            raise subprocess.CalledProcessError(1, command)
+
+        with patch.object(m, "fetch", return_value=raw), patch.object(m, "run", side_effect=failing_run):
+            with self.assertRaises(subprocess.CalledProcessError):
+                m.prepare("legends-grant", module, self.home)
+        created = list((self.home / "releases" / "legends-grant").iterdir())
+        self.assertEqual(len(created), 1)
+        self.assertTrue((created[0] / "install.log").is_file())
+
+    def test_startup_atomic_retries_windows_permission_error(self):
+        target = self.home / "AGENTS.md"
+        real_replace = os.replace
+        attempts = {"n": 0}
+
+        def flaky_replace(src, dst):
+            attempts["n"] += 1
+            if attempts["n"] < 3:
+                raise PermissionError("AV scanner lock")
+            return real_replace(src, dst)
+
+        with patch.object(startup.os, "name", "nt"), patch.object(startup.os, "replace", side_effect=flaky_replace), \
+             patch.object(startup.time, "sleep"):
+            startup._atomic(target, b"hello startup\n")
+        self.assertEqual(attempts["n"], 3)
+        self.assertEqual(target.read_bytes(), b"hello startup\n")
+
+    def test_updates_reports_guided_native_hint(self):
+        def fake_fetch(url, repos, *, timeout=90):
+            if url == m.CANONICAL_CATALOG_URL:
+                return json.dumps(m.catalog()).encode("utf-8")
+            return json.dumps({"tag_name": "v0.1.0"}).encode("utf-8")
+
+        with patch.object(m, "fetch", side_effect=fake_fetch):
+            res = m.updates(self.home)
+        by_id = {row["id"]: row for row in res["modules"]}
+        self.assertEqual(by_id["legends-hyperyap"]["status"], "not_installed")
+        self.assertEqual(by_id["legends-hyperyap"]["next"], "guided native setup; run cto-legends guide legends-hyperyap")
 
 
 if __name__ == "__main__":

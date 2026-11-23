@@ -43,6 +43,7 @@ readme = "README.md"
 
 [project.urls]
 Homepage = "https://cto-legends.com/home"
+Documentation = "https://cto-legends.com/home"
 Repository = "https://github.com/avalonreset/cto-legends"
 Issues = "https://github.com/avalonreset/cto-legends/issues"
 

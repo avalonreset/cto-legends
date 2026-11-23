@@ -157,7 +157,12 @@ class DmTests(unittest.TestCase):
         self.addCleanup(self.env_patch.stop)
         os.environ.pop(dm.TOKEN_ENV, None)
         os.environ.pop(dm.ALLOW_UNTRUSTED_ENV, None)
-        self.addCleanup(self.server.shutdown)
+        def _close_server():
+            self.server.shutdown()
+            self.thread.join(timeout=5)
+            self.server.server_close()
+
+        self.addCleanup(_close_server)
 
     def run_cli(self, *argv):
         out, err = io.StringIO(), io.StringIO()

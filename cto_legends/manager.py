@@ -1023,34 +1023,46 @@ def prepare(key, module, home, *, progress=None):
     node_floor = recipe.get("requires_node")
     if node_floor is not None:
         node_binary(node_floor, key)
+    _emit(f"{key} {module['version']}: downloading and verifying archive...")
+    is_tgz = recipe.get("source", "codeload-zip") == "release-tgz"
+    if is_tgz:
+        raw = fetch(module["artifact_url"], {module["repo"]})
+    else:
+        raw = fetch(f"https://codeload.github.com/{module['repo']}/zip/{module['commit']}", {module["repo"]})
     relative = "releases/" + key + "/" + module["version"] + "-" + uuid.uuid4().hex[:12]
     release = managed_path(home, relative)
     release.mkdir(parents=True)
     source = release / "source"
     source.mkdir()
-    _emit(f"{key} {module['version']}: downloading and verifying archive...")
-    if recipe.get("source", "codeload-zip") == "release-tgz":
-        raw = fetch(module["artifact_url"], {module["repo"]})
-        extract_tgz(raw, source, module["sha256"])
-    else:
-        raw = fetch(f"https://codeload.github.com/{module['repo']}/zip/{module['commit']}", {module["repo"]})
-        extract(raw, source, module["sha256"])
-    if recipe.get("env", True):
-        _emit(f"{key} {module['version']}: creating venv and installing dependencies...")
-        run([sys.executable, "-m", "venv", release / "env"], release)
-        python = python_at(release)
-        pip = recipe.get("pip", {"kind": "none"})
-        if pip["kind"] != "none":
-            run([python, "-m", "pip", "install", "--disable-pip-version-check", "--upgrade", "pip>=26.2.2"], release)
-        if pip["kind"] == "path":
-            run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
-        elif pip["kind"] == "requirements":
-            for name in pip["files"]:
-                run([python, "-m", "pip", "install", "--disable-pip-version-check",
-                     "-r", confine(source, name)], release)
-    _emit(f"{key} {module['version']}: running offline probes...")
-    probe(key, release, recipe, log=True)
-    atomic_write_text(release / "receipt.json", json.dumps(module, indent=2) + "\n")
+    try:
+        if is_tgz:
+            extract_tgz(raw, source, module["sha256"])
+        else:
+            extract(raw, source, module["sha256"])
+        if recipe.get("env", True):
+            _emit(f"{key} {module['version']}: creating venv and installing dependencies...")
+            run([sys.executable, "-m", "venv", release / "env"], release)
+            python = python_at(release)
+            pip = recipe.get("pip", {"kind": "none"})
+            if pip["kind"] != "none":
+                run([python, "-m", "pip", "install", "--disable-pip-version-check", "--upgrade", "pip>=26.2.2"], release)
+            if pip["kind"] == "path":
+                run([python, "-m", "pip", "install", "--disable-pip-version-check", source], release)
+            elif pip["kind"] == "requirements":
+                for name in pip["files"]:
+                    run([python, "-m", "pip", "install", "--disable-pip-version-check",
+                         "-r", confine(source, name)], release)
+        _emit(f"{key} {module['version']}: running offline probes...")
+        probe(key, release, recipe, log=True)
+        atomic_write_text(release / "receipt.json", json.dumps(module, indent=2) + "\n")
+    except Exception:
+        if not (release / "install.log").exists():
+            shutil.rmtree(release, ignore_errors=True)
+            try:
+                release.parent.rmdir()
+            except OSError:
+                pass
+        raise
     return relative
 
 
@@ -1485,7 +1497,10 @@ def updates(home):
             continue
         if installed is None:
             action = "not_installed"
-            hint = "install only if a task needs it"
+            if module.get("recipe", {}).get("mode") == "guided":
+                hint = f"guided native setup; run cto-legends guide {key}"
+            else:
+                hint = "install only if a task needs it"
         elif installed != module["version"]:
             action = "update_ready"
             hint = f"run cto-legends update {key} --apply when authorized"

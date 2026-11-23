@@ -155,7 +155,7 @@ def _attach_remote_update_hint(result, key, row, cat):
             'local_catalog_version': row['version'],
             'remote_catalog_version': remote_row['version'],
             'remote_catalog': remote_cat['version'],
-            'next': f"cto-legends sync (then cto-legends update {key} --apply when authorized)",
+            'next': f"cto-legends update --sync (or cto-legends sync, then cto-legends update {key} --apply when authorized)",
         }
     return result
 
