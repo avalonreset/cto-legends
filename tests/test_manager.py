@@ -435,7 +435,7 @@ class ManagerTests(unittest.TestCase):
         target = self.home / "skills"
         install_skill(target, self.home)
         path = target / "cto-legends" / "SKILL.md"
-        self.assertIn(str(self.home), path.read_text())
+        self.assertIn(str(self.home.resolve()), path.read_text(encoding="utf-8"))
         original = path.read_bytes()
         with self.assertRaises(ValueError):
             install_skill(target, self.home)
