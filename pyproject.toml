@@ -17,7 +17,8 @@ cto-legends = "cto_legends.cli:main"
 ctolegends = "cto_legends.cli:main"
 
 [project.urls]
-Homepage = "https://cto-legends.com"
+Homepage = "https://cto-legends.com/home"
+Documentation = "https://cto-legends.com/home"
 Repository = "https://github.com/avalonreset/cto-legends"
 Issues = "https://github.com/avalonreset/cto-legends/issues"
 
