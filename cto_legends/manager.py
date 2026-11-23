@@ -59,6 +59,10 @@ DEFAULT_GUIDE_FILE = "AGENTS.md"
 GUIDE_SOURCE = "user-selected-local-guide"
 
 
+def _is_windows():
+    return os.name == "nt"
+
+
 def ensure_not_linked(path):
     """Reject symlinks and Windows junctions/reparse points along a target path."""
     target = Path(path)
@@ -110,14 +114,14 @@ def atomic_write_text(path, content, *, mode=0o600):
             handle.write(content.encode("utf-8"))
             handle.flush()
             os.fsync(handle.fileno())
-        if os.name != "nt":
+        if not _is_windows():
             os.chmod(tmp, mode)
         for attempt in range(3):
             try:
                 os.replace(tmp, target)
                 break
             except PermissionError:
-                if os.name != "nt" or attempt == 2:
+                if not _is_windows() or attempt == 2:
                     raise
                 time.sleep(0.02)
     except Exception:
@@ -540,10 +544,12 @@ def _pid_is_alive(pid):
     """Cross-platform PID liveness probe. Returns True (live), False (dead), or None (unknown)."""
     if isinstance(pid, bool) or not isinstance(pid, int) or pid <= 0:
         return None
-    if os.name == "nt":
+    if _is_windows():
         import _winapi
         try:
             handle = _winapi.OpenProcess(_winapi.SYNCHRONIZE, False, pid)
+        except OverflowError:
+            return None
         except OSError as exc:
             winerror = getattr(exc, "winerror", None)
             if winerror == 87:  # ERROR_INVALID_PARAMETER: PID does not exist
@@ -567,7 +573,7 @@ def _pid_is_alive(pid):
         return False
     except PermissionError:
         return True
-    except OSError:
+    except (OSError, OverflowError):
         return None
 
 
@@ -584,37 +590,38 @@ def _read_lock_bytes(path):
     ensure_not_linked(path)
     st = path.lstat()
     if not stat.S_ISREG(st.st_mode) or st.st_size > _LOCK_MAX_BYTES:
-        raise ValueError(f"Malformed or non-regular operation.lock at {path}; inspect it before removing")
+        raise ValueError(f"Malformed or non-regular {path.name} at {path}; inspect it before removing")
     flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_BINARY", 0)
     fd = os.open(path, flags)
     with os.fdopen(fd, "rb") as handle:
         raw = handle.read(_LOCK_MAX_BYTES + 1)
     if len(raw) > _LOCK_MAX_BYTES:
-        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+        raise ValueError(f"Malformed {path.name} at {path}; inspect it before removing")
     return raw, st
 
 
 def _parse_lock_pid(raw, path):
+    max_pid = 0xFFFFFFFF if _is_windows() else 0x7FFFFFFF
     try:
         text = raw.decode("utf-8").strip()
     except UnicodeDecodeError:
-        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing") from None
+        raise ValueError(f"Malformed {path.name} at {path}; inspect it before removing") from None
     if not text:
-        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+        raise ValueError(f"Malformed {path.name} at {path}; inspect it before removing")
     if text.isdigit():
         pid = int(text)
-        if pid <= 0:
-            raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+        if pid <= 0 or pid > max_pid:
+            raise ValueError(f"Malformed {path.name} at {path}; inspect it before removing")
         return pid
     try:
         data = json.loads(text)
     except ValueError:
-        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing") from None
+        raise ValueError(f"Malformed {path.name} at {path}; inspect it before removing") from None
     if not isinstance(data, dict) or data.get("schema") != 1:
-        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+        raise ValueError(f"Malformed {path.name} at {path}; inspect it before removing")
     pid = data.get("pid")
-    if isinstance(pid, bool) or not isinstance(pid, int) or pid <= 0:
-        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+    if isinstance(pid, bool) or not isinstance(pid, int) or pid <= 0 or pid > max_pid:
+        raise ValueError(f"Malformed {path.name} at {path}; inspect it before removing")
     return pid
 
 
@@ -647,6 +654,96 @@ def _release_lock_file(path, expected_token):
             path.unlink(missing_ok=True)
     except (FileNotFoundError, OSError, ValueError):
         pass
+
+
+def _acquire_reclaim_lock(home, reclaim_path, reclaim_payload):
+    ensure_not_linked(reclaim_path)
+    try:
+        _open_exclusive_lock(reclaim_path, reclaim_payload)
+        return
+    except PermissionError:
+        if reclaim_path.exists() and not reclaim_path.is_file():
+            raise ValueError(
+                f"Malformed or non-regular {reclaim_path.name} at {reclaim_path}; inspect it before removing"
+            ) from None
+        raise
+    except FileExistsError:
+        pass
+
+    try:
+        reclaim_raw, reclaim_st = _read_lock_bytes(reclaim_path)
+    except FileNotFoundError:
+        reclaim_raw = None
+
+    if reclaim_raw is not None:
+        if reclaim_raw == b"":
+            if time.time() - reclaim_st.st_mtime < 2.0:
+                time.sleep(0.05)
+                try:
+                    reclaim_raw, reclaim_st = _read_lock_bytes(reclaim_path)
+                except FileNotFoundError:
+                    reclaim_raw = None
+            if reclaim_raw == b"":
+                raise ValueError(
+                    f"Malformed or active {reclaim_path.name} at {reclaim_path}; inspect it before removing"
+                ) from None
+
+    if reclaim_raw is not None:
+        reclaim_pid = _parse_lock_pid(reclaim_raw, reclaim_path)
+        reclaim_alive = _pid_is_alive(reclaim_pid)
+        if reclaim_alive is True:
+            raise ValueError(
+                f"Another operation (PID {reclaim_pid}) is recovering operation.lock; retry or inspect {reclaim_path}"
+            ) from None
+        if reclaim_alive is None:
+            raise ValueError(
+                f"Cannot verify PID {reclaim_pid} recovering operation.lock; inspect {reclaim_path}"
+            ) from None
+
+        guard_hash = hashlib.sha256(reclaim_raw).hexdigest()[:16]
+        guard_path = home / f"operation.reclaim.{guard_hash}.guard"
+        ensure_not_linked(guard_path)
+        guard_token = uuid.uuid4().hex
+        guard_payload = _make_lock_payload(guard_token)
+        try:
+            _open_exclusive_lock(guard_path, guard_payload)
+        except FileExistsError:
+            raise ValueError(
+                f"Another operation is recovering {reclaim_path.name}; retry or inspect {guard_path}"
+            ) from None
+        except PermissionError:
+            if guard_path.exists() and not guard_path.is_file():
+                raise ValueError(
+                    f"Malformed or non-regular {guard_path.name} at {guard_path}; inspect it before removing"
+                ) from None
+            raise
+        try:
+            try:
+                current_reclaim_raw, _ = _read_lock_bytes(reclaim_path)
+            except FileNotFoundError:
+                current_reclaim_raw = None
+            if current_reclaim_raw is not None:
+                if current_reclaim_raw != reclaim_raw:
+                    raise ValueError(
+                        f"Another operation is recovering operation.lock; retry or inspect {reclaim_path}"
+                    ) from None
+                reclaim_path.unlink(missing_ok=True)
+        finally:
+            _release_lock_file(guard_path, guard_token)
+
+    ensure_not_linked(reclaim_path)
+    try:
+        _open_exclusive_lock(reclaim_path, reclaim_payload)
+    except FileExistsError:
+        raise ValueError(
+            f"Another operation is recovering operation.lock; retry or inspect {reclaim_path}"
+        ) from None
+    except PermissionError:
+        if reclaim_path.exists() and not reclaim_path.is_file():
+            raise ValueError(
+                f"Malformed or non-regular {reclaim_path.name} at {reclaim_path}; inspect it before removing"
+            ) from None
+        raise
 
 
 @contextmanager
@@ -705,15 +802,9 @@ def lock(home):
                 f"Cannot verify PID {pid} holding operation.lock; inspect it before removing"
             ) from None
 
-        ensure_not_linked(reclaim_path)
         reclaim_token = uuid.uuid4().hex
         reclaim_payload = _make_lock_payload(reclaim_token)
-        try:
-            _open_exclusive_lock(reclaim_path, reclaim_payload)
-        except FileExistsError:
-            raise ValueError(
-                f"Another operation is recovering operation.lock; retry or inspect {reclaim_path}"
-            ) from None
+        _acquire_reclaim_lock(home, reclaim_path, reclaim_payload)
         try:
             try:
                 current_raw, _ = _read_lock_bytes(path)

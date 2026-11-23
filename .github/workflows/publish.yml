@@ -45,6 +45,8 @@ jobs:
               )
               with urllib.request.urlopen(req, timeout=30) as resp:
                   token = json.loads(resp.read().decode("utf-8"))["token"]
+              if token:
+                  print(f"::add-mask::{token}", flush=True)
 
           if not token:
               raise SystemExit("Neither PYPI_API_TOKEN nor GitHub OIDC Trusted Publisher succeeded.")

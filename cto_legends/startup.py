@@ -24,13 +24,17 @@ BEGIN = b'<!-- cto-legends startup:begin -->'
 END = b'<!-- cto-legends startup:end -->'
 
 
+def _is_windows():
+    return os.name == 'nt'
+
+
 def digest(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
 def _normalize_target_text(target):
     text = str(target)
-    if os.name == 'nt' and len(text) >= 2 and text[1] == ':':
+    if _is_windows() and len(text) >= 2 and text[1] == ':':
         text = text[0].upper() + text[1:]
     return text
 
@@ -42,7 +46,7 @@ def _target_key(target):
 def _find_active_record(home, target):
     directory = safe_path(home / 'startup')
     canonical = safe_path(directory / ('active-' + _target_key(target) + '.json'))
-    if canonical.is_file() or os.name != 'nt':
+    if canonical.is_file() or not _is_windows():
         return canonical
     text = str(target)
     if len(text) >= 2 and text[1] == ':':
@@ -220,18 +224,21 @@ def _atomic(path, raw, mode=None):
             handle.write(raw)
             handle.flush()
             os.fsync(handle.fileno())
-        if os.name != 'nt' or mode is not None:
+        if not _is_windows() or mode is not None:
             temporary.chmod(target_mode)
         for attempt in range(3):
             try:
                 os.replace(temporary, path)
                 break
             except PermissionError:
-                if os.name != 'nt' or attempt == 2:
+                if not _is_windows() or attempt == 2:
                     raise
                 time.sleep(0.02)
     finally:
-        temporary.unlink(missing_ok=True)
+        try:
+            temporary.unlink(missing_ok=True)
+        except OSError:
+            pass
 
 
 def configure(host, managed_home, *, user_home=None, instruction_file=None, apply=False,
@@ -357,7 +364,7 @@ def refresh_registered(managed_home, *, catalog=None, apply=False):
             target = safe_path(target_text)
             row['instruction_file'] = str(target)
             expected_records = {directory / ('active-' + _target_key(target) + '.json')}
-            if os.name == 'nt':
+            if _is_windows():
                 target_str = str(target)
                 if len(target_str) >= 2 and target_str[1] == ':':
                     expected_records.add(

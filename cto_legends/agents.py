@@ -162,7 +162,7 @@ def restore(manifest, *, apply=False):
 
 def _normalize_path_text(path):
     text = str(Path(path).expanduser().resolve())
-    if os.name == "nt" and len(text) >= 2 and text[1] == ":":
+    if m._is_windows() and len(text) >= 2 and text[1] == ":":
         text = text[0].upper() + text[1:]
     return text
 
@@ -211,16 +211,98 @@ def _build_receipt(host, digest, managed_home, overlay_meta):
     }
 
 
-def _write_skill_registration(managed_home, host, target):
-    resolved_home = Path(managed_home).expanduser().resolve()
-    record_path = _skill_record_path(resolved_home, target)
+def _build_skill_registration_text(resolved_home, host, target):
     payload = {
         "schema": 1,
         "host": host,
         "skill_dir": str(Path(target).expanduser().resolve()),
         "managed_home": str(resolved_home),
     }
-    m.atomic_write_text(record_path, json.dumps(payload, indent=2) + "\n")
+    return json.dumps(payload, indent=2) + "\n"
+
+
+def _write_skill_registration(managed_home, host, target):
+    resolved_home = Path(managed_home).expanduser().resolve()
+    record_path = _skill_record_path(resolved_home, target)
+    m.atomic_write_text(record_path, _build_skill_registration_text(resolved_home, host, target))
+    return record_path
+
+
+def _read_bounded_bytes_optional(path):
+    if not path.exists() and not path.is_symlink():
+        return None
+    target = m.ensure_not_linked(path)
+    st = target.stat()
+    if not os.path.isfile(target) or st.st_size > m.MAX_STATE_BYTES:
+        raise ValueError(f"Unreadable skill state file: {target}")
+    with target.open("rb") as handle:
+        raw = handle.read(m.MAX_STATE_BYTES + 1)
+    if len(raw) > m.MAX_STATE_BYTES:
+        raise ValueError(f"File exceeds {m.MAX_STATE_BYTES} byte limit: {target}")
+    return raw
+
+
+def _write_skill_transaction(target, skill, receipt, content, receipt_text, resolved_home, host, *, write_active_rec=True):
+    """Write (skill, receipt, active_rec) with pre-transaction rollback on OSError."""
+    target_existed = target.exists()
+    existed = skill.exists()
+    old_skill_bytes = m.read_bounded_text(skill).encode("utf-8") if skill.is_file() else None
+    old_receipt_bytes = m.read_bounded_text(receipt).encode("utf-8") if receipt.is_file() else None
+    record_path = _skill_record_path(resolved_home, target)
+    m.ensure_not_linked(record_path)
+    had_active_rec = record_path.exists()
+    old_active_bytes = m.read_bounded_text(record_path).encode("utf-8") if record_path.is_file() else None
+
+    new_skill_bytes = content.encode("utf-8")
+    new_receipt_bytes = receipt_text.encode("utf-8")
+    active_text = _build_skill_registration_text(resolved_home, host, target) if write_active_rec else None
+    new_active_bytes = active_text.encode("utf-8") if active_text is not None else None
+
+    try:
+        target.mkdir(parents=True, exist_ok=True)
+        m.atomic_write_text(skill, content)
+        m.atomic_write_text(receipt, receipt_text)
+        if active_text is not None:
+            m.atomic_write_text(record_path, active_text)
+    except OSError as failure:
+        try:
+            current_skill = _read_bounded_bytes_optional(skill)
+            current_receipt = _read_bounded_bytes_optional(receipt)
+            current_active = _read_bounded_bytes_optional(record_path) if write_active_rec else old_active_bytes
+
+            before_skill = old_skill_bytes if existed else None
+            if current_skill not in (before_skill, new_skill_bytes):
+                raise ValueError("Skill file changed during failed write; preserved")
+            if current_receipt not in (old_receipt_bytes, new_receipt_bytes):
+                raise ValueError("Skill receipt changed during failed write; preserved")
+            if write_active_rec and current_active not in (old_active_bytes, new_active_bytes):
+                raise ValueError("Active skill registration changed during failed write; preserved")
+
+            if current_skill != before_skill:
+                if existed and old_skill_bytes is not None:
+                    m.atomic_write_text(skill, old_skill_bytes.decode("utf-8"))
+                else:
+                    skill.unlink(missing_ok=True)
+            if current_receipt != old_receipt_bytes:
+                if old_receipt_bytes is not None:
+                    m.atomic_write_text(receipt, old_receipt_bytes.decode("utf-8"))
+                else:
+                    receipt.unlink(missing_ok=True)
+            if write_active_rec and current_active != old_active_bytes:
+                if had_active_rec and old_active_bytes is not None:
+                    m.atomic_write_text(record_path, old_active_bytes.decode("utf-8"))
+                else:
+                    record_path.unlink(missing_ok=True)
+            if not target_existed and target.is_dir():
+                try:
+                    target.rmdir()
+                except OSError:
+                    pass
+        except (OSError, ValueError) as rollback_failure:
+            raise OSError(
+                f"Skill write failed ({failure}); automatic rollback incomplete ({rollback_failure})"
+            ) from failure
+        raise OSError(f"Skill write failed ({failure}); previous skill state restored") from failure
     return record_path
 
 
@@ -234,6 +316,8 @@ def _validate_target(target):
         if not receipt.is_file() or not skill.is_file() or skill.is_symlink() or receipt.is_symlink():
             raise ValueError("Existing skill is unmanaged; preserved")
         old = json.loads(m.read_bounded_text(receipt))
+        if not isinstance(old, dict):
+            raise ValueError("Malformed skill installation receipt; preserved")
         skill_bytes = m.read_bounded_text(skill).encode("utf-8")
         if hashlib.sha256(skill_bytes).hexdigest() != old.get("sha256"):
             raise ValueError("Existing skill was edited; preserved")
@@ -266,11 +350,8 @@ def install_directory(directory, managed_home, *, apply=False, allow_refresh=Fal
                 raise ValueError("Skill destination exists; review it before replacing. No files changed.")
             content, digest, overlay_meta = _render_skill_content(resolved_home)
             directory.mkdir(parents=True, exist_ok=True)
-            target.mkdir(parents=True, exist_ok=True)
-            receipt_text = json.dumps(_build_receipt("custom", digest, resolved_home, overlay_meta), indent=2)
-            m.atomic_write_text(skill, content)
-            m.atomic_write_text(receipt, receipt_text + "\n")
-            _write_skill_registration(resolved_home, "custom", target)
+            receipt_text = json.dumps(_build_receipt("custom", digest, resolved_home, overlay_meta), indent=2) + "\n"
+            _write_skill_transaction(target, skill, receipt, content, receipt_text, resolved_home, "custom")
         result["registration"] = "installed"
     return result
 
@@ -296,12 +377,9 @@ def configure(host, managed_home, *, user_home=None, directory=None, apply=False
         with m.lock(resolved_home):
             validated = [_validate_target(item) for item in targets]
             content, digest, overlay_meta = _render_skill_content(resolved_home)
-            receipt_text = json.dumps(_build_receipt(host, digest, resolved_home, overlay_meta), indent=2)
+            receipt_text = json.dumps(_build_receipt(host, digest, resolved_home, overlay_meta), indent=2) + "\n"
             for item, (item_skill, item_receipt) in zip(targets, validated):
-                item.mkdir(parents=True, exist_ok=True)
-                m.atomic_write_text(item_skill, content)
-                m.atomic_write_text(item_receipt, receipt_text + "\n")
-                _write_skill_registration(resolved_home, host, item)
+                _write_skill_transaction(item, item_skill, item_receipt, content, receipt_text, resolved_home, host)
         result["registration"] = "installed"
     return result
 
@@ -318,7 +396,8 @@ def refresh_registered(managed_home, *, user_home=None, apply=False):
         seen = set()
 
         skills_dir = resolved_home / "skills"
-        if skills_dir.exists() and not skills_dir.is_symlink() and skills_dir.is_dir():
+        m.ensure_not_linked(skills_dir)
+        if skills_dir.is_dir():
             for rec_path in sorted(skills_dir.glob("active-*.json")):
                 try:
                     m.ensure_not_linked(rec_path)
@@ -352,29 +431,26 @@ def refresh_registered(managed_home, *, user_home=None, apply=False):
             scan_roots.append(Path(os.environ["CODEX_HOME"]).expanduser() / "skills")
 
         for root in scan_roots:
-            candidate = root / "cto-legends"
             try:
+                candidate = root / "cto-legends"
                 key = _normalize_path_text(candidate)
-            except OSError:
-                continue
-            if key in seen:
-                continue
-            if not candidate.exists() or candidate.is_symlink():
-                continue
-            receipt = candidate / "installation.json"
-            if not receipt.is_file() or receipt.is_symlink():
-                continue
-            try:
+                if key in seen:
+                    continue
+                if not candidate.exists() or candidate.is_symlink():
+                    continue
+                receipt = candidate / "installation.json"
+                if not receipt.is_file() or receipt.is_symlink():
+                    continue
                 m.ensure_not_linked(candidate)
                 old = json.loads(m.read_bounded_text(receipt))
+                if not isinstance(old, dict) or not isinstance(old.get("managed_home"), str):
+                    continue
+                if _normalize_path_text(old["managed_home"]) != norm_home:
+                    continue
+                seen.add(key)
+                discovered.append((candidate, old.get("host"), None))
             except (OSError, ValueError, TypeError):
                 continue
-            if not isinstance(old, dict) or not isinstance(old.get("managed_home"), str):
-                continue
-            if _normalize_path_text(old["managed_home"]) != norm_home:
-                continue
-            seen.add(key)
-            discovered.append((candidate, old.get("host"), None))
 
         for target, declared_host, active_rec in discovered:
             skill = target / "SKILL.md"
@@ -411,11 +487,17 @@ def refresh_registered(managed_home, *, user_home=None, apply=False):
                     row["changed"] = True
                 else:
                     attempted_write = True
-                    receipt_text = json.dumps(_build_receipt(host, new_digest, resolved_home, overlay_meta), indent=2)
-                    m.atomic_write_text(skill, content)
-                    m.atomic_write_text(receipt, receipt_text + "\n")
-                    if active_rec is None or not active_rec.is_file():
-                        _write_skill_registration(resolved_home, host, target)
+                    receipt_text = json.dumps(_build_receipt(host, new_digest, resolved_home, overlay_meta), indent=2) + "\n"
+                    _write_skill_transaction(
+                        target,
+                        skill,
+                        receipt,
+                        content,
+                        receipt_text,
+                        resolved_home,
+                        host,
+                        write_active_rec=(active_rec is None or not active_rec.is_file()),
+                    )
                     row["status"] = "refreshed"
                     row["changed"] = True
             except (OSError, ValueError, TypeError, KeyError) as exc:

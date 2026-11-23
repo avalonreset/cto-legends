@@ -277,11 +277,16 @@ def execute(args):
             dropped = []
         if not args.apply:
             result = {"preview": True, "changes": m.plan(home, keys)}
+            if not args.modules:
+                skill_preview = m._safe_skill_refresh(home, apply=False)
+                if any(r.get("status") == "refresh_pending" for r in skill_preview.get("registrations", [])):
+                    result["skill_refresh"] = skill_preview
         else:
             result = m.update(home, keys, progress=progress_cb)
-            skill_preview = m._safe_skill_refresh(home, apply=False)
-            if any(r.get("status") == "refresh_pending" for r in skill_preview.get("registrations", [])):
-                result["skill_refresh"] = m._safe_skill_refresh(home, apply=True)
+            if not args.modules:
+                skill_preview = m._safe_skill_refresh(home, apply=False)
+                if any(r.get("status") == "refresh_pending" for r in skill_preview.get("registrations", [])):
+                    result["skill_refresh"] = m._safe_skill_refresh(home, apply=True)
         if dropped:
             result["skipped_not_in_catalog"] = dropped
         return result

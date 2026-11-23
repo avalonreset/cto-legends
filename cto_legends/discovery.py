@@ -150,12 +150,19 @@ def _attach_remote_update_hint(result, key, row, cat):
     if (remote_row.get('version'), remote_row.get('commit'), remote_row.get('sha256')) != (
         row.get('version'), row.get('commit'), row.get('sha256')
     ):
+        installation = result.get('installation')
+        if installation == 'not_installed':
+            next_cmd = f"cto-legends sync (preview) and cto-legends sync --apply when authorized, then cto-legends install {key} --apply"
+        elif installation == 'guided_native':
+            next_cmd = f"cto-legends sync (preview) and cto-legends sync --apply when authorized, then cto-legends guide {key}"
+        else:
+            next_cmd = f"cto-legends update --sync (or cto-legends sync, then cto-legends update {key} --apply when authorized)"
         result['remote_update_available'] = {
             'module': key,
             'local_catalog_version': row['version'],
             'remote_catalog_version': remote_row['version'],
             'remote_catalog': remote_cat['version'],
-            'next': f"cto-legends update --sync (or cto-legends sync, then cto-legends update {key} --apply when authorized)",
+            'next': next_cmd,
         }
     return result
 

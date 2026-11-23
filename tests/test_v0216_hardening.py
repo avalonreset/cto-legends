@@ -43,7 +43,7 @@ class LockRecoveryAndSafetyTests(unittest.TestCase):
             exc.winerror = code
             return exc
 
-        with patch.object(m.os, "name", "nt"), patch.dict(sys.modules, {"_winapi": fake_winapi}):
+        with patch.object(m, "_is_windows", return_value=True), patch.dict(sys.modules, {"_winapi": fake_winapi}):
             fake_winapi.OpenProcess.side_effect = err(87)
             self.assertFalse(m._pid_is_alive(999999))
 
@@ -53,6 +53,9 @@ class LockRecoveryAndSafetyTests(unittest.TestCase):
             fake_winapi.OpenProcess.side_effect = err(999)
             self.assertIsNone(m._pid_is_alive(4))
 
+            fake_winapi.OpenProcess.side_effect = OverflowError("overflow")
+            self.assertIsNone(m._pid_is_alive(9999999999999))
+
             fake_winapi.OpenProcess.side_effect = None
             fake_winapi.OpenProcess.return_value = 42
             fake_winapi.WaitForSingleObject.return_value = 258
@@ -61,6 +64,9 @@ class LockRecoveryAndSafetyTests(unittest.TestCase):
 
             fake_winapi.WaitForSingleObject.return_value = 0
             self.assertFalse(m._pid_is_alive(1234))
+
+        with patch.object(m, "_is_windows", return_value=False), patch.object(m.os, "kill", side_effect=OverflowError("overflow")):
+            self.assertIsNone(m._pid_is_alive(9999999999999))
 
     def test_reclaims_dead_json_and_legacy_pid_locks(self):
         lock_path = self.home / "operation.lock"
@@ -105,8 +111,10 @@ class LockRecoveryAndSafetyTests(unittest.TestCase):
             "0",
             "-5",
             "",
+            "1763906400000",
             json.dumps({"schema": 99, "pid": 999999}),
             json.dumps({"schema": 1, "pid": True}),
+            json.dumps({"schema": 1, "pid": 9999999999999}),
             "x" * 5000,
         )
         for payload in cases:
@@ -156,6 +164,50 @@ class LockRecoveryAndSafetyTests(unittest.TestCase):
                     pass
         self.assertEqual(lock_path.read_text(encoding="utf-8"), winner)
         self.assertFalse(reclaim_path.exists())
+
+    def test_dead_pid_reclaim_lock_recovered_and_live_pid_reclaim_lock_refused(self):
+        lock_path = self.home / "operation.lock"
+        reclaim_path = self.home / "operation.reclaim.lock"
+        stale_lock = json.dumps({"schema": 1, "pid": 999991, "token": "dead-lock", "started_at": 1.0}) + "\n"
+        dead_reclaim = json.dumps({"schema": 1, "pid": 999992, "token": "dead-reclaim", "started_at": 1.0}) + "\n"
+
+        # Dead PID in operation.reclaim.lock is recovered cleanly via content-addressed guard
+        lock_path.write_text(stale_lock, encoding="utf-8")
+        reclaim_path.write_text(dead_reclaim, encoding="utf-8")
+        with patch.object(m, "_pid_is_alive", return_value=False):
+            with m.lock(self.home):
+                data = json.loads(lock_path.read_text(encoding="utf-8"))
+                self.assertEqual(data["pid"], os.getpid())
+                self.assertFalse(reclaim_path.exists())
+                self.assertEqual(list(self.home.glob("operation.reclaim.*.guard")), [])
+        self.assertFalse(lock_path.exists())
+        self.assertFalse(reclaim_path.exists())
+        self.assertEqual(list(self.home.glob("operation.reclaim.*.guard")), [])
+
+        # Live PID in operation.reclaim.lock fails closed without deleting either lock
+        live_reclaim = json.dumps({"schema": 1, "pid": 424242, "token": "live-reclaim", "started_at": 2.0}) + "\n"
+        lock_path.write_text(stale_lock, encoding="utf-8")
+        reclaim_path.write_text(live_reclaim, encoding="utf-8")
+
+        def alive_check(pid):
+            return pid == 424242
+
+        with patch.object(m, "_pid_is_alive", side_effect=alive_check):
+            with self.assertRaisesRegex(ValueError, "PID 424242.*operation.reclaim.lock"):
+                with m.lock(self.home):
+                    pass
+        self.assertEqual(lock_path.read_text(encoding="utf-8"), stale_lock)
+        self.assertEqual(reclaim_path.read_text(encoding="utf-8"), live_reclaim)
+        reclaim_path.unlink()
+
+        # Directory at operation.reclaim.lock fails closed with ValueError
+        reclaim_path.mkdir()
+        with patch.object(m, "_pid_is_alive", return_value=False):
+            with self.assertRaisesRegex(ValueError, "Malformed|non-regular"):
+                with m.lock(self.home):
+                    pass
+        self.assertTrue(reclaim_path.is_dir())
+        self.assertEqual(lock_path.read_text(encoding="utf-8"), stale_lock)
 
     def test_finally_does_not_unlink_externally_replaced_lock(self):
         lock_path = self.home / "operation.lock"
@@ -211,6 +263,9 @@ class CheckpointedUpdateAndProgressTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name).resolve()
         self.home = self.base / "home"
+        home_patch = patch.object(Path, "home", return_value=self.base)
+        home_patch.start()
+        self.addCleanup(home_patch.stop)
 
     def _seed_old_install(self, key):
         rel = f"releases/{key}/old"
@@ -311,13 +366,38 @@ class CheckpointedUpdateAndProgressTests(unittest.TestCase):
         m.write_state(self.home, {"schema": 1, "active": {"legends-grant": rel}, "previous": {}})
         custom_skills = self.home.parent / "update-custom-skills"
         install_skill(custom_skills, self.home, apply=True)
+        skill_file = custom_skills / "cto-legends" / "SKILL.md"
+
+        # When no skill is pending, preview omits skill_refresh
+        clean_preview = execute(parser().parse_args(["--home", str(self.home), "update"]))
+        self.assertNotIn("skill_refresh", clean_preview)
+
+        # Adding overlay makes the skill refresh_pending
         (self.home / "skill-local.md").write_text("## Updated overlay\n", encoding="utf-8")
+
+        # Unscoped update preview exposes pending skill_refresh without mutating disk
+        pending_preview = execute(parser().parse_args(["--home", str(self.home), "update"]))
+        self.assertTrue(pending_preview["preview"])
+        self.assertIn("skill_refresh", pending_preview)
+        self.assertEqual(pending_preview["skill_refresh"]["registrations"][0]["status"], "refresh_pending")
+        self.assertNotIn("## Updated overlay", skill_file.read_text(encoding="utf-8"))
+
+        # Scoped update <module> (preview and apply) does NOT include or mutate unrelated skills
+        scoped_preview = execute(parser().parse_args(["--home", str(self.home), "update", "legends-grant"]))
+        self.assertNotIn("skill_refresh", scoped_preview)
+        with patch.object(m, "prepare", side_effect=self._make_release):
+            scoped_apply = execute(parser().parse_args(["--home", str(self.home), "update", "legends-grant", "--apply", "--quiet"]))
+        self.assertTrue(scoped_apply["ok"])
+        self.assertNotIn("skill_refresh", scoped_apply)
+        self.assertNotIn("## Updated overlay", skill_file.read_text(encoding="utf-8"))
+
+        # Unscoped update --apply refreshes clean pending skills
         with patch.object(m, "prepare", side_effect=self._make_release):
             res = execute(parser().parse_args(["--home", str(self.home), "update", "--apply", "--quiet"]))
         self.assertTrue(res["ok"])
         self.assertIn("skill_refresh", res)
         self.assertEqual(res["skill_refresh"]["registrations"][0]["status"], "refreshed")
-        self.assertIn("## Updated overlay", (custom_skills / "cto-legends" / "SKILL.md").read_text(encoding="utf-8"))
+        self.assertIn("## Updated overlay", skill_file.read_text(encoding="utf-8"))
 
 
 class SkillRefreshAndInstallSkillTests(unittest.TestCase):
@@ -437,6 +517,95 @@ class SkillRefreshAndInstallSkillTests(unittest.TestCase):
         self.assertTrue(all(r["status"] == "refreshed" for r in refreshed["registrations"]))
         self.assertFalse(live_lock.exists())
 
+    def test_non_dict_installation_json_raises_value_error(self):
+        agents.configure("claude", self.home_a, user_home=self.base, apply=True)
+        receipt = self.base / ".claude/skills/cto-legends/installation.json"
+        for bad_json in ("[]", "null", "123"):
+            with self.subTest(bad_json=bad_json):
+                receipt.write_text(bad_json, encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "Malformed skill installation receipt"):
+                    agents.configure("claude", self.home_a, user_home=self.base, apply=False)
+                with self.assertRaisesRegex(ValueError, "Malformed skill installation receipt"):
+                    agents.install_directory(self.base / ".claude/skills", self.home_a, apply=False)
+
+    def test_skill_write_rollback_on_receipt_failure_initial_and_refresh(self):
+        real_atomic = m.atomic_write_text
+
+        # 1. Initial install failure on receipt write rolls back cleanly and retries
+        custom_dir = self.base / "rollback-initial"
+        target_dir = custom_dir / "cto-legends"
+
+        def fail_on_receipt(path, content, *, mode=0o600):
+            if Path(path).name == "installation.json":
+                raise OSError("simulated receipt write failure")
+            return real_atomic(path, content, mode=mode)
+
+        with patch.object(m, "atomic_write_text", side_effect=fail_on_receipt):
+            with self.assertRaisesRegex(OSError, "previous skill state restored"):
+                agents.install_directory(custom_dir, self.home_a, apply=True)
+        self.assertFalse(target_dir.exists())
+        self.assertFalse((target_dir / "SKILL.md").exists())
+        self.assertEqual(list((self.home_a / "skills").glob("active-*.json")) if (self.home_a / "skills").exists() else [], [])
+
+        # Clean retry succeeds without hitting "unmanaged" or "exists"
+        installed = agents.install_directory(custom_dir, self.home_a, apply=True)
+        self.assertEqual(installed["registration"], "installed")
+        skill_path = Path(installed["skill"])
+        receipt_path = skill_path.parent / "installation.json"
+        before_skill = skill_path.read_bytes()
+        before_receipt = receipt_path.read_bytes()
+
+        # 2. Refresh failure on receipt write restores prior SKILL.md and receipt, allowing clean retry
+        (self.home_a / "skill-local.md").write_text("## Retry overlay\n", encoding="utf-8")
+        with patch.object(m, "atomic_write_text", side_effect=fail_on_receipt):
+            failed_refresh = agents.refresh_registered(self.home_a, user_home=self.base, apply=True)
+        self.assertEqual(failed_refresh["registrations"][0]["status"], "failed")
+        self.assertEqual(skill_path.read_bytes(), before_skill)
+        self.assertEqual(receipt_path.read_bytes(), before_receipt)
+
+        # Clean retry refreshes cleanly instead of being wedged as "edited"
+        retried = agents.refresh_registered(self.home_a, user_home=self.base, apply=True)
+        self.assertEqual(retried["registrations"][0]["status"], "refreshed")
+        self.assertIn("## Retry overlay", skill_path.read_text(encoding="utf-8"))
+
+    def test_refresh_registered_refuses_linked_skills_dir_and_tolerates_scan_roots_permission_error(self):
+        custom_dir = self.base / "explicit-custom"
+        installed = agents.install_directory(custom_dir, self.home_a, apply=True)
+        skill_path = Path(installed["skill"])
+        (self.home_a / "skill-local.md").write_text("## Sandbox safe overlay\n", encoding="utf-8")
+
+        # 1. Linked <home>/skills directory is refused via ensure_not_linked
+        skills_dir = (self.home_a / "skills").resolve()
+        reparse_flag = getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
+        real_lstat = Path.lstat
+
+        def fake_skills_lstat(path):
+            if path == skills_dir:
+                st = MagicMock()
+                st.st_mode = stat.S_IFLNK | 0o777
+                st.st_file_attributes = reparse_flag
+                return st
+            return real_lstat(path)
+
+        with patch.object(Path, "lstat", fake_skills_lstat):
+            with self.assertRaisesRegex(ValueError, "symlink or junction"):
+                agents.refresh_registered(self.home_a, user_home=self.base, apply=False)
+
+        # 2. PermissionError on an unrelated scan_roots entry does not abort explicit active-*.json refresh
+        blocked = (self.base / ".claude/skills/cto-legends").resolve()
+        real_exists = Path.exists
+
+        def flaky_exists(path):
+            if path.resolve() == blocked:
+                raise PermissionError("EACCES on unrelated ~/.claude")
+            return real_exists(path)
+
+        with patch.object(Path, "exists", flaky_exists):
+            refreshed = agents.refresh_registered(self.home_a, user_home=self.base, apply=True)
+        self.assertEqual(len(refreshed["registrations"]), 1)
+        self.assertEqual(refreshed["registrations"][0]["status"], "refreshed")
+        self.assertIn("## Sandbox safe overlay", skill_path.read_text(encoding="utf-8"))
+
 
 class RouterDriftAndUpdateSyncTests(unittest.TestCase):
     def setUp(self):
@@ -444,6 +613,9 @@ class RouterDriftAndUpdateSyncTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name).resolve()
         self.home = self.base / "manager"
+        home_patch = patch.object(Path, "home", return_value=self.base)
+        home_patch.start()
+        self.addCleanup(home_patch.stop)
 
     def test_check_updates_router_drift_and_ctolegends_hint(self):
         def fake_fetch(url, repos, *, timeout=90):
@@ -652,10 +824,33 @@ class MiscHardeningTests(unittest.TestCase):
         self.assertEqual(payload["modules"]["legends-grant"], "passed")
 
     def test_peek_remote_catalog_passes_timeout_3(self):
-        with patch.object(m, "fetch", return_value=json.dumps(m.catalog()).encode("utf-8")) as mock_fetch:
+        with patch.dict(os.environ, {"CTO_LEGENDS_OFFLINE": ""}), \
+             patch.object(m, "fetch", return_value=json.dumps(m.catalog()).encode("utf-8")) as mock_fetch:
             cat = discovery.peek_remote_catalog()
         self.assertIsNotNone(cat)
         mock_fetch.assert_called_once_with(m.CANONICAL_CATALOG_URL, set(), timeout=3)
+
+    def test_handoff_remote_update_hint_tailors_next_by_installation_state(self):
+        remote_cat = copy.deepcopy(m.catalog())
+        remote_cat["version"] = "9.9.9"
+        remote_cat["modules"]["legends-grant"]["version"] = "9.0.0"
+        remote_cat["modules"]["legends-hyperyap"]["version"] = "9.0.0"
+
+        with patch.object(discovery, "peek_remote_catalog", return_value=remote_cat):
+            not_inst = discovery.handoff("legends-grant", self.home, peek_remote=True)
+            self.assertIn("cto-legends install legends-grant --apply", not_inst["remote_update_available"]["next"])
+            self.assertNotIn("cto-legends update legends-grant", not_inst["remote_update_available"]["next"])
+
+            guided = discovery.handoff("legends-hyperyap", self.home, peek_remote=True)
+            self.assertIn("cto-legends guide legends-hyperyap", guided["remote_update_available"]["next"])
+            self.assertNotIn("cto-legends update legends-hyperyap", guided["remote_update_available"]["next"])
+
+            rel = "releases/legends-grant/old"
+            (self.home / rel / "source").mkdir(parents=True)
+            (self.home / rel / "receipt.json").write_text(json.dumps(m.catalog()["modules"]["legends-grant"]), encoding="utf-8")
+            m.write_state(self.home, {"schema": 1, "active": {"legends-grant": rel}, "previous": {}})
+            inst = discovery.handoff("legends-grant", self.home, peek_remote=True)
+            self.assertIn("cto-legends update legends-grant --apply", inst["remote_update_available"]["next"])
 
     def test_dm_build_opener_uses_manager_ssl_context(self):
         import urllib.request
@@ -680,7 +875,7 @@ class MiscHardeningTests(unittest.TestCase):
             self.assertEqual(env_log["PYTHONUTF8"], "1")
 
     def test_startup_normalizes_windows_drive_letter_casing(self):
-        with patch.object(startup.os, "name", "nt"):
+        with patch.object(startup, "_is_windows", return_value=True):
             k_lower = startup._target_key(r"e:\repo\AGENTS.md")
             k_upper = startup._target_key(r"E:\repo\AGENTS.md")
             self.assertEqual(k_lower, k_upper)
@@ -696,7 +891,7 @@ class MiscHardeningTests(unittest.TestCase):
                 raise PermissionError("AV scanner lock")
             return real_replace(src, dst)
 
-        with patch.object(m.os, "name", "nt"), patch.object(m.os, "replace", side_effect=flaky_replace), \
+        with patch.object(m, "_is_windows", return_value=True), patch.object(m.os, "replace", side_effect=flaky_replace), \
              patch.object(m.time, "sleep"):
             m.atomic_write_text(target, '{"ok": true}\n')
         self.assertEqual(attempts["n"], 3)
@@ -780,11 +975,19 @@ class MiscHardeningTests(unittest.TestCase):
                 raise PermissionError("AV scanner lock")
             return real_replace(src, dst)
 
-        with patch.object(startup.os, "name", "nt"), patch.object(startup.os, "replace", side_effect=flaky_replace), \
+        with patch.object(startup, "_is_windows", return_value=True), patch.object(startup.os, "replace", side_effect=flaky_replace), \
              patch.object(startup.time, "sleep"):
             startup._atomic(target, b"hello startup\n")
         self.assertEqual(attempts["n"], 3)
         self.assertEqual(target.read_bytes(), b"hello startup\n")
+
+        # Cleanup unlink OSError must not mask the original replace PermissionError
+        with patch.object(startup, "_is_windows", return_value=True), \
+             patch.object(startup.os, "replace", side_effect=PermissionError("target locked")), \
+             patch.object(startup.time, "sleep"), \
+             patch.object(Path, "unlink", side_effect=PermissionError("tmp locked")):
+            with self.assertRaisesRegex(PermissionError, "target locked"):
+                startup._atomic(target, b"second\n")
 
     def test_updates_reports_guided_native_hint(self):
         def fake_fetch(url, repos, *, timeout=90):
@@ -792,7 +995,7 @@ class MiscHardeningTests(unittest.TestCase):
                 return json.dumps(m.catalog()).encode("utf-8")
             return json.dumps({"tag_name": "v0.1.0"}).encode("utf-8")
 
-        with patch.object(m, "fetch", side_effect=fake_fetch):
+        with patch.object(Path, "home", return_value=self.home), patch.object(m, "fetch", side_effect=fake_fetch):
             res = m.updates(self.home)
         by_id = {row["id"]: row for row in res["modules"]}
         self.assertEqual(by_id["legends-hyperyap"]["status"], "not_installed")

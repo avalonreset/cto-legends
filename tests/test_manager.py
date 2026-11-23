@@ -574,18 +574,20 @@ class ManagerTests(unittest.TestCase):
         self.assertEqual(proc.stdout.strip(), cto_legends.__version__)
 
     def test_ssl_context_loads_certifi_bundle_when_available(self):
+        import builtins
         import ssl
         ca_file = self.home / "custom-ca.pem"
         ca_file.write_text("dummy", encoding="utf-8")
         fake_mod = unittest.mock.MagicMock()
         fake_mod.where.return_value = str(ca_file)
+        real_import = builtins.__import__
         with patch("ssl.create_default_context") as create_ctx, patch("builtins.__import__") as mock_import:
             ctx_instance = unittest.mock.MagicMock(spec=ssl.SSLContext)
             create_ctx.return_value = ctx_instance
             def side_effect(name, *args, **kwargs):
                 if name == "certifi":
                     return fake_mod
-                return __import__(name, *args, **kwargs)
+                return real_import(name, *args, **kwargs)
             mock_import.side_effect = side_effect
             res = m._ssl_context()
             self.assertIs(res, ctx_instance)
