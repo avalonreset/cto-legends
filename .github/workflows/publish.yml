@@ -51,7 +51,30 @@ jobs:
 
           env = {**os.environ, "TWINE_USERNAME": "__token__", "TWINE_PASSWORD": token}
           subprocess.run([sys.executable, "-m", "twine", "upload", "--skip-existing", "dist/*"], env=env, check=True)
-          rc = subprocess.run([sys.executable, "-m", "twine", "upload", "--skip-existing", "dist-alias/*"], env=env)
+          rc = subprocess.run(
+              [sys.executable, "-m", "twine", "upload", "--skip-existing", "dist-alias/*"],
+              env=env,
+              capture_output=True,
+              text=True,
+          )
+          if rc.stdout:
+              print(rc.stdout, end="")
+          if rc.stderr:
+              print(rc.stderr, end="", file=sys.stderr)
           if rc.returncode != 0:
-              print("Note: dist-alias (ctolegends) skipped or requires PyPI admin similarity exception.", file=sys.stderr)
+              combined = f"{rc.stdout}\n{rc.stderr}".lower()
+              similarity_markers = (
+                  "too similar to an existing project",
+                  "name is too similar",
+                  "similarity",
+              )
+              if any(marker in combined for marker in similarity_markers):
+                  print(
+                      "Note: dist-alias (ctolegends) skipped due to PyPI name similarity restriction.",
+                      file=sys.stderr,
+                  )
+              else:
+                  raise SystemExit(
+                      f"dist-alias (ctolegends) upload failed with exit code {rc.returncode}."
+                  )
           PY

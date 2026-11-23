@@ -38,11 +38,11 @@ description = "Alias package for cto-legends: discover, install, and maintain th
 requires-python = ">=3.11"
 license = "MIT"
 authors = [{{name = "Benjamin Samar / cto-legends"}}]
-dependencies = ["cto-legends=={pkg_version}"]
+dependencies = ["cto-legends>={pkg_version}"]
 readme = "README.md"
 
 [project.urls]
-Homepage = "https://cto-legends.com"
+Homepage = "https://cto-legends.com/home"
 Repository = "https://github.com/avalonreset/cto-legends"
 Issues = "https://github.com/avalonreset/cto-legends/issues"
 

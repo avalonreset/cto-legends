@@ -133,7 +133,7 @@ class NoCrossOriginRedirectHandler(urllib.request.HTTPRedirectHandler):
 
 def _build_opener():
     return urllib.request.build_opener(
-        urllib.request.HTTPSHandler(),
+        urllib.request.HTTPSHandler(context=manager._ssl_context()),
         urllib.request.HTTPHandler(),
         NoCrossOriginRedirectHandler(),
     )

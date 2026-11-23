@@ -28,20 +28,30 @@ recipe. The manager engine interprets only hardcoded primitives with
 validated parameters: catalogs never supply shell commands. GitHub release
 discovery is read-only.
 
-## Installation transaction
+## Installation and update transactions
 
-1. Acquire an exclusive per-home operation lock.
+1. Acquire an exclusive per-home `operation.lock` (refusing symlinks/junctions and recovering verified dead-PID locks via a short-lived `operation.reclaim.lock` mutex while failing closed on live, empty, or malformed locks).
 2. Resolve requested modules against the active catalog (synced home copy, else the bundled seed).
 3. Download and verify each source archive, rejecting unsafe members.
 4. Create a fresh version directory and, for Python modules, an environment at its final path.
-5. Install the Python module/requirements or unpack the prebuilt OBS Node package.
+5. Install the Python module/requirements or unpack the module source package.
 6. Run offline module checks and write a receipt.
-7. Atomically replace state.json only when the whole batch succeeds.
+7. Activation semantics:
+   - `cto-legends install --apply`: batch-atomic. Atomically replaces `state.json` only after every requested module in the batch passes its probes.
+   - `cto-legends update --apply` (and `update --sync --apply`): per-module checkpointed. Immediately atomically checkpoints `state.json` (moving the prior release into `previous`) after each individual module passes its probes, continues remaining independent modules on per-module failure while reporting sanitized errors and `install.log` paths, and emits live progress on `stderr` while keeping `stdout` pure JSON.
 
 Python environments cannot be renamed after creation. Failed directories stay
-inactive and retain logs. A killed process may leave a lock requiring inspection.
-The lock serializes manager mutations, not arbitrary user processes. Do not run
-updates while editing managed source. User data belongs outside managed releases.
+inactive and retain logs. The lock serializes manager mutations, not arbitrary
+user processes. Do not run updates while editing managed source. User data
+belongs outside managed releases.
+
+`cto-legends sync` refreshes the catalog plus existing unedited startup blocks
+and receipt-verified host `SKILL.md` registrations owned by the managed home.
+`cto-legends update --sync` previews catalog sync, startup/skill refresh, module
+updates against the candidate catalog, and router self-version status without
+writing any files; `cto-legends update --sync --apply` executes catalog sync,
+registration refreshes, and checkpointed module updates in one step (while
+reporting any router pip upgrade command without running pip against itself).
 
 Rollback probes a retained environment before swapping its active/previous
 references. Repeated rollback toggles between those versions. It does not roll
@@ -54,17 +64,19 @@ cost gates. Resolve the release tag to a full commit, download its codeload ZIP,
 and record the SHA-256 hash. Update the catalog entry (pins plus recipe data),
 bump the catalog version, and record the change in the catalog changelog. No
 manager code or skill change is needed: users adopt the new pins with
-`cto-legends sync`, then `update --apply` for installed modules. A new manager
-release is only needed for engine, primitive, or CLI changes, and only after
-platform CI succeeds. See [module release checklist](MODULE-RELEASE.md) and
+`cto-legends update --sync` (preview) and `cto-legends update --sync --apply`
+(or `cto-legends sync`, then `update --apply`). A new manager release is only
+needed for engine, primitive, or CLI changes, and only after platform CI
+succeeds. See [module release checklist](MODULE-RELEASE.md) and
 [router stability](ROUTER-STABILITY.md).
 
 Do not add a private module, placeholder, or merely available repository to the
-catalog. The current set contains fourteen independently released projects: thirteen
-managed CLIs and one native setup guide. Native entries supply pinned release
-assets and checksums but are never recorded as managed installed environments.
-Other public projects need the same review before admission. The intentionally
-excluded SEO Dungeon project is not routable or installable through this catalog.
+catalog. The current set contains twenty-one independently released projects:
+twenty managed CLIs and one native setup guide. Native entries supply pinned
+release assets and checksums but are never recorded as managed installed
+environments. Other public projects need the same review before admission. The
+intentionally excluded SEO Dungeon project is not routable or installable
+through this catalog.
 
 OBS uses its released npm tarball, verified before regular-file-only extraction.
 No TypeScript compiler or package manager is needed. Python modules retain their

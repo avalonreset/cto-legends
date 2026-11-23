@@ -123,6 +123,16 @@ def check(root: Path = ROOT) -> list[str]:
     if cl_ver != pkg_version:
         errors.append(f"CHANGELOG.md head={cl_ver} vs __init__.py={pkg_version}")
 
+    alias_script = root / "scripts" / "build_ctolegends_alias.py"
+    if not alias_script.is_file():
+        errors.append("Missing required script: scripts/build_ctolegends_alias.py")
+    else:
+        alias_text = alias_script.read_text(encoding="utf-8")
+        if "cto-legends>={" not in alias_text or "cto-legends=={" in alias_text:
+            errors.append(
+                "scripts/build_ctolegends_alias.py must use 'cto-legends>={' and never 'cto-legends=={'"
+            )
+
     cat = catalog()
     validate_catalog(cat)
     for mod_id, row in sorted(cat.get("modules", {}).items()):

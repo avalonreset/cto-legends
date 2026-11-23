@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.16 - 2026-11-23
+
+- Harden `operation.lock` with cross-platform PID liveness checks (`_winapi` on Windows, POSIX `os.kill(pid, 0)`), symlink/junction refusal, bounded regular-file reads, fail-closed handling on live/empty/malformed locks, and race-safe dead-PID reclamation via `operation.reclaim.lock`.
+- Add per-module `state.json` checkpointing and live `stderr` progress (with pure JSON `stdout` and optional `--quiet`) in `cto-legends update --apply`, continuing independent modules on failure with sanitized error and `install.log` reporting while keeping `cto-legends install --apply` batch-atomic.
+- Add receipt-verified host `SKILL.md` refresh (`agents.refresh_registered`) filtered strictly by `managed_home`, preserving hand-edited or unmanaged skills, recording active receipts under `<home>/skills/`, unifying `install-skill --directory` through `agents.py`, and wiring refresh into `sync` and `update --apply`.
+- Add router self-version drift detection (including `ctolegends` alias upgrade guidance) plus `startup_refresh`, `skill_refresh`, and `recommended_next` summaries to `check-updates`, and add 1-step `cto-legends update --sync` (zero-write preview) / `cto-legends update --sync --apply`.
+- Fix `ctolegends` alias packaging to depend on `cto-legends>={version}` with aligned homepage metadata, add a release-gate regression guard in `scripts/check_release.py`, and surface real `twine` diagnostics in `.github/workflows/publish.yml`.
+- Harden CLI and runtime edges: refuse symlinked `--home` before `.resolve()`, report per-module `doctor` failures across all modules without referencing `install.log`, apply a 3-second timeout to `peek_remote_catalog()`, pass `manager._ssl_context()` in `dm._build_opener()`, set `PYTHONDONTWRITEBYTECODE=1` and `PYTHONUTF8=1` in `manager.run()`, normalize Windows drive-letter casing in `startup.py` receipt keys, retry transient Windows `PermissionError` in `atomic_write_text()`, and guard `report-readiness` with `is_file()` and `timeout=60`. Canonical `cto_legends/SKILL.md` bytes remain unchanged.
+
 ## 0.2.15 - 2026-11-22
 
 - Add the 2-way agentic DM bridge: `cto-legends dm send`, `read`, `watch`, `link`, `login`, and `logout` for agent-to-agent thread messaging.

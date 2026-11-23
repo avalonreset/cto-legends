@@ -313,6 +313,7 @@ class UpdateStatusTests(unittest.TestCase):
         for key, row in m.catalog()["modules"].items():
             tags[row["repo"]] = "v" + row["version"]
         tags["avalonreset/legends-github"] = "v9.9.9"
+        tags["avalonreset/cto-legends"] = "v" + m.MANAGER_VERSION
 
         def fetch(url, repos):
             if url == m.CANONICAL_CATALOG_URL:
@@ -389,7 +390,7 @@ class RemoteCatalogPeekTests(unittest.TestCase):
             **{"legends-grant": {"version": "0.9.9", "commit": "a" * 40}},
         )
 
-    def fake_fetch(self, url, repos):
+    def fake_fetch(self, url, repos, *, timeout=90):
         if url == m.CANONICAL_CATALOG_URL:
             return json.dumps(self.remote_cat).encode("utf-8")
         raise AssertionError(f"unexpected fetch {url}")

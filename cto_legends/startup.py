@@ -27,6 +27,31 @@ def digest(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
+def _normalize_target_text(target):
+    text = str(target)
+    if os.name == 'nt' and len(text) >= 2 and text[1] == ':':
+        text = text[0].upper() + text[1:]
+    return text
+
+
+def _target_key(target):
+    return digest(_normalize_target_text(target).encode())
+
+
+def _find_active_record(home, target):
+    directory = safe_path(home / 'startup')
+    canonical = safe_path(directory / ('active-' + _target_key(target) + '.json'))
+    if canonical.is_file() or os.name != 'nt':
+        return canonical
+    text = str(target)
+    if len(text) >= 2 and text[1] == ':':
+        alt_text = text[0].lower() + text[1:]
+        alt = safe_path(directory / ('active-' + digest(alt_text.encode()) + '.json'))
+        if alt.is_file():
+            return alt
+    return canonical
+
+
 def invocation(home):
     prefix = '& ' if os.name == 'nt' else ''
     return f'{prefix}"{sys.executable}" -m cto_legends --home "{home}"'
@@ -164,7 +189,7 @@ def inspect(host, managed_home, *, user_home=None, instruction_file=None):
         warnings.append('Aider has no native skill directory; load the installed SKILL.md with an explicit file read. Registration alone proves nothing.')
     issues = []
     if span:
-        record = safe_path(home / 'startup' / ('active-' + digest(str(target).encode()) + '.json'))
+        record = _find_active_record(home, target)
         if not record.is_file():
             issues.append('Managed startup receipt is missing.')
         else:
@@ -210,8 +235,7 @@ def configure(host, managed_home, *, user_home=None, instruction_file=None, appl
         raise ValueError('Existing index differs from its content hash; preserved')
     newline = b'\r\n' if b'\r\n' in raw else b'\n'
     new_block = block(index_file, home, newline)
-    key = digest(str(target).encode())
-    record = safe_path(home / 'startup' / ('active-' + key + '.json'))
+    record = _find_active_record(home, target)
     if _registered_receipt is not None:
         if not span or not record.is_file() or _read_bounded_bytes(record) != _registered_receipt:
             raise ValueError('Registered startup changed during refresh; preserved')
@@ -319,8 +343,14 @@ def refresh_registered(managed_home, *, catalog=None, apply=False):
                 raise ValueError('Receipt requires an explicit absolute instruction file')
             target = safe_path(target_text)
             row['instruction_file'] = str(target)
-            expected_record = directory / ('active-' + digest(str(target).encode()) + '.json')
-            if record != expected_record or data.get('active_record') != str(record):
+            expected_records = {directory / ('active-' + _target_key(target) + '.json')}
+            if os.name == 'nt':
+                target_str = str(target)
+                if len(target_str) >= 2 and target_str[1] == ':':
+                    expected_records.add(
+                        directory / ('active-' + digest((target_str[0].lower() + target_str[1:]).encode()) + '.json')
+                    )
+            if record not in expected_records or data.get('active_record') != str(record):
                 raise ValueError('Startup receipt target does not match its registration')
             if not target.is_file():
                 raise ValueError('Registered instruction file is missing; preserved')

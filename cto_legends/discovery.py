@@ -85,7 +85,7 @@ def peek_remote_catalog():
     if m.os.environ.get('CTO_LEGENDS_OFFLINE') == '1':
         return None
     try:
-        raw = m.fetch(m.CANONICAL_CATALOG_URL, set())
+        raw = m.fetch(m.CANONICAL_CATALOG_URL, set(), timeout=3)
         return m.validate_catalog(json.loads(raw))
     except Exception:
         return None

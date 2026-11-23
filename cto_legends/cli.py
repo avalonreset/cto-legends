@@ -15,18 +15,8 @@ from . import dm as dm_module
 from .discovery import route
 
 
-def install_skill(directory, home):
-    directory = m.ensure_not_linked(directory.expanduser()).resolve()
-    target = directory / "cto-legends"
-    m.ensure_not_linked(target)
-    if target.exists():
-        raise ValueError("Skill destination exists; review it before replacing. No files changed.")
-    directory.mkdir(parents=True, exist_ok=True)
-    target.mkdir()
-    text = (m.ROOT / "SKILL.md").read_text(encoding="utf-8")
-    text += f"\n## This installation\n\nPython executable: `{sys.executable}`\n\nManaged home: `{home}`\n\nUse that Python with `-m cto_legends --home <managed-home>` if the command is not on PATH.\n"
-    m.atomic_write_text(target / "SKILL.md", text)
-    return {"skill": str(target / "SKILL.md"), "next": "Reload your agent's skills and ask it to list cto-legends modules."}
+def install_skill(directory, home, *, apply=True):
+    return agents.install_directory(directory, home, apply=apply, allow_refresh=False)
 
 
 def parser():
@@ -60,7 +50,7 @@ def parser():
     r = sub.add_parser("startup-restore", help="Restore a startup change from its checked backup")
     r.add_argument("manifest", type=Path)
     r.add_argument("--apply", action="store_true")
-    sub.add_parser("check-updates", help="Compare installed, catalog, and upstream versions without installing")
+    sub.add_parser("check-updates", help="Compare router, catalog, registrations, installed, and upstream versions without installing")
     r = sub.add_parser("sync", help="Preview a catalog refresh; add --apply to adopt it, --rollback to revert")
     r.add_argument("--apply", action="store_true")
     r.add_argument("--rollback", action="store_true")
@@ -75,9 +65,17 @@ def parser():
     r = sub.add_parser("guide", help="Show pinned setup instructions, platform requirements, and release downloads")
     r.add_argument("module")
     for name in ("install", "update"):
-        s = sub.add_parser(name, help="Preview changes; add --apply to install")
+        help_text = (
+            "Preview batch-atomic module installation; add --apply to install"
+            if name == "install"
+            else "Preview checkpointed updates (add --sync to sync catalog and refresh registrations first; add --apply to execute)"
+        )
+        s = sub.add_parser(name, help=help_text)
         s.add_argument("modules", nargs="+" if name == "install" else "*")
         s.add_argument("--apply", action="store_true")
+        s.add_argument("--quiet", action="store_true", help="Suppress live progress lines on stderr")
+        if name == "update":
+            s.add_argument("--sync", action="store_true", help="Sync canonical catalog and refresh startup/skill registrations before updating")
     r = sub.add_parser("rollback", help="Switch to a retained previous environment")
     r.add_argument("module")
     r.add_argument("--apply", action="store_true")
@@ -135,7 +133,7 @@ def parser():
 def execute(args):
     if getattr(args, "command", None) == "dm":
         return dm_module.run_command(args)
-    home = args.home.expanduser().resolve()
+    home = m.ensure_not_linked(args.home.expanduser()).resolve()
     cmd = args.command
     if cmd == "startup-setup":
         return startup.configure(args.host, home, instruction_file=args.instruction_file, apply=args.apply)
@@ -197,21 +195,68 @@ def execute(args):
         return m.updates(home)
     if cmd == "sync":
         return m.sync(home, apply=args.apply, rollback_catalog=args.rollback)
-    if cmd in ("install", "update"):
+    if cmd == "install":
         cat = m.active_catalog(home)
-        raw = args.modules if args.modules else list(m.read_state(home)["active"])
-        keys = list(dict.fromkeys(m.resolve_module(k, cat) for k in raw))
-        if cmd == "update":
-            if any(k not in m.read_state(home)["active"] for k in keys):
+        keys = list(dict.fromkeys(m.resolve_module(k, cat) for k in args.modules))
+        if not args.apply:
+            return {"preview": True, "changes": m.plan(home, keys)}
+        progress_cb = None if getattr(args, "quiet", False) else (lambda msg: print(msg, file=sys.stderr, flush=True))
+        return m.install(home, keys, progress=progress_cb)
+    if cmd == "update":
+        progress_cb = None if getattr(args, "quiet", False) else (lambda msg: print(msg, file=sys.stderr, flush=True))
+        if getattr(args, "sync", False):
+            if not args.apply:
+                return m.update_sync_preview(home, args.modules or None)
+            sync_result = m.sync(home, apply=True)
+            cat = m.active_catalog(home)
+            state = m.read_state(home)
+            raw = args.modules if args.modules else list(state["active"])
+            keys = list(dict.fromkeys(m.resolve_module(k, cat) for k in raw))
+            if any(k not in state["active"] for k in keys):
                 raise ValueError("Update only operates on installed modules; use install for new modules")
             if not args.modules:
                 dropped = [k for k in keys if k not in cat["modules"]]
                 keys = [k for k in keys if k in cat["modules"]]
             else:
                 dropped = []
+            update_result = m.update(home, keys, progress=progress_cb)
+            router = m.check_router_update()
+            result = {
+                **update_result,
+                "preview": False,
+                "sync": {
+                    "catalog_version": sync_result["catalog_version"],
+                    "diff": sync_result["diff"],
+                },
+                "startup_refresh": sync_result["startup_refresh"],
+                "skill_refresh": sync_result["skill_refresh"],
+                "router": router,
+            }
+            if dropped:
+                result["skipped_not_in_catalog"] = dropped
+            if router.get("update_available"):
+                result["next"] = f"Router update available ({router['installed']} -> {router['latest_version']}): {router['next']}"
+            else:
+                result["next"] = "Sync and module updates complete." if result["ok"] else "Sync completed; inspect failed modules and install.log."
+            return result
+        cat = m.active_catalog(home)
+        state = m.read_state(home)
+        raw = args.modules if args.modules else list(state["active"])
+        keys = list(dict.fromkeys(m.resolve_module(k, cat) for k in raw))
+        if any(k not in state["active"] for k in keys):
+            raise ValueError("Update only operates on installed modules; use install for new modules")
+        if not args.modules:
+            dropped = [k for k in keys if k not in cat["modules"]]
+            keys = [k for k in keys if k in cat["modules"]]
         else:
             dropped = []
-        result = m.install(home, keys) if args.apply else {"preview": True, "changes": m.plan(home, keys)}
+        if not args.apply:
+            result = {"preview": True, "changes": m.plan(home, keys)}
+        else:
+            result = m.update(home, keys, progress=progress_cb)
+            skill_preview = m._safe_skill_refresh(home, apply=False)
+            if any(r.get("status") == "refresh_pending" for r in skill_preview.get("registrations", [])):
+                result["skill_refresh"] = m._safe_skill_refresh(home, apply=True)
         if dropped:
             result["skipped_not_in_catalog"] = dropped
         return result
@@ -220,19 +265,30 @@ def execute(args):
         key = m.resolve_module(args.module, cat)
         return m.rollback(home, key) if args.apply else {"preview": True, "previous": m.read_state(home)["previous"].get(key)}
     if cmd == "install-skill":
-        return install_skill(args.directory, home) if args.apply else {"preview": True, "destination": str(args.directory / "cto-legends" / "SKILL.md")}
+        return install_skill(args.directory, home, apply=args.apply)
     if cmd == "doctor":
         cat = m.active_catalog(home)
         state = m.read_state(home)
         checks = {}
+        all_ok = True
         for key, relative in state["active"].items():
-            release = m.managed_path(home, relative)
-            if key in cat.get("retired", {}) and "recipe" not in json.loads(m.read_bounded_text(release / "receipt.json")):
-                checks[key] = f"retired (succeeded by {cat['retired'][key]})"
-                continue
-            m.probe(key, release, m.recipe_for(home, key, relative, cat))
-            checks[key] = "passed"
-        return {"ok": True, "version": __version__, "catalog_version": cat["version"], "modules": checks,
+            try:
+                release = m.managed_path(home, relative)
+                if key in cat.get("retired", {}) and "recipe" not in json.loads(m.read_bounded_text(release / "receipt.json")):
+                    checks[key] = f"retired (succeeded by {cat['retired'][key]})"
+                    continue
+                m.probe(key, release, m.recipe_for(home, key, relative, cat))
+                checks[key] = "passed"
+            except subprocess.CalledProcessError as exc:
+                all_ok = False
+                checks[key] = f"failed: probe exited with status {exc.returncode}"
+            except subprocess.TimeoutExpired:
+                all_ok = False
+                checks[key] = "failed: probe timed out"
+            except (ValueError, OSError, KeyError, subprocess.SubprocessError) as exc:
+                all_ok = False
+                checks[key] = f"failed: {exc}"
+        return {"ok": all_ok, "version": __version__, "catalog_version": cat["version"], "modules": checks,
                 "optional_tools": {x: bool(shutil.which(x)) for x in ("node", "pnpm", "gh")},
                 "note": "Checks managed CLI capabilities only. Native apps, OBS connection, GPU/models, browser UI, PDFs, credentials and paid calls require module setup."}
     if cmd == "report-readiness":
@@ -240,9 +296,13 @@ def execute(args):
         if "legends-geogrid" not in state["active"]:
             raise ValueError("Install legends-geogrid first")
         release = m.managed_path(home, state["active"]["legends-geogrid"])
-        return subprocess.run([str(m.python_at(release)),
-            str(release / "source" / "tools" / "geogrid_doctor.py"),
-            "--reports", "--basemaps", "--dataforseo"]).returncode
+        doctor_script = m.confine(release / "source", "tools/geogrid_doctor.py")
+        if not doctor_script.is_file():
+            raise ValueError(f"GeoGrid doctor script is missing: {doctor_script}")
+        return subprocess.run(
+            [str(m.python_at(release)), str(doctor_script), "--reports", "--basemaps", "--dataforseo"],
+            timeout=60,
+        ).returncode
     if cmd == "run":
         cat = m.active_catalog(home)
         key = m.resolve_module(args.module, cat)

@@ -14,6 +14,7 @@ from functools import partial
 from pathlib import Path, PurePosixPath
 import gzip
 import hashlib
+import importlib.metadata
 import json
 import os
 import re
@@ -23,6 +24,7 @@ import stat
 import subprocess
 import sys
 import tarfile
+import time
 import urllib.parse
 import urllib.request
 import uuid
@@ -35,6 +37,7 @@ LIMIT = 100 * 1024 * 1024
 MAX_EXTRACTED_BYTES = 400 * 1024 * 1024
 MAX_STATE_BYTES = 1_048_576
 MAX_CATALOG_BYTES = 4 * 1_048_576
+_LOCK_MAX_BYTES = 4096
 _MACOS_SYSTEM_SYMLINKS = {Path("/var"), Path("/tmp"), Path("/etc")}
 _STDLIB_URLOPEN = urllib.request.urlopen
 _RELEASE_ASSET_CDNS = (
@@ -109,7 +112,14 @@ def atomic_write_text(path, content, *, mode=0o600):
             os.fsync(handle.fileno())
         if os.name != "nt":
             os.chmod(tmp, mode)
-        os.replace(tmp, target)
+        for attempt in range(3):
+            try:
+                os.replace(tmp, target)
+                break
+            except PermissionError:
+                if os.name != "nt" or attempt == 2:
+                    raise
+                time.sleep(0.02)
     except Exception:
         try:
             tmp.unlink(missing_ok=True)
@@ -526,20 +536,205 @@ def confine(base, relative):
     return path
 
 
+def _pid_is_alive(pid):
+    """Cross-platform PID liveness probe. Returns True (live), False (dead), or None (unknown)."""
+    if isinstance(pid, bool) or not isinstance(pid, int) or pid <= 0:
+        return None
+    if os.name == "nt":
+        import _winapi
+        try:
+            handle = _winapi.OpenProcess(_winapi.SYNCHRONIZE, False, pid)
+        except OSError as exc:
+            winerror = getattr(exc, "winerror", None)
+            if winerror == 87:  # ERROR_INVALID_PARAMETER: PID does not exist
+                return False
+            if winerror == 5:  # ERROR_ACCESS_DENIED: live elevated/protected process
+                return True
+            return None
+        try:
+            wait = _winapi.WaitForSingleObject(handle, 0)
+            if wait == _winapi.WAIT_TIMEOUT:
+                return True
+            if wait == _winapi.WAIT_OBJECT_0:
+                return False
+            return None
+        finally:
+            _winapi.CloseHandle(handle)
+    try:
+        os.kill(pid, 0)
+        return True
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    except OSError:
+        return None
+
+
+def _make_lock_payload(token):
+    return (json.dumps({
+        "schema": 1,
+        "pid": os.getpid(),
+        "token": token,
+        "started_at": time.time(),
+    }) + "\n").encode("utf-8")
+
+
+def _read_lock_bytes(path):
+    ensure_not_linked(path)
+    st = path.lstat()
+    if not stat.S_ISREG(st.st_mode) or st.st_size > _LOCK_MAX_BYTES:
+        raise ValueError(f"Malformed or non-regular operation.lock at {path}; inspect it before removing")
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_BINARY", 0)
+    fd = os.open(path, flags)
+    with os.fdopen(fd, "rb") as handle:
+        raw = handle.read(_LOCK_MAX_BYTES + 1)
+    if len(raw) > _LOCK_MAX_BYTES:
+        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+    return raw, st
+
+
+def _parse_lock_pid(raw, path):
+    try:
+        text = raw.decode("utf-8").strip()
+    except UnicodeDecodeError:
+        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing") from None
+    if not text:
+        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+    if text.isdigit():
+        pid = int(text)
+        if pid <= 0:
+            raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+        return pid
+    try:
+        data = json.loads(text)
+    except ValueError:
+        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing") from None
+    if not isinstance(data, dict) or data.get("schema") != 1:
+        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+    pid = data.get("pid")
+    if isinstance(pid, bool) or not isinstance(pid, int) or pid <= 0:
+        raise ValueError(f"Malformed operation.lock at {path}; inspect it before removing")
+    return pid
+
+
+def _open_exclusive_lock(path, payload):
+    flags = (os.O_CREAT | os.O_EXCL | os.O_WRONLY
+             | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_BINARY", 0))
+    fd = os.open(path, flags, 0o600)
+    try:
+        view = memoryview(payload)
+        written = 0
+        while written < len(view):
+            written += os.write(fd, view[written:])
+    except Exception:
+        os.close(fd)
+        try:
+            path.unlink(missing_ok=True)
+        except OSError:
+            pass
+        raise
+    os.close(fd)
+
+
+def _release_lock_file(path, expected_token):
+    try:
+        if path.is_symlink():
+            return
+        raw, _ = _read_lock_bytes(path)
+        data = json.loads(raw.decode("utf-8"))
+        if isinstance(data, dict) and data.get("token") == expected_token:
+            path.unlink(missing_ok=True)
+    except (FileNotFoundError, OSError, ValueError):
+        pass
+
+
 @contextmanager
 def lock(home):
+    home = Path(home)
+    ensure_not_linked(home)
     home.mkdir(parents=True, exist_ok=True)
+    ensure_not_linked(home)
     path = home / "operation.lock"
+    reclaim_path = home / "operation.reclaim.lock"
+    ensure_not_linked(path)
+    token = uuid.uuid4().hex
+    payload = _make_lock_payload(token)
+
+    acquired = False
+    for _attempt in range(2):
+        ensure_not_linked(path)
+        try:
+            _open_exclusive_lock(path, payload)
+            acquired = True
+            break
+        except FileExistsError:
+            pass
+        except PermissionError:
+            if path.exists() and not path.is_file():
+                raise ValueError(
+                    f"Malformed or non-regular operation.lock at {path}; inspect it before removing"
+                ) from None
+            raise
+
+        try:
+            raw, st = _read_lock_bytes(path)
+        except FileNotFoundError:
+            continue
+
+        if raw == b"":
+            if time.time() - st.st_mtime < 2.0:
+                time.sleep(0.05)
+                try:
+                    raw, st = _read_lock_bytes(path)
+                except FileNotFoundError:
+                    continue
+            if raw == b"":
+                raise ValueError(
+                    f"Malformed or active operation.lock at {path}; inspect it before removing"
+                ) from None
+
+        pid = _parse_lock_pid(raw, path)
+        alive = _pid_is_alive(pid)
+        if alive is True:
+            raise ValueError(
+                f"Another operation (PID {pid}) holds operation.lock; inspect it before removing"
+            ) from None
+        if alive is None:
+            raise ValueError(
+                f"Cannot verify PID {pid} holding operation.lock; inspect it before removing"
+            ) from None
+
+        ensure_not_linked(reclaim_path)
+        reclaim_token = uuid.uuid4().hex
+        reclaim_payload = _make_lock_payload(reclaim_token)
+        try:
+            _open_exclusive_lock(reclaim_path, reclaim_payload)
+        except FileExistsError:
+            raise ValueError(
+                f"Another operation is recovering operation.lock; retry or inspect {reclaim_path}"
+            ) from None
+        try:
+            try:
+                current_raw, _ = _read_lock_bytes(path)
+            except FileNotFoundError:
+                continue
+            if current_raw != raw:
+                raise ValueError(
+                    "Another operation holds operation.lock; inspect it before removing"
+                ) from None
+            path.unlink(missing_ok=True)
+        finally:
+            _release_lock_file(reclaim_path, reclaim_token)
+
+    if not acquired:
+        raise ValueError(
+            "Another operation or interrupted operation holds operation.lock; inspect it before removing"
+        )
     try:
-        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-    except FileExistsError:
-        raise ValueError("Another operation or interrupted operation holds operation.lock; inspect it before removing") from None
-    try:
-        with os.fdopen(fd, "w") as handle:
-            handle.write(str(os.getpid()))
         yield
     finally:
-        path.unlink()
+        _release_lock_file(path, token)
 
 
 def write_state(home, data):
@@ -580,7 +775,7 @@ def _ssl_context():
     return ctx
 
 
-def fetch(url, repos):
+def fetch(url, repos, *, timeout=90):
     try:
         _check_clean_url(url, "download origin")
     except ValueError:
@@ -603,14 +798,14 @@ def fetch(url, repos):
             headers["Authorization"] = "Bearer " + token
     request = urllib.request.Request(url, headers=headers)
     if urllib.request.urlopen is not _STDLIB_URLOPEN:
-        context = urllib.request.urlopen(request, timeout=90)
+        context = urllib.request.urlopen(request, timeout=timeout)
     else:
         opener = urllib.request.build_opener(
             urllib.request.ProxyHandler({}),
             urllib.request.HTTPSHandler(context=_ssl_context()),
             _SafeRedirectHandler(allow_release_redirect=is_release),
         )
-        context = opener.open(request, timeout=90)
+        context = opener.open(request, timeout=timeout)
     with context as response:
         final_url = getattr(response, "url", url) or url
         allowed_final = (releases + _RELEASE_ASSET_CDNS) if is_release else (allowed + raw)
@@ -766,16 +961,16 @@ def python_at(release):
 
 
 def run(command, cwd, *, log=True):
+    environment = dict(os.environ, PYTHONDONTWRITEBYTECODE="1", PYTHONUTF8="1")
     # Readiness can run in a read-only agent sandbox. Only installation writes logs.
     if not log:
-        environment = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
         return subprocess.run([str(x) for x in command], cwd=cwd,
                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                               check=True, timeout=600, env=environment)
     # Never shell interpolation. Keep mutation output in the managed install log.
     with (cwd / "install.log").open("a", encoding="utf-8") as handle:
         subprocess.run([str(x) for x in command], cwd=cwd, stdout=handle,
-                       stderr=subprocess.STDOUT, check=True, timeout=600)
+                       stderr=subprocess.STDOUT, check=True, timeout=600, env=environment)
 
 
 def probe(key, release, recipe, *, log=False):
@@ -813,7 +1008,11 @@ def probe(key, release, recipe, *, log=False):
             raise ValueError(f"Unknown probe step for {key}: {do!r}")
 
 
-def prepare(key, module, home):
+def prepare(key, module, home, *, progress=None):
+    def _emit(msg):
+        if progress is not None:
+            progress(msg)
+
     recipe = module["recipe"]
     if recipe.get("mode", "managed") == "guided":
         raise ValueError("This module uses guided native setup")
@@ -829,6 +1028,7 @@ def prepare(key, module, home):
     release.mkdir(parents=True)
     source = release / "source"
     source.mkdir()
+    _emit(f"{key} {module['version']}: downloading and verifying archive...")
     if recipe.get("source", "codeload-zip") == "release-tgz":
         raw = fetch(module["artifact_url"], {module["repo"]})
         extract_tgz(raw, source, module["sha256"])
@@ -836,6 +1036,7 @@ def prepare(key, module, home):
         raw = fetch(f"https://codeload.github.com/{module['repo']}/zip/{module['commit']}", {module["repo"]})
         extract(raw, source, module["sha256"])
     if recipe.get("env", True):
+        _emit(f"{key} {module['version']}: creating venv and installing dependencies...")
         run([sys.executable, "-m", "venv", release / "env"], release)
         python = python_at(release)
         pip = recipe.get("pip", {"kind": "none"})
@@ -847,6 +1048,7 @@ def prepare(key, module, home):
             for name in pip["files"]:
                 run([python, "-m", "pip", "install", "--disable-pip-version-check",
                      "-r", confine(source, name)], release)
+    _emit(f"{key} {module['version']}: running offline probes...")
     probe(key, release, recipe, log=True)
     atomic_write_text(release / "receipt.json", json.dumps(module, indent=2) + "\n")
     return relative
@@ -865,10 +1067,16 @@ def recipe_for(home, key, relative, cat):
     return recipe
 
 
-def plan(home, keys):
-    cat = active_catalog(home)
+def plan(home, keys, *, _catalog=None):
+    cat = active_catalog(home) if _catalog is None else _catalog
     modules = cat["modules"]
     state = read_state(home)
+    if _catalog is not None:
+        aliases = cat.get("aliases", {})
+        for group in ("active", "previous"):
+            for alias, target in aliases.items():
+                if alias in state[group] and target not in state[group]:
+                    state[group][target] = state[group].pop(alias)
     result = []
     for key in keys:
         if key in cat.get("retired", {}):
@@ -896,24 +1104,116 @@ def plan(home, keys):
     return result
 
 
-def install(home, keys):
+def install(home, keys, *, progress=None):
     with lock(home):
         changes = plan(home, keys)
         state = read_state(home)
         modules = active_catalog(home)["modules"]
         prepared = {}
-        for item in changes:
+        total = len(changes)
+        for idx, item in enumerate(changes, 1):
+            key = item["id"]
+            prefix = f"[{idx}/{total}] "
             if item["action"] == "install":
-                prepared[item["id"]] = prepare(item["id"], modules[item["id"]], home)
+                started = time.monotonic()
+                if progress is not None:
+                    step_progress = lambda msg, p=prefix: progress(p + msg)
+                    prepared[key] = prepare(key, modules[key], home, progress=step_progress)
+                    elapsed = time.monotonic() - started
+                    progress(f"{prefix}{key} {item['version']}: verified ({elapsed:.1f}s)")
+                else:
+                    prepared[key] = prepare(key, modules[key], home)
+            elif progress is not None:
+                if item["action"] == "keep":
+                    progress(f"{prefix}{key} {item['version']}: already current (skip)")
+                elif item["action"] == "guided-setup":
+                    progress(f"{prefix}{key}: guided native setup (skip)")
         # Activate the entire set only after every environment passed its probe.
         for key, relative in prepared.items():
             if key in state["active"]:
                 state["previous"][key] = state["active"][key]
             state["active"][key] = relative
         write_state(home, state)
+        if progress is not None and prepared:
+            progress(f"Activated {len(prepared)} verified module(s).")
     cat = active_catalog(home)
     return {"changes": changes, "active": state["active"],
             "guided_setup": [guide(item["id"], cat) for item in changes if item["action"] == "guided-setup"]}
+
+
+def update(home, keys, *, progress=None):
+    """Update installed modules with per-module probe verification and state checkpointing."""
+    updated = []
+    kept = []
+    failed = {}
+    with lock(home):
+        changes = plan(home, keys)
+        state = read_state(home)
+        cat = active_catalog(home)
+        modules = cat["modules"]
+        total = len(changes)
+        for idx, item in enumerate(changes, 1):
+            key = item["id"]
+            action = item["action"]
+            prefix = f"[{idx}/{total}] "
+            if action == "guided-setup":
+                if progress is not None:
+                    progress(f"{prefix}{key}: guided native setup (skip)")
+                continue
+            if action == "keep":
+                kept.append(key)
+                if progress is not None:
+                    progress(f"{prefix}{key} {item['version']}: already current (skip)")
+                continue
+            started = time.monotonic()
+            mod_dir = home / "releases" / key
+            before_dirs = set(mod_dir.iterdir()) if mod_dir.is_dir() else set()
+            try:
+                if progress is not None:
+                    step_progress = lambda msg, p=prefix: progress(p + msg)
+                    relative = prepare(key, modules[key], home, progress=step_progress)
+                else:
+                    relative = prepare(key, modules[key], home)
+            except (ValueError, OSError, subprocess.SubprocessError) as exc:
+                log_path = None
+                if mod_dir.is_dir():
+                    new_dirs = sorted(
+                        (p for p in mod_dir.iterdir() if p not in before_dirs and p.is_dir()),
+                        key=lambda p: p.stat().st_mtime,
+                        reverse=True,
+                    )
+                    for candidate in new_dirs:
+                        candidate_log = candidate / "install.log"
+                        if candidate_log.is_file():
+                            log_path = str(candidate_log)
+                            break
+                err_msg = (
+                    "Module setup or verification failed; inspect the managed install.log. Previous active version is unchanged."
+                    if isinstance(exc, subprocess.SubprocessError)
+                    else str(exc)
+                )
+                failed[key] = {"error": err_msg, "log": log_path}
+                if progress is not None:
+                    progress(f"{prefix}{key} {item['version']}: failed ({err_msg})")
+                continue
+            if key in state["active"]:
+                state["previous"][key] = state["active"][key]
+            state["active"][key] = relative
+            write_state(home, state)
+            updated.append(key)
+            if progress is not None:
+                elapsed = time.monotonic() - started
+                progress(f"{prefix}{key} {item['version']}: verified and activated ({elapsed:.1f}s)")
+    cat = active_catalog(home)
+    return {
+        "ok": not bool(failed),
+        "changes": changes,
+        "updated": updated,
+        "kept": kept,
+        "failed": failed,
+        "active": state["active"],
+        "guided_setup": [guide(item["id"], cat) for item in changes if item["action"] == "guided-setup"],
+    }
 
 
 def rollback(home, key):
@@ -966,6 +1266,75 @@ def catalog_diff(current, candidate):
             "added": added, "removed": removed, "updated": updated, "revised_same_version": revised}
 
 
+def _version_tuple(version_str):
+    cleaned = str(version_str).strip()
+    if cleaned.startswith("v"):
+        cleaned = cleaned[1:]
+    if not re.fullmatch(VERSION_RE, cleaned):
+        raise ValueError(f"Invalid version: {version_str!r}")
+    return tuple(int(part) for part in cleaned.split("."))
+
+
+def _router_upgrade_command():
+    try:
+        importlib.metadata.distribution("ctolegends")
+        return "python -m pip install --upgrade cto-legends ctolegends"
+    except importlib.metadata.PackageNotFoundError:
+        return "python -m pip install --upgrade cto-legends"
+
+
+def check_router_update():
+    """Check avalonreset/cto-legends latest release tag against MANAGER_VERSION."""
+    try:
+        release = json.loads(
+            fetch(f"https://api.github.com/repos/{CATALOG_REPO}/releases/latest", set())
+        )
+        tag = release["tag_name"]
+        if not isinstance(tag, str) or not tag.strip():
+            raise ValueError("Missing tag_name in router release metadata")
+        latest_version = tag.strip().lstrip("v")
+        update_available = _version_tuple(latest_version) > _version_tuple(MANAGER_VERSION)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        return {
+            "installed": MANAGER_VERSION,
+            "latest_tag": None,
+            "latest_version": None,
+            "update_available": False,
+            "status": "upstream_unreachable",
+            "next": f"router version check failed ({exc}); retry later",
+        }
+    if update_available:
+        return {
+            "installed": MANAGER_VERSION,
+            "latest_tag": tag,
+            "latest_version": latest_version,
+            "update_available": True,
+            "status": "update_available",
+            "next": _router_upgrade_command(),
+        }
+    return {
+        "installed": MANAGER_VERSION,
+        "latest_tag": tag,
+        "latest_version": latest_version,
+        "update_available": False,
+        "status": "current",
+        "next": "router is up to date",
+    }
+
+
+def _safe_skill_refresh(home, *, apply=False):
+    from . import agents
+    try:
+        return agents.refresh_registered(home, apply=apply)
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        return {
+            "preview": not apply,
+            "registrations": [],
+            "residuals": 1,
+            "issue": f"Skill refresh failed; inspect existing registrations: {exc}",
+        }
+
+
 def sync(home, *, apply=False, rollback_catalog=False):
     """Refresh the home catalog from the canonical live copy. Preview unless applied."""
     from . import startup
@@ -993,7 +1362,8 @@ def sync(home, *, apply=False, rollback_catalog=False):
                   "was_synced": previous.get("was_synced", False),
                   "next": "run with --apply when authorized" if not apply else "restored"}
         if not apply:
-            return {**detail, "startup_refresh": refresh(restored)}
+            return {**detail, "startup_refresh": refresh(restored),
+                    "skill_refresh": _safe_skill_refresh(home, apply=False)}
         with lock(home):
             active_path = home / "catalog.json"
             rotation = {"was_synced": active_path.exists(),
@@ -1003,7 +1373,8 @@ def sync(home, *, apply=False, rollback_catalog=False):
                 atomic_write_text(active_path, json.dumps(restored, indent=2) + "\n")
             else:
                 active_path.unlink(missing_ok=True)
-        return {**detail, "startup_refresh": refresh(restored)}
+        return {**detail, "startup_refresh": refresh(restored),
+                "skill_refresh": _safe_skill_refresh(home, apply=True)}
     current = active_catalog(home)
     try:
         candidate = validate_catalog(json.loads(fetch(CANONICAL_CATALOG_URL, set())))
@@ -1012,9 +1383,10 @@ def sync(home, *, apply=False, rollback_catalog=False):
     diff = catalog_diff(current, candidate)
     detail = {"preview": not apply, "catalog_version": diff["catalog_version"], "diff": diff,
               "next": ("run with --apply when authorized" if diff["changed"]
-                       else "catalog already current; inspect startup_refresh for existing registration updates")}
+                       else "catalog already current; inspect startup_refresh and skill_refresh for existing registration updates")}
     if not apply:
-        return {**detail, "startup_refresh": refresh(candidate)}
+        return {**detail, "startup_refresh": refresh(candidate),
+                "skill_refresh": _safe_skill_refresh(home, apply=False)}
     if diff["changed"]:
         with lock(home):
             active_path = home / "catalog.json"
@@ -1024,18 +1396,78 @@ def sync(home, *, apply=False, rollback_catalog=False):
             atomic_write_text(home / "catalog.previous.json", json.dumps(rotation, indent=2) + "\n")
             atomic_write_text(active_path, json.dumps(candidate, indent=2) + "\n")
     refreshed = refresh(candidate)
-    return {**detail, "preview": False, "startup_refresh": refreshed,
+    skill_refreshed = _safe_skill_refresh(home, apply=True)
+    return {**detail, "preview": False, "startup_refresh": refreshed, "skill_refresh": skill_refreshed,
             "next": ("synced" if diff["changed"] else "catalog already current") +
-                    "; inspect startup_refresh residuals, reload refreshed hosts, then check-updates for installed modules"}
+                    "; inspect startup_refresh and skill_refresh residuals, reload refreshed hosts, then check-updates for installed modules"}
+
+
+def update_sync_preview(home, raw_modules=None):
+    """Read-only preview of sync + startup/skill refresh + module update plan against candidate catalog."""
+    from . import startup
+
+    current = active_catalog(home)
+    try:
+        candidate = validate_catalog(json.loads(fetch(CANONICAL_CATALOG_URL, set())))
+    except ValueError as exc:
+        raise ValueError(f"Canonical catalog failed validation; nothing changed: {exc}") from None
+    diff = catalog_diff(current, candidate)
+    try:
+        startup_refresh = startup.refresh_registered(home, catalog=candidate, apply=False)
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        startup_refresh = {"preview": True, "registrations": [], "residuals": 1,
+                           "issue": f"Startup refresh preview failed: {exc}"}
+    skill_refresh = _safe_skill_refresh(home, apply=False)
+
+    state = read_state(home)
+    aliases = candidate.get("aliases", {})
+    active_resolved = {}
+    for key, rel in state["active"].items():
+        active_resolved[aliases.get(key, key)] = rel
+
+    raw = list(raw_modules) if raw_modules else list(active_resolved)
+    keys = list(dict.fromkeys(resolve_module(k, candidate) for k in raw))
+    if any(k not in active_resolved for k in keys):
+        raise ValueError("Update only operates on installed modules; use install for new modules")
+    if not raw_modules:
+        dropped = [k for k in keys if k not in candidate["modules"]]
+        keys = [k for k in keys if k in candidate["modules"]]
+    else:
+        dropped = []
+    changes = plan(home, keys, _catalog=candidate)
+    router = check_router_update()
+
+    next_hint = "Run cto-legends update --sync --apply when authorized"
+    if router.get("update_available"):
+        next_hint += f"; also upgrade router with: {router['next']}"
+    result = {
+        "preview": True,
+        "sync": {
+            "preview": True,
+            "catalog_version": diff["catalog_version"],
+            "diff": diff,
+        },
+        "startup_refresh": startup_refresh,
+        "skill_refresh": skill_refresh,
+        "changes": changes,
+        "router": router,
+        "next": next_hint,
+    }
+    if dropped:
+        result["skipped_not_in_catalog"] = dropped
+    return result
 
 
 def updates(home):
+    from . import startup
+
     cat = active_catalog(home)
     state = read_state(home)
     try:
         canonical_version = validate_catalog(json.loads(fetch(CANONICAL_CATALOG_URL, set())))["version"]
     except (ValueError, OSError) as exc:
         canonical_version = f"unreachable: {exc}"
+    router = check_router_update()
     result = []
     for key, module in cat["modules"].items():
         installed = None
@@ -1065,6 +1497,31 @@ def updates(home):
             hint = "installed, catalog, and upstream agree"
         result.append({"id": key, "installed": installed, "catalog_version": module["version"],
                        "upstream_tag": tag, "status": action, "next": hint})
-    return {"modules": result, "catalog_version": cat["version"], "canonical_catalog_version": canonical_version,
-            "catalog_stale": canonical_version != cat["version"] and not str(canonical_version).startswith("unreachable"),
-            "policy": "Upstream checks are informational. Sync refreshes the catalog; update --apply refreshes installed modules."}
+    try:
+        startup_refresh = startup.refresh_registered(home, apply=False)
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        startup_refresh = {"preview": True, "registrations": [], "residuals": 1,
+                           "issue": f"Startup refresh preview failed: {exc}"}
+    skill_refresh = _safe_skill_refresh(home, apply=False)
+    catalog_stale = canonical_version != cat["version"] and not str(canonical_version).startswith("unreachable")
+    has_module_updates = any(row["status"] == "update_ready" for row in result)
+    has_pending_startup = any(r.get("status") == "refresh_pending" for r in startup_refresh.get("registrations", []))
+    has_pending_skill = any(r.get("status") == "refresh_pending" for r in skill_refresh.get("registrations", []))
+    recommended_next = []
+    if router.get("update_available"):
+        recommended_next.append(router["next"])
+    if catalog_stale or has_module_updates or has_pending_startup or has_pending_skill:
+        recommended_next.append("cto-legends update --sync (preview) then cto-legends update --sync --apply (when authorized)")
+    next_summary = "; ".join(recommended_next) if recommended_next else "Router, catalog, registrations, and installed modules are current."
+    return {
+        "modules": result,
+        "catalog_version": cat["version"],
+        "canonical_catalog_version": canonical_version,
+        "catalog_stale": catalog_stale,
+        "router": router,
+        "startup_refresh": startup_refresh,
+        "skill_refresh": skill_refresh,
+        "recommended_next": recommended_next,
+        "next": next_summary,
+        "policy": "Upstream checks are informational. Sync refreshes the catalog; update --sync --apply syncs and updates installed modules; router updates run via pip.",
+    }
