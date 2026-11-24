@@ -109,6 +109,25 @@ Every preset wires the single router skill into that host's standard directory a
 
 Any coding agent without native skill loading can read [cto_legends/SKILL.md](cto_legends/SKILL.md) directly, and you can register your own internal Markdown playbooks alongside the public catalog with `cto-legends register-guide`.
 
+## Zero-Keys Hosted Option ($10 PAYG)
+
+Want the search, competitor, and local rank answers without setting up any accounts?
+
+This module is free, MIT licensed, and runs on your own accounts. That does not change.
+
+If you would rather not manage provider accounts or API keys at all, [CTO Legends Recon](https://cto-legends.com/recon) is a separate hosted MCP server that answers the same kind of questions from one endpoint:
+
+- One URL and one API key. Works in Claude Code, Cursor, Antigravity, Claude Desktop, and OpenCode
+- Pay as you go from a $10 prepaid wallet. No subscription
+- From $0.05 a run. Anything above your limit is quoted first
+- Failed runs and 24-hour repeats cost $0.00
+
+```bash
+claude mcp add --transport http recon-concierge https://recon.cto-legends.com/mcp --header "Authorization: Bearer YOUR_API_KEY"
+```
+
+Create a key at [recon.cto-legends.com](https://recon.cto-legends.com/login). Prefer to self-host? Keep reading. Everything below needs nothing from us.
+
 ## The curated modules
 
 Every module is an independent open-source repository with its own test suite and release pins, and you never need to memorize their names. They are listed below so you can see how far a single plain-english request reaches, and you can also browse the interactive engineering specs at [cto-legends.com/modules](https://cto-legends.com/modules).
