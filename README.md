@@ -8,6 +8,7 @@ sovereign business infrastructure & operational ontology
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-ff0000?style=flat-square&labelColor=000000)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-ff0000?style=flat-square&labelColor=000000)](LICENSE)
 [![1 router skill](https://img.shields.io/badge/setup-1_router_skill-ff0000?style=flat-square&labelColor=000000)](#why-a-curated-stack-beats-a-pile-of-claude-skills-and-codex-skills)
+[![CTO Legends MCP connector](https://glama.ai/mcp/connectors/com.cto-legends/cto-legends/badges/score.svg)](https://glama.ai/mcp/connectors/com.cto-legends/cto-legends)
 
 For decades, computers forced human beings to think like machines. You hunted for packages, memorized flags, and typed system commands into a terminal. Coding agents were supposed to end that, yet most agent skills setups quietly turn you back into the computer's assistant.
 
@@ -110,6 +111,8 @@ Every preset wires the single router skill into that host's standard directory a
 Any coding agent without native skill loading can read [cto_legends/SKILL.md](cto_legends/SKILL.md) directly, and you can register your own internal Markdown playbooks alongside the public catalog with `cto-legends register-guide`.
 
 ## Optional MCP Plug-In: Legends Gambit (Open Beta)
+
+[![Legends Gambit MCP connector](https://glama.ai/mcp/connectors/com.cto-legends/gambit/badges/score.svg)](https://glama.ai/mcp/connectors/com.cto-legends/gambit)
 
 Want verified search, keyword demand, competitor teardowns, and local rank grids without setting up vendor accounts?
 
