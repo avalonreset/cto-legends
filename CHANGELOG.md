@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.18 - 2026-11-25
+
+- Ship bundled catalog `1.0.75` updating `legends-astro` to `0.4.0` (`89d6ab54ea37`, Day-1 greenfield agency starter via `init` / `scaffold --mode starter`, Day-2 article publishing and safe updating via `post` with deduplicated cycle-checked `301` redirects, fail-closed `verify-build` regression manifest gate and scheduled future-`pubDate` leak verification, 53 vendored `withastro/docs` MDX guides / 56 verified files, and expanded 12-file Empire knowledge pack).
+
 ## 0.2.17 - 2026-11-24
 
 - Ship bundled catalog `1.0.74` updating `legends-astro` to `0.3.0` (`e4a2d414fcd8`, Astro v7.4.13 baseline, 45 vendored `withastro/docs` MDX guides, multi-framework static repository auditing across Next.js, Nuxt, Gatsby, Vite/CRA, Docusaurus, Hugo, Jekyll, Eleventy, and SvelteKit, live/Firecrawl capture, two-pass asset localization, preview-first clone/editorial scaffolding, Playwright Visual Digital Twin parity diffing, and CWE-918/CWE-59/CWE-776 network and filesystem safety).

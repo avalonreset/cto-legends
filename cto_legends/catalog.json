@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.74",
+  "version": "1.0.75",
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
@@ -411,7 +411,7 @@
       "readiness": "doctor"
     },
     "legends-astro": {
-      "purpose": "End-to-end multi-framework repo auditing, live/Firecrawl capture, asset localization, Astro v7 scaffolding, Visual Digital Twin parity checks, build verification, and a source-cited knowledge vault.",
+      "purpose": "Complete agency Astro lifecycle: Day-1 greenfield starter, multi-framework repo auditing, live/Firecrawl capture, asset localization, Astro v7 scaffolding, Day-2 article publishing and safe updating, regression manifest gating, Visual Digital Twin parity checks, build verification, and a source-cited knowledge vault.",
       "recipe": {
         "requires_python": [
           3,
@@ -453,10 +453,10 @@
         },
         "source": "codeload-zip"
       },
-      "commit": "e4a2d414fcd87494746eb133bcc3726524a3fdc8",
-      "sha256": "52a1ca69ce47e7ab15556a4b577308a50f42053b9571aef0768d919e9e2f9092",
+      "commit": "89d6ab54ea3794122fba70aa6ea93b327543a036",
+      "sha256": "b2915776ff370a105d37f0cd792209893ad8d112ee5106cb5102a5855a9f61be",
       "license": "MIT",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "discovery": {
         "instructions": [
           "README.md",
@@ -479,10 +479,20 @@
           "convert to astro",
           "astro migration",
           "astro content collections",
-          "astro build parity"
+          "astro build parity",
+          "astro starter",
+          "new astro site",
+          "agency astro website",
+          "astro blog publishing",
+          "publish astro article",
+          "update astro blog post",
+          "astro slug redirect"
         ],
         "examples": [
           "Convert my WordPress export or static HTML pages to an Astro v7 site and verify parity",
+          "Start a new Astro agency, blog, or local business starter site",
+          "Publish this Markdown article to my Astro blog and verify nothing else broke",
+          "Update an Astro post or rename its slug with a 301 redirect",
           "Check why my Astro v7 build broke client scripts, styles, trailing slashes, or content collections",
           "Audit an existing site before migrating to Astro and verify the built dist folder afterward",
           "Attach the Astro v7 knowledge pack to my Empire vault"
@@ -508,9 +518,13 @@
         "migration",
         "visual-digital-twin",
         "static-site",
-        "content-collections"
+        "content-collections",
+        "agency-starter",
+        "blog-publishing",
+        "site-manifest",
+        "regression-gate"
       ],
-      "scope": "Portable Python and Node CLI for Astro v7 readiness, multi-framework repository auditing (Next.js, Nuxt, Gatsby, Vite/CRA, Docusaurus, Hugo, Jekyll, Eleventy, SvelteKit), live HTTP/Firecrawl capture, two-pass asset localization (vendor-assets), preview-first clone/editorial scaffolding (scaffold/ingest), post-build dist/ parity verification (verify-build), Playwright Visual Digital Twin diffing (twin/twin-diff), pinned withastro/docs lookup, and attachable Empire knowledge pack.",
+      "scope": "Portable Python and Node CLI for Astro v7 readiness, Day-1 greenfield agency starter (init, scaffold --mode starter), multi-framework repository auditing (Next.js, Nuxt, Gatsby, Vite/CRA, Docusaurus, Hugo, Jekyll, Eleventy, SvelteKit), live HTTP/Firecrawl capture, two-pass asset localization (vendor-assets), preview-first clone/editorial/starter scaffolding (scaffold/ingest), Day-2 article publishing and safe updating (post), post-build dist/ parity and regression manifest verification (verify-build --baseline/--write-manifest), Playwright Visual Digital Twin diffing (twin/twin-diff), pinned withastro/docs lookup, and attachable Empire knowledge pack.",
       "dependencies": {},
       "readiness": "doctor"
     },
