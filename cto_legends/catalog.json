@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.73",
+  "version": "1.0.74",
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
@@ -411,7 +411,7 @@
       "readiness": "doctor"
     },
     "legends-astro": {
-      "purpose": "Astro v7 site migrations, source contract extraction, build parity checks, and a source-cited knowledge vault.",
+      "purpose": "End-to-end multi-framework repo auditing, live/Firecrawl capture, asset localization, Astro v7 scaffolding, Visual Digital Twin parity checks, build verification, and a source-cited knowledge vault.",
       "recipe": {
         "requires_python": [
           3,
@@ -450,25 +450,31 @@
         },
         "pip": {
           "kind": "path"
-        }
+        },
+        "source": "codeload-zip"
       },
-      "commit": "9fbdc40cf32332e564c74ae51d3f2af3679835d8",
-      "sha256": "f5586a343e0cfd8c85f8dc9130cdc0459a2f24e28ce51019b1aa86db1a26a8fb",
+      "commit": "e4a2d414fcd87494746eb133bcc3726524a3fdc8",
+      "sha256": "52a1ca69ce47e7ab15556a4b577308a50f42053b9571aef0768d919e9e2f9092",
       "license": "MIT",
-      "version": "0.2.6",
+      "version": "0.3.0",
       "discovery": {
         "instructions": [
           "README.md",
           "docs/AGENT-RECIPE.md",
           "wiki/index.md"
         ],
-        "setup": "Python 3.11+ and Node.js 22.12+ (LTS 24.15.0 recommended). Offline doctor, source-audit, ingest preview, verify-build, and docs-lookup require no credentials.",
+        "setup": "Python 3.11+ and Node.js 22.23.4+ (LTS 24.15.0 recommended). Optional Playwright runtime for `twin`. Offline doctor, source-audit, ingest/scaffold preview, verify-build, twin-diff, and docs-lookup require no credentials.",
         "not_for": "Provisioning cloud servers, reverse proxies, or DNS records; executing untrusted astro.config.mjs files during read-only inspection.",
         "signals": [
           "astro",
           "astro v7",
           "astrojs",
           "wordpress to astro",
+          "nextjs to astro",
+          "nuxt to astro",
+          "gatsby to astro",
+          "hugo to astro",
+          "jekyll to astro",
           "html to astro",
           "convert to astro",
           "astro migration",
@@ -491,12 +497,20 @@
       "keywords": [
         "astro",
         "astrojs",
+        "nextjs",
+        "nuxt",
+        "gatsby",
+        "hugo",
+        "jekyll",
+        "sveltekit",
         "wordpress",
+        "webflow",
         "migration",
+        "visual-digital-twin",
         "static-site",
         "content-collections"
       ],
-      "scope": "Portable Python and Node CLI for Astro v7 readiness, HTML/WordPress/Firecrawl migration contract extraction, Content Layer scaffolding, post-build dist/ parity verification, pinned withastro/docs lookup, and attachable Empire knowledge pack.",
+      "scope": "Portable Python and Node CLI for Astro v7 readiness, multi-framework repository auditing (Next.js, Nuxt, Gatsby, Vite/CRA, Docusaurus, Hugo, Jekyll, Eleventy, SvelteKit), live HTTP/Firecrawl capture, two-pass asset localization (vendor-assets), preview-first clone/editorial scaffolding (scaffold/ingest), post-build dist/ parity verification (verify-build), Playwright Visual Digital Twin diffing (twin/twin-diff), pinned withastro/docs lookup, and attachable Empire knowledge pack.",
       "dependencies": {},
       "readiness": "doctor"
     },
