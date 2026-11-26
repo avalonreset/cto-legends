@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.75",
+  "version": "1.0.76",
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
@@ -525,6 +525,121 @@
         "regression-gate"
       ],
       "scope": "Portable Python and Node CLI for Astro v7 readiness, Day-1 greenfield agency starter (init, scaffold --mode starter), multi-framework repository auditing (Next.js, Nuxt, Gatsby, Vite/CRA, Docusaurus, Hugo, Jekyll, Eleventy, SvelteKit), live HTTP/Firecrawl capture, two-pass asset localization (vendor-assets), preview-first clone/editorial/starter scaffolding (scaffold/ingest), Day-2 article publishing and safe updating (post), post-build dist/ parity and regression manifest verification (verify-build --baseline/--write-manifest), Playwright Visual Digital Twin diffing (twin/twin-diff), pinned withastro/docs lookup, and attachable Empire knowledge pack.",
+      "dependencies": {},
+      "readiness": "doctor"
+    },
+    "legends-a2ui": {
+      "purpose": "Offline-first A2UI v1.0, v0.9.1, v0.9, and v0.8 toolkit: strict schema and graph validation, deterministic v0.8/v0.9-to-v1.0 normalization, curated interactive surface composition, zero-coupling JSON-to-A2UI projection (project), zero-daemon static HTML previewing, Precision Noir React/WebCore/Lit renderer scaffolding, pinned a2ui-project/a2ui spec lookup, and an attachable Empire knowledge pack.",
+      "scope": "Python 3.11+ standard-library CLI (zero mandatory pip dependencies) for validating JSON/JSONL/Markdown A2UI payloads against vendored a2ui-project/a2ui (google/A2UI) schemas, upgrading legacy v0.8/v0.9 surfaces to canonical v1.0 (@path, @call, @accessibility, @checks, UAX #31 IDs while keeping ChildList.path and updateDataModel.path unprefixed), composing 8 validated operator surface templates, projecting arbitrary structured JSON into strict A2UI v1.0 surfaces via project (auto, plan-approval, health-deck, data-briefing), generating offline self-contained file:// HTML previews with live dataModel bindings and action inspection, preview-first scaffolding of React/WebCore/Lit Precision Noir integration kits, checking project @a2ui/* drift, offline catalog/docs lookup, and attaching the a2ui Empire knowledge pack.",
+      "recipe": {
+        "probe": [
+          {
+            "module": "legends_a2ui",
+            "do": "import",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "module": "legends_a2ui",
+            "args": [
+              "doctor"
+            ],
+            "do": "module-cli"
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "wiki/index.md",
+              "references/sources.md",
+              "docs/AGENT-RECIPE.md",
+              "knowledge/a2ui/pack.json",
+              "vendor/a2ui-spec/manifest.json",
+              "assets/manifest.json"
+            ]
+          }
+        ],
+        "run": {
+          "kind": "module",
+          "module": "legends_a2ui",
+          "runtime": "python"
+        },
+        "pip": {
+          "kind": "path"
+        },
+        "requires_python": [
+          3,
+          11
+        ],
+        "source": "codeload-zip"
+      },
+      "commit": "e42eecf0d7f5d5f2661dc9de785cbfcc62ff5398",
+      "sha256": "437d62dafd2012cea8f525c96f315ec282710246873d09ce7e05ac798d987004",
+      "license": "MIT",
+      "version": "0.1.0",
+      "keywords": [
+        "a2ui",
+        "generative-ui",
+        "agent-ui",
+        "a2ui-v1",
+        "json-schema",
+        "basic-catalog",
+        "uax-31",
+        "react",
+        "lit",
+        "web-core",
+        "precision-noir",
+        "interactive-cards",
+        "json-projection",
+        "streaming-jsonl",
+        "validation",
+        "html-preview"
+      ],
+      "discovery": {
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "wiki/index.md"
+        ],
+        "setup": "Python 3.11+ standard library only (zero mandatory pip dependencies). Optional Node.js 18+ only when integrating JS/TS renderer packages.",
+        "signals": [
+          "a2ui",
+          "a2ui v1.0",
+          "validate a2ui",
+          "normalize a2ui",
+          "upgrade a2ui v0.8",
+          "upgrade a2ui v0.9",
+          "project json to a2ui",
+          "a2ui project",
+          "a2ui basic catalog",
+          "a2ui surface",
+          "a2ui card",
+          "a2ui form",
+          "a2ui preview",
+          "a2ui react",
+          "a2ui web_core",
+          "a2ui lit",
+          "interactive agent card",
+          "generative ui json"
+        ],
+        "examples": [
+          "Validate all ```a2ui blocks in this Markdown file against A2UI v1.0 strict rules",
+          "Upgrade this legacy A2UI v0.8 or v0.9 payload to canonical v1.0 with @path and UAX #31 IDs",
+          "Compose an A2UI v1.0 ship-call approval card or multi-field intake form",
+          "Project a CLI planSha256 preview JSON or doctor health JSON into an interactive A2UI v1.0 surface with legends-a2ui project",
+          "Render this A2UI JSON into an offline interactive file:// HTML preview",
+          "Scaffold a Precision Noir @a2ui/react and @a2ui/web_core renderer kit into my web app",
+          "Check my project's @a2ui/* packages for version drift against upstream a2ui-project/a2ui",
+          "Attach the A2UI v1.0 knowledge pack to my Empire vault"
+        ],
+        "not_for": "Hosting live multi-tenant A2UI agent backends, provisioning cloud servers, bypassing URL/secret safety gates, or spawning detached background web servers for previews."
+      },
+      "repo": "avalonreset/legends-a2ui",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
       "dependencies": {},
       "readiness": "doctor"
     },
@@ -2070,7 +2185,8 @@
     "legends-youtube-kit": "legends-youtube",
     "legends-yt-dlp": "legends-youtube",
     "legends-yt-dlp-kit": "legends-youtube",
-    "legends-temporal-kit": "legends-temporal"
+    "legends-temporal-kit": "legends-temporal",
+    "legends-a2ui-kit": "legends-a2ui"
   },
   "retired": {
     "legends-obsidian": "legends-empire"

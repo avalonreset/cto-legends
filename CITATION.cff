@@ -5,8 +5,8 @@ abstract: "Open-source single-skill router and ecosystem manager for agent skill
 authors:
   - family-names: "Samar"
     given-names: "Benjamin"
-version: 0.2.18
-date-released: "2026-11-25"
+version: 0.2.19
+date-released: "2026-11-26"
 license: MIT
 repository-code: "https://github.com/avalonreset/cto-legends"
 url: "https://cto-legends.com"

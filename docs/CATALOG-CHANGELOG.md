@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.76 - 2026-11-26
+
+- Admit `legends-a2ui` `0.1.0` (`e42eecf0d7f5`, codeload-zip SHA-256 `437d62dafd2012cea8f525c96f315ec282710246873d09ce7e05ac798d987004`) with unified router skill pin, offline A2UI v1.0 validation/normalization/projection/preview/scaffolding, and attachable Empire knowledge pack.
+
 ## 1.0.75 - 2026-11-25
 
 - Update `legends-astro` to 0.4.0 (`89d6ab54ea37`, codeload-zip SHA-256 `b2915776ff370a105d37f0cd792209893ad8d112ee5106cb5102a5855a9f61be`) with unified router skill pin and verified release checksums.

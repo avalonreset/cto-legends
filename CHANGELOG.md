@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.19 - 2026-11-26
+
+- Ship bundled catalog `1.0.76` admitting `legends-a2ui` `0.1.0` (`e42eecf0d7f5`, offline-first A2UI v1.0, v0.9.1, v0.9, and v0.8 strict validator, deterministic normalizer, curated 8-template composer, zero-coupling JSON-to-A2UI projector, static `file://` HTML previewer, Precision Noir React/WebCore/Lit scaffolder, 28 SHA-256-pinned `a2ui-project/a2ui` spec files, and attachable 9-file Empire knowledge pack).
+
 ## 0.2.18 - 2026-11-25
 
 - Ship bundled catalog `1.0.75` updating `legends-astro` to `0.4.0` (`89d6ab54ea37`, Day-1 greenfield agency starter via `init` / `scaffold --mode starter`, Day-2 article publishing and safe updating via `post` with deduplicated cycle-checked `301` redirects, fail-closed `verify-build` regression manifest gate and scheduled future-`pubDate` leak verification, 53 vendored `withastro/docs` MDX guides / 56 verified files, and expanded 12-file Empire knowledge pack).
