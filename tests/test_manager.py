@@ -61,7 +61,7 @@ class ManagerTests(unittest.TestCase):
             "legends-empire", "legends-grant", "legends-firecrawl",
             "legends-temporal", "legends-ambient-intelligence", "legends-captions", "legends-coolify", "legends-jev",
             "legends-hetzner", "legends-cloudflare", "legends-astro", "legends-a2ui", "legends-stripe", "legends-gohighlevel",
-            "legends-buzz", "legends-youtube"})
+            "legends-buzz", "legends-youtube", "legends-capcut"})
 
     def test_setup_revision_rebuilds_same_source(self):
         module = m.catalog()['modules']['legends-github']
@@ -92,7 +92,8 @@ class ManagerTests(unittest.TestCase):
                                ("Audit my GoHighLevel sub-account pipelines and rebilling", "legends-gohighlevel"),
                                ("Check why my Buzz agent is getting HTTP 403 on our self-hosted Nostr relay", "legends-buzz"),
                                ("Audit my YouTube channel metadata, CTR scorecard, and Studio video quizzes", "legends-youtube"),
-                               ("Validate my A2UI v1.0 JSON payload and project this JSON into an interactive card", "legends-a2ui")):
+                               ("Validate my A2UI v1.0 JSON payload and project this JSON into an interactive card", "legends-a2ui"),
+                               ("Build a CapCut project timeline from these clips and surgically patch scene S03", "legends-capcut")):
             self.assertEqual(route(goal)["matches"][0]["id"], expected)
 
     def test_obs_kit_plan_advertises_cursor_extra(self):

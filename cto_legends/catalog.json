@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.77",
+  "version": "1.0.78",
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
@@ -2168,6 +2168,111 @@
         "macos"
       ],
       "readiness": "doctor"
+    },
+    "legends-capcut": {
+      "version": "0.1.0",
+      "commit": "8c0f50e99bd1d8d88eeb8a8486b8d9daf6f413d1",
+      "repo": "avalonreset/legends-capcut",
+      "sha256": "f4192a751db7e2ec16313278c7da64f92e23d4f4e3acb5ffcbe281d06fd121f5",
+      "purpose": "Agent-native CapCut Desktop editing: a bidirectional draft compiler and reader, strict validator, surgical single-scene patcher, perpetual six-frame storyboards, reveal-aware readability and overstay critic, beat sync, local effect and keymap discovery, optional Windows GUI playback watch, and a matching CLI and stdio MCP server.",
+      "keywords": [
+        "capcut",
+        "capcut-desktop",
+        "video-editing",
+        "timeline",
+        "draft-compiler",
+        "scene-patcher",
+        "storyboard",
+        "readability",
+        "beat-sync",
+        "keyframes",
+        "transitions",
+        "mcp"
+      ],
+      "dependencies": {},
+      "scope": "Python 3.11+ standard-library CLI and stdio MCP server (zero mandatory pip dependencies) that compiles a plain JSON timeline spec into a complete CapCut Desktop project (video, overlay, text and audio tracks, transitions, animations, keyframes, fades, ducking, beat markers, review burn-in), decodes any project back into scenes S01, S02, patches one scene at a time with ripple and byte-identical untouched tracks, toggles track mute and hide flags, catalogs locally cached effects, resolves the active shortcut preset, maps music beats and sections, renders storyboard contact sheets, audits on-screen text readability and pacing, and optionally drives the visible CapCut window on Windows when a local desktop bridge is configured.",
+      "discovery": {
+        "signals": [
+          "capcut",
+          "capcut project",
+          "capcut draft",
+          "edit in capcut",
+          "build a capcut timeline",
+          "capcut scene",
+          "extend a scene",
+          "trim a clip in capcut",
+          "replace a clip in capcut",
+          "capcut transitions",
+          "capcut keyframes",
+          "beat sync video",
+          "storyboard contact sheet",
+          "video readability audit",
+          "watch capcut playback",
+          "capcut shortcuts"
+        ],
+        "examples": [
+          "Build a CapCut project from these clips and this song, cut on the downbeats",
+          "Show me the scenes in my CapCut project as S01, S02 and what text is on each",
+          "Make scene S03 a second and a half longer and keep everything after it in sync",
+          "Swap scene S02 for this shorter clip and shorten the scene to fit",
+          "Render a storyboard of every scene so I can review the cut without opening CapCut",
+          "Check whether the on-screen text stays up long enough to read",
+          "Open the project in CapCut, play it, and show me what it actually looks like"
+        ],
+        "not_for": "Exporting or rendering final video files (CapCut renders the export), editing projects this tool did not generate, downloading CapCut effects or templates, or automating CapCut accounts and cloud features.",
+        "setup": "Python 3.11+ standard library for the compiler, reader, validator and patcher. Optional extras: [beats] for beat sync, [vision] for storyboards, readability probes and GUI capture, [audio] for the vocal presence check. ffmpeg and ffprobe on PATH when present. Optional GUI commands need Windows, CapCut Desktop, and a local desktop bridge (LEGENDS_SHELL_PS1).",
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "docs/CAPCUT-928-INTERNALS.md",
+          "routes.json"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_capcut",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_capcut",
+            "args": [
+              "doctor"
+            ]
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "docs/AGENT-RECIPE.md",
+              "docs/CAPCUT-928-INTERNALS.md",
+              "routes.json"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_capcut"
+        }
+      },
+      "license": "MIT",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "readiness": "doctor"
     }
   },
   "aliases": {
@@ -2186,7 +2291,8 @@
     "legends-yt-dlp": "legends-youtube",
     "legends-yt-dlp-kit": "legends-youtube",
     "legends-temporal-kit": "legends-temporal",
-    "legends-a2ui-kit": "legends-a2ui"
+    "legends-a2ui-kit": "legends-a2ui",
+    "legends-capcut-kit": "legends-capcut"
   },
   "retired": {
     "legends-obsidian": "legends-empire"

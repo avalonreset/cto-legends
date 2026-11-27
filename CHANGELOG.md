@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.21 - 2026-11-26
+
+- Ship bundled catalog `1.0.78` admitting `legends-capcut` `0.1.0` (`8c0f50e99bd1`, agent-native CapCut Desktop bidirectional draft compiler and reader, strict validator, surgical single-scene patcher with ripple sync and zero-orphan copy safety, perpetual six-frame storyboards, reveal-aware readability critic, beat sync, local effect and keymap discovery, optional Windows GUI playback watch, and matching CLI + 21-tool stdio MCP server).
+
 ## 0.2.20 - 2026-11-26
 
 - Ship bundled catalog `1.0.77` updating `legends-geogrid` to `0.3.0` (`115666bc3428`, circular honeycomb cartography, 30-layer marching-squares topography and Winnability relief, coastline/river clipping, Local Leaders search and map-to-rail auto-scroll, Campaigns planner, 3-pane storefront signage studio, Strategy Room with interactive avoid zones, 7-stage deterministic planner, 5-page vector-hex PDF report, and South Philadelphia Cosmi's Deli starter pack).
