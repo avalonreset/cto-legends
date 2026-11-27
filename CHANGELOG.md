@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.20 - 2026-11-26
+
+- Ship bundled catalog `1.0.77` updating `legends-geogrid` to `0.3.0` (`115666bc3428`, circular honeycomb cartography, 30-layer marching-squares topography and Winnability relief, coastline/river clipping, Local Leaders search and map-to-rail auto-scroll, Campaigns planner, 3-pane storefront signage studio, Strategy Room with interactive avoid zones, 7-stage deterministic planner, 5-page vector-hex PDF report, and South Philadelphia Cosmi's Deli starter pack).
+
 ## 0.2.19 - 2026-11-26
 
 - Ship bundled catalog `1.0.76` admitting `legends-a2ui` `0.1.0` (`e42eecf0d7f5`, offline-first A2UI v1.0, v0.9.1, v0.9, and v0.8 strict validator, deterministic normalizer, curated 8-template composer, zero-coupling JSON-to-A2UI projector, static `file://` HTML previewer, Precision Noir React/WebCore/Lit scaffolder, 28 SHA-256-pinned `a2ui-project/a2ui` spec files, and attachable 9-file Empire knowledge pack).

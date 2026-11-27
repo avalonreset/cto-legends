@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.76",
+  "version": "1.0.77",
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
@@ -854,11 +854,11 @@
       "readiness": "doctor"
     },
     "legends-geogrid": {
-      "version": "0.2.11",
-      "commit": "d6f3bee1040111ebf63848676aca6b613311f59a",
+      "version": "0.3.0",
+      "commit": "115666bc3428ea5676365f2d17ba925b1e20aea7",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "552a7a9526185090a779839d315dab9c85a1354db220e4a37c209dfe21c0e020",
-      "purpose": "Google Maps ranking grids, circular-lattice competitive studies, embeddable interactive report viewer with full per-point rankings, web-parity 21-page Letter PDF and HTML strategy reports, and Google Business Profile name-review dossiers with optional Jev 1.14 optical signage verification.",
+      "sha256": "943c6cb0259ba335dee6da2e06b6256aa63cf1f8745ac6cf31ee70481e0d1bc5",
+      "purpose": "Google Maps circular honeycomb 30-deep competitive ranking studies, Winnability relief topography, Local Leaders territory audit, Campaigns planner, 3-pane Street View storefront signage studio, Strategy Room, 5-page vector-hex PDF briefings, 7-stage deterministic planner, and embeddable geogrid-viewer/v1 report viewer.",
       "keywords": [
         "maps",
         "grid",
@@ -876,7 +876,7 @@
       "dependencies": {
         "legends-dataforseo": "0.1.11"
       },
-      "scope": "Self-contained static HTML competitive map companion (study.py --open), embeddable geogrid-viewer/v1 report viewer with full per-point Location and Competitors rankings, circular-lattice sampling, business-name review workbench with multi-vantage Street View and optional legends-jev optical signage checks, OpenFreeMap .osm-legends dark basemap rendering, and multi-query 21-page Letter PDF/HTML strategy reports. Includes a zero-credit 10-mile Austin pizza starter study out of the box.",
+      "scope": "Self-contained static HTML competitive map companion (study.py --open) with 5 studio views (Rankings, Local Leaders, Campaigns, Keyword Stuffing, Strategy Room), 30-layer marching-squares topography and Winnability relief, coastline/river polygon clipping, 7-stage deterministic planner (study.py plan), 3-pane storefront signage audit with optional legends-jev optical checks, embeddable geogrid-viewer/v1 report viewer, and 5-page vector-hex PDF strategy reports. Ships with a zero-credit 6-mile, 458-pin South Philadelphia starter study (Cosmi's Deli across sandwich shop, hoagie, and cheesesteak) out of the box.",
       "discovery": {
         "signals": [
           "local visibility",

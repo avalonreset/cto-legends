@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.77 - 2026-11-26
+
+- Update `legends-geogrid` to `0.3.0` (`115666bc3428ea5676365f2d17ba925b1e20aea7`, codeload-zip SHA-256 `943c6cb0259ba335dee6da2e06b6256aa63cf1f8745ac6cf31ee70481e0d1bc5`) with circular honeycomb cartography, 30-layer marching-squares topography and Winnability relief, coastline/river clipping, Local Leaders with search and map-to-rail auto-scroll, Campaigns planner, 3-pane storefront signage studio, Strategy Room, 7-stage deterministic planner, and South Philadelphia starter pack.
+
 ## 1.0.76 - 2026-11-26
 
 - Admit `legends-a2ui` `0.1.0` (`e42eecf0d7f5`, codeload-zip SHA-256 `437d62dafd2012cea8f525c96f315ec282710246873d09ce7e05ac798d987004`) with unified router skill pin, offline A2UI v1.0 validation/normalization/projection/preview/scaffolding, and attachable Empire knowledge pack.
