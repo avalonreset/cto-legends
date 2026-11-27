@@ -54,7 +54,7 @@ jobs:
           env = {**os.environ, "TWINE_USERNAME": "__token__", "TWINE_PASSWORD": token}
           subprocess.run([sys.executable, "-m", "twine", "upload", "--skip-existing", "dist/*"], env=env, check=True)
           rc = subprocess.run(
-              [sys.executable, "-m", "twine", "upload", "--skip-existing", "dist-alias/*"],
+              [sys.executable, "-m", "twine", "upload", "--verbose", "--skip-existing", "dist-alias/*"],
               env=env,
               capture_output=True,
               text=True,

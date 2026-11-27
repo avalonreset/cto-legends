@@ -25,10 +25,13 @@ import argparse
 import base64
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
 from pathlib import Path
+
+os.environ.setdefault("CTO_LEGENDS_ARCHIVE_CACHE", str(Path.home() / ".cto-legends" / "archive-cache"))
 
 ORG = "avalonreset"
 ROUTER_REPO = "cto-legends"
