@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.79 - 2026-11-27
+
+- Reorder all 23 catalog modules into the canonical business-owner storyline sequence (`legends-empire -> legends-hetzner -> legends-coolify -> legends-cloudflare -> legends-astro -> legends-gohighlevel -> legends-stripe -> legends-dataforseo -> legends-geogrid -> legends-firecrawl -> legends-grant -> legends-youtube -> legends-obs -> legends-capcut -> legends-captions -> legends-stable-audio-3 -> legends-hyperyap -> legends-ambient-intelligence -> legends-temporal -> legends-jev -> legends-buzz -> legends-a2ui -> legends-github`) as the single source of truth synchronized across the GitHub profile, `cto-legends.com`, the GitHub Star List, and telemetry trackers.
+
 ## 1.0.78 - 2026-11-26
 
 - Admit `legends-capcut` `0.1.0` (`8c0f50e99bd1d8d88eeb8a8486b8d9daf6f413d1`, codeload-zip SHA-256 `f4192a751db7e2ec16313278c7da64f92e23d4f4e3acb5ffcbe281d06fd121f5`) with unified router skill pin, bidirectional CapCut Desktop draft compiler/reader, surgical single-scene patcher, six-frame storyboards, reveal-aware readability critic, beat sync, and matching CLI + stdio MCP server.

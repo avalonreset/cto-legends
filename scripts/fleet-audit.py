@@ -36,9 +36,8 @@ CANONICAL_SKILL_PATH = "cto_legends/SKILL.md"
 _DRIVE_ROOT = Path("E:/") if Path("E:/cto-legends-public").is_dir() else Path("/mnt/e")
 DEFAULT_CATALOG = str(_DRIVE_ROOT / "cto-legends-public" / "cto_legends" / "catalog.json")
 
-# Hardcoded fleet matrix. Local paths are the public-checkout sources of truth
-# per projects/Legends-Ecosystem-Reset. None means no public checkout exists
-# locally; tree-dependent checks SKIP unless --checkouts supplies a path.
+# Hardcoded local-checkout map for non-standard folder names; any new module
+# admitted to catalog.json is auto-discovered below as <DRIVE_ROOT>/<module_id>.
 REPOS: list[dict] = [
     {"id": "cto-legends", "repo": "cto-legends", "local": str(_DRIVE_ROOT / "cto-legends-public"), "router": True},
     {"id": "legends-empire", "repo": "legends-empire", "local": str(_DRIVE_ROOT / "legends-empire-public")},
@@ -46,22 +45,24 @@ REPOS: list[dict] = [
     {"id": "legends-coolify", "repo": "legends-coolify", "local": str(_DRIVE_ROOT / "legends-coolify")},
     {"id": "legends-cloudflare", "repo": "legends-cloudflare", "local": str(_DRIVE_ROOT / "legends-cloudflare")},
     {"id": "legends-astro", "repo": "legends-astro", "local": str(_DRIVE_ROOT / "legends-astro")},
-    {"id": "legends-stripe", "repo": "legends-stripe", "local": str(_DRIVE_ROOT / "legends-stripe")},
     {"id": "legends-gohighlevel", "repo": "legends-gohighlevel", "local": str(_DRIVE_ROOT / "legends-gohighlevel")},
-    {"id": "legends-geogrid", "repo": "legends-geogrid", "local": str(_DRIVE_ROOT / "legends-geogrid")},
+    {"id": "legends-stripe", "repo": "legends-stripe", "local": str(_DRIVE_ROOT / "legends-stripe")},
     {"id": "legends-dataforseo", "repo": "legends-dataforseo", "local": str(_DRIVE_ROOT / "legends-dataforseo")},
+    {"id": "legends-geogrid", "repo": "legends-geogrid", "local": str(_DRIVE_ROOT / "legends-geogrid")},
     {"id": "legends-firecrawl", "repo": "legends-firecrawl", "local": str(_DRIVE_ROOT / "legends-firecrawl")},
-    {"id": "legends-github", "repo": "legends-github", "local": str(_DRIVE_ROOT / "legends-github-public")},
     {"id": "legends-grant", "repo": "legends-grant", "local": str(_DRIVE_ROOT / "legends-grant-public")},
-    {"id": "legends-jev", "repo": "legends-jev", "local": str(_DRIVE_ROOT / "legends-jev")},
+    {"id": "legends-youtube", "repo": "legends-youtube", "local": str(_DRIVE_ROOT / "legends-youtube")},
     {"id": "legends-obs", "repo": "legends-obs", "local": str(_DRIVE_ROOT / "legends-obs-kit")},
+    {"id": "legends-capcut", "repo": "legends-capcut", "local": str(_DRIVE_ROOT / "legends-capcut")},
     {"id": "legends-captions", "repo": "legends-captions", "local": str(_DRIVE_ROOT / "legends-captions")},
-    {"id": "legends-temporal", "repo": "legends-temporal", "local": str(_DRIVE_ROOT / "legends-temporal")},
     {"id": "legends-stable-audio-3", "repo": "legends-stable-audio-3", "local": str(_DRIVE_ROOT / "legends-stable-audio-3-public-rc")},
     {"id": "legends-hyperyap", "repo": "legends-hyperyap", "local": str(_DRIVE_ROOT / "legends-hyperyap-public")},
     {"id": "legends-ambient-intelligence", "repo": "legends-ambient-intelligence", "local": str(_DRIVE_ROOT / "legends-ambient-intelligence")},
+    {"id": "legends-temporal", "repo": "legends-temporal", "local": str(_DRIVE_ROOT / "legends-temporal")},
+    {"id": "legends-jev", "repo": "legends-jev", "local": str(_DRIVE_ROOT / "legends-jev")},
     {"id": "legends-buzz", "repo": "legends-buzz", "local": str(_DRIVE_ROOT / "legends-buzz")},
-    {"id": "legends-youtube", "repo": "legends-youtube", "local": str(_DRIVE_ROOT / "legends-youtube")},
+    {"id": "legends-a2ui", "repo": "legends-a2ui", "local": str(_DRIVE_ROOT / "legends-a2ui")},
+    {"id": "legends-github", "repo": "legends-github", "local": str(_DRIVE_ROOT / "legends-github-public")},
 ]
 
 AGENT_BLOCK_MARKER = "Agent setup (via `cto-legends`)"

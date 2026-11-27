@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.0.78",
+  "version": "1.0.79",
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
@@ -528,223 +528,6 @@
       "dependencies": {},
       "readiness": "doctor"
     },
-    "legends-a2ui": {
-      "purpose": "Offline-first A2UI v1.0, v0.9.1, v0.9, and v0.8 toolkit: strict schema and graph validation, deterministic v0.8/v0.9-to-v1.0 normalization, curated interactive surface composition, zero-coupling JSON-to-A2UI projection (project), zero-daemon static HTML previewing, Precision Noir React/WebCore/Lit renderer scaffolding, pinned a2ui-project/a2ui spec lookup, and an attachable Empire knowledge pack.",
-      "scope": "Python 3.11+ standard-library CLI (zero mandatory pip dependencies) for validating JSON/JSONL/Markdown A2UI payloads against vendored a2ui-project/a2ui (google/A2UI) schemas, upgrading legacy v0.8/v0.9 surfaces to canonical v1.0 (@path, @call, @accessibility, @checks, UAX #31 IDs while keeping ChildList.path and updateDataModel.path unprefixed), composing 8 validated operator surface templates, projecting arbitrary structured JSON into strict A2UI v1.0 surfaces via project (auto, plan-approval, health-deck, data-briefing), generating offline self-contained file:// HTML previews with live dataModel bindings and action inspection, preview-first scaffolding of React/WebCore/Lit Precision Noir integration kits, checking project @a2ui/* drift, offline catalog/docs lookup, and attaching the a2ui Empire knowledge pack.",
-      "recipe": {
-        "probe": [
-          {
-            "module": "legends_a2ui",
-            "do": "import",
-            "present": [
-              "__version__"
-            ]
-          },
-          {
-            "module": "legends_a2ui",
-            "args": [
-              "doctor"
-            ],
-            "do": "module-cli"
-          },
-          {
-            "do": "files-exist",
-            "paths": [
-              "wiki/index.md",
-              "references/sources.md",
-              "docs/AGENT-RECIPE.md",
-              "knowledge/a2ui/pack.json",
-              "vendor/a2ui-spec/manifest.json",
-              "assets/manifest.json"
-            ]
-          }
-        ],
-        "run": {
-          "kind": "module",
-          "module": "legends_a2ui",
-          "runtime": "python"
-        },
-        "pip": {
-          "kind": "path"
-        },
-        "requires_python": [
-          3,
-          11
-        ],
-        "source": "codeload-zip"
-      },
-      "commit": "e42eecf0d7f5d5f2661dc9de785cbfcc62ff5398",
-      "sha256": "437d62dafd2012cea8f525c96f315ec282710246873d09ce7e05ac798d987004",
-      "license": "MIT",
-      "version": "0.1.0",
-      "keywords": [
-        "a2ui",
-        "generative-ui",
-        "agent-ui",
-        "a2ui-v1",
-        "json-schema",
-        "basic-catalog",
-        "uax-31",
-        "react",
-        "lit",
-        "web-core",
-        "precision-noir",
-        "interactive-cards",
-        "json-projection",
-        "streaming-jsonl",
-        "validation",
-        "html-preview"
-      ],
-      "discovery": {
-        "instructions": [
-          "README.md",
-          "docs/AGENT-RECIPE.md",
-          "wiki/index.md"
-        ],
-        "setup": "Python 3.11+ standard library only (zero mandatory pip dependencies). Optional Node.js 18+ only when integrating JS/TS renderer packages.",
-        "signals": [
-          "a2ui",
-          "a2ui v1.0",
-          "validate a2ui",
-          "normalize a2ui",
-          "upgrade a2ui v0.8",
-          "upgrade a2ui v0.9",
-          "project json to a2ui",
-          "a2ui project",
-          "a2ui basic catalog",
-          "a2ui surface",
-          "a2ui card",
-          "a2ui form",
-          "a2ui preview",
-          "a2ui react",
-          "a2ui web_core",
-          "a2ui lit",
-          "interactive agent card",
-          "generative ui json"
-        ],
-        "examples": [
-          "Validate all ```a2ui blocks in this Markdown file against A2UI v1.0 strict rules",
-          "Upgrade this legacy A2UI v0.8 or v0.9 payload to canonical v1.0 with @path and UAX #31 IDs",
-          "Compose an A2UI v1.0 ship-call approval card or multi-field intake form",
-          "Project a CLI planSha256 preview JSON or doctor health JSON into an interactive A2UI v1.0 surface with legends-a2ui project",
-          "Render this A2UI JSON into an offline interactive file:// HTML preview",
-          "Scaffold a Precision Noir @a2ui/react and @a2ui/web_core renderer kit into my web app",
-          "Check my project's @a2ui/* packages for version drift against upstream a2ui-project/a2ui",
-          "Attach the A2UI v1.0 knowledge pack to my Empire vault"
-        ],
-        "not_for": "Hosting live multi-tenant A2UI agent backends, provisioning cloud servers, bypassing URL/secret safety gates, or spawning detached background web servers for previews."
-      },
-      "repo": "avalonreset/legends-a2ui",
-      "platforms": [
-        "windows",
-        "linux",
-        "macos"
-      ],
-      "dependencies": {},
-      "readiness": "doctor"
-    },
-    "legends-stripe": {
-      "purpose": "Stripe payment infrastructure governance, .env price-ID auditing, product catalog lint, declarative test/live price ladder sync, B2B Hosted Invoicing (send_invoice) and receivables radar, cent-exact Stripe Drag treasury telemetry, subscription dunning and duplicate-billing radar, raw-body webhook HMAC verification, and Astro/Python server blueprints.",
-      "recipe": {
-        "requires_python": [
-          3,
-          11
-        ],
-        "probe": [
-          {
-            "module": "legends_stripe",
-            "do": "import",
-            "present": [
-              "__version__"
-            ]
-          },
-          {
-            "module": "legends_stripe",
-            "args": [
-              "doctor",
-              "--json"
-            ],
-            "do": "module-cli"
-          },
-          {
-            "do": "files-exist",
-            "paths": [
-              "README.md",
-              "docs/AGENT-RECIPE.md",
-              "wiki/index.md",
-              "references/sources.md",
-              "knowledge/stripe/pack.json"
-            ]
-          }
-        ],
-        "run": {
-          "kind": "module",
-          "module": "legends_stripe",
-          "runtime": "python"
-        },
-        "pip": {
-          "kind": "path"
-        }
-      },
-      "commit": "133feb34ae9fee73225c9a45462fc78e061bf75c",
-      "sha256": "6c525da2d68e20c671ce2759feb94ca6d8ad35cb39b3d6659f0ba2f3c1713d7d",
-      "license": "MIT",
-      "version": "0.1.5",
-      "discovery": {
-        "instructions": [
-          "README.md",
-          "docs/AGENT-RECIPE.md",
-          "wiki/index.md"
-        ],
-        "setup": "Python 3.11+. Offline doctor, resources, ladder-plan, verify-webhook, sign-webhook, and blueprint require no credentials. Live read/audit commands require STRIPE_SECRET_KEY in env or --env-file; live mutations require explicit preview plan-hash confirmation.",
-        "not_for": "Raw credit card PAN handling, PCI-DSS cardholder data storage, or unreviewed live-mode catalog, invoice, or webhook mutations.",
-        "signals": [
-          "stripe",
-          "stripe cli",
-          "stripe checkout",
-          "stripe billing",
-          "stripe invoice",
-          "stripe b2b invoice",
-          "stripe scheduled invoice payments",
-          "stripe webhook",
-          "stripe webhook signature verification",
-          "stripe price id",
-          "stripe fee calculator",
-          "stripe drag",
-          "stripe customer portal",
-          "astro stripe",
-          "stripe catalog sync",
-          "stripe subscription dunning"
-        ],
-        "examples": [
-          "Audit my .env file against Stripe and check if any price IDs or keys are mismatched",
-          "Reconcile our Stripe balance, gross revenue, and Stripe fee drag to the cent",
-          "Check our Stripe products and prices for orphaned prices or statement descriptor issues",
-          "Issue a B2B Hosted Invoice or scan open B2B receivables and overdue aging",
-          "Verify our Stripe webhook endpoint and test Stripe-Signature HMAC verification",
-          "Scan Stripe subscriptions for MRR, past-due dunning, and double-billed customers"
-        ]
-      },
-      "repo": "avalonreset/legends-stripe",
-      "platforms": [
-        "windows",
-        "linux",
-        "macos"
-      ],
-      "keywords": [
-        "stripe",
-        "stripe-cli",
-        "stripe-checkout",
-        "stripe-billing",
-        "stripe-invoicing",
-        "stripe-webhook",
-        "payments",
-        "treasury"
-      ],
-      "scope": "Dependency-free Python 3.11+ CLI for Stripe .env price-ID governance, product catalog lint, preview-first price ladder sync, orphan-free B2B Hosted Invoicing, cent-exact Stripe Drag treasury reconciliation, subscription dunning and double-billing radar, constant-time webhook HMAC verification, Astro/Python server blueprints, and attachable Empire knowledge pack.",
-      "dependencies": {},
-      "readiness": "doctor"
-    },
     "legends-gohighlevel": {
       "purpose": "GoHighLevel CRM, Workflows v3, Voice/Conversation AI, Custom Objects, and 5-layer agency backend governance CLI with preview-first mutations, API readback, and a source-cited knowledge vault.",
       "recipe": {
@@ -853,6 +636,208 @@
       "dependencies": {},
       "readiness": "doctor"
     },
+    "legends-stripe": {
+      "purpose": "Stripe payment infrastructure governance, .env price-ID auditing, product catalog lint, declarative test/live price ladder sync, B2B Hosted Invoicing (send_invoice) and receivables radar, cent-exact Stripe Drag treasury telemetry, subscription dunning and duplicate-billing radar, raw-body webhook HMAC verification, and Astro/Python server blueprints.",
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "probe": [
+          {
+            "module": "legends_stripe",
+            "do": "import",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "module": "legends_stripe",
+            "args": [
+              "doctor",
+              "--json"
+            ],
+            "do": "module-cli"
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "README.md",
+              "docs/AGENT-RECIPE.md",
+              "wiki/index.md",
+              "references/sources.md",
+              "knowledge/stripe/pack.json"
+            ]
+          }
+        ],
+        "run": {
+          "kind": "module",
+          "module": "legends_stripe",
+          "runtime": "python"
+        },
+        "pip": {
+          "kind": "path"
+        }
+      },
+      "commit": "133feb34ae9fee73225c9a45462fc78e061bf75c",
+      "sha256": "6c525da2d68e20c671ce2759feb94ca6d8ad35cb39b3d6659f0ba2f3c1713d7d",
+      "license": "MIT",
+      "version": "0.1.5",
+      "discovery": {
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "wiki/index.md"
+        ],
+        "setup": "Python 3.11+. Offline doctor, resources, ladder-plan, verify-webhook, sign-webhook, and blueprint require no credentials. Live read/audit commands require STRIPE_SECRET_KEY in env or --env-file; live mutations require explicit preview plan-hash confirmation.",
+        "not_for": "Raw credit card PAN handling, PCI-DSS cardholder data storage, or unreviewed live-mode catalog, invoice, or webhook mutations.",
+        "signals": [
+          "stripe",
+          "stripe cli",
+          "stripe checkout",
+          "stripe billing",
+          "stripe invoice",
+          "stripe b2b invoice",
+          "stripe scheduled invoice payments",
+          "stripe webhook",
+          "stripe webhook signature verification",
+          "stripe price id",
+          "stripe fee calculator",
+          "stripe drag",
+          "stripe customer portal",
+          "astro stripe",
+          "stripe catalog sync",
+          "stripe subscription dunning"
+        ],
+        "examples": [
+          "Audit my .env file against Stripe and check if any price IDs or keys are mismatched",
+          "Reconcile our Stripe balance, gross revenue, and Stripe fee drag to the cent",
+          "Check our Stripe products and prices for orphaned prices or statement descriptor issues",
+          "Issue a B2B Hosted Invoice or scan open B2B receivables and overdue aging",
+          "Verify our Stripe webhook endpoint and test Stripe-Signature HMAC verification",
+          "Scan Stripe subscriptions for MRR, past-due dunning, and double-billed customers"
+        ]
+      },
+      "repo": "avalonreset/legends-stripe",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "keywords": [
+        "stripe",
+        "stripe-cli",
+        "stripe-checkout",
+        "stripe-billing",
+        "stripe-invoicing",
+        "stripe-webhook",
+        "payments",
+        "treasury"
+      ],
+      "scope": "Dependency-free Python 3.11+ CLI for Stripe .env price-ID governance, product catalog lint, preview-first price ladder sync, orphan-free B2B Hosted Invoicing, cent-exact Stripe Drag treasury reconciliation, subscription dunning and double-billing radar, constant-time webhook HMAC verification, Astro/Python server blueprints, and attachable Empire knowledge pack.",
+      "dependencies": {},
+      "readiness": "doctor"
+    },
+    "legends-dataforseo": {
+      "version": "0.1.14",
+      "commit": "bffbd0e5e422022c28c71115d6065846231680c2",
+      "repo": "avalonreset/legends-dataforseo",
+      "sha256": "556ed4e411e9596eb24e22cd8e0bc53dd708ed4eca2236e625c1f4e324773e39",
+      "purpose": "53-route DataForSEO v3 catalog for search, Google Maps, Google Business Profile, fail-closed decoy SERP defense (resolve_poisoned_results), depth-aware resolve_goto_urls and allowlisted website_name domain mapping, Google 5x search-operator billing guard, Labs/LLM Mentions/Backlinks/Lighthouse/On-Page intelligence, and keyword research with complete saved offline evidence, integrity verification, and explicit reuse checks.",
+      "keywords": [
+        "seo",
+        "keywords",
+        "keyword",
+        "search",
+        "serp",
+        "dataforseo",
+        "backlinks",
+        "research",
+        "maps",
+        "gbp",
+        "business-profile",
+        "llm-mentions",
+        "lighthouse"
+      ],
+      "dependencies": {},
+      "scope": "Python API and CLI across 53 DataForSEO v3 routes (each with section and mode), mandatory resolve_poisoned_results: true and serp_integrity.verified stamping, 5x Google operator cost preflight floor, optional verify_no_swap double-pull, depth-aware resolve_goto_urls with allowlisted website_name domain extraction, certifi-backed docs discovery, offline evidence export, integrity verification, manifest inventory, focused views, and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
+      "discovery": {
+        "signals": [
+          "keyword demand",
+          "search demand",
+          "search volume",
+          "serp",
+          "decoy serp",
+          "backlinks",
+          "keyword research",
+          "search results",
+          "google business profile",
+          "my business info",
+          "gbp lookup",
+          "competitor keywords",
+          "ranked keywords",
+          "relevant pages",
+          "llm mentions",
+          "ai overview",
+          "lighthouse",
+          "content parsing"
+        ],
+        "examples": [
+          "Research keyword demand",
+          "Collect search results and preserve reusable evidence",
+          "Find and inspect saved DataForSEO research without another API call"
+        ],
+        "not_for": "Automatic marketing conclusions or a substitute for GeoGrid study design.",
+        "setup": "Offline inspection needs no credentials; fresh API work requires credentials and explicit execution authorization.",
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "docs/RESEARCH-MEMORY.md"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_dataforseo",
+            "present": [
+              "API_ROOT",
+              "ApiError",
+              "CredentialError"
+            ],
+            "callable": [
+              "api_request"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_dataforseo",
+            "args": [
+              "doctor"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_dataforseo"
+        }
+      },
+      "readiness": "task-readiness research",
+      "license": "MIT",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ]
+    },
     "legends-geogrid": {
       "version": "0.3.0",
       "commit": "115666bc3428ea5676365f2d17ba925b1e20aea7",
@@ -955,106 +940,6 @@
         "macos"
       ]
     },
-    "legends-dataforseo": {
-      "version": "0.1.14",
-      "commit": "bffbd0e5e422022c28c71115d6065846231680c2",
-      "repo": "avalonreset/legends-dataforseo",
-      "sha256": "556ed4e411e9596eb24e22cd8e0bc53dd708ed4eca2236e625c1f4e324773e39",
-      "purpose": "53-route DataForSEO v3 catalog for search, Google Maps, Google Business Profile, fail-closed decoy SERP defense (resolve_poisoned_results), depth-aware resolve_goto_urls and allowlisted website_name domain mapping, Google 5x search-operator billing guard, Labs/LLM Mentions/Backlinks/Lighthouse/On-Page intelligence, and keyword research with complete saved offline evidence, integrity verification, and explicit reuse checks.",
-      "keywords": [
-        "seo",
-        "keywords",
-        "keyword",
-        "search",
-        "serp",
-        "dataforseo",
-        "backlinks",
-        "research",
-        "maps",
-        "gbp",
-        "business-profile",
-        "llm-mentions",
-        "lighthouse"
-      ],
-      "dependencies": {},
-      "scope": "Python API and CLI across 53 DataForSEO v3 routes (each with section and mode), mandatory resolve_poisoned_results: true and serp_integrity.verified stamping, 5x Google operator cost preflight floor, optional verify_no_swap double-pull, depth-aware resolve_goto_urls with allowlisted website_name domain extraction, certifi-backed docs discovery, offline evidence export, integrity verification, manifest inventory, focused views, and reuse checks. Credentials required only for provider requests; no automatic canonical knowledge promotion.",
-      "discovery": {
-        "signals": [
-          "keyword demand",
-          "search demand",
-          "search volume",
-          "serp",
-          "decoy serp",
-          "backlinks",
-          "keyword research",
-          "search results",
-          "google business profile",
-          "my business info",
-          "gbp lookup",
-          "competitor keywords",
-          "ranked keywords",
-          "relevant pages",
-          "llm mentions",
-          "ai overview",
-          "lighthouse",
-          "content parsing"
-        ],
-        "examples": [
-          "Research keyword demand",
-          "Collect search results and preserve reusable evidence",
-          "Find and inspect saved DataForSEO research without another API call"
-        ],
-        "not_for": "Automatic marketing conclusions or a substitute for GeoGrid study design.",
-        "setup": "Offline inspection needs no credentials; fresh API work requires credentials and explicit execution authorization.",
-        "instructions": [
-          "README.md",
-          "docs/AGENT-RECIPE.md",
-          "docs/RESEARCH-MEMORY.md"
-        ]
-      },
-      "recipe": {
-        "requires_python": [
-          3,
-          11
-        ],
-        "pip": {
-          "kind": "path"
-        },
-        "probe": [
-          {
-            "do": "import",
-            "module": "legends_dataforseo",
-            "present": [
-              "API_ROOT",
-              "ApiError",
-              "CredentialError"
-            ],
-            "callable": [
-              "api_request"
-            ]
-          },
-          {
-            "do": "module-cli",
-            "module": "legends_dataforseo",
-            "args": [
-              "doctor"
-            ]
-          }
-        ],
-        "run": {
-          "runtime": "python",
-          "kind": "module",
-          "module": "legends_dataforseo"
-        }
-      },
-      "readiness": "task-readiness research",
-      "license": "MIT",
-      "platforms": [
-        "windows",
-        "linux",
-        "macos"
-      ]
-    },
     "legends-firecrawl": {
       "version": "0.3.9",
       "commit": "2631d6c6a60fa06672edb98b48b8b538464b0c1a",
@@ -1142,101 +1027,6 @@
         "macos"
       ],
       "readiness": "doctor"
-    },
-    "legends-github": {
-      "version": "0.2.6",
-      "commit": "d300e505e80a6d168a7065de4d6878ed4a6ddf1b",
-      "repo": "avalonreset/legends-github",
-      "sha256": "649c01a11e6bdfc765bbf828b729f1320308991cb80eeb11bd5b969dc32883f6",
-      "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
-      "keywords": [
-        "github",
-        "repository",
-        "repositories",
-        "readme",
-        "release",
-        "packaging",
-        "seo",
-        "optimization",
-        "keywords",
-        "social-preview"
-      ],
-      "dependencies": {
-        "legends-dataforseo": "0.1.13"
-      },
-      "scope": "Portable Python repository workflows, optional research, and social-preview preparation/served-image verification. Actual upload uses the agent host's supported browser/file-upload tools; no legends-chrome-kit or legends-shell-kit dependency.",
-      "setup_revision": 2,
-      "discovery": {
-        "signals": [
-          "github",
-          "readme",
-          "repository discovery",
-          "repository visibility",
-          "repo visibility",
-          "open source project",
-          "github social preview",
-          "repository social image"
-        ],
-        "examples": [
-          "Improve discovery of my GitHub project",
-          "Optimize my repository with search evidence",
-          "Upload and verify my GitHub social preview image"
-        ],
-        "not_for": "General website SEO or merely adding unresearched keywords.",
-        "setup": "Requires target repository and appropriate GitHub access; live research needs provider credentials. Social-preview verification needs gh access; upload needs a supported authenticated browser and file-upload control.",
-        "instructions": [
-          "README.md",
-          "docs/AGENT-RECIPE.md",
-          "docs/GITHUB-RECIPE.md",
-          "github/references/social-preview-sop.md"
-        ]
-      },
-      "recipe": {
-        "requires_python": [
-          3,
-          11
-        ],
-        "pip": {
-          "kind": "requirements",
-          "files": [
-            "requirements-dataforseo.txt",
-            "github/requirements.txt"
-          ]
-        },
-        "probe": [
-          {
-            "do": "script",
-            "path": "legends_github.py",
-            "args": [
-              "capabilities"
-            ]
-          },
-          {
-            "do": "import",
-            "module": "legends_dataforseo",
-            "callable": [
-              "api_request"
-            ]
-          },
-          {
-            "do": "version-floor",
-            "package": "legends-dataforseo",
-            "min": "0.1.0"
-          }
-        ],
-        "run": {
-          "runtime": "python",
-          "kind": "script",
-          "path": "legends_github.py"
-        }
-      },
-      "readiness": "task-readiness github",
-      "license": "MIT",
-      "platforms": [
-        "windows",
-        "linux",
-        "macos"
-      ]
     },
     "legends-grant": {
       "version": "0.3.5",
@@ -1338,68 +1128,88 @@
       "readiness": "doctor",
       "license": "MIT"
     },
-    "legends-jev": {
-      "version": "0.2.6",
-      "commit": "34a978fa169bfe71e73327c1faa3bfaf30960193",
-      "repo": "avalonreset/legends-jev",
-      "sha256": "d307bc6990adf35808d8b3e42ac47612e42bbba01dcbb454b51cf80619ed7463",
-      "purpose": "Typed optical recognition (OCR), storefront signage verification, and decision advice for computer use, application control and browser action selection from supplied text evidence, local images, and candidates.",
+    "legends-youtube": {
+      "version": "0.2.1",
+      "commit": "cb7aa7a20491816b60cad87cc50d29570253421f",
+      "repo": "avalonreset/legends-youtube",
+      "sha256": "47ca56bbc8995a888b5c7be375bdfe1494aa5f1de6bfba8dd49be1a5d33ca78b",
+      "purpose": "Operate YouTube channels over Data API v3 and Analytics API v2 with ETag-guarded lossless metadata updates, quota-cost wave planning, 0-quota public readback and outlier scouting, sourced CTR/retention A/B scorecards, Studio quiz and chapter validators, SHA-256 frozen private-draft uploads, repeatable yt-dlp source pulls, transcripts, search, and word-timed clip-building (legends-yt-dlp), and an attachable 18-file Empire knowledge pack.",
       "keywords": [
-        "jev",
-        "typesafe",
-        "computer",
-        "application",
-        "browser",
-        "decision",
-        "accessibility",
-        "ocr",
-        "optical",
-        "signage",
-        "streetview",
-        "grounding",
-        "vision",
-        "bounding-box"
+        "youtube",
+        "youtube-api",
+        "youtube-data-api",
+        "youtube-analytics",
+        "youtube-studio",
+        "youtube-channel",
+        "youtube-shorts",
+        "thumbnails",
+        "chapters",
+        "quizzes",
+        "ctr",
+        "retention",
+        "ytdlp",
+        "yt-dlp",
+        "download",
+        "downloads",
+        "video",
+        "videos",
+        "clip",
+        "clips",
+        "archive",
+        "archiving",
+        "rip",
+        "transcript",
+        "playlist",
+        "channel"
       ],
       "dependencies": {},
-      "platforms": [
-        "windows",
-        "linux",
-        "macos"
-      ],
-      "scope": "Structured optical text extraction (ocr), storefront signage vs GBP title verification (signage) with normalized 0..1000 and pixel bounding boxes across 1..6 local images, and candidate decision selection (decide). Operator validates; existing shell/chrome tools actuate.",
+      "scope": "Unified Python 3.11+ distribution exposing both legends-youtube (zero-dependency YouTube Data API v3, Analytics API v2, 0-quota public readback/outlier radar, Perfect Video Score idea scoring, ETag-guarded lossless snippet merges, Studio chapter/quiz linters, and SHA-256 private-draft uploads) and legends-yt-dlp (preview-first items.jsonl probing, SHA-256 yt-dlp.conf anonymous option allowlist, ffprobe stream verification, and local GPU CrispASR Parakeet word ledgers and FFmpeg clip plans) plus an 18-file Empire knowledge pack.",
       "discovery": {
         "signals": [
-          "computer use",
-          "application control",
-          "browser action",
-          "action selection",
-          "accessibility evidence",
-          "screen evidence",
-          "typed decision",
-          "jev",
-          "typesafe",
-          "optical character recognition",
-          "ocr",
-          "read text from image",
-          "storefront signage",
-          "signage verification",
-          "verify storefront signage",
-          "optical grounding",
-          "bounding box"
+          "youtube channel",
+          "youtube data api",
+          "youtube analytics",
+          "youtube studio",
+          "youtube metadata",
+          "youtube description",
+          "youtube tags",
+          "youtube chapters",
+          "youtube quizzes",
+          "youtube thumbnail",
+          "youtube ctr",
+          "youtube retention",
+          "youtube draft upload",
+          "youtube shorts funnel",
+          "youtube quota",
+          "youtube outliers",
+          "legends-youtube",
+          "download this video",
+          "rip this video",
+          "archive this channel",
+          "archive this playlist",
+          "pull this video",
+          "youtube download",
+          "yt-dlp",
+          "clip this video",
+          "transcribe this video"
         ],
         "examples": [
-          "Choose a browser action from supplied accessibility evidence",
-          "Compare candidate application controls",
-          "Evaluate whether screen-description evidence supports a next action",
-          "Extract visible text and bounding boxes from a screenshot or photo",
-          "Verify whether storefront and Street View photos support a published business name"
+          "Inventory my YouTube channel and generate a lossless metadata plan to migrate legacy description links without wiping video tags",
+          "Calculate the YouTube Data API v3 quota cost and daily waves needed to update 250 video descriptions",
+          "Run a YouTube channel health scorecard and rank below-median-CTR long-form videos for Title and Thumbnail Test & Compare A/B runs",
+          "Validate my YouTube description chapters, Studio video quizzes JSON, and custom thumbnail before freezing a private draft upload",
+          "Compile a transcript into validated YouTube chapters, Shorts gem-cut candidates, and a retention cliff X-ray",
+          "Scout breakout outlier videos on a public YouTube channel for zero API quota units",
+          "Rip this video for my edit",
+          "Archive this channel with pacing"
         ],
-        "not_for": "Desktop or browser actuation, live screenshot capture, autonomous permissions, or private data by default.",
-        "setup": "Run offline doctor and input readiness. Explicit API execution needs safely provisioned TYPESAFE_API_KEY and reviewed public/synthetic/nonsecret metadata.",
+        "not_for": "Bypassing DRM, paywalls, logins, captchas, or access controls; calling videos.update without merging existing live snippet fields; uploading public/unlisted drafts; or reading browser profile databases/cookie stores.",
+        "setup": "Python 3.11+. Exposes both legends-youtube and legends-yt-dlp entrypoints (plus legends-youtube yt-dlp|archive|pull|transcribe|clips). Offline doctor, resources, quota-plan, metadata-plan, packaging-audit, chapters-lint, quiz-lint, thumbnail-check, draft-freeze, score-idea, and 0-quota public-readback / channel-outliers require no credentials. Live Data API v3 / Analytics API v2 commands use YOUTUBE_API_KEY or OAuth 2.0 env vars; yt-dlp media pulls verify the local yt-dlp binary and ffmpeg on PATH.",
         "instructions": [
           "README.md",
           "docs/AGENT-RECIPE.md",
-          "legends_jev/docs/recipe.md"
+          "docs/OPERATOR-ROUTING.md",
+          "wiki/index.md"
         ]
       },
       "recipe": {
@@ -1412,20 +1222,51 @@
         },
         "probe": [
           {
+            "do": "import",
+            "module": "legends_youtube",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "do": "import",
+            "module": "legends_ytdlp",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
             "do": "module-cli",
-            "module": "legends_jev",
+            "module": "legends_youtube",
             "args": [
-              "doctor"
+              "doctor",
+              "--json"
+            ]
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "README.md",
+              "docs/AGENT-RECIPE.md",
+              "docs/OPERATOR-ROUTING.md",
+              "wiki/index.md",
+              "references/sources.md",
+              "knowledge/youtube/pack.json"
             ]
           }
         ],
         "run": {
           "runtime": "python",
           "kind": "module",
-          "module": "legends_jev"
+          "module": "legends_youtube"
         }
       },
       "license": "MIT",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
       "readiness": "doctor"
     },
     "legends-obs": {
@@ -1501,6 +1342,111 @@
           "cursor": "Optional animated cursor overlay plus click effects (GPL Lua filter, not installed by default). After install, copy extras/cursor/legends_cursor_filter.lua into the OBS scripts folder and enable it under Tools > Scripts."
         }
       },
+      "readiness": "doctor"
+    },
+    "legends-capcut": {
+      "version": "0.1.0",
+      "commit": "8c0f50e99bd1d8d88eeb8a8486b8d9daf6f413d1",
+      "repo": "avalonreset/legends-capcut",
+      "sha256": "f4192a751db7e2ec16313278c7da64f92e23d4f4e3acb5ffcbe281d06fd121f5",
+      "purpose": "Agent-native CapCut Desktop editing: a bidirectional draft compiler and reader, strict validator, surgical single-scene patcher, perpetual six-frame storyboards, reveal-aware readability and overstay critic, beat sync, local effect and keymap discovery, optional Windows GUI playback watch, and a matching CLI and stdio MCP server.",
+      "keywords": [
+        "capcut",
+        "capcut-desktop",
+        "video-editing",
+        "timeline",
+        "draft-compiler",
+        "scene-patcher",
+        "storyboard",
+        "readability",
+        "beat-sync",
+        "keyframes",
+        "transitions",
+        "mcp"
+      ],
+      "dependencies": {},
+      "scope": "Python 3.11+ standard-library CLI and stdio MCP server (zero mandatory pip dependencies) that compiles a plain JSON timeline spec into a complete CapCut Desktop project (video, overlay, text and audio tracks, transitions, animations, keyframes, fades, ducking, beat markers, review burn-in), decodes any project back into scenes S01, S02, patches one scene at a time with ripple and byte-identical untouched tracks, toggles track mute and hide flags, catalogs locally cached effects, resolves the active shortcut preset, maps music beats and sections, renders storyboard contact sheets, audits on-screen text readability and pacing, and optionally drives the visible CapCut window on Windows when a local desktop bridge is configured.",
+      "discovery": {
+        "signals": [
+          "capcut",
+          "capcut project",
+          "capcut draft",
+          "edit in capcut",
+          "build a capcut timeline",
+          "capcut scene",
+          "extend a scene",
+          "trim a clip in capcut",
+          "replace a clip in capcut",
+          "capcut transitions",
+          "capcut keyframes",
+          "beat sync video",
+          "storyboard contact sheet",
+          "video readability audit",
+          "watch capcut playback",
+          "capcut shortcuts"
+        ],
+        "examples": [
+          "Build a CapCut project from these clips and this song, cut on the downbeats",
+          "Show me the scenes in my CapCut project as S01, S02 and what text is on each",
+          "Make scene S03 a second and a half longer and keep everything after it in sync",
+          "Swap scene S02 for this shorter clip and shorten the scene to fit",
+          "Render a storyboard of every scene so I can review the cut without opening CapCut",
+          "Check whether the on-screen text stays up long enough to read",
+          "Open the project in CapCut, play it, and show me what it actually looks like"
+        ],
+        "not_for": "Exporting or rendering final video files (CapCut renders the export), editing projects this tool did not generate, downloading CapCut effects or templates, or automating CapCut accounts and cloud features.",
+        "setup": "Python 3.11+ standard library for the compiler, reader, validator and patcher. Optional extras: [beats] for beat sync, [vision] for storyboards, readability probes and GUI capture, [audio] for the vocal presence check. ffmpeg and ffprobe on PATH when present. Optional GUI commands need Windows, CapCut Desktop, and a local desktop bridge (LEGENDS_SHELL_PS1).",
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "docs/CAPCUT-928-INTERNALS.md",
+          "routes.json"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_capcut",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_capcut",
+            "args": [
+              "doctor"
+            ]
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "docs/AGENT-RECIPE.md",
+              "docs/CAPCUT-928-INTERNALS.md",
+              "routes.json"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_capcut"
+        }
+      },
+      "license": "MIT",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
       "readiness": "doctor"
     },
     "legends-captions": {
@@ -1583,111 +1529,6 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_captions"
-        }
-      },
-      "license": "MIT",
-      "platforms": [
-        "windows",
-        "linux",
-        "macos"
-      ],
-      "readiness": "doctor"
-    },
-    "legends-temporal": {
-      "version": "0.1.2",
-      "commit": "a6fcc58f451cab866919650a91bab8a70114e4cd",
-      "repo": "avalonreset/legends-temporal",
-      "sha256": "ef74b0f483d78255c6ed087b2d474008d0a57e89f3b52a54354d6cf9f0ae0dfe",
-      "purpose": "Operate local, self-hosted, or Temporal Cloud clusters with durable cron and interval schedules, one-shot start_delay timers, first-class cto-legends --module scheduling, orphaned-queue and declarative inventory drift auditing (audit), local SQLite/Docker Compose/systemd cluster bootstrap (bootstrap), zero-rewrite 11-field ScriptJob and AgentJob workers across split control and exec task queues, compact event-history failure diagnosis, a 10-tool stdio MCP server, and a 7-note Empire knowledge pack.",
-      "keywords": [
-        "temporal",
-        "temporal-io",
-        "workflow",
-        "workflows",
-        "orchestration",
-        "durable",
-        "schedule",
-        "schedules",
-        "scheduler",
-        "cron",
-        "timer",
-        "timers",
-        "queue",
-        "worker"
-      ],
-      "dependencies": {},
-      "scope": "Python 3.11+ CLI and 10-tool stdio MCP server backed by the official temporalio SDK over gRPC (plain, TLS, mTLS, or Temporal Cloud API key). Supports offline doctor, config, resources, bootstrap compose/systemd previews, offline schedule/inventory audits, and --dry-run schedule/timer previews (including --module <legends-module>) with zero network calls, plus live queue-poller cross-check audits, split control-plane and exec-plane ScriptJob workers, and 7-note Empire knowledge pack attachment.",
-      "discovery": {
-        "signals": [
-          "temporal",
-          "temporal cluster",
-          "temporal schedule",
-          "temporal timer",
-          "temporal workflow",
-          "temporal queue",
-          "temporal worker",
-          "durable timer",
-          "durable schedule",
-          "cron schedule",
-          "workflow history",
-          "diagnose failed workflow",
-          "legends-temporal",
-          "schedule legends module",
-          "audit temporal schedules",
-          "bootstrap temporal"
-        ],
-        "examples": [
-          "Check if our Temporal server, namespace, and control and exec task-queue pollers are healthy",
-          "Preview and create a nightly 02:30 cron schedule or apply a JSON schedule inventory with overlap and catchup policies",
-          "Schedule a one-shot durable timer in 15 minutes to run a Python script, POST an env-held webhook, or wake an agent session",
-          "List failed workflows from last night and run workflow history --diagnose to get the script exit code, worker identity, output tail, and remediation hint",
-          "Start a control-plane or exec-plane ScriptJob worker and resolve the 6-note Temporal knowledge pack paths"
-        ],
-        "not_for": "Embedding raw API keys, webhook URLs, or notification private keys inside Temporal workflow payloads or event history; deleting schedules or terminating workflows without --yes.",
-        "setup": "Python 3.11+ with temporalio>=1.20.0. Offline doctor, resources, config show, and --dry-run schedule/timer previews require no running Temporal server. Live cluster commands use TEMPORAL_ADDRESS / TEMPORAL_NAMESPACE (or ~/.legends-temporal/config.json profiles).",
-        "instructions": [
-          "README.md",
-          "docs/AGENT-RECIPE.md",
-          "knowledge/temporal/pack.json"
-        ]
-      },
-      "recipe": {
-        "requires_python": [
-          3,
-          11
-        ],
-        "pip": {
-          "kind": "path"
-        },
-        "probe": [
-          {
-            "do": "import",
-            "module": "legends_temporal",
-            "present": [
-              "__version__"
-            ]
-          },
-          {
-            "do": "module-cli",
-            "module": "legends_temporal",
-            "args": [
-              "doctor",
-              "--json"
-            ]
-          },
-          {
-            "do": "files-exist",
-            "paths": [
-              "README.md",
-              "docs/AGENT-RECIPE.md",
-              "knowledge/temporal/pack.json"
-            ]
-          }
-        ],
-        "run": {
-          "runtime": "python",
-          "kind": "module",
-          "module": "legends_temporal"
         }
       },
       "license": "MIT",
@@ -1924,6 +1765,201 @@
       ],
       "readiness": "doctor"
     },
+    "legends-temporal": {
+      "version": "0.1.2",
+      "commit": "a6fcc58f451cab866919650a91bab8a70114e4cd",
+      "repo": "avalonreset/legends-temporal",
+      "sha256": "ef74b0f483d78255c6ed087b2d474008d0a57e89f3b52a54354d6cf9f0ae0dfe",
+      "purpose": "Operate local, self-hosted, or Temporal Cloud clusters with durable cron and interval schedules, one-shot start_delay timers, first-class cto-legends --module scheduling, orphaned-queue and declarative inventory drift auditing (audit), local SQLite/Docker Compose/systemd cluster bootstrap (bootstrap), zero-rewrite 11-field ScriptJob and AgentJob workers across split control and exec task queues, compact event-history failure diagnosis, a 10-tool stdio MCP server, and a 7-note Empire knowledge pack.",
+      "keywords": [
+        "temporal",
+        "temporal-io",
+        "workflow",
+        "workflows",
+        "orchestration",
+        "durable",
+        "schedule",
+        "schedules",
+        "scheduler",
+        "cron",
+        "timer",
+        "timers",
+        "queue",
+        "worker"
+      ],
+      "dependencies": {},
+      "scope": "Python 3.11+ CLI and 10-tool stdio MCP server backed by the official temporalio SDK over gRPC (plain, TLS, mTLS, or Temporal Cloud API key). Supports offline doctor, config, resources, bootstrap compose/systemd previews, offline schedule/inventory audits, and --dry-run schedule/timer previews (including --module <legends-module>) with zero network calls, plus live queue-poller cross-check audits, split control-plane and exec-plane ScriptJob workers, and 7-note Empire knowledge pack attachment.",
+      "discovery": {
+        "signals": [
+          "temporal",
+          "temporal cluster",
+          "temporal schedule",
+          "temporal timer",
+          "temporal workflow",
+          "temporal queue",
+          "temporal worker",
+          "durable timer",
+          "durable schedule",
+          "cron schedule",
+          "workflow history",
+          "diagnose failed workflow",
+          "legends-temporal",
+          "schedule legends module",
+          "audit temporal schedules",
+          "bootstrap temporal"
+        ],
+        "examples": [
+          "Check if our Temporal server, namespace, and control and exec task-queue pollers are healthy",
+          "Preview and create a nightly 02:30 cron schedule or apply a JSON schedule inventory with overlap and catchup policies",
+          "Schedule a one-shot durable timer in 15 minutes to run a Python script, POST an env-held webhook, or wake an agent session",
+          "List failed workflows from last night and run workflow history --diagnose to get the script exit code, worker identity, output tail, and remediation hint",
+          "Start a control-plane or exec-plane ScriptJob worker and resolve the 6-note Temporal knowledge pack paths"
+        ],
+        "not_for": "Embedding raw API keys, webhook URLs, or notification private keys inside Temporal workflow payloads or event history; deleting schedules or terminating workflows without --yes.",
+        "setup": "Python 3.11+ with temporalio>=1.20.0. Offline doctor, resources, config show, and --dry-run schedule/timer previews require no running Temporal server. Live cluster commands use TEMPORAL_ADDRESS / TEMPORAL_NAMESPACE (or ~/.legends-temporal/config.json profiles).",
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "knowledge/temporal/pack.json"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "import",
+            "module": "legends_temporal",
+            "present": [
+              "__version__"
+            ]
+          },
+          {
+            "do": "module-cli",
+            "module": "legends_temporal",
+            "args": [
+              "doctor",
+              "--json"
+            ]
+          },
+          {
+            "do": "files-exist",
+            "paths": [
+              "README.md",
+              "docs/AGENT-RECIPE.md",
+              "knowledge/temporal/pack.json"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_temporal"
+        }
+      },
+      "license": "MIT",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "readiness": "doctor"
+    },
+    "legends-jev": {
+      "version": "0.2.6",
+      "commit": "34a978fa169bfe71e73327c1faa3bfaf30960193",
+      "repo": "avalonreset/legends-jev",
+      "sha256": "d307bc6990adf35808d8b3e42ac47612e42bbba01dcbb454b51cf80619ed7463",
+      "purpose": "Typed optical recognition (OCR), storefront signage verification, and decision advice for computer use, application control and browser action selection from supplied text evidence, local images, and candidates.",
+      "keywords": [
+        "jev",
+        "typesafe",
+        "computer",
+        "application",
+        "browser",
+        "decision",
+        "accessibility",
+        "ocr",
+        "optical",
+        "signage",
+        "streetview",
+        "grounding",
+        "vision",
+        "bounding-box"
+      ],
+      "dependencies": {},
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "scope": "Structured optical text extraction (ocr), storefront signage vs GBP title verification (signage) with normalized 0..1000 and pixel bounding boxes across 1..6 local images, and candidate decision selection (decide). Operator validates; existing shell/chrome tools actuate.",
+      "discovery": {
+        "signals": [
+          "computer use",
+          "application control",
+          "browser action",
+          "action selection",
+          "accessibility evidence",
+          "screen evidence",
+          "typed decision",
+          "jev",
+          "typesafe",
+          "optical character recognition",
+          "ocr",
+          "read text from image",
+          "storefront signage",
+          "signage verification",
+          "verify storefront signage",
+          "optical grounding",
+          "bounding box"
+        ],
+        "examples": [
+          "Choose a browser action from supplied accessibility evidence",
+          "Compare candidate application controls",
+          "Evaluate whether screen-description evidence supports a next action",
+          "Extract visible text and bounding boxes from a screenshot or photo",
+          "Verify whether storefront and Street View photos support a published business name"
+        ],
+        "not_for": "Desktop or browser actuation, live screenshot capture, autonomous permissions, or private data by default.",
+        "setup": "Run offline doctor and input readiness. Explicit API execution needs safely provisioned TYPESAFE_API_KEY and reviewed public/synthetic/nonsecret metadata.",
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "legends_jev/docs/recipe.md"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "pip": {
+          "kind": "path"
+        },
+        "probe": [
+          {
+            "do": "module-cli",
+            "module": "legends_jev",
+            "args": [
+              "doctor"
+            ]
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "module",
+          "module": "legends_jev"
+        }
+      },
+      "license": "MIT",
+      "readiness": "doctor"
+    },
     "legends-buzz": {
       "version": "0.1.3",
       "commit": "0d2083101c3f4bd34af536328160d6c0e12e2a9e",
@@ -2028,251 +2064,215 @@
       ],
       "readiness": "doctor"
     },
-    "legends-youtube": {
-      "version": "0.2.1",
-      "commit": "cb7aa7a20491816b60cad87cc50d29570253421f",
-      "repo": "avalonreset/legends-youtube",
-      "sha256": "47ca56bbc8995a888b5c7be375bdfe1494aa5f1de6bfba8dd49be1a5d33ca78b",
-      "purpose": "Operate YouTube channels over Data API v3 and Analytics API v2 with ETag-guarded lossless metadata updates, quota-cost wave planning, 0-quota public readback and outlier scouting, sourced CTR/retention A/B scorecards, Studio quiz and chapter validators, SHA-256 frozen private-draft uploads, repeatable yt-dlp source pulls, transcripts, search, and word-timed clip-building (legends-yt-dlp), and an attachable 18-file Empire knowledge pack.",
-      "keywords": [
-        "youtube",
-        "youtube-api",
-        "youtube-data-api",
-        "youtube-analytics",
-        "youtube-studio",
-        "youtube-channel",
-        "youtube-shorts",
-        "thumbnails",
-        "chapters",
-        "quizzes",
-        "ctr",
-        "retention",
-        "ytdlp",
-        "yt-dlp",
-        "download",
-        "downloads",
-        "video",
-        "videos",
-        "clip",
-        "clips",
-        "archive",
-        "archiving",
-        "rip",
-        "transcript",
-        "playlist",
-        "channel"
-      ],
-      "dependencies": {},
-      "scope": "Unified Python 3.11+ distribution exposing both legends-youtube (zero-dependency YouTube Data API v3, Analytics API v2, 0-quota public readback/outlier radar, Perfect Video Score idea scoring, ETag-guarded lossless snippet merges, Studio chapter/quiz linters, and SHA-256 private-draft uploads) and legends-yt-dlp (preview-first items.jsonl probing, SHA-256 yt-dlp.conf anonymous option allowlist, ffprobe stream verification, and local GPU CrispASR Parakeet word ledgers and FFmpeg clip plans) plus an 18-file Empire knowledge pack.",
-      "discovery": {
-        "signals": [
-          "youtube channel",
-          "youtube data api",
-          "youtube analytics",
-          "youtube studio",
-          "youtube metadata",
-          "youtube description",
-          "youtube tags",
-          "youtube chapters",
-          "youtube quizzes",
-          "youtube thumbnail",
-          "youtube ctr",
-          "youtube retention",
-          "youtube draft upload",
-          "youtube shorts funnel",
-          "youtube quota",
-          "youtube outliers",
-          "legends-youtube",
-          "download this video",
-          "rip this video",
-          "archive this channel",
-          "archive this playlist",
-          "pull this video",
-          "youtube download",
-          "yt-dlp",
-          "clip this video",
-          "transcribe this video"
-        ],
-        "examples": [
-          "Inventory my YouTube channel and generate a lossless metadata plan to migrate legacy description links without wiping video tags",
-          "Calculate the YouTube Data API v3 quota cost and daily waves needed to update 250 video descriptions",
-          "Run a YouTube channel health scorecard and rank below-median-CTR long-form videos for Title and Thumbnail Test & Compare A/B runs",
-          "Validate my YouTube description chapters, Studio video quizzes JSON, and custom thumbnail before freezing a private draft upload",
-          "Compile a transcript into validated YouTube chapters, Shorts gem-cut candidates, and a retention cliff X-ray",
-          "Scout breakout outlier videos on a public YouTube channel for zero API quota units",
-          "Rip this video for my edit",
-          "Archive this channel with pacing"
-        ],
-        "not_for": "Bypassing DRM, paywalls, logins, captchas, or access controls; calling videos.update without merging existing live snippet fields; uploading public/unlisted drafts; or reading browser profile databases/cookie stores.",
-        "setup": "Python 3.11+. Exposes both legends-youtube and legends-yt-dlp entrypoints (plus legends-youtube yt-dlp|archive|pull|transcribe|clips). Offline doctor, resources, quota-plan, metadata-plan, packaging-audit, chapters-lint, quiz-lint, thumbnail-check, draft-freeze, score-idea, and 0-quota public-readback / channel-outliers require no credentials. Live Data API v3 / Analytics API v2 commands use YOUTUBE_API_KEY or OAuth 2.0 env vars; yt-dlp media pulls verify the local yt-dlp binary and ffmpeg on PATH.",
-        "instructions": [
-          "README.md",
-          "docs/AGENT-RECIPE.md",
-          "docs/OPERATOR-ROUTING.md",
-          "wiki/index.md"
-        ]
-      },
+    "legends-a2ui": {
+      "purpose": "Offline-first A2UI v1.0, v0.9.1, v0.9, and v0.8 toolkit: strict schema and graph validation, deterministic v0.8/v0.9-to-v1.0 normalization, curated interactive surface composition, zero-coupling JSON-to-A2UI projection (project), zero-daemon static HTML previewing, Precision Noir React/WebCore/Lit renderer scaffolding, pinned a2ui-project/a2ui spec lookup, and an attachable Empire knowledge pack.",
+      "scope": "Python 3.11+ standard-library CLI (zero mandatory pip dependencies) for validating JSON/JSONL/Markdown A2UI payloads against vendored a2ui-project/a2ui (google/A2UI) schemas, upgrading legacy v0.8/v0.9 surfaces to canonical v1.0 (@path, @call, @accessibility, @checks, UAX #31 IDs while keeping ChildList.path and updateDataModel.path unprefixed), composing 8 validated operator surface templates, projecting arbitrary structured JSON into strict A2UI v1.0 surfaces via project (auto, plan-approval, health-deck, data-briefing), generating offline self-contained file:// HTML previews with live dataModel bindings and action inspection, preview-first scaffolding of React/WebCore/Lit Precision Noir integration kits, checking project @a2ui/* drift, offline catalog/docs lookup, and attaching the a2ui Empire knowledge pack.",
       "recipe": {
-        "requires_python": [
-          3,
-          11
-        ],
-        "pip": {
-          "kind": "path"
-        },
         "probe": [
           {
+            "module": "legends_a2ui",
             "do": "import",
-            "module": "legends_youtube",
             "present": [
               "__version__"
             ]
           },
           {
-            "do": "import",
-            "module": "legends_ytdlp",
-            "present": [
-              "__version__"
-            ]
-          },
-          {
-            "do": "module-cli",
-            "module": "legends_youtube",
-            "args": [
-              "doctor",
-              "--json"
-            ]
-          },
-          {
-            "do": "files-exist",
-            "paths": [
-              "README.md",
-              "docs/AGENT-RECIPE.md",
-              "docs/OPERATOR-ROUTING.md",
-              "wiki/index.md",
-              "references/sources.md",
-              "knowledge/youtube/pack.json"
-            ]
-          }
-        ],
-        "run": {
-          "runtime": "python",
-          "kind": "module",
-          "module": "legends_youtube"
-        }
-      },
-      "license": "MIT",
-      "platforms": [
-        "windows",
-        "linux",
-        "macos"
-      ],
-      "readiness": "doctor"
-    },
-    "legends-capcut": {
-      "version": "0.1.0",
-      "commit": "8c0f50e99bd1d8d88eeb8a8486b8d9daf6f413d1",
-      "repo": "avalonreset/legends-capcut",
-      "sha256": "f4192a751db7e2ec16313278c7da64f92e23d4f4e3acb5ffcbe281d06fd121f5",
-      "purpose": "Agent-native CapCut Desktop editing: a bidirectional draft compiler and reader, strict validator, surgical single-scene patcher, perpetual six-frame storyboards, reveal-aware readability and overstay critic, beat sync, local effect and keymap discovery, optional Windows GUI playback watch, and a matching CLI and stdio MCP server.",
-      "keywords": [
-        "capcut",
-        "capcut-desktop",
-        "video-editing",
-        "timeline",
-        "draft-compiler",
-        "scene-patcher",
-        "storyboard",
-        "readability",
-        "beat-sync",
-        "keyframes",
-        "transitions",
-        "mcp"
-      ],
-      "dependencies": {},
-      "scope": "Python 3.11+ standard-library CLI and stdio MCP server (zero mandatory pip dependencies) that compiles a plain JSON timeline spec into a complete CapCut Desktop project (video, overlay, text and audio tracks, transitions, animations, keyframes, fades, ducking, beat markers, review burn-in), decodes any project back into scenes S01, S02, patches one scene at a time with ripple and byte-identical untouched tracks, toggles track mute and hide flags, catalogs locally cached effects, resolves the active shortcut preset, maps music beats and sections, renders storyboard contact sheets, audits on-screen text readability and pacing, and optionally drives the visible CapCut window on Windows when a local desktop bridge is configured.",
-      "discovery": {
-        "signals": [
-          "capcut",
-          "capcut project",
-          "capcut draft",
-          "edit in capcut",
-          "build a capcut timeline",
-          "capcut scene",
-          "extend a scene",
-          "trim a clip in capcut",
-          "replace a clip in capcut",
-          "capcut transitions",
-          "capcut keyframes",
-          "beat sync video",
-          "storyboard contact sheet",
-          "video readability audit",
-          "watch capcut playback",
-          "capcut shortcuts"
-        ],
-        "examples": [
-          "Build a CapCut project from these clips and this song, cut on the downbeats",
-          "Show me the scenes in my CapCut project as S01, S02 and what text is on each",
-          "Make scene S03 a second and a half longer and keep everything after it in sync",
-          "Swap scene S02 for this shorter clip and shorten the scene to fit",
-          "Render a storyboard of every scene so I can review the cut without opening CapCut",
-          "Check whether the on-screen text stays up long enough to read",
-          "Open the project in CapCut, play it, and show me what it actually looks like"
-        ],
-        "not_for": "Exporting or rendering final video files (CapCut renders the export), editing projects this tool did not generate, downloading CapCut effects or templates, or automating CapCut accounts and cloud features.",
-        "setup": "Python 3.11+ standard library for the compiler, reader, validator and patcher. Optional extras: [beats] for beat sync, [vision] for storyboards, readability probes and GUI capture, [audio] for the vocal presence check. ffmpeg and ffprobe on PATH when present. Optional GUI commands need Windows, CapCut Desktop, and a local desktop bridge (LEGENDS_SHELL_PS1).",
-        "instructions": [
-          "README.md",
-          "docs/AGENT-RECIPE.md",
-          "docs/CAPCUT-928-INTERNALS.md",
-          "routes.json"
-        ]
-      },
-      "recipe": {
-        "requires_python": [
-          3,
-          11
-        ],
-        "pip": {
-          "kind": "path"
-        },
-        "probe": [
-          {
-            "do": "import",
-            "module": "legends_capcut",
-            "present": [
-              "__version__"
-            ]
-          },
-          {
-            "do": "module-cli",
-            "module": "legends_capcut",
+            "module": "legends_a2ui",
             "args": [
               "doctor"
-            ]
+            ],
+            "do": "module-cli"
           },
           {
             "do": "files-exist",
             "paths": [
+              "wiki/index.md",
+              "references/sources.md",
               "docs/AGENT-RECIPE.md",
-              "docs/CAPCUT-928-INTERNALS.md",
-              "routes.json"
+              "knowledge/a2ui/pack.json",
+              "vendor/a2ui-spec/manifest.json",
+              "assets/manifest.json"
             ]
           }
         ],
         "run": {
-          "runtime": "python",
           "kind": "module",
-          "module": "legends_capcut"
-        }
+          "module": "legends_a2ui",
+          "runtime": "python"
+        },
+        "pip": {
+          "kind": "path"
+        },
+        "requires_python": [
+          3,
+          11
+        ],
+        "source": "codeload-zip"
       },
+      "commit": "e42eecf0d7f5d5f2661dc9de785cbfcc62ff5398",
+      "sha256": "437d62dafd2012cea8f525c96f315ec282710246873d09ce7e05ac798d987004",
       "license": "MIT",
+      "version": "0.1.0",
+      "keywords": [
+        "a2ui",
+        "generative-ui",
+        "agent-ui",
+        "a2ui-v1",
+        "json-schema",
+        "basic-catalog",
+        "uax-31",
+        "react",
+        "lit",
+        "web-core",
+        "precision-noir",
+        "interactive-cards",
+        "json-projection",
+        "streaming-jsonl",
+        "validation",
+        "html-preview"
+      ],
+      "discovery": {
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "wiki/index.md"
+        ],
+        "setup": "Python 3.11+ standard library only (zero mandatory pip dependencies). Optional Node.js 18+ only when integrating JS/TS renderer packages.",
+        "signals": [
+          "a2ui",
+          "a2ui v1.0",
+          "validate a2ui",
+          "normalize a2ui",
+          "upgrade a2ui v0.8",
+          "upgrade a2ui v0.9",
+          "project json to a2ui",
+          "a2ui project",
+          "a2ui basic catalog",
+          "a2ui surface",
+          "a2ui card",
+          "a2ui form",
+          "a2ui preview",
+          "a2ui react",
+          "a2ui web_core",
+          "a2ui lit",
+          "interactive agent card",
+          "generative ui json"
+        ],
+        "examples": [
+          "Validate all ```a2ui blocks in this Markdown file against A2UI v1.0 strict rules",
+          "Upgrade this legacy A2UI v0.8 or v0.9 payload to canonical v1.0 with @path and UAX #31 IDs",
+          "Compose an A2UI v1.0 ship-call approval card or multi-field intake form",
+          "Project a CLI planSha256 preview JSON or doctor health JSON into an interactive A2UI v1.0 surface with legends-a2ui project",
+          "Render this A2UI JSON into an offline interactive file:// HTML preview",
+          "Scaffold a Precision Noir @a2ui/react and @a2ui/web_core renderer kit into my web app",
+          "Check my project's @a2ui/* packages for version drift against upstream a2ui-project/a2ui",
+          "Attach the A2UI v1.0 knowledge pack to my Empire vault"
+        ],
+        "not_for": "Hosting live multi-tenant A2UI agent backends, provisioning cloud servers, bypassing URL/secret safety gates, or spawning detached background web servers for previews."
+      },
+      "repo": "avalonreset/legends-a2ui",
       "platforms": [
         "windows",
         "linux",
         "macos"
       ],
+      "dependencies": {},
       "readiness": "doctor"
+    },
+    "legends-github": {
+      "version": "0.2.6",
+      "commit": "d300e505e80a6d168a7065de4d6878ed4a6ddf1b",
+      "repo": "avalonreset/legends-github",
+      "sha256": "649c01a11e6bdfc765bbf828b729f1320308991cb80eeb11bd5b969dc32883f6",
+      "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
+      "keywords": [
+        "github",
+        "repository",
+        "repositories",
+        "readme",
+        "release",
+        "packaging",
+        "seo",
+        "optimization",
+        "keywords",
+        "social-preview"
+      ],
+      "dependencies": {
+        "legends-dataforseo": "0.1.13"
+      },
+      "scope": "Portable Python repository workflows, optional research, and social-preview preparation/served-image verification. Actual upload uses the agent host's supported browser/file-upload tools; no legends-chrome-kit or legends-shell-kit dependency.",
+      "setup_revision": 2,
+      "discovery": {
+        "signals": [
+          "github",
+          "readme",
+          "repository discovery",
+          "repository visibility",
+          "repo visibility",
+          "open source project",
+          "github social preview",
+          "repository social image"
+        ],
+        "examples": [
+          "Improve discovery of my GitHub project",
+          "Optimize my repository with search evidence",
+          "Upload and verify my GitHub social preview image"
+        ],
+        "not_for": "General website SEO or merely adding unresearched keywords.",
+        "setup": "Requires target repository and appropriate GitHub access; live research needs provider credentials. Social-preview verification needs gh access; upload needs a supported authenticated browser and file-upload control.",
+        "instructions": [
+          "README.md",
+          "docs/AGENT-RECIPE.md",
+          "docs/GITHUB-RECIPE.md",
+          "github/references/social-preview-sop.md"
+        ]
+      },
+      "recipe": {
+        "requires_python": [
+          3,
+          11
+        ],
+        "pip": {
+          "kind": "requirements",
+          "files": [
+            "requirements-dataforseo.txt",
+            "github/requirements.txt"
+          ]
+        },
+        "probe": [
+          {
+            "do": "script",
+            "path": "legends_github.py",
+            "args": [
+              "capabilities"
+            ]
+          },
+          {
+            "do": "import",
+            "module": "legends_dataforseo",
+            "callable": [
+              "api_request"
+            ]
+          },
+          {
+            "do": "version-floor",
+            "package": "legends-dataforseo",
+            "min": "0.1.0"
+          }
+        ],
+        "run": {
+          "runtime": "python",
+          "kind": "script",
+          "path": "legends_github.py"
+        }
+      },
+      "readiness": "task-readiness github",
+      "license": "MIT",
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ]
     }
   },
   "aliases": {

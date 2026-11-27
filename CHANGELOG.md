@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.22 - 2026-11-27
+
+- Ship bundled catalog `1.0.79` reordering all 23 public modules into the canonical business-owner storyline sequence (Single Source of Truth synchronized with the GitHub profile, `cto-legends.com`, and the `cto-legends` GitHub Star List).
+- Add `scripts/verify_ecosystem_parity.py` deterministic order and progress-tracker parity gate and update `scripts/fleet-audit.py` to include `legends-a2ui` and `legends-capcut` in canonical storyline order.
+
 ## 0.2.21 - 2026-11-26
 
 - Ship bundled catalog `1.0.78` admitting `legends-capcut` `0.1.0` (`8c0f50e99bd1`, agent-native CapCut Desktop bidirectional draft compiler and reader, strict validator, surgical single-scene patcher with ripple sync and zero-orphan copy safety, perpetual six-frame storyboards, reveal-aware readability critic, beat sync, local effect and keymap discovery, optional Windows GUI playback watch, and matching CLI + 21-tool stdio MCP server).
