@@ -54,8 +54,6 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.11', '3.13']
     runs-on: ${{ matrix.os }}
-    env:
-      CTO_LEGENDS_ARCHIVE_CACHE: ${{ runner.temp }}/cto-legends-archive-cache
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
         with:
@@ -81,6 +79,8 @@ jobs:
       - run: cto-legends route "Google Maps ranking grids"
       - run: python scripts/check_startup.py
       - run: cto-legends --home "${{ runner.temp }}/legends" install legends-dataforseo legends-geogrid legends-github legends-stable-audio-3 legends-obs legends-yt-dlp --apply
+        env:
+          CTO_LEGENDS_ARCHIVE_CACHE: ${{ runner.temp }}/cto-legends-archive-cache
       - run: cto-legends --home "${{ runner.temp }}/legends" doctor
       - run: cto-legends --home "${{ runner.temp }}/legends" check-updates
       - run: cto-legends --home "${{ runner.temp }}/legends" sync
@@ -100,6 +100,8 @@ jobs:
       - run: cto-legends route "rip this video"
       - name: Install and verify Empire on its supported Python
         if: matrix.python == '3.13'
+        env:
+          CTO_LEGENDS_ARCHIVE_CACHE: ${{ runner.temp }}/cto-legends-archive-cache
         run: cto-legends --home "${{ runner.temp }}/legends" install legends-empire --apply
       - name: Check Empire portable surface
         if: matrix.python == '3.13'
