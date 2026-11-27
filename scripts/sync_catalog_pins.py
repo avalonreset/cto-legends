@@ -57,6 +57,21 @@ def bump_patch(ver: str) -> str:
     return f"{parts[0]}.{parts[1]}.{int(parts[2]) + 1}"
 
 
+def cache_hint(row: dict, *, commit: str, artifact_url: str | None = None) -> str:
+    """Return the pinned SHA-256 only while the pinned source is unchanged.
+
+    The archive cache is keyed by SHA-256 alone, so passing the old pin for a new
+    release would return the previous release's cached bytes and silently re-pin
+    the old digest under the new version. A changed commit or artifact URL always
+    forces a fresh download.
+    """
+    if row.get("commit") != commit:
+        return ""
+    if artifact_url is not None and row.get("artifact_url") != artifact_url:
+        return ""
+    return row.get("sha256", "")
+
+
 def verify_and_compute_module(mod_id: str, row: dict) -> dict:
     repo = row["repo"]
     mode = (row.get("recipe") or {}).get("mode", "managed")
@@ -71,7 +86,7 @@ def verify_and_compute_module(mod_id: str, row: dict) -> dict:
 
     if mode == "guided":
         url = f"https://codeload.github.com/{repo}/zip/{tag_sha}"
-        raw = m._fetch_verified_archive(url, {repo}, row.get("sha256", ""))
+        raw = m._fetch_verified_archive(url, {repo}, cache_hint(row, commit=tag_sha))
         sha256 = hashlib.sha256(raw).hexdigest()
         artifact_url = None
         with tempfile.TemporaryDirectory() as tmp:
@@ -88,7 +103,7 @@ def verify_and_compute_module(mod_id: str, row: dict) -> dict:
                 f"{mod_id} ({tag}) missing canonical release bundle {bundle_name!r} in release assets: {assets}"
             )
         artifact_url = f"https://github.com/{repo}/releases/download/{tag}/{bundle_name}"
-        raw = m._fetch_verified_archive(artifact_url, {repo}, row.get("sha256", ""))
+        raw = m._fetch_verified_archive(artifact_url, {repo}, cache_hint(row, commit=tag_sha, artifact_url=artifact_url))
         sha256 = hashlib.sha256(raw).hexdigest()
         with tempfile.TemporaryDirectory() as tmp:
             dest = Path(tmp) / "source"

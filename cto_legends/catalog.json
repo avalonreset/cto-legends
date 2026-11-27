@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "version": "1.0.81",
-  "router_version": "0.2.24",
+  "version": "1.0.82",
+  "router_version": "0.2.25",
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
@@ -855,10 +855,10 @@
       "artifact_url": "https://github.com/avalonreset/legends-dataforseo/releases/download/v0.1.14/legends-dataforseo-0.1.14-bundle.tar.gz"
     },
     "legends-geogrid": {
-      "version": "0.3.0",
-      "commit": "115666bc3428ea5676365f2d17ba925b1e20aea7",
+      "version": "0.3.1",
+      "commit": "272b294c5a104da6642f5c9efa03834ba1a637b9",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "c2736c38815a50025b99f4d54c349d0a232cd91ab890d17b37aca8fe05fdd990",
+      "sha256": "afa100c1bdc4676fef20a4893a5de993905134e7a6bbe934599a5d5b1ed7d6b5",
       "purpose": "Google Maps circular honeycomb 30-deep competitive ranking studies, Winnability relief topography, Local Leaders territory audit, Campaigns planner, 3-pane Street View storefront signage studio, Strategy Room, 5-page vector-hex PDF briefings, 7-stage deterministic planner, and embeddable geogrid-viewer/v1 report viewer.",
       "keywords": [
         "maps",
@@ -956,7 +956,7 @@
         "linux",
         "macos"
       ],
-      "artifact_url": "https://github.com/avalonreset/legends-geogrid/releases/download/v0.3.0/legends-geogrid-0.3.0-bundle.tar.gz"
+      "artifact_url": "https://github.com/avalonreset/legends-geogrid/releases/download/v0.3.1/legends-geogrid-0.3.1-bundle.tar.gz"
     },
     "legends-firecrawl": {
       "version": "0.3.9",

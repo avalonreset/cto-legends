@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.25 - 2026-11-27
+
+- Ship bundled catalog `1.0.82` updating `legends-geogrid` to `0.3.1` (`272b294c5a10`, cartographic hotfix: inward-only shapeburst engine with zero exterior bleed, 200 ms cubic-bezier hover with exact interpolated rank and Fortress Core dominance tooltips guarded by clip, land and study-circle boundaries, tau-coupled relief and focus drape, and all 7 showcase and Companion Studio screenshots refreshed from the v0.3.1 runtime).
+- Fix `scripts/sync_catalog_pins.py` reusing the previous release's cached archive when a module's commit or bundle URL changes, which re-pinned the old SHA-256 under the new version. The pinned digest now seeds the archive cache only while the pinned source is unchanged.
+
 ## 0.2.24 - 2026-11-27
 
 - Ship bundled catalog `1.0.81` admitting `legends-seedance` `0.1.0` (`3ec89d633da1`, local prep, prompt linting, masking, plate compositing and exact frame finishing for ByteDance Seedance 2.0 and 2.5: offline doctor, clip probe with credit estimate, pass-through-aware prompt linter and compiler, box/ellipse/color/SAM 2.1 inpaint masks, feathered ROI compositor, reference cards, and RIFE exact-frame retiming with untouched WAV restore and QC sheet).

@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.82 - 2026-11-27
+
+- Update `legends-geogrid` to 0.3.1 (`272b294c5a10`, release-tgz bundle SHA-256 `afa100c1bdc4676fef20a4893a5de993905134e7a6bbe934599a5d5b1ed7d6b5`) with cartographic hotfix: inward-only shapeburst engine with zero exterior bleed, 200 ms cubic-bezier hover with exact interpolated rank and Fortress Core dominance tooltips guarded by clip, land and study-circle boundaries, tau-coupled relief and focus drape, and all 7 showcase and Companion Studio screenshots refreshed from the v0.3.1 runtime.
+
 ## 1.0.81 - 2026-11-27
 
 - Admit `legends-seedance` `0.1.0` (`3ec89d633da1`, release-tgz bundle SHA-256 `988370df0ed0fdf19f0f0087e26031521f5d90c34a8713591748420704edd244`) with unified router skill pin, offline ByteDance Seedance 2.0 and 2.5 readiness doctor, clip probe with model bounds and credit estimate, prompt linter and verb-first compiler, inpaint mask builder (box, ellipse, color and SAM 2.1 tracking), feathered ROI plate compositor, deterministic reference cards, and RIFE exact-frame finisher with WAV restore and QC sheet. Placed in the video production chapter after `legends-obs`; router `router_version` bumped to `0.2.24`.
