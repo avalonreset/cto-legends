@@ -28,7 +28,7 @@ class GrantCatalogTests(unittest.TestCase):
         self.assertEqual(row["dependencies"], {})
         self.assertEqual(row["readiness"], "doctor")
         self.assertEqual(row["recipe"], {
-            "requires_python": [3, 11], "pip": {"kind": "path"},
+            "requires_python": [3, 11], "source": "release-tgz", "pip": {"kind": "path"},
             "probe": [{"do": "module-cli", "module": "grant_engine", "args": ["doctor"]}],
             "run": {"runtime": "python", "kind": "module", "module": "grant_engine"}})
         self.assertEqual(set(row["platforms"]), {"windows", "linux", "macos"})

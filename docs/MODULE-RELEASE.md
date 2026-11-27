@@ -39,8 +39,10 @@ user vault. See [the knowledge contract](MODULE-KNOWLEDGE.md).
 
 1. Tag the module repo (`vX.Y.Z`, not a pre-release) and publish the
    GitHub release with notes.
-2. For prebuilt modules (OBS Kit), attach the release artifact and record
-   its URL and SHA-256.
+2. For every managed module, attach the deterministic
+   `<module>-<version>-bundle.tar.gz` archive (built via `git archive` from the
+   exact tagged commit) alongside distribution artifacts and `SHA256SUMS.txt`,
+   and record its GitHub Release Asset URL and SHA-256.
 
 Before publication, test the packaged artifact outside its source checkout.
 It must include version and module identity, recipe files, runtime data and any
@@ -51,9 +53,9 @@ be present in the artifact.
 ## 2. Update the catalog
 
 1. In the router repo, edit `cto_legends/catalog.json`:
-   - `version`, `commit` (full 40-hex SHA of the tag), `sha256` (of the
-     exact bytes the manager downloads: codeload ZIP, or the release
-     artifact for prebuilt modules).
+   - `version`, `commit` (full 40-hex SHA of the tag), `artifact_url`
+     (canonical GitHub Release Asset `<module>-<version>-bundle.tar.gz` URL for
+     managed modules), and `sha256` (of the exact bytes the manager downloads).
    - `discovery`, `scope`, `platforms`, `readiness`, and `recipe` fields
      when behavior changed. New modules need a complete entry: pins,
      discovery block, and a closed-vocabulary recipe.

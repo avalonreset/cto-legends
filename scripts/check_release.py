@@ -135,12 +135,27 @@ def check(root: Path = ROOT) -> list[str]:
 
     cat = catalog()
     validate_catalog(cat)
+    if cat.get("router_version") != pkg_version:
+        errors.append(
+            f"catalog.json router_version={cat.get('router_version')!r} != __init__.py={pkg_version!r}"
+        )
     for mod_id, row in sorted(cat.get("modules", {}).items()):
-        src = (row.get("recipe") or {}).get("source", "codeload-zip")
-        if src != "codeload-zip" or "artifact_url" in row:
+        recipe = row.get("recipe") or {}
+        mode = recipe.get("mode", "managed")
+        if mode == "guided":
+            if "artifact_url" in row:
+                errors.append(f"Guided module {mod_id} must not declare artifact_url")
+            continue
+        src = recipe.get("source", "codeload-zip")
+        art_url = row.get("artifact_url") or ""
+        want_url = (
+            f"https://github.com/{row.get('repo')}/releases/download/"
+            f"v{row.get('version')}/{mod_id}-{row.get('version')}-bundle.tar.gz"
+        )
+        if src != "release-tgz" or art_url != want_url:
             errors.append(
-                f"Module {mod_id} must use source='codeload-zip' without artifact_url "
-                f"(found source={src!r}, artifact_url={'artifact_url' in row})"
+                f"Managed module {mod_id} must use source='release-tgz' with canonical bundle "
+                f"artifact_url={want_url!r} (found source={src!r}, artifact_url={art_url!r})"
             )
     cat_cl = (root / "docs" / "CATALOG-CHANGELOG.md").read_text(encoding="utf-8")
     m_ccl = re.search(r"^##\s+(\d+\.\d+\.\d+)", cat_cl, re.MULTILINE)

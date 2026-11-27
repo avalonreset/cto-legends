@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""Deterministic catalog pin and codeload-zip SHA-256 synchronization tool for cto-legends.
+"""Deterministic catalog pin and release-tgz bundle SHA-256 synchronization tool for cto-legends.
 
-For all 21 modules in cto_legends/catalog.json:
-1. Enforces uniform source='codeload-zip' (no artifact_url / release-tgz CI download leaks).
+For all modules in cto_legends/catalog.json:
+1. Enforces uniform source='release-tgz' with canonical GitHub Release Asset bundle URL
+   (https://github.com/avalonreset/<repo>/releases/download/v<ver>/<id>-<ver>-bundle.tar.gz)
+   on every managed module, while leaving guided modules without artifact_url.
 2. Queries GitHub for the latest release tag (vX.Y.Z), its commit SHA, and main HEAD SHA.
-3. Asserts tag_commit == main_head (fail-closed if any repo has untagged commits on main)
-   and asserts the latest release carries distribution assets + SHA256SUMS.txt.
-4. Downloads the exact https://codeload.github.com/avalonreset/<repo>/zip/<commit> archive
-   using cto_legends.manager.fetch, computes its SHA-256 digest, and test-extracts it via
-   cto_legends.manager.extract to verify every discovery.instructions path exists.
+3. Asserts the latest release carries distribution assets + SHA256SUMS.txt + the canonical
+   -bundle.tar.gz archive (for managed modules).
+4. Downloads the exact release-tgz bundle (honoring CTO_LEGENDS_ARCHIVE_CACHE when set),
+   computes its SHA-256 digest, and test-extracts it via cto_legends.manager.extract_tgz
+   to verify every discovery.instructions path exists.
 5. Writes updated pins to cto_legends/catalog.json and prepends docs/CATALOG-CHANGELOG.md
    when --apply is passed.
 """
@@ -54,6 +56,7 @@ def bump_patch(ver: str) -> str:
 
 def verify_and_compute_module(mod_id: str, row: dict) -> dict:
     repo = row["repo"]
+    mode = (row.get("recipe") or {}).get("mode", "managed")
     rel = gh_json(f"repos/{repo}/releases/latest")
     tag = str(rel["tag_name"])
     ver = tag[1:] if tag.startswith("v") else tag
@@ -61,44 +64,66 @@ def verify_and_compute_module(mod_id: str, row: dict) -> dict:
     if len(assets) < 2 or "SHA256SUMS.txt" not in assets:
         raise ValueError(f"{mod_id} ({tag}) missing standardized release assets + SHA256SUMS.txt: {assets}")
 
-    main_sha = str(gh_json(f"repos/{repo}/commits/main")["sha"])
     tag_sha = str(gh_json(f"repos/{repo}/commits/{tag}")["sha"])
-    if main_sha != tag_sha:
-        raise ValueError(f"{mod_id}: tag {tag} ({tag_sha[:12]}) != main HEAD ({main_sha[:12]}); cut a patch release first")
 
-    url = f"https://codeload.github.com/{repo}/zip/{tag_sha}"
-    raw = m.fetch(url, {repo})
-    sha256 = hashlib.sha256(raw).hexdigest()
-
-    with tempfile.TemporaryDirectory() as tmp:
-        dest = Path(tmp) / "source"
-        dest.mkdir()
-        m.extract(raw, dest, sha256)
-        for inst in row.get("discovery", {}).get("instructions", []):
-            if not m.confine(dest, inst).is_file():
-                raise ValueError(f"{mod_id}: missing instruction file {inst!r} in extracted codeload-zip")
+    if mode == "guided":
+        url = f"https://codeload.github.com/{repo}/zip/{tag_sha}"
+        raw = m._fetch_verified_archive(url, {repo}, row.get("sha256", ""))
+        sha256 = hashlib.sha256(raw).hexdigest()
+        artifact_url = None
+        with tempfile.TemporaryDirectory() as tmp:
+            dest = Path(tmp) / "source"
+            dest.mkdir()
+            m.extract(raw, dest, sha256)
+            for inst in row.get("discovery", {}).get("instructions", []):
+                if not m.confine(dest, inst).is_file():
+                    raise ValueError(f"{mod_id}: missing instruction file {inst!r} in extracted archive")
+    else:
+        bundle_name = f"{mod_id}-{ver}-bundle.tar.gz"
+        if bundle_name not in assets:
+            raise ValueError(
+                f"{mod_id} ({tag}) missing canonical release bundle {bundle_name!r} in release assets: {assets}"
+            )
+        artifact_url = f"https://github.com/{repo}/releases/download/{tag}/{bundle_name}"
+        raw = m._fetch_verified_archive(artifact_url, {repo}, row.get("sha256", ""))
+        sha256 = hashlib.sha256(raw).hexdigest()
+        with tempfile.TemporaryDirectory() as tmp:
+            dest = Path(tmp) / "source"
+            dest.mkdir()
+            m.extract_tgz(raw, dest, sha256)
+            for inst in row.get("discovery", {}).get("instructions", []):
+                if not m.confine(dest, inst).is_file():
+                    raise ValueError(f"{mod_id}: missing instruction file {inst!r} in extracted release-tgz bundle")
 
     return {
         "id": mod_id,
+        "mode": mode,
         "old_version": row.get("version"),
         "new_version": ver,
         "old_commit": row.get("commit"),
         "new_commit": tag_sha,
         "old_sha256": row.get("sha256"),
         "new_sha256": sha256,
+        "artifact_url": artifact_url,
         "assets": assets,
         "changed": (
             row.get("version") != ver
             or row.get("commit") != tag_sha
             or row.get("sha256") != sha256
-            or "artifact_url" in row
-            or row.get("recipe", {}).get("source", "codeload-zip") != "codeload-zip"
+            or (mode == "guided" and "artifact_url" in row)
+            or (
+                mode != "guided"
+                and (
+                    row.get("artifact_url") != artifact_url
+                    or row.get("recipe", {}).get("source", "codeload-zip") != "release-tgz"
+                )
+            )
         ),
     }
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description="Synchronize and verify all 21 module pins in cto_legends/catalog.json.")
+    ap = argparse.ArgumentParser(description="Synchronize and verify all module pins in cto_legends/catalog.json.")
     ap.add_argument("--apply", action="store_true", help="Write updated pins to catalog.json and docs/CATALOG-CHANGELOG.md")
     ap.add_argument("--catalog-version", help="Explicit new catalog version (defaults to patch bump when changes exist)")
     ap.add_argument("--date", default=datetime.now().strftime("%Y-%m-%d"), help="Changelog entry date (YYYY-MM-DD)")
@@ -112,21 +137,21 @@ def main(argv: list[str] | None = None) -> int:
         status = "CHANGED" if info["changed"] else "OK"
         print(
             f"[{status:7}] {mod_id:<30} v{info['old_version']}->v{info['new_version']} "
-            f"commit={info['new_commit'][:12]} zip_sha256={info['new_sha256'][:12]} assets={len(info['assets'])}"
+            f"commit={info['new_commit'][:12]} sha256={info['new_sha256'][:12]} assets={len(info['assets'])}"
         )
         if info["changed"]:
             changes.append(info)
             row["version"] = info["new_version"]
             row["commit"] = info["new_commit"]
             row["sha256"] = info["new_sha256"]
-            row.pop("artifact_url", None)
-            if "recipe" in row and "source" in row["recipe"]:
-                row["recipe"]["source"] = "codeload-zip"
-            if mod_id == "legends-obs" and "prebuilt" in row.get("scope", ""):
-                row["scope"] = "Managed Node CLI; Node 22+ required. Live OBS operation targets Windows and needs local OBS WebSocket setup."
+            if info["mode"] == "guided":
+                row.pop("artifact_url", None)
+            else:
+                row["artifact_url"] = info["artifact_url"]
+                row.setdefault("recipe", {})["source"] = "release-tgz"
 
     if not changes:
-        print("Catalog pins and codeload-zip SHA-256 digests are already 100% current.")
+        print("Catalog pins and release-tgz bundle SHA-256 digests are already 100% current.")
         m.validate_catalog(cat)
         return 0
 
@@ -144,9 +169,10 @@ def main(argv: list[str] | None = None) -> int:
     cl_text = CHANGELOG_PATH.read_text(encoding="utf-8").replace("\r\n", "\n")
     bullets = []
     for c in changes:
+        kind = "guided codeload-zip" if c["mode"] == "guided" else "release-tgz bundle"
         bullets.append(
             f"- Update `{c['id']}` to {c['new_version']} (`{c['new_commit'][:12]}`, "
-            f"codeload-zip SHA-256 `{c['new_sha256']}`) with unified router skill pin and verified release checksums."
+            f"{kind} SHA-256 `{c['new_sha256']}`) with unified router skill pin and verified release checksums."
         )
     if new_cat_ver == old_cat_ver and f"## {new_cat_ver}" in cl_text:
         for c, b in zip(changes, bullets):

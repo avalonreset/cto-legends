@@ -475,34 +475,47 @@ def audit_repo(entry: dict, catalog: dict) -> tuple[str, list[Check]]:
                     f"both @ {pin_commit[:12]}" if pin_commit == tag_commit_sha
                     else f"catalog={pin_commit[:12]} != tag={tag_commit_sha[:12]}",
                 ))
-            src_kind = mod.get("recipe", {}).get("source", "codeload-zip")
-            has_art_url = "artifact_url" in mod
-            checks.append(Check(
-                src_kind == "codeload-zip" and not has_art_url,
-                "catalog uses uniform codeload-zip source (zero CI asset inflation)",
-                "source=codeload-zip" if (src_kind == "codeload-zip" and not has_art_url)
-                else f"source={src_kind!r}, artifact_url={mod.get('artifact_url')!r}",
-            ))
-            try:
-                router_dir = str(_DRIVE_ROOT / "cto-legends-public")
-                if router_dir not in sys.path:
-                    sys.path.insert(0, router_dir)
-                from cto_legends.manager import fetch as manager_fetch  # noqa
-                zip_url = f"https://codeload.github.com/{full}/zip/{pin_commit}"
-                raw_zip = manager_fetch(zip_url, {full})
-                live_sha256 = hashlib.sha256(raw_zip).hexdigest()
-                want_sha256 = str(mod.get("sha256", ""))
+            recipe = mod.get("recipe", {})
+            mode = recipe.get("mode", "managed")
+            if mode == "guided":
                 checks.append(Check(
-                    live_sha256 == want_sha256,
-                    "live codeload-zip SHA-256 matches catalog.json",
-                    f"sha256={live_sha256[:16]}..." if live_sha256 == want_sha256
-                    else f"want {want_sha256[:16]}..., got {live_sha256[:16]}...",
+                    "artifact_url" not in mod,
+                    "guided module omits managed artifact_url",
+                    "mode=guided" if "artifact_url" not in mod else f"unexpected artifact_url={mod.get('artifact_url')!r}",
                 ))
-            except Exception as exc:
+            else:
+                src_kind = recipe.get("source", "codeload-zip")
+                art_url = str(mod.get("artifact_url") or "")
+                want_url = (
+                    f"https://github.com/{full}/releases/download/"
+                    f"v{catalog_ver}/{module}-{catalog_ver}-bundle.tar.gz"
+                )
                 checks.append(Check(
-                    False, "live codeload-zip SHA-256 matches catalog.json",
-                    f"download/hash check failed: {exc}",
+                    src_kind == "release-tgz" and art_url == want_url,
+                    "catalog uses canonical immutable release-tgz bundle",
+                    f"source=release-tgz ({module}-{catalog_ver}-bundle.tar.gz)"
+                    if (src_kind == "release-tgz" and art_url == want_url)
+                    else f"source={src_kind!r}, artifact_url={art_url!r}",
                 ))
+                try:
+                    router_dir = str(_DRIVE_ROOT / "cto-legends-public")
+                    if router_dir not in sys.path:
+                        sys.path.insert(0, router_dir)
+                    from cto_legends.manager import _fetch_verified_archive  # noqa
+                    want_sha256 = str(mod.get("sha256", ""))
+                    raw_bundle = _fetch_verified_archive(art_url, {full}, want_sha256)
+                    live_sha256 = hashlib.sha256(raw_bundle).hexdigest()
+                    checks.append(Check(
+                        live_sha256 == want_sha256,
+                        "live release-tgz bundle SHA-256 matches catalog.json",
+                        f"sha256={live_sha256[:16]}..." if live_sha256 == want_sha256
+                        else f"want {want_sha256[:16]}..., got {live_sha256[:16]}...",
+                    ))
+                except Exception as exc:
+                    checks.append(Check(
+                        False, "live release-tgz bundle SHA-256 matches catalog.json",
+                        f"download/hash check failed: {exc}",
+                    ))
 
     # --- tree side.
     local = entry.get("local")

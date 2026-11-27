@@ -50,7 +50,8 @@ def parser():
     r = sub.add_parser("startup-restore", help="Restore a startup change from its checked backup")
     r.add_argument("manifest", type=Path)
     r.add_argument("--apply", action="store_true")
-    sub.add_parser("check-updates", help="Compare router, catalog, registrations, installed, and upstream versions without installing")
+    r = sub.add_parser("check-updates", help="Compare router, catalog, registrations, installed, and canonical versions without installing")
+    r.add_argument("--upstream", action="store_true", help="Also query GitHub Releases API per repository (uses GitHub REST API quota)")
     r = sub.add_parser("sync", help="Preview a catalog refresh; add --apply to adopt it, --rollback to revert")
     r.add_argument("--apply", action="store_true")
     r.add_argument("--rollback", action="store_true")
@@ -192,7 +193,7 @@ def execute(args):
         result["local_guides"] = m.read_guides(home)
         return result
     if cmd == "check-updates":
-        return m.updates(home)
+        return m.updates(home, check_upstream=getattr(args, "upstream", False))
     if cmd == "sync":
         return m.sync(home, apply=args.apply, rollback_catalog=args.rollback)
     if cmd == "install":
@@ -220,7 +221,7 @@ def execute(args):
             else:
                 dropped = []
             update_result = m.update(home, keys, progress=progress_cb)
-            router = m.check_router_update()
+            router = m.check_router_update(canonical_catalog=cat)
             result = {
                 **update_result,
                 "preview": False,

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.23 - 2026-11-27
+
+- Make `cto-legends check-updates` and `update --sync` zero-API by default: read the single CDN-cached `catalog.json` (including top-level `router_version`) instead of firing 24 unauthenticated `api.github.com` requests per run, eliminating the 60 req/hr IP rate-limit wall (pass `check-updates --upstream` when explicitly querying per-repo GitHub Releases API tags).
+- Ship bundled catalog `1.0.80` migrating all 22 managed modules to immutable GitHub Release Asset bundles (`source="release-tgz"` with deterministic `<module>-<version>-bundle.tar.gz` archives verified by SHA-256) for real CDN scale, byte-stable checksums, and native per-module release download visibility while remaining 100% backward-compatible with older `cto-legends` clients.
+- Add optional content-addressed `CTO_LEGENDS_ARCHIVE_CACHE` support (symlink-checked and SHA-256 verified) and a `prime-cache` CI job in `.github/workflows/checks.yml` so multi-OS CI matrix runs restore verified bundles from `actions/cache` without inflating public release download counters.
+
 ## 0.2.22 - 2026-11-27
 
 - Ship bundled catalog `1.0.79` reordering all 23 public modules into the canonical business-owner storyline sequence (Single Source of Truth synchronized with the GitHub profile, `cto-legends.com`, and the `cto-legends` GitHub Star List).

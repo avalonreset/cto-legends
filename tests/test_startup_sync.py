@@ -20,6 +20,10 @@ class StartupSyncTests(unittest.TestCase):
         self.candidate['version'] = '9.9.9'
         fixture = copy.deepcopy(next(iter(self.candidate['modules'].values())))
         fixture['repo'] = 'avalonreset/legends-test-steward'
+        fixture['artifact_url'] = (
+            f"https://github.com/avalonreset/legends-test-steward/releases/download/"
+            f"v{fixture['version']}/legends-test-steward-{fixture['version']}-bundle.tar.gz"
+        )
         fixture['purpose'] = 'Maintain fixture vaults through repeatable stewardship.'
         fixture['discovery']['examples'] = ['Clean and organize the fixture vault']
         self.candidate['modules']['legends-test-steward'] = fixture

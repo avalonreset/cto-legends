@@ -618,12 +618,13 @@ class RouterDriftAndUpdateSyncTests(unittest.TestCase):
         self.addCleanup(home_patch.stop)
 
     def test_check_updates_router_drift_and_ctolegends_hint(self):
+        canonical = copy.deepcopy(m.catalog())
+        canonical["router_version"] = "9.9.9"
+
         def fake_fetch(url, repos, *, timeout=90):
             if url == m.CANONICAL_CATALOG_URL:
-                return json.dumps(m.catalog()).encode("utf-8")
-            if url == f"https://api.github.com/repos/{m.CATALOG_REPO}/releases/latest":
-                return json.dumps({"tag_name": "v9.9.9"}).encode("utf-8")
-            return json.dumps({"tag_name": "v0.0.1"}).encode("utf-8")
+                return json.dumps(canonical).encode("utf-8")
+            raise AssertionError(f"default check-updates must not call {url}")
 
         with patch.object(m, "fetch", side_effect=fake_fetch):
             with patch.object(importlib.metadata, "distribution", side_effect=importlib.metadata.PackageNotFoundError):
@@ -637,9 +638,12 @@ class RouterDriftAndUpdateSyncTests(unittest.TestCase):
             self.assertEqual(res_alias["router"]["next"], "python -m pip install --upgrade cto-legends ctolegends")
 
     def test_check_updates_router_unreachable_degrades_honestly(self):
+        canonical_no_router = copy.deepcopy(m.catalog())
+        canonical_no_router.pop("router_version", None)
+
         def fake_fetch(url, repos, *, timeout=90):
             if url == m.CANONICAL_CATALOG_URL:
-                return json.dumps(m.catalog()).encode("utf-8")
+                return json.dumps(canonical_no_router).encode("utf-8")
             raise OSError("network offline")
 
         with patch.object(m, "fetch", side_effect=fake_fetch):
@@ -653,15 +657,14 @@ class RouterDriftAndUpdateSyncTests(unittest.TestCase):
         # Seed home with one installed module, a startup registration, and a custom skill
         candidate = copy.deepcopy(m.catalog())
         candidate["version"] = "9.9.9"
+        candidate["router_version"] = "9.9.9"
         candidate["modules"]["legends-grant"]["version"] = "9.9.0"
         candidate["modules"]["legends-grant"]["commit"] = "f" * 40
 
-        # Preview on completely absent home writes zero files
+        # Preview on completely absent home writes zero files (and makes 0 GitHub API calls!)
         def fake_fetch(url, repos, *, timeout=90):
             if url == m.CANONICAL_CATALOG_URL:
                 return json.dumps(candidate).encode("utf-8")
-            if url == f"https://api.github.com/repos/{m.CATALOG_REPO}/releases/latest":
-                return json.dumps({"tag_name": "v9.9.9"}).encode("utf-8")
             raise AssertionError(f"unexpected fetch {url}")
 
         with patch.object(m, "fetch", side_effect=fake_fetch):
@@ -719,14 +722,13 @@ class RouterDriftAndUpdateSyncTests(unittest.TestCase):
     def test_update_sync_apply_schema_residuals_and_nolog_failure_next_text(self):
         candidate = copy.deepcopy(m.catalog())
         candidate["version"] = "9.9.9"
+        candidate["router_version"] = m.MANAGER_VERSION
         candidate["modules"]["legends-grant"]["version"] = "9.9.0"
         candidate["modules"]["legends-grant"]["commit"] = "f" * 40
 
         def fake_fetch(url, repos, *, timeout=90):
             if url == m.CANONICAL_CATALOG_URL:
                 return json.dumps(candidate).encode("utf-8")
-            if url == f"https://api.github.com/repos/{m.CATALOG_REPO}/releases/latest":
-                return json.dumps({"tag_name": f"v{m.MANAGER_VERSION}"}).encode("utf-8")
             raise AssertionError(f"unexpected fetch {url}")
 
         old_rel = "releases/legends-grant/old"
@@ -946,10 +948,13 @@ class MiscHardeningTests(unittest.TestCase):
         self.assertFalse(releases_dir.exists())
 
         # Failed venv/probe that creates install.log MUST retain its directory
-        import zipfile
+        import tarfile
         stream = io.BytesIO()
-        with zipfile.ZipFile(stream, "w") as zf:
-            zf.writestr("legends-grant-0.1.0/README.md", "hi")
+        with tarfile.open(fileobj=stream, mode="w:gz") as tar:
+            payload = b"hi"
+            info = tarfile.TarInfo("legends-grant-0.1.0/README.md")
+            info.size = len(payload)
+            tar.addfile(info, io.BytesIO(payload))
         raw = stream.getvalue()
         module["sha256"] = hashlib.sha256(raw).hexdigest()
 
@@ -993,13 +998,46 @@ class MiscHardeningTests(unittest.TestCase):
         def fake_fetch(url, repos, *, timeout=90):
             if url == m.CANONICAL_CATALOG_URL:
                 return json.dumps(m.catalog()).encode("utf-8")
-            return json.dumps({"tag_name": "v0.1.0"}).encode("utf-8")
+            raise AssertionError(f"unexpected fetch {url}")
 
         with patch.object(Path, "home", return_value=self.home), patch.object(m, "fetch", side_effect=fake_fetch):
             res = m.updates(self.home)
         by_id = {row["id"]: row for row in res["modules"]}
         self.assertEqual(by_id["legends-hyperyap"]["status"], "not_installed")
         self.assertEqual(by_id["legends-hyperyap"]["next"], "guided native setup; run cto-legends guide legends-hyperyap")
+
+    def test_archive_cache_serves_verified_bytes_and_rejects_corrupt_entries(self):
+        import hashlib
+        cache_dir = self.home / "archive-cache"
+        payload = b"verified release archive bytes"
+        sha = hashlib.sha256(payload).hexdigest()
+        url = "https://github.com/avalonreset/legends-grant/releases/download/v0.3.5/legends-grant-0.3.5-bundle.tar.gz"
+        calls = []
+
+        def fake_fetch(u, repos, *, timeout=90):
+            calls.append(u)
+            return payload
+
+        with patch.dict(os.environ, {"CTO_LEGENDS_ARCHIVE_CACHE": str(cache_dir)}):
+            with patch.object(m, "fetch", side_effect=fake_fetch):
+                # 1. Cold miss downloads once and populates cache
+                got1 = m._fetch_verified_archive(url, {"avalonreset/legends-grant"}, sha)
+                self.assertEqual(got1, payload)
+                self.assertEqual(len(calls), 1)
+                cache_file = cache_dir / f"{sha}.bin"
+                self.assertTrue(cache_file.is_file())
+
+                # 2. Warm hit returns verified bytes with 0 network calls
+                got2 = m._fetch_verified_archive(url, {"avalonreset/legends-grant"}, sha)
+                self.assertEqual(got2, payload)
+                self.assertEqual(len(calls), 1)
+
+                # 3. Corrupted cache entry is ignored and safely re-fetched
+                cache_file.write_bytes(b"corrupted bytes")
+                got3 = m._fetch_verified_archive(url, {"avalonreset/legends-grant"}, sha)
+                self.assertEqual(got3, payload)
+                self.assertEqual(len(calls), 2)
+                self.assertEqual(cache_file.read_bytes(), payload)
 
 
 if __name__ == "__main__":

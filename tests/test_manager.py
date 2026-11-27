@@ -181,9 +181,12 @@ class ManagerTests(unittest.TestCase):
         lanes = ['README.md', 'docs/GRANT-RECIPE.md', 'docs/RUNTIME.md',
                  'docs/QUALIFICATION.md', 'pyproject.toml', 'grant_engine/__init__.py']
         stream = io.BytesIO()
-        with zipfile.ZipFile(stream, 'w') as z:
+        with tarfile.open(fileobj=stream, mode='w:gz') as tar:
             for name in lanes:
-                z.writestr('legends-grant-0.2.0/' + name, 'fixture')
+                payload = b'fixture'
+                info = tarfile.TarInfo('legends-grant-0.2.0/' + name)
+                info.size = len(payload)
+                tar.addfile(info, io.BytesIO(payload))
         raw = stream.getvalue()
         module = dict(m.catalog()['modules']['legends-grant'],
                       sha256=hashlib.sha256(raw).hexdigest())
@@ -253,8 +256,11 @@ class ManagerTests(unittest.TestCase):
 
     def test_firecrawl_prepare_installs_package_source(self):
         stream = io.BytesIO()
-        with zipfile.ZipFile(stream, 'w') as z:
-            z.writestr('legends-firecrawl-0.1.0/pyproject.toml', 'package')
+        with tarfile.open(fileobj=stream, mode='w:gz') as tar:
+            payload = b'package'
+            info = tarfile.TarInfo('legends-firecrawl-0.1.0/pyproject.toml')
+            info.size = len(payload)
+            tar.addfile(info, io.BytesIO(payload))
         raw = stream.getvalue()
         module = dict(m.catalog()['modules']['legends-firecrawl'],
                       sha256=hashlib.sha256(raw).hexdigest())

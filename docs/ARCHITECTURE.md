@@ -60,38 +60,44 @@ back provider requests or changes a module made to other repositories.
 ## Adding or updating a module
 
 Verify its public release and license. Review its installation instructions and
-cost gates. Resolve the release tag to a full commit, download its codeload ZIP,
-and record the SHA-256 hash. Update the catalog entry (pins plus recipe data),
-bump the catalog version, and record the change in the catalog changelog. No
-manager code or skill change is needed: users adopt the new pins with
-`cto-legends update --sync` (preview) and `cto-legends update --sync --apply`
-(or `cto-legends sync`, then `update --apply`). A new manager release is only
-needed for engine, primitive, or CLI changes, and only after platform CI
-succeeds. See [module release checklist](MODULE-RELEASE.md) and
-[router stability](ROUTER-STABILITY.md).
+cost gates. Resolve the release tag to a full commit, attach its deterministic
+`<module>-<version>-bundle.tar.gz` release asset (`git archive` from the tagged
+commit), and record the asset URL and SHA-256 hash. Update the catalog entry
+(pins plus recipe data), bump the catalog version, and record the change in the
+catalog changelog. No manager code or skill change is needed: users adopt the
+new pins with `cto-legends update --sync` (preview) and
+`cto-legends update --sync --apply` (or `cto-legends sync`, then
+`update --apply`). `cto-legends check-updates` reads the single CDN-cached
+`catalog.json` (including `router_version`) with zero GitHub REST API calls by
+default; pass `--upstream` to query per-repo GitHub Releases API tags. A new
+manager release is only needed for engine, primitive, or CLI changes, and only
+after platform CI succeeds. See [module release checklist](MODULE-RELEASE.md)
+and [router stability](ROUTER-STABILITY.md).
 
 Do not add a private module, placeholder, or merely available repository to the
-catalog. The current set contains twenty-one independently released projects:
-twenty managed CLIs and one native setup guide. Native entries supply pinned
-release assets and checksums but are never recorded as managed installed
-environments. Other public projects need the same review before admission. The
-intentionally excluded SEO Dungeon project is not routable or installable
-through this catalog.
+catalog. Managed modules install from immutable GitHub Release Asset bundles
+(`release-tgz`), verified by SHA-256 before regular-file-only extraction (with
+optional content-addressed `CTO_LEGENDS_ARCHIVE_CACHE` support for CI and
+offline reuse). Native guided entries supply pinned release assets and
+checksums but are never recorded as managed installed environments. Other
+public projects need the same review before admission. The intentionally
+excluded SEO Dungeon project is not routable or installable through this
+catalog.
 
-OBS uses its released npm tarball, verified before regular-file-only extraction.
-No TypeScript compiler or package manager is needed. Python modules retain their
-own environments; audio installs its base dependency set without GPU extras.
-Doctor runs offline CLI probes, not OBS control, microphones, or GPU generation.
-`guide` works offline and exposes upstream setup details without executing them.
+OBS uses its deterministic source bundle verified before regular-file-only
+extraction. No TypeScript compiler or package manager is needed. Python modules
+retain their own environments; audio installs its base dependency set without
+GPU extras. Doctor runs offline CLI probes, not OBS control, microphones, or
+GPU generation. `guide` works offline and exposes upstream setup details
+without executing them.
 
 ## Trust and boundaries
 
 The canonical catalog on the router main branch and the manager release are
-the trust root. Hashes verify the download matches the reviewed source; they
-are not signatures. GitHub-generated archive byte changes fail closed and
-require maintainer investigation. Module dependency installation executes
-Python package build code and uses normal pip indexes. Not every transitive
-dependency is locked. This is not a sandbox.
+the trust root. Hashes verify the download matches the immutable GitHub Release
+Asset built from the reviewed tag; they are not signatures. Module dependency
+installation executes Python package build code and uses normal pip indexes.
+Not every transitive dependency is locked. This is not a sandbox.
 
 The manager never reads provider credentials. Child module processes inherit
 the caller's environment so modules can use credentials when requested. Their

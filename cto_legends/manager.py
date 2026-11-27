@@ -417,6 +417,8 @@ def validate_catalog(data):
             f"Catalog schema {data.get('schema')!r} needs a newer manager; "
             "update cto-legends itself, then sync again")
     _check_version(data.get("version"), "catalog version")
+    if "router_version" in data:
+        _check_version(data.get("router_version"), "router version")
     modules = data.get("modules")
     if not isinstance(modules, dict) or not modules:
         raise ValueError("Catalog holds no modules")
@@ -1099,6 +1101,52 @@ def probe(key, release, recipe, *, log=False):
             raise ValueError(f"Unknown probe step for {key}: {do!r}")
 
 
+def _archive_cache_dir():
+    raw = os.environ.get("CTO_LEGENDS_ARCHIVE_CACHE", "").strip()
+    if not raw:
+        return None
+    return ensure_not_linked(Path(raw).expanduser())
+
+
+def _fetch_verified_archive(url, repos, expected_sha256):
+    cache_dir = _archive_cache_dir()
+    if cache_dir is not None and re.fullmatch(r"[0-9a-f]{64}", expected_sha256 or ""):
+        cache_file = cache_dir / f"{expected_sha256}.bin"
+        try:
+            ensure_not_linked(cache_file)
+            if cache_file.exists():
+                st = cache_file.lstat()
+                if stat.S_ISREG(st.st_mode) and st.st_size <= LIMIT:
+                    cached = cache_file.read_bytes()
+                    if hashlib.sha256(cached).hexdigest() == expected_sha256:
+                        return cached
+        except (OSError, ValueError):
+            pass
+    raw = fetch(url, repos)
+    if cache_dir is not None and re.fullmatch(r"[0-9a-f]{64}", expected_sha256 or ""):
+        if hashlib.sha256(raw).hexdigest() == expected_sha256:
+            try:
+                cache_dir.mkdir(parents=True, exist_ok=True)
+                ensure_not_linked(cache_dir)
+                cache_file = ensure_not_linked(cache_dir / f"{expected_sha256}.bin")
+                tmp = cache_file.with_name(f".{cache_file.name}.{os.getpid()}.{uuid.uuid4().hex[:8]}.tmp")
+                flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
+                fd = os.open(tmp, flags, 0o600)
+                try:
+                    with os.fdopen(fd, "wb") as handle:
+                        handle.write(raw)
+                        handle.flush()
+                    os.replace(tmp, cache_file)
+                except Exception:
+                    try:
+                        tmp.unlink(missing_ok=True)
+                    except OSError:
+                        pass
+            except (OSError, ValueError):
+                pass
+    return raw
+
+
 def prepare(key, module, home, *, progress=None):
     def _emit(msg):
         if progress is not None:
@@ -1117,9 +1165,13 @@ def prepare(key, module, home, *, progress=None):
     _emit(f"{key} {module['version']}: downloading and verifying archive...")
     is_tgz = recipe.get("source", "codeload-zip") == "release-tgz"
     if is_tgz:
-        raw = fetch(module["artifact_url"], {module["repo"]})
+        raw = _fetch_verified_archive(module["artifact_url"], {module["repo"]}, module["sha256"])
     else:
-        raw = fetch(f"https://codeload.github.com/{module['repo']}/zip/{module['commit']}", {module["repo"]})
+        raw = _fetch_verified_archive(
+            f"https://codeload.github.com/{module['repo']}/zip/{module['commit']}",
+            {module["repo"]},
+            module["sha256"],
+        )
     relative = "releases/" + key + "/" + module["version"] + "-" + uuid.uuid4().hex[:12]
     release = managed_path(home, relative)
     release.mkdir(parents=True)
@@ -1386,16 +1438,24 @@ def _router_upgrade_command():
         return "python -m pip install --upgrade cto-legends"
 
 
-def check_router_update():
-    """Check avalonreset/cto-legends latest release tag against MANAGER_VERSION."""
+def check_router_update(*, canonical_catalog=None, check_upstream=False):
+    """Check latest cto-legends router version via canonical catalog (0 API calls) or GitHub Releases."""
     try:
-        release = json.loads(
-            fetch(f"https://api.github.com/repos/{CATALOG_REPO}/releases/latest", set())
-        )
-        tag = release["tag_name"]
-        if not isinstance(tag, str) or not tag.strip():
-            raise ValueError("Missing tag_name in router release metadata")
-        latest_version = tag.strip().lstrip("v")
+        latest_version = None
+        tag = None
+        if not check_upstream and isinstance(canonical_catalog, dict):
+            cat_router = canonical_catalog.get("router_version")
+            if isinstance(cat_router, str) and cat_router.strip():
+                latest_version = _check_version(cat_router.strip(), "router version")
+                tag = "v" + latest_version
+        if latest_version is None:
+            release = json.loads(
+                fetch(f"https://api.github.com/repos/{CATALOG_REPO}/releases/latest", set())
+            )
+            tag = release["tag_name"]
+            if not isinstance(tag, str) or not tag.strip():
+                raise ValueError("Missing tag_name in router release metadata")
+            latest_version = tag.strip().lstrip("v")
         update_available = _version_tuple(latest_version) > _version_tuple(MANAGER_VERSION)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         return {
@@ -1538,7 +1598,7 @@ def update_sync_preview(home, raw_modules=None):
     else:
         dropped = []
     changes = plan(home, keys, _catalog=candidate)
-    router = check_router_update()
+    router = check_router_update(canonical_catalog=candidate)
 
     next_hint = "Run cto-legends update --sync --apply when authorized"
     if router.get("update_available"):
@@ -1561,46 +1621,86 @@ def update_sync_preview(home, raw_modules=None):
     return result
 
 
-def updates(home):
+def updates(home, *, check_upstream=False):
     from . import startup
 
     cat = active_catalog(home)
     state = read_state(home)
+    canonical_cat = None
     try:
-        canonical_version = validate_catalog(json.loads(fetch(CANONICAL_CATALOG_URL, set())))["version"]
+        canonical_cat = validate_catalog(json.loads(fetch(CANONICAL_CATALOG_URL, set())))
+        canonical_version = canonical_cat["version"]
     except (ValueError, OSError) as exc:
         canonical_version = f"unreachable: {exc}"
-    router = check_router_update()
+    router = check_router_update(canonical_catalog=canonical_cat, check_upstream=check_upstream)
     result = []
     for key, module in cat["modules"].items():
         installed = None
+        receipt = None
         current = state["active"].get(key)
         if current:
             receipt = json.loads(read_bounded_text(managed_path(home, current) / "receipt.json"))
             installed = receipt.get("version")
-        try:
-            release = json.loads(fetch(f"https://api.github.com/repos/{module['repo']}/releases/latest", {module["repo"]}))
-            tag = release["tag_name"]
-        except (OSError, ValueError, KeyError) as exc:
-            result.append({"id": key, "installed": installed, "catalog_version": module["version"],
-                           "upstream_tag": None, "status": "upstream_unreachable",
-                           "next": f"upstream check failed ({exc}); retry later"})
-            continue
+        installed_matches_local = bool(
+            receipt
+            and receipt.get("commit") == module["commit"]
+            and receipt.get("sha256") == module["sha256"]
+            and receipt.get("setup_revision", 0) == module.get("setup_revision", 0)
+        )
+        if check_upstream:
+            try:
+                release = json.loads(fetch(f"https://api.github.com/repos/{module['repo']}/releases/latest", {module["repo"]}))
+                tag = release["tag_name"]
+            except (OSError, ValueError, KeyError) as exc:
+                result.append({"id": key, "installed": installed, "catalog_version": module["version"],
+                               "upstream_tag": None, "status": "upstream_unreachable",
+                               "next": f"upstream check failed ({exc}); retry later"})
+                continue
+            remote_behind = tag != "v" + module["version"]
+        else:
+            if canonical_cat is None:
+                if installed is not None and (installed != module["version"] or not installed_matches_local):
+                    result.append({"id": key, "installed": installed, "catalog_version": module["version"],
+                                   "upstream_tag": None, "status": "update_ready",
+                                   "next": f"run cto-legends update {key} --apply when authorized"})
+                else:
+                    result.append({"id": key, "installed": installed, "catalog_version": module["version"],
+                                   "upstream_tag": None, "status": "upstream_unreachable",
+                                   "next": f"canonical catalog check failed ({canonical_version}); retry later"})
+                continue
+            remote_mod = canonical_cat["modules"].get(key)
+            if remote_mod is None:
+                result.append({"id": key, "installed": installed, "catalog_version": module["version"],
+                               "upstream_tag": None, "status": "catalog_behind_upstream",
+                               "next": "module left canonical catalog; run cto-legends sync to inspect"})
+                continue
+            tag = "v" + remote_mod["version"]
+            remote_behind = (
+                remote_mod["version"],
+                remote_mod["commit"],
+                remote_mod["sha256"],
+                remote_mod.get("setup_revision", 0),
+            ) != (
+                module["version"],
+                module["commit"],
+                module["sha256"],
+                module.get("setup_revision", 0),
+            )
         if installed is None:
             action = "not_installed"
             if module.get("recipe", {}).get("mode") == "guided":
                 hint = f"guided native setup; run cto-legends guide {key}"
             else:
                 hint = "install only if a task needs it"
-        elif installed != module["version"]:
+        elif installed != module["version"] or not installed_matches_local:
             action = "update_ready"
             hint = f"run cto-legends update {key} --apply when authorized"
-        elif tag != "v" + module["version"]:
+        elif remote_behind:
             action = "catalog_behind_upstream"
             hint = "the author released %s; run cto-legends sync to check for a refreshed catalog" % tag
         else:
             action = "current"
-            hint = "installed, catalog, and upstream agree"
+            hint = "installed, catalog, and upstream agree" if check_upstream else "installed, catalog, and canonical catalog agree"
         result.append({"id": key, "installed": installed, "catalog_version": module["version"],
                        "upstream_tag": tag, "status": action, "next": hint})
     try:
@@ -1610,6 +1710,7 @@ def updates(home):
                            "issue": f"Startup refresh preview failed: {exc}"}
     skill_refresh = _safe_skill_refresh(home, apply=False)
     catalog_stale = canonical_version != cat["version"] and not str(canonical_version).startswith("unreachable")
+    new_modules = sorted(set(canonical_cat["modules"]) - set(cat["modules"])) if canonical_cat is not None else []
     has_module_updates = any(row["status"] == "update_ready" for row in result)
     has_pending_startup = any(r.get("status") == "refresh_pending" for r in startup_refresh.get("registrations", []))
     has_pending_skill = any(r.get("status") == "refresh_pending" for r in skill_refresh.get("registrations", []))
@@ -1624,10 +1725,12 @@ def updates(home):
         "catalog_version": cat["version"],
         "canonical_catalog_version": canonical_version,
         "catalog_stale": catalog_stale,
+        "new_modules_in_canonical": new_modules,
+        "source_mode": "upstream_api" if check_upstream else "canonical_catalog",
         "router": router,
         "startup_refresh": startup_refresh,
         "skill_refresh": skill_refresh,
         "recommended_next": recommended_next,
         "next": next_summary,
-        "policy": "Upstream checks are informational. Sync refreshes the catalog; update --sync --apply syncs and updates installed modules; router updates run via pip.",
+        "policy": "Checks use the canonical CDN catalog by default (0 GitHub API calls; pass --upstream to query per-repo releases). Sync refreshes the catalog; update --sync --apply syncs and updates installed modules; router updates run via pip.",
     }

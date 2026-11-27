@@ -196,7 +196,7 @@ class SyncTests(unittest.TestCase):
             return json.dumps({"tag_name": "v0.0.0"}).encode()
 
         with patch.object(m, "fetch", side_effect=fetch):
-            result = m.updates(self.home)
+            result = m.updates(self.home, check_upstream=True)
         by_id = {row["id"]: row for row in result["modules"]}
         self.assertEqual(by_id["legends-grant"]["status"], "upstream_unreachable")
         self.assertIsNone(by_id["legends-grant"]["upstream_tag"])
@@ -324,7 +324,7 @@ class UpdateStatusTests(unittest.TestCase):
             raise AssertionError(f"unexpected fetch {url}")
 
         with patch.object(m, "fetch", side_effect=fetch):
-            result = m.updates(self.home)
+            result = m.updates(self.home, check_upstream=True)
         by_id = {row["id"]: row for row in result["modules"]}
         self.assertEqual(by_id["legends-dataforseo"]["status"], "update_ready")
         self.assertIn("update legends-dataforseo --apply", by_id["legends-dataforseo"]["next"])
@@ -333,6 +333,41 @@ class UpdateStatusTests(unittest.TestCase):
         self.assertEqual(by_id["legends-geogrid"]["status"], "not_installed")
         self.assertEqual(by_id["legends-captions"]["status"], "current")
         self.assertFalse(result["catalog_stale"])
+        self.assertEqual(result["source_mode"], "upstream_api")
+
+    def test_updates_default_zero_api_uses_canonical_catalog_only(self):
+        old = self.write_receipt("legends-dataforseo", "0.0.1")
+        same = self.write_receipt("legends-github", m.catalog()["modules"]["legends-github"]["version"])
+        current = self.write_receipt("legends-captions", m.catalog()["modules"]["legends-captions"]["version"])
+        m.write_state(self.home, {"schema": 1,
+                                  "active": {"legends-dataforseo": old, "legends-github": same,
+                                             "legends-captions": current},
+                                  "previous": {}})
+        canonical = copy.deepcopy(m.catalog())
+        canonical["version"] = "9.9.9"
+        canonical["router_version"] = "9.9.9"
+        canonical["modules"]["legends-github"]["version"] = "9.9.9"
+        canonical["modules"]["legends-fixture"] = copy.deepcopy(FIXTURE)
+        calls = []
+
+        def fetch(url, repos):
+            calls.append(url)
+            if url == m.CANONICAL_CATALOG_URL:
+                return json.dumps(canonical).encode()
+            raise AssertionError(f"default check-updates must not call {url}")
+
+        with patch.object(m, "fetch", side_effect=fetch):
+            result = m.updates(self.home)
+        self.assertEqual(calls, [m.CANONICAL_CATALOG_URL])
+        self.assertEqual(result["source_mode"], "canonical_catalog")
+        self.assertTrue(result["catalog_stale"])
+        self.assertTrue(result["router"]["update_available"])
+        self.assertEqual(result["router"]["latest_version"], "9.9.9")
+        self.assertEqual(result["new_modules_in_canonical"], ["legends-fixture"])
+        by_id = {row["id"]: row for row in result["modules"]}
+        self.assertEqual(by_id["legends-dataforseo"]["status"], "update_ready")
+        self.assertEqual(by_id["legends-github"]["status"], "catalog_behind_upstream")
+        self.assertEqual(by_id["legends-captions"]["status"], "current")
 
     def test_update_all_skips_removed_modules(self):
         cat = copy.deepcopy(m.catalog())

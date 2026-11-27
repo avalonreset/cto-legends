@@ -5,6 +5,11 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.80 - 2026-11-27
+
+- Add top-level `router_version` (`0.2.23`) so `cto-legends check-updates` and `update --sync` detect router drift from the single CDN-cached catalog with zero GitHub REST API calls.
+- Migrate all 22 managed modules (`legends-empire`, `legends-hetzner`, `legends-coolify`, `legends-cloudflare`, `legends-astro`, `legends-gohighlevel`, `legends-stripe`, `legends-dataforseo`, `legends-geogrid`, `legends-firecrawl`, `legends-grant`, `legends-youtube`, `legends-obs`, `legends-capcut`, `legends-captions`, `legends-stable-audio-3`, `legends-ambient-intelligence`, `legends-temporal`, `legends-jev`, `legends-buzz`, `legends-a2ui`, `legends-github`) to immutable GitHub Release Asset source bundles (`source="release-tgz"`, `<module>-<version>-bundle.tar.gz`) built deterministically from each module's pinned release tag commit and verified by SHA-256. `legends-hyperyap` remains `guided`.
+
 ## 1.0.79 - 2026-11-27
 
 - Reorder all 23 catalog modules into the canonical business-owner storyline sequence (`legends-empire -> legends-hetzner -> legends-coolify -> legends-cloudflare -> legends-astro -> legends-gohighlevel -> legends-stripe -> legends-dataforseo -> legends-geogrid -> legends-firecrawl -> legends-grant -> legends-youtube -> legends-obs -> legends-capcut -> legends-captions -> legends-stable-audio-3 -> legends-hyperyap -> legends-ambient-intelligence -> legends-temporal -> legends-jev -> legends-buzz -> legends-a2ui -> legends-github`) as the single source of truth synchronized across the GitHub profile, `cto-legends.com`, the GitHub Star List, and telemetry trackers.

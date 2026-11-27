@@ -1,12 +1,13 @@
 {
   "schema": 1,
-  "version": "1.0.79",
+  "version": "1.0.80",
+  "router_version": "0.2.23",
   "modules": {
     "legends-empire": {
       "version": "0.4.3",
       "commit": "9cede43a11554c94b552a98410e7b63513af3df0",
       "repo": "avalonreset/legends-empire",
-      "sha256": "620ad46d8f8a9dad0d8f369f85d0913073647c7673d7319a5b8cbc622ef636d3",
+      "sha256": "4835f3d5970f505a330c2e8c59361066ba9e477318c531d483b18bdcd9ee96c4",
       "purpose": "Markdown knowledge foundation with Ontology Engine, multi-vendor entry-chain auditing (steward entry-audit) and non-ratcheting health digests (steward digest). For vault cleanup and project or session review, invoke the named vault stewardship capability (legends-vault-stewardship), included in the same Empire installation. Agents name the selected workflow before checking readiness and performing work. Optional Home-ready shared-root structure supports standalone Empire projects and an independently authorized AI Marketing Hub Home headless capability layer without duplicate business records.",
       "keywords": [
         "empire",
@@ -134,20 +135,22 @@
           "kind": "script",
           "path": "scripts/claude-empire.py"
         },
-        "guide_file": "README.md"
+        "guide_file": "README.md",
+        "source": "release-tgz"
       },
       "license": "MIT",
       "platforms": [
         "windows",
         "linux",
         "macos"
-      ]
+      ],
+      "artifact_url": "https://github.com/avalonreset/legends-empire/releases/download/v0.4.3/legends-empire-0.4.3-bundle.tar.gz"
     },
     "legends-hetzner": {
       "version": "0.1.7",
       "repo": "avalonreset/legends-hetzner",
       "commit": "0cdcd3b24f40388bf52f4f7ba02daaedb7116b05",
-      "sha256": "4040985825b4fd465a63f45839820b73408b293565814935fae415e013c8f6d0",
+      "sha256": "083892123d5bad66292d55c5da4c717257340292f225c0c88dc52b939ee24fb3",
       "purpose": "Inspect Hetzner Cloud projects, scan Cost-Optimized CX/CAX stock with Fractional CTO sizing, prepare reviewed server plans, snipe scarce capacity safely, and attach a source-cited operations library to a selected Empire vault.",
       "keywords": [
         "hetzner",
@@ -223,10 +226,12 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_hetzner"
-        }
+        },
+        "source": "release-tgz"
       },
       "license": "MIT",
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-hetzner/releases/download/v0.1.7/legends-hetzner-0.1.7-bundle.tar.gz"
     },
     "legends-coolify": {
       "purpose": "Read-only Coolify operations and source-cited runbooks, standalone or attached to an Empire vault.",
@@ -275,10 +280,11 @@
         },
         "pip": {
           "kind": "path"
-        }
+        },
+        "source": "release-tgz"
       },
       "commit": "cc646c6de14d8d96ab7229bcb3038dc0895054aa",
-      "sha256": "fbb115d2a9283bbe723220aa83a98a8c55480afed1247b7b734d563e243d3ba9",
+      "sha256": "4a55a4490f3459600559ac2a639ae4115d10eb9a225613a1237f23e35282e655",
       "license": "MIT",
       "version": "0.2.5",
       "discovery": {
@@ -323,7 +329,8 @@
       ],
       "scope": "Portable Python CLI for inventory, deployment history, resource status, environment names, backup schedules and advisory plans. Packaged knowledge library with optional versioned Empire attachment. No deployment or configuration mutation.",
       "dependencies": {},
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-coolify/releases/download/v0.2.5/legends-coolify-0.2.5-bundle.tar.gz"
     },
     "legends-cloudflare": {
       "purpose": "Cloudflare DNS automation with reviewed change plans, readback checks and a source-cited knowledge vault.",
@@ -364,10 +371,11 @@
         },
         "pip": {
           "kind": "path"
-        }
+        },
+        "source": "release-tgz"
       },
       "commit": "9884a00ce5d2d3b9e81df8d90b41d06ee13bb6eb",
-      "sha256": "2ea46ed29f7e70c0d0218e010ffa319d9843ce0b46b9003fe56d6903a7bceb7c",
+      "sha256": "a7ee4facaf9cf7c07e7ecca7242e80d72acddc74c9dab7fa2553118e2901d77d",
       "license": "MIT",
       "version": "0.1.5",
       "discovery": {
@@ -408,7 +416,8 @@
       ],
       "scope": "Portable Python CLI for zones, DNS inventory, nameservers, preview-first single-record upsert and exact-ID deletion. Source-cited Markdown knowledge pack, attachable Empire knowledge pack, and private Empire templates.",
       "dependencies": {},
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-cloudflare/releases/download/v0.1.5/legends-cloudflare-0.1.5-bundle.tar.gz"
     },
     "legends-astro": {
       "purpose": "Complete agency Astro lifecycle: Day-1 greenfield starter, multi-framework repo auditing, live/Firecrawl capture, asset localization, Astro v7 scaffolding, Day-2 article publishing and safe updating, regression manifest gating, Visual Digital Twin parity checks, build verification, and a source-cited knowledge vault.",
@@ -451,10 +460,10 @@
         "pip": {
           "kind": "path"
         },
-        "source": "codeload-zip"
+        "source": "release-tgz"
       },
       "commit": "89d6ab54ea3794122fba70aa6ea93b327543a036",
-      "sha256": "b2915776ff370a105d37f0cd792209893ad8d112ee5106cb5102a5855a9f61be",
+      "sha256": "7f445bd9ff983184b0341f6acfa61e0ee26a8df198fb6726df461601f2414c28",
       "license": "MIT",
       "version": "0.4.0",
       "discovery": {
@@ -526,7 +535,8 @@
       ],
       "scope": "Portable Python and Node CLI for Astro v7 readiness, Day-1 greenfield agency starter (init, scaffold --mode starter), multi-framework repository auditing (Next.js, Nuxt, Gatsby, Vite/CRA, Docusaurus, Hugo, Jekyll, Eleventy, SvelteKit), live HTTP/Firecrawl capture, two-pass asset localization (vendor-assets), preview-first clone/editorial/starter scaffolding (scaffold/ingest), Day-2 article publishing and safe updating (post), post-build dist/ parity and regression manifest verification (verify-build --baseline/--write-manifest), Playwright Visual Digital Twin diffing (twin/twin-diff), pinned withastro/docs lookup, and attachable Empire knowledge pack.",
       "dependencies": {},
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-astro/releases/download/v0.4.0/legends-astro-0.4.0-bundle.tar.gz"
     },
     "legends-gohighlevel": {
       "purpose": "GoHighLevel CRM, Workflows v3, Voice/Conversation AI, Custom Objects, and 5-layer agency backend governance CLI with preview-first mutations, API readback, and a source-cited knowledge vault.",
@@ -567,10 +577,11 @@
         },
         "pip": {
           "kind": "path"
-        }
+        },
+        "source": "release-tgz"
       },
       "commit": "2506933c2b85a44693ab86067a48ebc5b24cbf2e",
-      "sha256": "fe355ee355d419f41c0ab99fc128401b7c82262cfcdeb6c254a42236c02949c9",
+      "sha256": "a87ed6020727a2e1f4f3c97845c3f866acfdaed2be291c83f895264d97241797",
       "license": "MIT",
       "version": "0.3.7",
       "discovery": {
@@ -634,7 +645,8 @@
       ],
       "scope": "Portable Python 3.11+ CLI for HighLevel API v2 and Workflows v3 sub-account inspection and preview-first CRM mutations (contacts, tags, notes, opportunities, custom values, workflows, Voice AI, Conversation AI, Custom Objects, Funnels), live internal backend 5-layer agency governance (location flags, user V1/V2 scopes, Default Dashboard RBAC, Custom SMTP locks, 4-store + 14-product 1.05x rebilling sync), and an attachable legends-empire knowledge pack.",
       "dependencies": {},
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-gohighlevel/releases/download/v0.3.7/legends-gohighlevel-0.3.7-bundle.tar.gz"
     },
     "legends-stripe": {
       "purpose": "Stripe payment infrastructure governance, .env price-ID auditing, product catalog lint, declarative test/live price ladder sync, B2B Hosted Invoicing (send_invoice) and receivables radar, cent-exact Stripe Drag treasury telemetry, subscription dunning and duplicate-billing radar, raw-body webhook HMAC verification, and Astro/Python server blueprints.",
@@ -677,10 +689,11 @@
         },
         "pip": {
           "kind": "path"
-        }
+        },
+        "source": "release-tgz"
       },
       "commit": "133feb34ae9fee73225c9a45462fc78e061bf75c",
-      "sha256": "6c525da2d68e20c671ce2759feb94ca6d8ad35cb39b3d6659f0ba2f3c1713d7d",
+      "sha256": "a78566616c3cc0ca5a0a6c44b10539492213f2aef8085f6be7a31bdc2ff55019",
       "license": "MIT",
       "version": "0.1.5",
       "discovery": {
@@ -736,13 +749,14 @@
       ],
       "scope": "Dependency-free Python 3.11+ CLI for Stripe .env price-ID governance, product catalog lint, preview-first price ladder sync, orphan-free B2B Hosted Invoicing, cent-exact Stripe Drag treasury reconciliation, subscription dunning and double-billing radar, constant-time webhook HMAC verification, Astro/Python server blueprints, and attachable Empire knowledge pack.",
       "dependencies": {},
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-stripe/releases/download/v0.1.5/legends-stripe-0.1.5-bundle.tar.gz"
     },
     "legends-dataforseo": {
       "version": "0.1.14",
       "commit": "bffbd0e5e422022c28c71115d6065846231680c2",
       "repo": "avalonreset/legends-dataforseo",
-      "sha256": "556ed4e411e9596eb24e22cd8e0bc53dd708ed4eca2236e625c1f4e324773e39",
+      "sha256": "1726db3a8cb9280da7e21fd747850a6e602f972bf83041ed453ac6b06cf70d0f",
       "purpose": "53-route DataForSEO v3 catalog for search, Google Maps, Google Business Profile, fail-closed decoy SERP defense (resolve_poisoned_results), depth-aware resolve_goto_urls and allowlisted website_name domain mapping, Google 5x search-operator billing guard, Labs/LLM Mentions/Backlinks/Lighthouse/On-Page intelligence, and keyword research with complete saved offline evidence, integrity verification, and explicit reuse checks.",
       "keywords": [
         "seo",
@@ -828,7 +842,8 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_dataforseo"
-        }
+        },
+        "source": "release-tgz"
       },
       "readiness": "task-readiness research",
       "license": "MIT",
@@ -836,13 +851,14 @@
         "windows",
         "linux",
         "macos"
-      ]
+      ],
+      "artifact_url": "https://github.com/avalonreset/legends-dataforseo/releases/download/v0.1.14/legends-dataforseo-0.1.14-bundle.tar.gz"
     },
     "legends-geogrid": {
       "version": "0.3.0",
       "commit": "115666bc3428ea5676365f2d17ba925b1e20aea7",
       "repo": "avalonreset/legends-geogrid",
-      "sha256": "943c6cb0259ba335dee6da2e06b6256aa63cf1f8745ac6cf31ee70481e0d1bc5",
+      "sha256": "c2736c38815a50025b99f4d54c349d0a232cd91ab890d17b37aca8fe05fdd990",
       "purpose": "Google Maps circular honeycomb 30-deep competitive ranking studies, Winnability relief topography, Local Leaders territory audit, Campaigns planner, 3-pane Street View storefront signage studio, Strategy Room, 5-page vector-hex PDF briefings, 7-stage deterministic planner, and embeddable geogrid-viewer/v1 report viewer.",
       "keywords": [
         "maps",
@@ -929,7 +945,8 @@
           "runtime": "python",
           "kind": "script",
           "path": "tools/study.py"
-        }
+        },
+        "source": "release-tgz"
       },
       "readiness": "report-readiness",
       "setup_revision": 2,
@@ -938,13 +955,14 @@
         "windows",
         "linux",
         "macos"
-      ]
+      ],
+      "artifact_url": "https://github.com/avalonreset/legends-geogrid/releases/download/v0.3.0/legends-geogrid-0.3.0-bundle.tar.gz"
     },
     "legends-firecrawl": {
       "version": "0.3.9",
       "commit": "2631d6c6a60fa06672edb98b48b8b538464b0c1a",
       "repo": "avalonreset/legends-firecrawl",
-      "sha256": "062ce6660e5edf1f4a8a8acfb5f17df0aaa2d628acdde74237728b09382b5a3c",
+      "sha256": "1a326d4f6b688013bfd64de657e2f268c92c68deb1fa62055a3f7090c15d361c",
       "purpose": "15-route Firecrawl v2 web operations (scrape, crawl, map, search, developer, research, parse, agent, interact, monitor, search-feedback), allowlisted website_name SERP target resolution, fail-closed scrape-serp verified-SERP guard, and Alexandria queries with complete saved offline evidence, integrity verification, and explicit reuse checks.",
       "keywords": [
         "firecrawl",
@@ -1018,7 +1036,8 @@
           "kind": "callable",
           "module": "legends_firecrawl.cli",
           "func": "main"
-        }
+        },
+        "source": "release-tgz"
       },
       "license": "MIT",
       "platforms": [
@@ -1026,13 +1045,14 @@
         "linux",
         "macos"
       ],
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-firecrawl/releases/download/v0.3.9/legends-firecrawl-0.3.9-bundle.tar.gz"
     },
     "legends-grant": {
       "version": "0.3.5",
       "commit": "8a5f4bd14433c61474b14b12b71be1bbfdf29689",
       "repo": "avalonreset/legends-grant",
-      "sha256": "b9ef5f778b9ec592914f83d100af01cf9504df9ab1016facd88ca7d1eb051e84",
+      "sha256": "3e2f33b092b8d574a68827365989e95963a46d8f9d342f6892c7c81193c8673f",
       "purpose": "Discover US grants, collect evidence, review eligibility and draft evidence-linked grant proposals for businesses, nonprofits, tribes, governments, researchers and individuals.",
       "keywords": [
         "grant",
@@ -1118,7 +1138,8 @@
           "runtime": "python",
           "kind": "module",
           "module": "grant_engine"
-        }
+        },
+        "source": "release-tgz"
       },
       "platforms": [
         "windows",
@@ -1126,13 +1147,14 @@
         "macos"
       ],
       "readiness": "doctor",
-      "license": "MIT"
+      "license": "MIT",
+      "artifact_url": "https://github.com/avalonreset/legends-grant/releases/download/v0.3.5/legends-grant-0.3.5-bundle.tar.gz"
     },
     "legends-youtube": {
       "version": "0.2.1",
       "commit": "cb7aa7a20491816b60cad87cc50d29570253421f",
       "repo": "avalonreset/legends-youtube",
-      "sha256": "47ca56bbc8995a888b5c7be375bdfe1494aa5f1de6bfba8dd49be1a5d33ca78b",
+      "sha256": "210807cba2d76ae0873f13ebaaebf202b5441d4871c68f1bdb65a64e0649c970",
       "purpose": "Operate YouTube channels over Data API v3 and Analytics API v2 with ETag-guarded lossless metadata updates, quota-cost wave planning, 0-quota public readback and outlier scouting, sourced CTR/retention A/B scorecards, Studio quiz and chapter validators, SHA-256 frozen private-draft uploads, repeatable yt-dlp source pulls, transcripts, search, and word-timed clip-building (legends-yt-dlp), and an attachable 18-file Empire knowledge pack.",
       "keywords": [
         "youtube",
@@ -1259,7 +1281,8 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_youtube"
-        }
+        },
+        "source": "release-tgz"
       },
       "license": "MIT",
       "platforms": [
@@ -1267,7 +1290,8 @@
         "linux",
         "macos"
       ],
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-youtube/releases/download/v0.2.1/legends-youtube-0.2.1-bundle.tar.gz"
     },
     "legends-obs": {
       "version": "0.1.7",
@@ -1292,7 +1316,7 @@
       "platforms": [
         "windows"
       ],
-      "sha256": "5969bece999c72a46ded35673128485718be9a56ddee4fac5fdb268b8160388f",
+      "sha256": "902b3bbe21af0a670d4a2659b2db1f673986cc10ca46c67f85972fd7608e0693",
       "discovery": {
         "signals": [
           "record my screen",
@@ -1320,7 +1344,7 @@
       "recipe": {
         "requires_node": 22,
         "env": false,
-        "source": "codeload-zip",
+        "source": "release-tgz",
         "pip": {
           "kind": "none"
         },
@@ -1342,13 +1366,14 @@
           "cursor": "Optional animated cursor overlay plus click effects (GPL Lua filter, not installed by default). After install, copy extras/cursor/legends_cursor_filter.lua into the OBS scripts folder and enable it under Tools > Scripts."
         }
       },
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-obs/releases/download/v0.1.7/legends-obs-0.1.7-bundle.tar.gz"
     },
     "legends-capcut": {
       "version": "0.1.0",
       "commit": "8c0f50e99bd1d8d88eeb8a8486b8d9daf6f413d1",
       "repo": "avalonreset/legends-capcut",
-      "sha256": "f4192a751db7e2ec16313278c7da64f92e23d4f4e3acb5ffcbe281d06fd121f5",
+      "sha256": "bb99b15c3c0b098cea3c7dbea24b2869a631d5e3f52ea98cddfed092ebf6964c",
       "purpose": "Agent-native CapCut Desktop editing: a bidirectional draft compiler and reader, strict validator, surgical single-scene patcher, perpetual six-frame storyboards, reveal-aware readability and overstay critic, beat sync, local effect and keymap discovery, optional Windows GUI playback watch, and a matching CLI and stdio MCP server.",
       "keywords": [
         "capcut",
@@ -1439,7 +1464,8 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_capcut"
-        }
+        },
+        "source": "release-tgz"
       },
       "license": "MIT",
       "platforms": [
@@ -1447,13 +1473,14 @@
         "linux",
         "macos"
       ],
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-capcut/releases/download/v0.1.0/legends-capcut-0.1.0-bundle.tar.gz"
     },
     "legends-captions": {
       "version": "0.1.6",
       "commit": "2d08345b61c1d00938e7d824ebb7d338b9ec0e33",
       "repo": "avalonreset/legends-captions",
-      "sha256": "7dc30df7c63df18b3bc77f7eda6a6c9d319306549b73a5ae1700274e99207204",
+      "sha256": "365aa12a99a2bea385e7eae52053dcf21d204b53c24787e189cd507df596be8a",
       "purpose": "Agentic video caption QA and rendering with contextual correction, alignment timing, and proof evidence.",
       "keywords": [
         "caption",
@@ -1529,7 +1556,8 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_captions"
-        }
+        },
+        "source": "release-tgz"
       },
       "license": "MIT",
       "platforms": [
@@ -1537,7 +1565,8 @@
         "linux",
         "macos"
       ],
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-captions/releases/download/v0.1.6/legends-captions-0.1.6-bundle.tar.gz"
     },
     "legends-stable-audio-3": {
       "version": "0.1.7",
@@ -1562,7 +1591,7 @@
         "macos",
         "linux"
       ],
-      "sha256": "a533fe3d6c18da79d36cf80a88a7146811b335d0c52c1d6b5dd55929ab4fd87d",
+      "sha256": "9c6cbe128618a136e7d4e1d60ec0825d2425b2589b228acef7a1b307e4b96cd8",
       "discovery": {
         "signals": [
           "make music",
@@ -1621,8 +1650,10 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_sa3"
-        }
-      }
+        },
+        "source": "release-tgz"
+      },
+      "artifact_url": "https://github.com/avalonreset/legends-stable-audio-3/releases/download/v0.1.7/legends-stable-audio-3-0.1.7-bundle.tar.gz"
     },
     "legends-hyperyap": {
       "version": "0.1.7",
@@ -1675,7 +1706,7 @@
       "version": "0.1.6",
       "commit": "8281058c134dc05b4600c034c78ec620e6c02637",
       "repo": "avalonreset/legends-ambient-intelligence",
-      "sha256": "aa7527563414f1f5bd2259318daf3ff19cc1200412109a2c27ba02fafde4c091",
+      "sha256": "0457235fab6dfd6ed6745f4f32f49a6f75958c4ec856b87f82be8fa710708699",
       "purpose": "Passive ambient audio capture, deduplicated archiving, offline transcription, and vault distillation.",
       "keywords": [
         "ambient",
@@ -1755,7 +1786,8 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_ambient"
-        }
+        },
+        "source": "release-tgz"
       },
       "license": "MIT",
       "platforms": [
@@ -1763,13 +1795,14 @@
         "linux",
         "macos"
       ],
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-ambient-intelligence/releases/download/v0.1.6/legends-ambient-intelligence-0.1.6-bundle.tar.gz"
     },
     "legends-temporal": {
       "version": "0.1.2",
       "commit": "a6fcc58f451cab866919650a91bab8a70114e4cd",
       "repo": "avalonreset/legends-temporal",
-      "sha256": "ef74b0f483d78255c6ed087b2d474008d0a57e89f3b52a54354d6cf9f0ae0dfe",
+      "sha256": "fdadbfa3f13b44d8bd95a64e8ebe058284f540ad8bae4b5eb78efae846de4da3",
       "purpose": "Operate local, self-hosted, or Temporal Cloud clusters with durable cron and interval schedules, one-shot start_delay timers, first-class cto-legends --module scheduling, orphaned-queue and declarative inventory drift auditing (audit), local SQLite/Docker Compose/systemd cluster bootstrap (bootstrap), zero-rewrite 11-field ScriptJob and AgentJob workers across split control and exec task queues, compact event-history failure diagnosis, a 10-tool stdio MCP server, and a 7-note Empire knowledge pack.",
       "keywords": [
         "temporal",
@@ -1860,7 +1893,8 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_temporal"
-        }
+        },
+        "source": "release-tgz"
       },
       "license": "MIT",
       "platforms": [
@@ -1868,13 +1902,14 @@
         "linux",
         "macos"
       ],
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-temporal/releases/download/v0.1.2/legends-temporal-0.1.2-bundle.tar.gz"
     },
     "legends-jev": {
       "version": "0.2.6",
       "commit": "34a978fa169bfe71e73327c1faa3bfaf30960193",
       "repo": "avalonreset/legends-jev",
-      "sha256": "d307bc6990adf35808d8b3e42ac47612e42bbba01dcbb454b51cf80619ed7463",
+      "sha256": "d21a58596329dc57f7022d45c67d5f5f114368fbf81bdc9f02bb08f9b1bb2615",
       "purpose": "Typed optical recognition (OCR), storefront signage verification, and decision advice for computer use, application control and browser action selection from supplied text evidence, local images, and candidates.",
       "keywords": [
         "jev",
@@ -1955,16 +1990,18 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_jev"
-        }
+        },
+        "source": "release-tgz"
       },
       "license": "MIT",
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-jev/releases/download/v0.2.6/legends-jev-0.2.6-bundle.tar.gz"
     },
     "legends-buzz": {
       "version": "0.1.3",
       "commit": "0d2083101c3f4bd34af536328160d6c0e12e2a9e",
       "repo": "avalonreset/legends-buzz",
-      "sha256": "28a5cd44e5166fa17050f09311043a5c89d2b5390886ac355d8b40810319f3de",
+      "sha256": "a57ea1ee1847f5b477bd8b4f7272a2a505eefb08cf95e6d8ae1002571ea4ed81",
       "purpose": "Self-hosted Block Buzz Nostr relay operations, 26-domain MCP-to-CLI agent routing, NIP-29/NIP-OA/NIP-FI membership diagnostics, connected-component reply thread reconstruction, 5-gate attachment inspection, and desktop PE/asset verification.",
       "keywords": [
         "buzz",
@@ -2054,7 +2091,8 @@
           "runtime": "python",
           "kind": "module",
           "module": "legends_buzz"
-        }
+        },
+        "source": "release-tgz"
       },
       "license": "MIT",
       "platforms": [
@@ -2062,7 +2100,8 @@
         "linux",
         "macos"
       ],
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-buzz/releases/download/v0.1.3/legends-buzz-0.1.3-bundle.tar.gz"
     },
     "legends-a2ui": {
       "purpose": "Offline-first A2UI v1.0, v0.9.1, v0.9, and v0.8 toolkit: strict schema and graph validation, deterministic v0.8/v0.9-to-v1.0 normalization, curated interactive surface composition, zero-coupling JSON-to-A2UI projection (project), zero-daemon static HTML previewing, Precision Noir React/WebCore/Lit renderer scaffolding, pinned a2ui-project/a2ui spec lookup, and an attachable Empire knowledge pack.",
@@ -2107,10 +2146,10 @@
           3,
           11
         ],
-        "source": "codeload-zip"
+        "source": "release-tgz"
       },
       "commit": "e42eecf0d7f5d5f2661dc9de785cbfcc62ff5398",
-      "sha256": "437d62dafd2012cea8f525c96f315ec282710246873d09ce7e05ac798d987004",
+      "sha256": "6e5b892eaea1475cddd972091e834964d2d936979a7b06995b0f6a77af8207b5",
       "license": "MIT",
       "version": "0.1.0",
       "keywords": [
@@ -2177,13 +2216,14 @@
         "macos"
       ],
       "dependencies": {},
-      "readiness": "doctor"
+      "readiness": "doctor",
+      "artifact_url": "https://github.com/avalonreset/legends-a2ui/releases/download/v0.1.0/legends-a2ui-0.1.0-bundle.tar.gz"
     },
     "legends-github": {
       "version": "0.2.6",
       "commit": "d300e505e80a6d168a7065de4d6878ed4a6ddf1b",
       "repo": "avalonreset/legends-github",
-      "sha256": "649c01a11e6bdfc765bbf828b729f1320308991cb80eeb11bd5b969dc32883f6",
+      "sha256": "68bd1c5c03e88686ab2ac8edbc5ad01bf069985b9c1216e8b4fd208db966684a",
       "purpose": "Research search demand and improve repository copy, metadata, presentation, and releases.",
       "keywords": [
         "github",
@@ -2264,7 +2304,8 @@
           "runtime": "python",
           "kind": "script",
           "path": "legends_github.py"
-        }
+        },
+        "source": "release-tgz"
       },
       "readiness": "task-readiness github",
       "license": "MIT",
@@ -2272,7 +2313,8 @@
         "windows",
         "linux",
         "macos"
-      ]
+      ],
+      "artifact_url": "https://github.com/avalonreset/legends-github/releases/download/v0.2.6/legends-github-0.2.6-bundle.tar.gz"
     }
   },
   "aliases": {
