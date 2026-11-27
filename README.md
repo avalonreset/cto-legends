@@ -181,6 +181,7 @@ Record your screen, score it with local AI audio, render active-word captions, p
 | Module | Say something like | What it does |
 | --- | --- | --- |
 | [`legends-obs`](https://github.com/avalonreset/legends-obs) | "Prepare OBS scenes for a 4K tutorial recording" | Inspects, configures and verifies OBS Studio recording workflows (live OBS control targets Windows) |
+| [`legends-seedance`](https://github.com/avalonreset/legends-seedance) | "Lint my Seedance prompt, mask this shot and retime the result to exact frames" | Local prep, prompt linting, inpaint masks, plate compositing and exact frame finishing for ByteDance Seedance 2.0 and 2.5 |
 | [`legends-captions`](https://github.com/avalonreset/legends-captions) | "Caption this video with active-word timing" | Caption QA and rendering with contextual correction, alignment timing and proof evidence |
 | [`legends-capcut`](https://github.com/avalonreset/legends-capcut) | "Compile this timeline into a CapCut project and patch scene S03" | Agent-native CapCut Desktop draft compiler, reader, surgical scene patcher, storyboards, readability critic, beat sync and MCP server |
 | [`legends-youtube`](https://github.com/avalonreset/legends-youtube) | "Pull this video batch, cut word-timed clips, and freeze a private draft" | YouTube channel operations, lossless metadata updates, quota planning, private-draft uploads and verified yt-dlp archiving (`legends-yt-dlp`) |

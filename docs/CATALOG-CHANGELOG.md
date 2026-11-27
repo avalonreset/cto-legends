@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.81 - 2026-11-27
+
+- Admit `legends-seedance` `0.1.0` (`3ec89d633da1`, release-tgz bundle SHA-256 `988370df0ed0fdf19f0f0087e26031521f5d90c34a8713591748420704edd244`) with unified router skill pin, offline ByteDance Seedance 2.0 and 2.5 readiness doctor, clip probe with model bounds and credit estimate, prompt linter and verb-first compiler, inpaint mask builder (box, ellipse, color and SAM 2.1 tracking), feathered ROI plate compositor, deterministic reference cards, and RIFE exact-frame finisher with WAV restore and QC sheet. Placed in the video production chapter after `legends-obs`; router `router_version` bumped to `0.2.24`.
+
 ## 1.0.80 - 2026-11-27
 
 - Add top-level `router_version` (`0.2.23`) so `cto-legends check-updates` and `update --sync` detect router drift from the single CDN-cached catalog with zero GitHub REST API calls.

@@ -56,6 +56,7 @@ REPOS: list[dict] = [
     {"id": "legends-grant", "repo": "legends-grant", "local": str(_DRIVE_ROOT / "legends-grant-public")},
     {"id": "legends-youtube", "repo": "legends-youtube", "local": str(_DRIVE_ROOT / "legends-youtube")},
     {"id": "legends-obs", "repo": "legends-obs", "local": str(_DRIVE_ROOT / "legends-obs-kit")},
+    {"id": "legends-seedance", "repo": "legends-seedance", "local": str(_DRIVE_ROOT / "legends-seedance-public")},
     {"id": "legends-capcut", "repo": "legends-capcut", "local": str(_DRIVE_ROOT / "legends-capcut")},
     {"id": "legends-captions", "repo": "legends-captions", "local": str(_DRIVE_ROOT / "legends-captions")},
     {"id": "legends-stable-audio-3", "repo": "legends-stable-audio-3", "local": str(_DRIVE_ROOT / "legends-stable-audio-3-public-rc")},

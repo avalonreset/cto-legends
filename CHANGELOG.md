@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.24 - 2026-11-27
+
+- Ship bundled catalog `1.0.81` admitting `legends-seedance` `0.1.0` (`3ec89d633da1`, local prep, prompt linting, masking, plate compositing and exact frame finishing for ByteDance Seedance 2.0 and 2.5: offline doctor, clip probe with credit estimate, pass-through-aware prompt linter and compiler, box/ellipse/color/SAM 2.1 inpaint masks, feathered ROI compositor, reference cards, and RIFE exact-frame retiming with untouched WAV restore and QC sheet).
+
 ## 0.2.23 - 2026-11-27
 
 - Make `cto-legends check-updates` and `update --sync` zero-API by default: read the single CDN-cached `catalog.json` (including top-level `router_version`) instead of firing 24 unauthenticated `api.github.com` requests per run, eliminating the 60 req/hr IP rate-limit wall (pass `check-updates --upstream` when explicitly querying per-repo GitHub Releases API tags).
