@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.26 - 2026-11-27
+
+- Ship bundled catalog `1.0.83` updating `legends-geogrid` to `0.3.2` (`0c4dfc88dbf0`, static Companion basemap hotfix: a Companion opened from `file://` now shows a real OpenFreeMap Dark street map with zero keys and no server via a bundled MapLibre classic Blob worker, never requests `tile.openstreetmap.org` from disk, defaults to OpenFreeMap Dark over HTTP too, counts map load deadlines only while the page is visible, and hardens basemap switching against superseded and post-destroy loads).
+
 ## 0.2.25 - 2026-11-27
 
 - Ship bundled catalog `1.0.82` updating `legends-geogrid` to `0.3.1` (`272b294c5a10`, cartographic hotfix: inward-only shapeburst engine with zero exterior bleed, 200 ms cubic-bezier hover with exact interpolated rank and Fortress Core dominance tooltips guarded by clip, land and study-circle boundaries, tau-coupled relief and focus drape, and all 7 showcase and Companion Studio screenshots refreshed from the v0.3.1 runtime).

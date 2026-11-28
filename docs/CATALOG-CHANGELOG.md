@@ -5,6 +5,10 @@ is `cto_legends/catalog.json` on the router repo main branch; users adopt it
 with `cto-legends sync`. The `schema` field gates manager compatibility: a
 manager refuses a catalog with a newer schema and asks for a manager update.
 
+## 1.0.83 - 2026-11-27
+
+- Update `legends-geogrid` to 0.3.2 (`0c4dfc88dbf0`, release-tgz bundle SHA-256 `57ccd587c8e5e29b9f130035c3b4ad918f5e88d8c22810dbc642bda6451c18d3`) with static Companion basemap hotfix: real OpenFreeMap Dark street map from `file://` with zero keys and no server (bundled MapLibre classic Blob worker), no `tile.openstreetmap.org` requests from disk, OpenFreeMap Dark default over HTTP, visibility-aware map load deadlines, and hardened basemap switching; router `router_version` bumped to `0.2.26`.
+
 ## 1.0.82 - 2026-11-27
 
 - Update `legends-geogrid` to 0.3.1 (`272b294c5a10`, release-tgz bundle SHA-256 `afa100c1bdc4676fef20a4893a5de993905134e7a6bbe934599a5d5b1ed7d6b5`) with cartographic hotfix: inward-only shapeburst engine with zero exterior bleed, 200 ms cubic-bezier hover with exact interpolated rank and Fortress Core dominance tooltips guarded by clip, land and study-circle boundaries, tau-coupled relief and focus drape, and all 7 showcase and Companion Studio screenshots refreshed from the v0.3.1 runtime.
